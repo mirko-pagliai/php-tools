@@ -13,12 +13,13 @@ You can install the package via composer:
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
 ## Global functions
-- `is_json()` Checks if a string is JSON
-- `is_positive()` Checks if a string is a positive number
-- `is_url()` Checks if a string is a valid url
+- `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
+- `is_json($string)` Checks if a string is JSON
+- `is_positive(string)` Checks if a string is a positive number
+- `is_url(string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
 - `rtr()` Returns the relative path (to the `ROOT` constant) of an absolute path (this method requires the `ROOT` constant has been defined)
-- `which()` Executes the `which` command and shows the full path of (shell) commands
+- `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
 ## Classes and methods
 ### ReflectionTrait
