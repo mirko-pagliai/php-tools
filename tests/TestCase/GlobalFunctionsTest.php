@@ -20,6 +20,23 @@ use PHPUnit\Framework\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `get_child_methods()` global function
+     * @test
+     */
+    public function testGetChildMethods()
+    {
+        $expected = ['childMethod', 'anotherChildMethod'];
+        $this->assertEquals($expected, get_child_methods('\App\ExampleChildClass'));
+
+        //This class has no parent, so the result is similar to the `get_class_methods()` method
+        $expected = get_class_methods('\App\ExampleClass');
+        $this->assertEquals($expected, get_child_methods('\App\ExampleClass'));
+
+        //No existing class
+        $this->assertNull(get_child_methods('\NoExistingClass'));
+    }
+
+    /**
      * Test for `isJson()` global function
      * @test
      */

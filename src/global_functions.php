@@ -10,6 +10,27 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!function_exists('get_child_methods')) {
+    /**
+     * Gets the class methods' names, but unlike the `get_class_methods()`
+     *  function, this function excludes the methods of the parent class
+     * @param string $class Class name
+     * @return array|null
+     * @since 1.0.1
+     */
+    function get_child_methods($class)
+    {
+        $methods = get_class_methods($class);
+        $parentClass = get_parent_class($class);
+
+        if ($parentClass) {
+            $methods = array_diff($methods, get_class_methods($parentClass));
+        }
+
+        return is_array($methods) ? array_values($methods) : null;
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON
