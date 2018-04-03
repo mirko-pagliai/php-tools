@@ -11,3 +11,6 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 require_once 'vendor/autoload.php';
+
+define('DS', DIRECTORY_SEPARATOR);
+define('ROOT', dirname(__DIR__) . DS);

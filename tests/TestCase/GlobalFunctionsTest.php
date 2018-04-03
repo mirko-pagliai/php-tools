@@ -51,4 +51,20 @@ class GlobalFunctionsTest extends TestCase
             $this->assertFalse(is_url($url));
         }
     }
+
+    /**
+     * Test for `rtr()` global function
+     * @test
+     */
+    public function testRtr()
+    {
+        // Path constants to a few helpful things.
+        foreach ([
+            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder',
+            'my' . DS . 'folder' => 'my' . DS . 'folder',
+            DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
+        ] as $result => $expected) {
+            $this->assertEquals($expected, rtr($result));
+        }
+    }
 }

@@ -21,3 +21,23 @@ if (!function_exists('is_url')) {
         return (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url);
     }
 }
+
+if (!function_exists('rtr')) {
+    /**
+     * Returns the relative path (to the ROOT constant) of an absolute path
+     * @param string $path Absolute path
+     * @return string Relative path
+     */
+    function rtr($path)
+    {
+        $root = ROOT;
+        $rootLength = strlen($root);
+        $isRootSlashTerm = in_array($root[$rootLength - 1], ['/', '\\']);
+
+        if (!$isRootSlashTerm) {
+            $root .= preg_match('/^[A-Z]:\\\\/i', $root) || substr($root, 0, 2) === '\\\\' ? '\\' : '/';
+        }
+
+        return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+    }
+}
