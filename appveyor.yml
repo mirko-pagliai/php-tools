@@ -27,4 +27,4 @@ install:
 
 test_script:
   - cd C:\projects\php-tools
-  - vendor\bin\phpunit.bat
+  - vendor\bin\phpunit.bat --exclude-group=onlyUnix
