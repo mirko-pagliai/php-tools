@@ -20,6 +20,19 @@ use PHPUnit\Framework\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `is_positive()` global function
+     * @test
+     */
+    public function testIsPositive()
+    {
+        $this->assertTrue(is_positive(1));
+
+        foreach ([0, -1, 1.1] as $string) {
+            $this->assertFalse(is_positive($string));
+        }
+    }
+
+    /**
      * Test for `is_url()` global function
      * @test
      */
@@ -53,6 +66,26 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_win()` global function on Unix
+     * @group onlyUnix
+     * @test
+     */
+    public function testIsWinOnUnix()
+    {
+        $this->assertFalse(is_win());
+    }
+
+    /**
+     * Test for `is_win()` global function on Windows
+     * @group onlyWindows
+     * @test
+     */
+    public function testIsWinOnWin()
+    {
+        $this->assertTrue(is_win());
+    }
+
+    /**
      * Test for `rtr()` global function
      * @test
      */
@@ -66,5 +99,27 @@ class GlobalFunctionsTest extends TestCase
         ] as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
+    }
+
+    /**
+     * Test for `which()` global function on Unix
+     * @group onlyUnix
+     * @test
+     */
+    public function testWhichOnUnix()
+    {
+        $this->assertEquals('/bin/cat', which('cat'));
+        $this->assertNull(which('noExistingBin'));
+    }
+
+    /**
+     * Test for `which()` global function on Windows
+     * @group onlyWindows
+     * @test
+     */
+    public function testWhichOnWindws()
+    {
+        $this->assertEquals('"C:\Program Files\Git\usr\bin\cat.exe"', which('cat'));
+        $this->assertNull(which('noExistingBin'));
     }
 }
