@@ -12,6 +12,28 @@ You can install the package via composer:
 
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
+## Global functions
+- `is_json()` Checks if a string is JSON
+- `is_positive()` Checks if a string is a positive number
+- `is_url()` Checks if a string is a valid url
+- `is_win()` Returns `true` if the environment is Windows
+- `rtr()` Returns the relative path (to the `ROOT` constant) of an absolute path (this method requires the `ROOT` constant has been defined)
+- `which()` Executes the `which` command and shows the full path of (shell) commands
+
+## Classes and methods
+### ReflectionTrait
+`ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
+- invoke protected or private methods;
+- set/get protected or private properties.
+
+Available methods are:
+
+    invokeMethod(&$object, $methodName, array $parameters = [])
+    getProperty(&$object, $propertyName)
+    setProperty(&$object, $propertyName, $propertyValue)
+    
+This trait comes to test protected and private methods and properties with
+PHPUnit.
 ## Tests
 Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is
 necessary because some commands to be executed in the terminal are only valid
