@@ -10,6 +10,24 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!function_exists('is_json')) {
+    /**
+     * Checks if a string is JSON
+     * @param string $string String
+     * @return bool
+     */
+    function is_json($string)
+    {
+        if (!is_string($string)) {
+            return false;
+        }
+
+        json_decode($string);
+
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+}
+
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number

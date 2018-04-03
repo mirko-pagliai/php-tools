@@ -20,6 +20,23 @@ use PHPUnit\Framework\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `isJson()` global function
+     * @test
+     */
+    public function testIsJson()
+    {
+        $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
+
+        foreach ([
+            ['alfa' => 'first', 'beta' => 'second'],
+            (object)['alfa' => 'first', 'beta' => 'second'],
+            'this is a no json string',
+        ] as $string) {
+            $this->assertFalse(is_json($string));
+        }
+    }
+
+    /**
      * Test for `is_positive()` global function
      * @test
      */
