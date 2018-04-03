@@ -42,13 +42,13 @@ if (!function_exists('is_positive')) {
 
 if (!function_exists('is_url')) {
     /**
-     * Checks whether a url is valid
-     * @param string $url Url
+     * Checks if a string is a valid url
+     * @param string $string String
      * @return bool
      */
-    function is_url($url)
+    function is_url($string)
     {
-        return (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $url);
+        return (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $string);
     }
 }
 
