@@ -37,6 +37,17 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `get_class_short_name()` global function
+     * @test
+     */
+    public function testGetClassShortName()
+    {
+        foreach (['\App\ExampleClass', 'App\ExampleClass'] as $class) {
+            $this->assertEquals('ExampleClass', get_class_short_name($class));
+        }
+    }
+
+    /**
      * Test for `isJson()` global function
      * @test
      */

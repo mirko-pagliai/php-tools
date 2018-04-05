@@ -31,6 +31,19 @@ if (!function_exists('get_child_methods')) {
     }
 }
 
+if (!function_exists('get_class_short_name')) {
+    /**
+     * Gets the short name of the class, the part without the namespace
+     * @param string $class Name of the class
+     * @return string
+     * @since 1.0.2
+     */
+    function get_class_short_name($class)
+    {
+        return (new \ReflectionClass($class))->getShortName();
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON
