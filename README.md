@@ -18,7 +18,7 @@ You can install the package via composer:
 - `is_positive(string)` Checks if a string is a positive number
 - `is_url(string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
-- `rtr()` Returns the relative path (to the `ROOT` constant) of an absolute path (this method requires the `ROOT` constant has been defined)
+- `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
 ## Classes and methods
