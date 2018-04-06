@@ -13,12 +13,15 @@
 namespace Tools\Test;
 
 use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
+    use TestCaseTrait;
+
     /**
      * Test for `get_child_methods()` global function
      * @test
@@ -29,11 +32,100 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals($expected, get_child_methods('\App\ExampleChildClass'));
 
         //This class has no parent, so the result is similar to the `get_class_methods()` method
-        $expected = get_class_methods('\App\ExampleClass');
-        $this->assertEquals($expected, get_child_methods('\App\ExampleClass'));
+        $this->assertSameMethods('\App\ExampleClass', '\App\ExampleClass');
 
         //No existing class
         $this->assertNull(get_child_methods('\NoExistingClass'));
+    }
+
+    /**
+     * Test for `get_class_short_name()` global function
+     * @test
+     */
+    public function testGetClassShortName()
+    {
+        foreach (['\App\ExampleClass', 'App\ExampleClass'] as $class) {
+            $this->assertEquals('ExampleClass', get_class_short_name($class));
+        }
+    }
+
+    /**
+     * Test for `get_extension()` global function
+     * @test
+     */
+    public function testGetExtension()
+    {
+        $extensions = [
+            'backup.sql' => 'sql',
+            'backup.sql.bz2' => 'sql.bz2',
+            'backup.sql.gz' => 'sql.gz',
+            'text.txt' => 'txt',
+            'TEXT.TXT' => 'txt',
+            'noExtension' => null,
+            'txt' => null,
+            '.txt' => null,
+            '.hiddenFile' => null,
+        ];
+
+        foreach ($extensions as $filename => $expectedExtension) {
+            $this->assertEquals($expectedExtension, get_extension($filename));
+        }
+
+        $filenames = [
+            'backup.sql.gz',
+            '/backup.sql.gz',
+            '/full/path/to/backup.sql.gz',
+            'relative/path/to/backup.sql.gz',
+            ROOT . 'backup.sql.gz',
+            '/withDot./backup.sql.gz',
+            'C:\backup.sql.gz',
+            'C:\subdir\backup.sql.gz',
+            'C:\withDot.\backup.sql.gz',
+        ];
+
+        foreach ($filenames as $filename) {
+            $this->assertEquals('sql.gz', get_extension($filename));
+        }
+
+        $urls = [
+            'http://example.com/backup.sql.gz',
+            'http://example.com/backup.sql.gz#fragment',
+            'http://example.com/backup.sql.gz?',
+            'http://example.com/backup.sql.gz?name=value',
+        ];
+
+        foreach ($urls as $url) {
+            $this->assertEquals('sql.gz', get_extension($url));
+        }
+    }
+
+    /**
+     * Test for `get_hostname_from_url()` global function
+     * @test
+     */
+    public function testGetHostnameFromUrl()
+    {
+        foreach (['http://127.0.0.1', 'http://127.0.0.1/'] as $url) {
+            $this->assertEquals('127.0.0.1', get_hostname_from_url($url));
+        }
+
+        foreach (['http://localhost', 'http://localhost/'] as $url) {
+            $this->assertEquals('localhost', get_hostname_from_url($url));
+        }
+
+        foreach ([
+            '//google.com',
+            'http://google.com',
+            'http://google.com/',
+            'http://www.google.com',
+            'https://google.com',
+            'http://google.com/page',
+            'http://google.com/page?name=value',
+        ] as $url) {
+            $this->assertEquals('google.com', get_hostname_from_url($url));
+        }
+
+        $this->assertNull(get_hostname_from_url('page.html'));
     }
 
     /**

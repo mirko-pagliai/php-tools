@@ -31,6 +31,71 @@ if (!function_exists('get_child_methods')) {
     }
 }
 
+if (!function_exists('get_class_short_name')) {
+    /**
+     * Gets the short name of the class, the part without the namespace
+     * @param string $class Name of the class
+     * @return string
+     * @since 1.0.2
+     */
+    function get_class_short_name($class)
+    {
+        return (new \ReflectionClass($class))->getShortName();
+    }
+}
+
+if (!function_exists('get_extension')) {
+    /**
+     * Gets the extension from a filename.
+     *
+     * Unlike other functions, this removes query string and fragments (if the
+     *  filename is an url) and knows how to recognize extensions made up of
+     *  several parts (eg, `sql.gz`).
+     * @param string $filename Filename
+     * @return string|null
+     * @since 1.0.2
+     */
+    function get_extension($filename)
+    {
+        //Gets the basename and, if the filename is an url, removes query string
+        //  and fragments (#)
+        $filename = parse_url(basename($filename), PHP_URL_PATH);
+
+        //On Windows, finds the occurrence of the last slash
+        $pos = strripos($filename, '\\');
+        if ($pos !== false) {
+            $filename = substr($filename, $pos + 1);
+        }
+
+        //Finds the occurrence of the first point. The offset is 1, so as to
+        //  preserve the hidden files
+        $pos = strpos($filename, '.', 1);
+
+        return $pos === false ? null : strtolower(substr($filename, $pos + 1));
+    }
+}
+
+if (!function_exists('get_hostname_from_url')) {
+    /**
+     * Gets the host name from an url.
+     *
+     * It also removes the `www.` prefix
+     * @param string $url Url
+     * @return string|null
+     * @since 1.0.2
+     */
+    function get_hostname_from_url($url)
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (substr($host, 0, 4) === 'www.') {
+            return substr($host, 4);
+        }
+
+        return $host;
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON
