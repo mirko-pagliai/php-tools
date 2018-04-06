@@ -75,6 +75,27 @@ if (!function_exists('get_extension')) {
     }
 }
 
+if (!function_exists('get_hostname_from_url')) {
+    /**
+     * Gets the host name from an url.
+     *
+     * It also removes the `www.` prefix
+     * @param string $url Url
+     * @return string|null
+     * @since 1.0.2
+     */
+    function get_hostname_from_url($url)
+    {
+        $host = parse_url($url, PHP_URL_HOST);
+
+        if (substr($host, 0, 4) === 'www.') {
+            return substr($host, 4);
+        }
+
+        return $host;
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON
