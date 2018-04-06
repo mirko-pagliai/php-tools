@@ -35,6 +35,17 @@ Available methods are:
     
 This trait comes to test protected and private methods and properties with
 PHPUnit.
+
+### TestCaseTrait
+`TestCaseTrait` is a trait that provides some assertion methods.
+
+Available methods are:
+
+    assertFileExtension($expectedExtension, $filename, $message = '')
+    assertFileMime($filename, $expectedMime, $message = '')
+    assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
+    assertSameMethods($firstClass, $secondClass, $message = '')
+
 ## Tests
 Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is
 necessary because some commands to be executed in the terminal are only valid

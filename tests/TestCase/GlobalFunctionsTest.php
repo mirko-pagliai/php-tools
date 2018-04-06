@@ -13,12 +13,15 @@
 namespace Tools\Test;
 
 use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
+    use TestCaseTrait;
+
     /**
      * Test for `get_child_methods()` global function
      * @test
@@ -29,8 +32,7 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals($expected, get_child_methods('\App\ExampleChildClass'));
 
         //This class has no parent, so the result is similar to the `get_class_methods()` method
-        $expected = get_class_methods('\App\ExampleClass');
-        $this->assertEquals($expected, get_child_methods('\App\ExampleClass'));
+        $this->assertSameMethods('\App\ExampleClass', '\App\ExampleClass');
 
         //No existing class
         $this->assertNull(get_child_methods('\NoExistingClass'));
