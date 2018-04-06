@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.0 branch
 ### 1.0.2
+* added `Tools\Apache` class with some methods;
 * added `Tools\TestSuite\TestCaseTrait` with some assertion methods;
 * added `get_class_short_name()` and `get_hostname_from_url()` global functions;
 * fixed `rtr()` global function. It can also use the `ROOT` environment variable.

@@ -22,6 +22,14 @@ You can install the package via composer:
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
 ## Classes and methods
+### Apache
+`Apache` is a class that provides some useful methods for interacting with Apache.
+
+Available methods are:
+    
+    is_enabled($module)
+    version()
+
 ### ReflectionTrait
 `ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
 - invoke protected or private methods;

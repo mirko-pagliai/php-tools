@@ -10,12 +10,16 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-require_once 'vendor/autoload.php';
+if (!function_exists('apache_get_modules')) {
+    function apache_get_modules()
+    {
+        return ['core', 'http_core', 'mod_so', 'sapi_apache2', 'mod_mime', 'mod_rewrite'];
+    }
+}
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once 'apache_functions.php';
-
-define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', dirname(__DIR__) . DS);
-define('COMPARING_FILES', ROOT . 'tests' . DS . 'comparing_files' . DS);
-define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
+if (!function_exists('apache_get_version')) {
+    function apache_get_version()
+    {
+        return 'Apache/1.3.29 (Unix) PHP/4.3.4';
+    }
+}
