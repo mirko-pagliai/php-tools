@@ -71,7 +71,7 @@ if (!function_exists('get_extension')) {
         //  preserve the hidden files
         $pos = strpos($filename, '.', 1);
 
-        return $pos === false ? null : substr($filename, $pos + 1);
+        return $pos === false ? null : strtolower(substr($filename, $pos + 1));
     }
 }
 

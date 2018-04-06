@@ -58,6 +58,7 @@ class GlobalFunctionsTest extends TestCase
             'backup.sql.bz2' => 'sql.bz2',
             'backup.sql.gz' => 'sql.gz',
             'text.txt' => 'txt',
+            'TEXT.TXT' => 'txt',
             'noExtension' => null,
             'txt' => null,
             '.txt' => null,
