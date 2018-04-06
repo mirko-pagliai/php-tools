@@ -44,6 +44,30 @@ if (!function_exists('get_class_short_name')) {
     }
 }
 
+if (!function_exists('get_extension')) {
+    /**
+     * Gets the extension from a filename.
+     *
+     * Unlike other functions, this removes query string and fragments (if the
+     *  filename is an url) and knows how to recognize extensions made up of
+     *  several parts (eg, `sql.gz`).
+     * @param string $filename Filename
+     * @return string|null
+     * @since 1.0.2
+     */
+    function get_extension($filename)
+    {
+        //If the filename is an url, this removes query string and fragments (#)
+        $filename = parse_url($filename, PHP_URL_PATH);
+
+        $filename = basename($filename);
+        $pos = strpos($filename, '.');
+
+        //Returns the string after the first occurrence of the dot character
+        return $pos === false ? null : substr($filename, $pos + 1);
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON

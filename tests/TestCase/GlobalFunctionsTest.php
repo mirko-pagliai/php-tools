@@ -48,6 +48,51 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `get_extension()` global function
+     * @test
+     */
+    public function testGetExtension()
+    {
+        $extensions = [
+            'backup.sql' => 'sql',
+            'backup.sql.bz2' => 'sql.bz2',
+            'backup.sql.gz' => 'sql.gz',
+            'text.txt' => 'txt',
+            'noExtension' => null,
+            'txt' => null,
+            '.txt' => 'txt',
+        ];
+
+        foreach ($extensions as $filename => $expectedExtension) {
+            $this->assertEquals($expectedExtension, get_extension($filename));
+        }
+
+        $filenames = [
+            'backup.sql.gz',
+            '/backup.sql.gz',
+            '/full/path/to/backup.sql.gz',
+            'relative/path/to/backup.sql.gz',
+            ROOT . 'backup.sql.gz',
+            'C:\backup.sql.gz',
+        ];
+
+        foreach ($filenames as $filename) {
+            $this->assertEquals('sql.gz', get_extension($filename));
+        }
+
+        $urls = [
+            'http://example.com/backup.sql.gz',
+            'http://example.com/backup.sql.gz#fragment',
+            'http://example.com/backup.sql.gz?',
+            'http://example.com/backup.sql.gz?name=value',
+        ];
+
+        foreach ($urls as $url) {
+            $this->assertEquals('sql.gz', get_extension($url));
+        }
+    }
+
+    /**
      * Test for `isJson()` global function
      * @test
      */
