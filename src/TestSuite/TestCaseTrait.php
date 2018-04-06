@@ -41,13 +41,6 @@ trait TestCaseTrait
      */
     protected function assertFileMime($filename, $expectedMime, $message = '')
     {
-        if (!version_compare(PHP_VERSION, '7.0', '>') &&
-            in_array($expectedMime, ['image/x-ms-bmp', 'image/vnd.adobe.photoshop'])) {
-            $this->markTestSkipped($message);
-
-            return;
-        }
-
         self::assertFileExists($filename, $message);
         self::assertEquals($expectedMime, mime_content_type($filename), $message);
     }
