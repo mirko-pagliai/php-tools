@@ -55,7 +55,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $filename = tempnam(TMP, 'test_file.txt');
+        //@codingStandardsIgnoreLine
+        $filename = @tempnam(TMP, 'test_file.txt');
         file_put_contents($filename, 'this is a test file');
 
         $this->assertFileMime($filename, 'text/plain');
