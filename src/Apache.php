@@ -23,7 +23,7 @@ class Apache
      * @param string $module Name of the module to be checked
      * @return bool
      */
-    public static function is_enabled($module)
+    public static function isEnabled($module)
     {
         return in_array($module, apache_get_modules());
     }

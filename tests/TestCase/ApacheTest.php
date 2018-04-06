@@ -21,13 +21,13 @@ use Tools\Apache;
 class ApacheTest extends TestCase
 {
     /**
-     * Tests for `is_enabled()` method
+     * Tests for `isEnabled()` method
      * @test
      */
     public function testIsEnabled()
     {
-        $this->assertTrue(Apache::is_enabled('mod_rewrite'));
-        $this->assertFalse(Apache::is_enabled('mod_noExisting'));
+        $this->assertTrue(Apache::isEnabled('mod_rewrite'));
+        $this->assertFalse(Apache::isEnabled('mod_noExisting'));
     }
 
     /**
