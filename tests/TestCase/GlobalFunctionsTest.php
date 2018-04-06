@@ -60,7 +60,8 @@ class GlobalFunctionsTest extends TestCase
             'text.txt' => 'txt',
             'noExtension' => null,
             'txt' => null,
-            '.txt' => 'txt',
+            '.txt' => null,
+            '.hiddenFile' => null,
         ];
 
         foreach ($extensions as $filename => $expectedExtension) {
@@ -73,7 +74,10 @@ class GlobalFunctionsTest extends TestCase
             '/full/path/to/backup.sql.gz',
             'relative/path/to/backup.sql.gz',
             ROOT . 'backup.sql.gz',
+            '/withDot./backup.sql.gz',
             'C:\backup.sql.gz',
+            'C:\subdir\backup.sql.gz',
+            'C:\withDot.\backup.sql.gz',
         ];
 
         foreach ($filenames as $filename) {

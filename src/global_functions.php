@@ -57,13 +57,20 @@ if (!function_exists('get_extension')) {
      */
     function get_extension($filename)
     {
-        //If the filename is an url, this removes query string and fragments (#)
-        $filename = parse_url($filename, PHP_URL_PATH);
+        //Gets the basename and, if the filename is an url, removes query string
+        //  and fragments (#)
+        $filename = parse_url(basename($filename), PHP_URL_PATH);
 
-        $filename = basename($filename);
-        $pos = strpos($filename, '.');
+        //On Windows, finds the occurrence of the last slash
+        $pos = strripos($filename, '\\');
+        if ($pos !== false) {
+            $filename = substr($filename, $pos + 1);
+        }
 
-        //Returns the string after the first occurrence of the dot character
+        //Finds the occurrence of the first point. The offset is 1, so as to
+        //  preserve the hidden files
+        $pos = strpos($filename, '.', 1);
+
         return $pos === false ? null : substr($filename, $pos + 1);
     }
 }
