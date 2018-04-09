@@ -19,6 +19,20 @@ namespace Tools\TestSuite;
 trait TestCaseTrait
 {
     /**
+     * Asserts that the array keys are equal to `$expected`
+     * @param array $expectedKeys Expected keys
+     * @param array $array Array to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     */
+    protected static function assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    {
+        self::assertIsArray($array);
+        self::assertEquals($expectedKeys, array_keys($array), $message);
+    }
+
+    /**
      * Asserts for the extension of a file
      * @param string $expectedExtension Expected extension
      * @param string $filename Path to the tested file
@@ -61,6 +75,42 @@ trait TestCaseTrait
         list($width, $height) = getimagesize($filename);
         self::assertEquals($width, $expectedWidth);
         self::assertEquals($height, $expectedHeight);
+    }
+
+    /**
+     * Asserts that a variable is an array
+     * @param mixed $var Variable to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     */
+    protected static function assertIsArray($var, $message = '')
+    {
+        self::assertTrue(is_array($var), $message);
+    }
+
+    /**
+     * Asserts that a variable is an object
+     * @param mixed $var Variable to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     */
+    protected static function assertIsObject($var, $message = '')
+    {
+        self::assertTrue(is_object($var), $message);
+    }
+
+    /**
+     * Asserts that a variable is a string
+     * @param mixed $var Variable to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     */
+    protected static function assertIsString($var, $message = '')
+    {
+        self::assertTrue(is_string($var), $message);
     }
 
     /**

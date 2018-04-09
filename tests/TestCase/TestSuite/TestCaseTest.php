@@ -24,6 +24,16 @@ class TestCaseTest extends TestCase
     use TestCaseTrait;
 
     /**
+     * Tests for `assertArrayKeysEqual()` method
+     * @test
+     */
+    public function testAssertArrayKeysEqual()
+    {
+        $array = ['key1' => 'value1', 'key2' => 'value2'];
+        $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+    }
+
+    /**
      * Test for `assertFileExtension()` method
      * @ŧest
      */
@@ -63,6 +73,37 @@ class TestCaseTest extends TestCase
 
         //@codingStandardsIgnoreLine
         @unlink($filename);
+    }
+
+    /**
+     * Tests for `assertIsArray()` method
+     * @test
+     */
+    public function testAssertIsArray()
+    {
+        $this->assertIsArray([]);
+        $this->assertIsArray([true]);
+        $this->assertIsArray((array)'string');
+    }
+
+    /**
+     * Tests for `assertIsObject()` method
+     * @test
+     */
+    public function testAssertIsObject()
+    {
+        $this->assertIsObject(new \stdClass);
+        $this->assertIsObject((object)[]);
+    }
+
+    /**
+     * Tests for `assertIsString()` method
+     * @test
+     */
+    public function testAssertIsString()
+    {
+        $this->assertIsString('string');
+        $this->assertIsString(serialize(['serialized_array']));
     }
 
     /**
