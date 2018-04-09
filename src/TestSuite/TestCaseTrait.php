@@ -39,7 +39,7 @@ trait TestCaseTrait
      *  generated message
      * @return void
      */
-    protected function assertFileMime($filename, $expectedMime, $message = '')
+    protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
         self::assertFileExists($filename, $message);
         self::assertEquals($expectedMime, mime_content_type($filename), $message);
