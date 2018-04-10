@@ -41,7 +41,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileExists()
     {
-        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
+        //@codingStandardsIgnoreLine
+        $files = [@tempnam(TMP, 'foo'), @tempnam(TMP, 'foo2')];
 
         //As string, array and `Traversable`
         $this->assertFileExists($files[0]);
@@ -86,7 +87,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $filename = tempnam(TMP, 'test_file.txt');
+        //@codingStandardsIgnoreLine
+        $filename = @tempnam(TMP, 'test_file.txt');
         file_put_contents($filename, 'this is a test file');
 
         $this->assertFileMime($filename, 'text/plain');
