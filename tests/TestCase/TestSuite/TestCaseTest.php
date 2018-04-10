@@ -13,7 +13,9 @@
 namespace Tools\Test\TestSuite;
 
 use App\ExampleClass;
+use App\ExampleOfTraversable;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Tools\TestSuite\TestCaseTrait;
 
 /**
@@ -31,6 +33,25 @@ class TestCaseTest extends TestCase
     {
         $array = ['key1' => 'value1', 'key2' => 'value2'];
         $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+    }
+
+    /**
+     * Tests for `assertFileExists()` method
+     * @test
+     */
+    public function testAssertFileExists()
+    {
+        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
+
+        //As string, array and `Traversable`
+        $this->assertFileExists($files[0]);
+        $this->assertFileExists($files);
+        $this->assertFileExists(new ExampleOfTraversable($files));
+
+        //@codingStandardsIgnoreStart
+        @unlink($files[0]);
+        @unlink($files[1]);
+        //@codingStandardsIgnoreEnd
     }
 
     /**
@@ -65,14 +86,38 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        //@codingStandardsIgnoreLine
-        $filename = @tempnam(TMP, 'test_file.txt');
+        $filename = tempnam(TMP, 'test_file.txt');
         file_put_contents($filename, 'this is a test file');
 
         $this->assertFileMime($filename, 'text/plain');
 
         //@codingStandardsIgnoreLine
         @unlink($filename);
+    }
+
+    /**
+     * Tests for `assertFileNotExists()` method
+     * @test
+     */
+    public function testAssertFileNotExists()
+    {
+        $files = [TMP . 'noExisting1', TMP . 'noExisting2'];
+
+        //As string, array and `Traversable`
+        $this->assertFileNotExists($files[0]);
+        $this->assertFileNotExists($files);
+        $this->assertFileNotExists(new ExampleOfTraversable($files));
+    }
+
+    /**
+     * Tests for `assertInstanceOf` method
+     * @test
+     */
+    public function testAssertInstanceOf()
+    {
+        $object = new stdClass;
+        $this->assertInstanceOf('stdClass', $object);
+        $this->assertInstanceOf('stdClass', [$object, &$object]);
     }
 
     /**
@@ -104,6 +149,21 @@ class TestCaseTest extends TestCase
     {
         $this->assertIsString('string');
         $this->assertIsString(serialize(['serialized_array']));
+    }
+
+    /**
+     * Tests for `assertObjectPropertiesEqual()` method
+     * @test
+     */
+    public function testAssertObjectPropertiesEqual()
+    {
+        $array = ['first' => 'one', 'second' => 'two'];
+        $object = new stdClass;
+        $object->first = 'first value';
+        $object->second = 'second value';
+
+        $this->assertObjectPropertiesEqual(['first', 'second'], $object);
+        $this->assertObjectPropertiesEqual(['first', 'second'], (object)$array);
     }
 
     /**
