@@ -159,6 +159,32 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_slash_term()` global function
+     * @test
+     */
+    public function testIsSlashTerm()
+    {
+        foreach ([
+            'path/',
+            '/path/',
+            'path\\',
+            '\\path\\',
+        ] as $path) {
+            $this->assertTrue(is_slash_term($path));
+        }
+
+        foreach ([
+            'path',
+            '/path',
+            '\\path',
+            'path.ext',
+            '/path.ext',
+        ] as $path) {
+            $this->assertFalse(is_slash_term($path));
+        }
+    }
+
+    /**
      * Test for `is_url()` global function
      * @test
      */

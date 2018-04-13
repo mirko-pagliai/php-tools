@@ -126,6 +126,18 @@ if (!function_exists('is_positive')) {
     }
 }
 
+if (!function_exists('is_slash_term')) {
+    /**
+     * Checks if a path ends in a slash (i.e. is slash-terminated).
+     * @param string $path Path
+     * @return bool
+     */
+    function is_slash_term($path)
+    {
+        return in_array($path[strlen($path) - 1], ['/', '\\']);
+    }
+}
+
 if (!function_exists('is_url')) {
     /**
      * Checks if a string is a valid url
@@ -162,9 +174,8 @@ if (!function_exists('rtr')) {
     {
         $root = getenv('ROOT') ?: ROOT;
         $rootLength = strlen($root);
-        $isRootSlashTerm = in_array($root[$rootLength - 1], ['/', '\\']);
 
-        if (!$isRootSlashTerm) {
+        if (!is_slash_term($root)) {
             $root .= preg_match('/^[A-Z]:\\\\/i', $root) || substr($root, 0, 2) === '\\\\' ? '\\' : '/';
             $rootLength = strlen($root);
         }

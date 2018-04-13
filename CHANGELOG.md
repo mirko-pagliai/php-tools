@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.3
+* added `is_slash_term()` global function.
+
 ### 1.0.2
 * added `Tools\Apache` class with some methods;
 * added `Tools\TestSuite\TestCaseTrait` with some assertion methods;
