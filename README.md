@@ -61,6 +61,7 @@ Available methods are:
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     assertInstanceOf($expectedInstance, $object, $message = '')
     assertIsArray($var, $message = '')
+    assertIsInt($var, $message = '')
     assertIsObject($var, $message = '')
     assertIsString($var, $message = '')
     assertSameMethods($firstClass, $secondClass, $message = '')

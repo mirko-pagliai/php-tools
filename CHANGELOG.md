@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.0 branch
 ### 1.0.4
-* added `is_external_url()` global function.
+* added `is_external_url()` global function;
+* added `assertIsInt()` assertion method.
 
 ### 1.0.3
 * added `clean_url()` and `is_slash_term()` global functions.
