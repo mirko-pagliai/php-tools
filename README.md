@@ -13,6 +13,7 @@ You can install the package via composer:
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
 ## Global functions
+- `clean_url($url)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_json($string)` Checks if a string is JSON
 - `is_positive(string)` Checks if a string is a positive number
@@ -50,9 +51,17 @@ PHPUnit.
 
 Available methods are:
 
+    assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    assertFileExists($filename, $message = '')
     assertFileExtension($expectedExtension, $filename, $message = '')
     assertFileMime($filename, $expectedMime, $message = '')
+    assertFileNotExists($filename, $message = '')
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
+    assertInstanceOf($expectedInstance, $object, $message = '')
+    assertIsArray($var, $message = '')
+    assertIsObject($var, $message = '')
+    assertIsString($var, $message = '')
     assertSameMethods($firstClass, $secondClass, $message = '')
 
 ## Tests
