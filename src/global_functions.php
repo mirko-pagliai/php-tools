@@ -128,7 +128,7 @@ if (!function_exists('is_positive')) {
 
 if (!function_exists('is_slash_term')) {
     /**
-     * Checks if a path ends in a slash (i.e. is slash-terminated).
+     * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
      */
