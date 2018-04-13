@@ -158,6 +158,39 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_external_url()` global function
+     * @test
+     */
+    public function testIsExternalUrl()
+    {
+        $hostname = 'google.com';
+
+        foreach ([
+            '//google.com',
+            '//google.com/',
+            'http://google.com',
+            'http://google.com/',
+            'http://www.google.com',
+            'http://www.google.com/',
+            'http://www.google.com/page.html',
+            'https://google.com',
+            'relative.html',
+            '/relative.html',
+        ] as $url) {
+            $this->assertFalse(is_external_url($url, $hostname));
+        }
+
+        foreach ([
+            '//site.com',
+            'http://site.com',
+            'http://www.site.com',
+            'http://subdomain.google.com',
+        ] as $url) {
+            $this->assertTrue(is_external_url($url, $hostname));
+        }
+    }
+
+    /**
      * Test for `isJson()` global function
      * @test
      */
