@@ -23,6 +23,35 @@ class GlobalFunctionsTest extends TestCase
     use TestCaseTrait;
 
     /**
+     * Test for `clean_url()` global function
+     * @test
+     */
+    public function testCleanUrl()
+    {
+        foreach ([
+            'http://mysite',
+            'http://mysite/',
+            'http://mysite#fragment',
+            'http://mysite/#fragment',
+        ] as $url) {
+            $this->assertEquals('http://mysite', clean_url($url));
+        }
+
+        foreach ([
+            'relative',
+            '/relative',
+            'relative/',
+            '/relative/',
+            'relative#fragment',
+            'relative/#fragment',
+            '/relative#fragment',
+            '/relative/#fragment',
+        ] as $url) {
+            $this->assertEquals('relative', clean_url($url));
+        }
+    }
+
+    /**
      * Test for `get_child_methods()` global function
      * @test
      */
