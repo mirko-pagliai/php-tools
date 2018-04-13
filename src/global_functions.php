@@ -10,6 +10,20 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!function_exists('clean_url')) {
+    /**
+     * Cleans an url, removing all unnecessary parts, as fragment (#) and
+     *  trailing slash
+     * @param string $url Url
+     * @return string
+     * @since 1.0.3
+     */
+    function clean_url($url)
+    {
+        return trim(preg_replace('/(\#.*)$/', '', $url), '/');
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -131,6 +145,7 @@ if (!function_exists('is_slash_term')) {
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
+     * @since 1.0.3
      */
     function is_slash_term($path)
     {
