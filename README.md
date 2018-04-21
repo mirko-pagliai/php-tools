@@ -24,6 +24,12 @@ You can install the package via composer:
 - `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
+## Safe functions
+- `safe_mkdir()` Safe alias for `mkdir()` function
+- `safe_rmdir()` Safe alias for `rmdir()` function
+- `safe_symlink()` Safe alias for `symlink()` function
+- `safe_unlink()` Safe alias for `unlink()` function
+
 ## Classes and methods
 ### Apache
 `Apache` is a class that provides some useful methods for interacting with Apache.
