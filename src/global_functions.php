@@ -110,6 +110,25 @@ if (!function_exists('get_hostname_from_url')) {
     }
 }
 
+if (!function_exists('is_external_url')) {
+    /**
+     * Checks if an url is external.
+     *
+     * The check is performed by comparing the URL with the passed hostname.
+     * @param string $url Url to check
+     * @param string $hostname Hostname for the comparison
+     * @return bool
+     * @since 1.0.4
+     */
+    function is_external_url($url, $hostname)
+    {
+        $currentHost = get_hostname_from_url($url);
+
+        //Url with the same host and relative url are not external
+        return $currentHost && strcasecmp($currentHost, $hostname) !== 0;
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON

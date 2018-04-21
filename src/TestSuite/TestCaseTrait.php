@@ -161,6 +161,19 @@ trait TestCaseTrait
     }
 
     /**
+     * Asserts that a variable is an integer
+     * @param mixed $var Variable to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.0.4
+     */
+    protected static function assertIsInt($var, $message = '')
+    {
+        self::assertTrue(is_int($var), $message);
+    }
+
+    /**
      * Asserts that a variable is an object
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the

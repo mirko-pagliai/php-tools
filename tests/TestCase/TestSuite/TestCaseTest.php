@@ -134,6 +134,15 @@ class TestCaseTest extends TestCase
     }
 
     /**
+     * Tests for `assertIsInt()` method
+     * @test
+     */
+    public function testAssertIsInt()
+    {
+        $this->assertIsInt(1);
+    }
+
+    /**
      * Tests for `assertIsObject()` method
      * @test
      */
