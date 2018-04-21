@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.5
+* added `safe_mkdir()`, `safe_rmdir()`, `safe_symlink()` and `safe_unlink()`
+    safe aliases.
+
 ### 1.0.4
 * added `is_external_url()` global function;
 * added `assertIsInt()` assertion method.

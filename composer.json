@@ -20,7 +20,8 @@
             "Tools\\": "src"
         },
         "files": [
-            "src/global_functions.php"
+            "src/global_functions.php",
+            "src/safe_functions.php"
         ]
     },
     "autoload-dev": {
