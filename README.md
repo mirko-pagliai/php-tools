@@ -25,10 +25,12 @@ You can install the package via composer:
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
 ## Safe functions
+- `safe_copy()` Safe alias for `copy()` function
 - `safe_mkdir()` Safe alias for `mkdir()` function
 - `safe_rmdir()` Safe alias for `rmdir()` function
 - `safe_symlink()` Safe alias for `symlink()` function
 - `safe_unlink()` Safe alias for `unlink()` function
+- `safe_unserialize()` Safe alias for `unserialize()` function
 
 ## Classes and methods
 ### Apache

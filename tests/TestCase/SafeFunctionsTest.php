@@ -24,6 +24,24 @@ class SafeFunctionsTest extends TestCase
     use TestCaseTrait;
 
     /**
+     * Test for `safe_copy()` safe function
+     * @test
+     */
+    public function testSafeCopy()
+    {
+        $source = tempnam(TMP, 'file');
+        $dest = TMP . 'copy_' . md5(time());
+        file_put_contents($source, null);
+        $this->assertFileNotExists($dest);
+
+        $this->assertTrue(safe_copy($source, $dest));
+        $this->assertFileExists($dest);
+
+        safe_unlink($source);
+        safe_unlink($dest);
+    }
+
+    /**
      * Test for `safe_mkdir()` safe function
      * @test
      */
@@ -81,5 +99,18 @@ class SafeFunctionsTest extends TestCase
 
         $this->assertTrue(safe_unlink($file));
         $this->assertFileNotExists($file);
+    }
+
+    /**
+     * Test for `safe_unserialize()` safe function
+     * @test
+     */
+    public function testSafeUnserialize()
+    {
+        $expected = ['test'];
+        $str = serialize($expected);
+        $this->assertEquals($expected, safe_unserialize($str));
+
+        $this->assertFalse(safe_unserialize('invalidString'));
     }
 }
