@@ -24,6 +24,24 @@ class SafeFunctionsTest extends TestCase
     use TestCaseTrait;
 
     /**
+     * Test for `safe_copy()` safe function
+     * @test
+     */
+    public function testSafeCopy()
+    {
+        $source = TMP . 'dir_' . md5(time());
+        $dest = TMP . 'dir_' . md5(time() + 1);
+        file_put_contents($source, null);
+        $this->assertFileNotExists($dest);
+
+        $this->assertTrue(safe_copy($source, $dest));
+        $this->assertFileExists($dest);
+
+        safe_unlink($source);
+        safe_unlink($dest);
+    }
+
+    /**
      * Test for `safe_mkdir()` safe function
      * @test
      */

@@ -10,6 +10,23 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!function_exists('safe_copy')) {
+    /**
+     * Safe alias for `copy()` function
+     * @param string $source Path to the source file
+     * @param string $dest The destination path. If dest is a URL, the copy
+     *  operation may fail if the wrapper does not support overwriting of
+     *  existing files
+     * @return bool
+     * @since 1.0.5
+     */
+    function safe_copy($source, $dest)
+    {
+        //@codingStandardsIgnoreLine
+        return @copy($source, $dest);
+    }
+}
+
 if (!function_exists('safe_mkdir')) {
     /**
      * Safe alias for `mkdir()` function
