@@ -29,8 +29,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeCopy()
     {
-        $source = TMP . 'dir_' . md5(time());
-        $dest = TMP . 'dir_' . md5(time() + 1);
+        $source = tempnam(TMP, 'file');
+        $dest = TMP . 'copy_' . md5(time());
         file_put_contents($source, null);
         $this->assertFileNotExists($dest);
 
