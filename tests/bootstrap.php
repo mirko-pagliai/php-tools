@@ -19,3 +19,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
 define('COMPARING_FILES', ROOT . 'tests' . DS . 'comparing_files' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
+
+//@codingStandardsIgnoreLine
+@mkdir(TMP, 0777, true);
