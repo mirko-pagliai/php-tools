@@ -100,4 +100,17 @@ class SafeFunctionsTest extends TestCase
         $this->assertTrue(safe_unlink($file));
         $this->assertFileNotExists($file);
     }
+
+    /**
+     * Test for `safe_unserialize()` safe function
+     * @test
+     */
+    public function testSafeUnserialize()
+    {
+        $expected = ['test'];
+        $str = serialize($expected);
+        $this->assertEquals($expected, safe_unserialize($str));
+
+        $this->assertFalse(safe_unserialize('invalidString'));
+    }
 }

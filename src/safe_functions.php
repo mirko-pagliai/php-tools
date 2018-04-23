@@ -83,3 +83,19 @@ if (!function_exists('safe_unlink')) {
         return @unlink($filename);
     }
 }
+
+if (!function_exists('safe_unserialize')) {
+    /**
+     * Safe alias for `unserialize()` function
+     * @param string $str The serialized string. If the variable being
+     *  unserialized is an object, after successfully reconstructing the object
+     *  PHP will automatically attempt to call the __wakeup() member function
+     *  (if it exists)
+     * @return bool
+     * @since 1.0.5
+     */
+    function safe_unserialize($str)
+    {
+        return @unserialize($str);
+    }
+}

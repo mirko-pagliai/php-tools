@@ -30,6 +30,7 @@ You can install the package via composer:
 - `safe_rmdir()` Safe alias for `rmdir()` function
 - `safe_symlink()` Safe alias for `symlink()` function
 - `safe_unlink()` Safe alias for `unlink()` function
+- `safe_unserialize()` Safe alias for `unserialize()` function
 
 ## Classes and methods
 ### Apache
