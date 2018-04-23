@@ -96,6 +96,7 @@ if (!function_exists('safe_unserialize')) {
      */
     function safe_unserialize($str)
     {
+        //@codingStandardsIgnoreLine
         return @unserialize($str);
     }
 }
