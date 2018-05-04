@@ -14,7 +14,6 @@ namespace Tools\Test\TestSuite;
 
 use App\ExampleClass;
 use App\ExampleOfTraversable;
-use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\TestSuite\TestCaseTrait;
@@ -144,21 +143,23 @@ class TestCaseTest extends TestCase
     }
 
     /**
-     * Tests for `assertIsArrayNotEmpty()` method with failures
+     * Tests for `assertIsArrayNotEmpty()` method, failure with empty array
+     * @expectedException PHPUnit\Framework\AssertionFailedError
      * @test
      */
-    public function testAssertIsArrayNotEmptyFailure()
+    public function testAssertIsArrayNotEmptyFailureForEmptyArray()
     {
+        $this->assertIsArrayNotEmpty([]);
+    }
 
-        foreach ([[], 'string'] as $invalidValue) {
-            try {
-                $this->assertIsArrayNotEmpty($invalidValue);
-            } catch (AssertionFailedError $e) {
-                continue;
-            }
-
-            $this->fail('AssertionFailedError was not raised');
-        }
+    /**
+     * Tests for `assertIsArrayNotEmpty()` method, failure with a no array
+     * @expectedException PHPUnit\Framework\AssertionFailedError
+     * @test
+     */
+    public function testAssertIsArrayNotEmptyFailureForNoArray()
+    {
+        $this->assertIsArrayNotEmpty('string');
     }
 
     /**
