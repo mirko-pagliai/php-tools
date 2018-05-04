@@ -161,6 +161,20 @@ trait TestCaseTrait
     }
 
     /**
+     * Asserts that a variable is an array and is not empty
+     * @param mixed $var Variable to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.0.6
+     */
+    protected static function assertIsArrayNotEmpty($var, $message = '')
+    {
+        self::assertIsArray($var, $message);
+        self::assertNotEmpty($var, $message);
+    }
+
+    /**
      * Asserts that a variable is an integer
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the

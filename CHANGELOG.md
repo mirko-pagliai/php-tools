@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.6
+* added `assertIsArrayNotEmpty()` assertion method.
+
 ### 1.0.5
 * added `safe_copy()` and `safe_unserialized()` safe aliases.
 
