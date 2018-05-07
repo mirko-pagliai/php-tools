@@ -22,3 +22,7 @@ define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
 //@codingStandardsIgnoreLine
 @mkdir(TMP, 0777, true);
+
+if (class_exists('PHPUnit_Framework_ExpectationFailedException')) {
+    class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\AssertionFailedError');
+}
