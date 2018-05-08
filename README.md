@@ -24,6 +24,11 @@ You can install the package via composer:
 - `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
+## "Or fail" functions
+- `file_exists_or_fail($filename)` - Checks whether a file or directory exists and throws an exception if the file does not exist
+- `is_readable_or_fail($filename)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
+- `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
+
 ## Safe functions
 - `safe_copy()` Safe alias for `copy()` function
 - `safe_mkdir()` Safe alias for `mkdir()` function
