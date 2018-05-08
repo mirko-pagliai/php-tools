@@ -3,7 +3,7 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://api.travis-ci.org/mirko-pagliai/php-tools.svg?branch=master)](https://travis-ci.org/mirko-pagliai/php-tools)
 [![Build status](https://ci.appveyor.com/api/projects/status/dexhrwff7w814wt3?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/php-tools)
-[![Coverage Status](https://img.shields.io/codecov/c/github/mirko-pagliai/php-tools.svg?style=flat-square)](https://codecov.io/github/mirko-pagliai/php-tools)
+[![codecov](https://codecov.io/gh/mirko-pagliai/php-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/php-tools)
 
 *php-tools* adds some useful global functions and some classes and methods.
 
@@ -13,14 +13,39 @@ You can install the package via composer:
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
 ## Global functions
-- `is_json()` Checks if a string is JSON
-- `is_positive()` Checks if a string is a positive number
-- `is_url()` Checks if a string is a valid url
+- `clean_url($url)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
+- `is_external_url($url, $hostname)` Checks if an url is external. The check is performed by comparing the URL with the passed hostname
+- `is_json($string)` Checks if a string is JSON
+- `is_positive(string)` Checks if a string is a positive number
+- `is_slash_term($path)` Checks if a path ends in a slash (i.e. is slash-terminated)
+- `is_url(string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
-- `rtr()` Returns the relative path (to the `ROOT` constant) of an absolute path (this method requires the `ROOT` constant has been defined)
-- `which()` Executes the `which` command and shows the full path of (shell) commands
+- `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
+- `which($command)` Executes the `which` command and shows the full path of (shell) commands
+
+## "Or fail" functions
+- `file_exists_or_fail($filename)` - Checks whether a file or directory exists and throws an exception if the file does not exist
+- `is_readable_or_fail($filename)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
+- `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
+
+## Safe functions
+- `safe_copy()` Safe alias for `copy()` function
+- `safe_mkdir()` Safe alias for `mkdir()` function
+- `safe_rmdir()` Safe alias for `rmdir()` function
+- `safe_symlink()` Safe alias for `symlink()` function
+- `safe_unlink()` Safe alias for `unlink()` function
+- `safe_unserialize()` Safe alias for `unserialize()` function
 
 ## Classes and methods
+### Apache
+`Apache` is a class that provides some useful methods for interacting with Apache.
+
+Available methods are:
+    
+    is_enabled($module)
+    version()
+
 ### ReflectionTrait
 `ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
 - invoke protected or private methods;
@@ -34,6 +59,27 @@ Available methods are:
     
 This trait comes to test protected and private methods and properties with
 PHPUnit.
+
+### TestCaseTrait
+`TestCaseTrait` is a trait that provides some assertion methods.
+
+Available methods are:
+
+    assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    assertFileExists($filename, $message = '')
+    assertFileExtension($expectedExtension, $filename, $message = '')
+    assertFileMime($filename, $expectedMime, $message = '')
+    assertFileNotExists($filename, $message = '')
+    assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
+    assertInstanceOf($expectedInstance, $object, $message = '')
+    assertIsArray($var, $message = '')
+    assertIsArrayNotEmpty($var, $message = '')
+    assertIsInt($var, $message = '')
+    assertIsObject($var, $message = '')
+    assertIsString($var, $message = '')
+    assertSameMethods($firstClass, $secondClass, $message = '')
+
 ## Tests
 Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is
 necessary because some commands to be executed in the terminal are only valid

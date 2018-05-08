@@ -13,12 +13,183 @@
 namespace Tools\Test;
 
 use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
+    use TestCaseTrait;
+
+    /**
+     * Test for `clean_url()` global function
+     * @test
+     */
+    public function testCleanUrl()
+    {
+        foreach ([
+            'http://mysite',
+            'http://mysite/',
+            'http://mysite#fragment',
+            'http://mysite/#fragment',
+        ] as $url) {
+            $this->assertEquals('http://mysite', clean_url($url));
+        }
+
+        foreach ([
+            'relative',
+            '/relative',
+            'relative/',
+            '/relative/',
+            'relative#fragment',
+            'relative/#fragment',
+            '/relative#fragment',
+            '/relative/#fragment',
+        ] as $url) {
+            $this->assertEquals('relative', clean_url($url));
+        }
+    }
+
+    /**
+     * Test for `get_child_methods()` global function
+     * @test
+     */
+    public function testGetChildMethods()
+    {
+        $expected = ['childMethod', 'anotherChildMethod'];
+        $this->assertEquals($expected, get_child_methods('\App\ExampleChildClass'));
+
+        //This class has no parent, so the result is similar to the `get_class_methods()` method
+        $this->assertSameMethods('\App\ExampleClass', '\App\ExampleClass');
+
+        //No existing class
+        $this->assertNull(get_child_methods('\NoExistingClass'));
+    }
+
+    /**
+     * Test for `get_class_short_name()` global function
+     * @test
+     */
+    public function testGetClassShortName()
+    {
+        foreach (['\App\ExampleClass', 'App\ExampleClass'] as $class) {
+            $this->assertEquals('ExampleClass', get_class_short_name($class));
+        }
+    }
+
+    /**
+     * Test for `get_extension()` global function
+     * @test
+     */
+    public function testGetExtension()
+    {
+        $extensions = [
+            'backup.sql' => 'sql',
+            'backup.sql.bz2' => 'sql.bz2',
+            'backup.sql.gz' => 'sql.gz',
+            'text.txt' => 'txt',
+            'TEXT.TXT' => 'txt',
+            'noExtension' => null,
+            'txt' => null,
+            '.txt' => null,
+            '.hiddenFile' => null,
+        ];
+
+        foreach ($extensions as $filename => $expectedExtension) {
+            $this->assertEquals($expectedExtension, get_extension($filename));
+        }
+
+        $filenames = [
+            'backup.sql.gz',
+            '/backup.sql.gz',
+            '/full/path/to/backup.sql.gz',
+            'relative/path/to/backup.sql.gz',
+            ROOT . 'backup.sql.gz',
+            '/withDot./backup.sql.gz',
+            'C:\backup.sql.gz',
+            'C:\subdir\backup.sql.gz',
+            'C:\withDot.\backup.sql.gz',
+        ];
+
+        foreach ($filenames as $filename) {
+            $this->assertEquals('sql.gz', get_extension($filename));
+        }
+
+        $urls = [
+            'http://example.com/backup.sql.gz',
+            'http://example.com/backup.sql.gz#fragment',
+            'http://example.com/backup.sql.gz?',
+            'http://example.com/backup.sql.gz?name=value',
+        ];
+
+        foreach ($urls as $url) {
+            $this->assertEquals('sql.gz', get_extension($url));
+        }
+    }
+
+    /**
+     * Test for `get_hostname_from_url()` global function
+     * @test
+     */
+    public function testGetHostnameFromUrl()
+    {
+        foreach (['http://127.0.0.1', 'http://127.0.0.1/'] as $url) {
+            $this->assertEquals('127.0.0.1', get_hostname_from_url($url));
+        }
+
+        foreach (['http://localhost', 'http://localhost/'] as $url) {
+            $this->assertEquals('localhost', get_hostname_from_url($url));
+        }
+
+        foreach ([
+            '//google.com',
+            'http://google.com',
+            'http://google.com/',
+            'http://www.google.com',
+            'https://google.com',
+            'http://google.com/page',
+            'http://google.com/page?name=value',
+        ] as $url) {
+            $this->assertEquals('google.com', get_hostname_from_url($url));
+        }
+
+        $this->assertNull(get_hostname_from_url('page.html'));
+    }
+
+    /**
+     * Test for `is_external_url()` global function
+     * @test
+     */
+    public function testIsExternalUrl()
+    {
+        $hostname = 'google.com';
+
+        foreach ([
+            '//google.com',
+            '//google.com/',
+            'http://google.com',
+            'http://google.com/',
+            'http://www.google.com',
+            'http://www.google.com/',
+            'http://www.google.com/page.html',
+            'https://google.com',
+            'relative.html',
+            '/relative.html',
+        ] as $url) {
+            $this->assertFalse(is_external_url($url, $hostname));
+        }
+
+        foreach ([
+            '//site.com',
+            'http://site.com',
+            'http://www.site.com',
+            'http://subdomain.google.com',
+        ] as $url) {
+            $this->assertTrue(is_external_url($url, $hostname));
+        }
+    }
+
     /**
      * Test for `isJson()` global function
      * @test
@@ -46,6 +217,32 @@ class GlobalFunctionsTest extends TestCase
 
         foreach ([0, -1, 1.1] as $string) {
             $this->assertFalse(is_positive($string));
+        }
+    }
+
+    /**
+     * Test for `is_slash_term()` global function
+     * @test
+     */
+    public function testIsSlashTerm()
+    {
+        foreach ([
+            'path/',
+            '/path/',
+            'path\\',
+            '\\path\\',
+        ] as $path) {
+            $this->assertTrue(is_slash_term($path));
+        }
+
+        foreach ([
+            'path',
+            '/path',
+            '\\path',
+            'path.ext',
+            '/path.ext',
+        ] as $path) {
+            $this->assertFalse(is_slash_term($path));
         }
     }
 
@@ -108,12 +305,20 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
-        // Path constants to a few helpful things.
-        foreach ([
+        $values = [
             ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder',
             'my' . DS . 'folder' => 'my' . DS . 'folder',
             DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
-        ] as $result => $expected) {
+        ];
+
+        foreach ($values as $result => $expected) {
+            $this->assertEquals($expected, rtr($result));
+        }
+
+        //Resets the ROOT value, removing the final slash
+        putenv('ROOT=' . rtrim(ROOT, DS));
+
+        foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
     }

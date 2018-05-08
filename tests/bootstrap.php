@@ -12,5 +12,17 @@
  */
 require_once 'vendor/autoload.php';
 
+//This adds `apache_get_modules()` and `apache_get_version()` functions
+require_once 'apache_functions.php';
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
+define('COMPARING_FILES', ROOT . 'tests' . DS . 'comparing_files' . DS);
+define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
+
+//@codingStandardsIgnoreLine
+@mkdir(TMP, 0777, true);
+
+if (class_exists('PHPUnit_Framework_ExpectationFailedException')) {
+    class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\AssertionFailedError');
+}
