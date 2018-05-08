@@ -61,7 +61,7 @@ class OrFailFunctionsTest extends TestCase
     /**
      * Test for `file_exists_or_fail()` "or fail" function, with a failure
      * @expectedException ErrorException
-     * @expectedExceptionMessage File or directory `/tmp/php-tools/noExisting` does not exist
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
      * @test
      */
     public function testFileExistsOrFailWithFailure()
@@ -81,7 +81,7 @@ class OrFailFunctionsTest extends TestCase
     /**
      * Test for `is_readable_or_fail()` "or fail" function, with a failure
      * @expectedException ErrorException
-     * @expectedExceptionMessage File or directory `/tmp/php-tools/noExisting` is not readable
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not readable$/
      * @test
      */
     public function testIsReadableOrFailWithFailure()
@@ -101,7 +101,7 @@ class OrFailFunctionsTest extends TestCase
     /**
      * Test for `is_writable_or_fail()` "or fail" function, with a failure
      * @expectedException ErrorException
-     * @expectedExceptionMessage File or directory `/tmp/php-tools/noExisting` is not writable
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not writable$/
      * @test
      */
     public function testIsWritableOrFailWithFailure()
