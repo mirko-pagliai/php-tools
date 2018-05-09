@@ -35,7 +35,7 @@ class OrFailFunctionsTest extends TestCase
         parent::setUp();
 
         $this->exampleFile = TMP . 'exampleFile';
-        file_put_contents($this->exampleFile, null);
+        file_put_contents($this->exampleFile, 'a string');
     }
 
     /**
@@ -67,6 +67,37 @@ class OrFailFunctionsTest extends TestCase
     public function testFileExistsOrFailWithFailure()
     {
         file_exists_or_fail(TMP . 'noExisting');
+    }
+
+    /**
+     * Test for `is_dir_or_fail()` "or fail" function
+     * @test
+     */
+    public function testIsDirOrFail()
+    {
+        $this->assertNull(is_dir_or_fail(dirname($this->exampleFile)));
+    }
+
+    /**
+     * Test for `is_dir_or_fail()` "or fail" function
+     * @expectedException ErrorException
+     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
+     * @test
+     */
+    public function testIsDirOrFailWithFailure()
+    {
+        is_dir_or_fail(TMP . 'noExisting');
+    }
+
+    /**
+     * Test for `is_dir_or_fail()` "or fail" function
+     * @expectedException ErrorException
+     * @expectedExceptionMessageRegExp /^`[\w\d\:\/\-\\]+` is not a directory$/
+     * @test
+     */
+    public function testIsDirOrFailWithFileFailure()
+    {
+        is_dir_or_fail($this->exampleFile);
     }
 
     /**

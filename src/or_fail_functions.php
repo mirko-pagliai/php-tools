@@ -27,6 +27,24 @@ if (!function_exists('file_exists_or_fail')) {
     }
 }
 
+if (!function_exists('is_dir_or_fail')) {
+    /**
+     * Tells whether the filename is a directory and throws an exception if the
+     *  filename is not a directory
+     * @param string $filename Path to the directory
+     * @return void
+     * @throws \ErrorException
+     */
+    function is_dir_or_fail($filename)
+    {
+        file_exists_or_fail($filename);
+
+        if (!is_dir($filename)) {
+            throw new \ErrorException(sprintf('`%s` is not a directory', rtr($filename)));
+        }
+    }
+}
+
 if (!function_exists('is_readable_or_fail')) {
     /**
      * Tells whether a file exists and is readable and throws an exception if
