@@ -230,7 +230,7 @@ trait TestCaseTrait
      * @return array
      * @since 1.0.6
      */
-    protected function createSomeFiles($files = [])
+    protected function createSomeFiles(array $files = [])
     {
         $files = $files ?: [
             TMP . 'exampleDir' . DS . 'file1',
