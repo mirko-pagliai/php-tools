@@ -27,6 +27,7 @@ You can install the package via composer:
 
 ## "Or fail" functions
 - `file_exists_or_fail($filename)` - Checks whether a file or directory exists and throws an exception if the file does not exist
+- `is_dir_or_fail($filename)` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
 - `is_readable_or_fail($filename)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
 - `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
 
