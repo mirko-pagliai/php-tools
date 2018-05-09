@@ -300,6 +300,37 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `rmdir_recursive()` global function
+     * @test
+     */
+    public function testRmdirRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        foreach ($files as $file) {
+            $this->assertFileExists($file);
+        }
+
+        rmdir_recursive(TMP . 'exampleDir');
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file);
+            $this->assertFileNotExists(dirname($file));
+        }
+
+        //Does not delete a file
+        $file = TMP . 'exampleDir' . DS . 'exampleFile';
+        mkdir(dirname($file), 0777, true);
+        file_put_contents($file, null);
+        $this->assertFileExists($file);
+        rmdir_recursive($file);
+        $this->assertFileExists($file);
+
+        safe_unlink($file);
+        safe_rmdir(dirname($file));
+    }
+
+    /**
      * Test for `rtr()` global function
      * @test
      */

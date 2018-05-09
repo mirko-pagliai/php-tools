@@ -17,10 +17,11 @@ You can install the package via composer:
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_external_url($url, $hostname)` Checks if an url is external. The check is performed by comparing the URL with the passed hostname
 - `is_json($string)` Checks if a string is JSON
-- `is_positive(string)` Checks if a string is a positive number
+- `is_positive($string)` Checks if a string is a positive number
 - `is_slash_term($path)` Checks if a path ends in a slash (i.e. is slash-terminated)
-- `is_url(string)` Checks if a string is a valid url
+- `is_url($string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
+- `rmdir_recursive($dirname)` - Removes directory and all its contents, including subdirectories and files
 - `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
@@ -33,6 +34,7 @@ You can install the package via composer:
 - `safe_copy()` Safe alias for `copy()` function
 - `safe_mkdir()` Safe alias for `mkdir()` function
 - `safe_rmdir()` Safe alias for `rmdir()` function
+- `safe_rmdir_recursive($dirname)` - Safe alias for `rmdir_recursive()` function
 - `safe_symlink()` Safe alias for `symlink()` function
 - `safe_unlink()` Safe alias for `unlink()` function
 - `safe_unserialize()` Safe alias for `unserialize()` function

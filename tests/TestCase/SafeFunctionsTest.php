@@ -71,6 +71,26 @@ class SafeFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `safe_rmdir_recursive()` safe function
+     * @test
+     */
+    public function testSafeRmdirRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        foreach ($files as $file) {
+            $this->assertFileExists($file);
+        }
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file);
+            $this->assertFileNotExists(dirname($file));
+        }
+    }
+
+    /**
      * Test for `safe_symlink()` safe function
      * @test
      */
