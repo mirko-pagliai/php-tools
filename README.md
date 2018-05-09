@@ -22,7 +22,7 @@ You can install the package via composer:
 - `is_url($string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
 - `rmdir_recursive($dirname)` - Removes directory and all its contents, including subdirectories and files
-- `rtr()` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
+- `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
 ## "Or fail" functions
@@ -31,22 +31,21 @@ You can install the package via composer:
 - `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
 
 ## Safe functions
-- `safe_copy()` Safe alias for `copy()` function
-- `safe_mkdir()` Safe alias for `mkdir()` function
-- `safe_rmdir()` Safe alias for `rmdir()` function
+- `safe_copy($source, $dest)` - Safe alias for `copy()` function
+- `safe_mkdir($pathname, $mode = 0777, $recursive = false)` - Safe alias for `mkdir()` function
+- `safe_rmdir($dirname)` - Safe alias for `rmdir()` function
 - `safe_rmdir_recursive($dirname)` - Safe alias for `rmdir_recursive()` function
-- `safe_symlink()` Safe alias for `symlink()` function
-- `safe_unlink()` Safe alias for `unlink()` function
-- `safe_unserialize()` Safe alias for `unserialize()` function
+- `safe_symlink($target, $link)` - Safe alias for `symlink()` function
+- `safe_unlink($filename)` - Safe alias for `unlink()` function
+- `safe_unserialize($str)` - Safe alias for `unserialize()` function
 
 ## Classes and methods
 ### Apache
 `Apache` is a class that provides some useful methods for interacting with Apache.
 
 Available methods are:
-    
-    is_enabled($module)
-    version()
+- `is_enabled($module)` - Checks if a module is enabled
+- `version()` - Gets the version
 
 ### ReflectionTrait
 `ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
@@ -54,10 +53,9 @@ Available methods are:
 - set/get protected or private properties.
 
 Available methods are:
-
-    invokeMethod(&$object, $methodName, array $parameters = [])
-    getProperty(&$object, $propertyName)
-    setProperty(&$object, $propertyName, $propertyValue)
+- `getProperty(&$object, $propertyName)` - Gets a property value
+- `invokeMethod(&$object, $methodName, array $parameters = [])` - Invokes a method
+- `setProperty(&$object, $propertyName, $propertyValue)` - Sets a property value
     
 This trait comes to test protected and private methods and properties with
 PHPUnit.
