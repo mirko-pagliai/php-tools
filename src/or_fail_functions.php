@@ -16,6 +16,7 @@ if (!function_exists('file_exists_or_fail')) {
      * Checks whether a file or directory exists and throws an exception if the
      *  file does not exist
      * @param string $filename Path to the file or directory
+     * @return void
      * @throws \ErrorException
      */
     function file_exists_or_fail($filename)
@@ -31,6 +32,7 @@ if (!function_exists('is_readable_or_fail')) {
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
      * @param string $filename Path to the file or directory
+     * @return void
      * @throws \ErrorException
      */
     function is_readable_or_fail($filename)
@@ -46,6 +48,7 @@ if (!function_exists('is_writable_or_fail')) {
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
      * @param string $filename Path to the file or directory
+     * @return void
      * @throws \ErrorException
      */
     function is_writable_or_fail($filename)
@@ -55,4 +58,3 @@ if (!function_exists('is_writable_or_fail')) {
         }
     }
 }
-

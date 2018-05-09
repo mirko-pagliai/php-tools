@@ -195,6 +195,32 @@ if (!function_exists('is_win')) {
     }
 }
 
+if (!function_exists('rmdir_recursive')) {
+    /**
+     * Removes directory and all its contents, including subdirectories and files
+     * @param string $dirname Path to the directory
+     * @return void
+     * @since 1.0.6
+     */
+    function rmdir_recursive($dirname)
+    {
+        if (!is_dir($dirname)) {
+            return;
+        }
+
+        foreach (scandir($dirname) as $file) {
+            if (in_array($file, ['.', '..'])) {
+                continue;
+            }
+
+            $file = $dirname . DS . $file;
+            is_dir($file) ? rmdir_recursive($file) : unlink($file);
+        }
+
+        rmdir($dirname);
+    }
+}
+
 if (!function_exists('rtr')) {
     /**
      * Returns a path relative to the root.

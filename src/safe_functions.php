@@ -57,6 +57,20 @@ if (!function_exists('safe_rmdir')) {
     }
 }
 
+if (!function_exists('safe_rmdir_recursive')) {
+    /**
+     * Safe alias for `rmdir_recursive()` function
+     * @param string $dirname Path to the directory
+     * @return void
+     * @since 1.0.6
+     */
+    function safe_rmdir_recursive($dirname)
+    {
+        //@codingStandardsIgnoreLine
+        @rmdir_recursive($dirname);
+    }
+}
+
 if (!function_exists('safe_symlink')) {
     /**
      * Safe alias for `symlink()` function
