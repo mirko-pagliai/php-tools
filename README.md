@@ -14,6 +14,7 @@ You can install the package via composer:
 
 ## Global functions
 - `clean_url($url)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `dir_tree($path, $order = true, $skipHidden = false)` Returns an array of nested directories and files in each directory
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_external_url($url, $hostname)` Checks if an url is external. The check is performed by comparing the URL with the passed hostname
 - `is_json($string)` Checks if a string is JSON

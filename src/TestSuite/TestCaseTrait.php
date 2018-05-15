@@ -240,6 +240,7 @@ trait TestCaseTrait
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
             TMP . 'exampleDir' . DS . '.hiddenFile',
+            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
         ];
 
         //Creates directories and files
@@ -247,6 +248,8 @@ trait TestCaseTrait
             safe_mkdir(dirname($file), 0777, true);
             file_put_contents($file, null);
         }
+
+        safe_mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;
     }
