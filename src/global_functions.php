@@ -24,6 +24,55 @@ if (!function_exists('clean_url')) {
     }
 }
 
+if (!function_exists('dir_tree')) {
+    /**
+     * Returns an array of nested directories and files in each directory
+     * @param string $path The directory path to build the tree from
+     * @param bool $order If you want to sort the results
+     * @param bool $skipHidden If you want to exclude files and directories
+     *  hidden from the results
+     * @return array Array of nested directories and files in each directory
+     * @since 1.0.7
+     */
+    function dir_tree($path, $order = true, $skipHidden = false)
+    {
+        try {
+            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF);
+            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
+        } catch (\Exception $e) {
+            return [[], []];
+        }
+
+        $directories = $files = [];
+        $directories[] = rtrim($path, DS);
+
+        foreach ($iterator as $itemPath => $fsIterator) {
+            if ($fsIterator->isDot()) {
+                continue;
+            }
+
+            $subPathName = $fsIterator->getSubPathname();
+
+            if ($skipHidden && ($subPathName{0} === '.' || strpos($subPathName, DS . '.') !== false)) {
+                continue;
+            }
+
+            if ($fsIterator->isDir()) {
+                $directories[] = $itemPath;
+            } else {
+                $files[] = $itemPath;
+            }
+        }
+
+        if ($order) {
+            sort($directories);
+            sort($files);
+        }
+
+        return [$directories, $files];
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -102,11 +151,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        if (substr($host, 0, 4) === 'www.') {
-            return substr($host, 4);
-        }
-
-        return $host;
+        return substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
     }
 }
 
@@ -204,20 +249,10 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        if (!is_dir($dirname)) {
-            return;
-        }
+        list($directories, $files) = dir_tree($dirname, false, false);
 
-        foreach (scandir($dirname) as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-
-            $file = $dirname . DS . $file;
-            is_dir($file) ? rmdir_recursive($file) : unlink($file);
-        }
-
-        rmdir($dirname);
+        array_map('unlink', $files);
+        array_map('rmdir', array_reverse($directories));
     }
 }
 

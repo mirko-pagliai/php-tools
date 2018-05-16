@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.7
+* added `dir_tree()` global function.
+
 ### 1.0.6
 * added `rmdir_recursive()` and `safe_rmdir_recursive()` functions;
 * added `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
