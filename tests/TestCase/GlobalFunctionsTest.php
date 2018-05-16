@@ -114,9 +114,7 @@ class GlobalFunctionsTest extends TestCase
             $this->assertEquals([[], []], dir_tree($directory));
         }
 
-        foreach ($files as $file) {
-            safe_unlink($file);
-        }
+        safe_rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**
