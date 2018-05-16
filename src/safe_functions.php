@@ -98,6 +98,22 @@ if (!function_exists('safe_unlink')) {
     }
 }
 
+if (!function_exists('safe_unlink_recursive')) {
+    /**
+     * Safe alias for `safe_unlink_recursive()` function
+     * @param string $dirname The directory path
+     * @param array|bool $exceptions Either an array of files to exclude
+     *  or boolean true to not grab dot files
+     * @return bool
+     * @since 1.0.7
+     */
+    function safe_unlink_recursive($dirname, $exceptions = false)
+    {
+        //@codingStandardsIgnoreLine
+        return @unlink_recursive($dirname, $exceptions);
+    }
+}
+
 if (!function_exists('safe_unserialize')) {
     /**
      * Safe alias for `unserialize()` function

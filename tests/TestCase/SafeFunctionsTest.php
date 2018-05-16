@@ -122,6 +122,23 @@ class SafeFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `safe_unlink_resursive()` safe function
+     * @test
+     */
+    public function testSafeUnlinkRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        $this->assertTrue(safe_unlink_resursive(TMP . 'exampleDir'));
+
+        //The files no longer exist, but the directories still exist
+        $this->assertFileNotExists($files);
+        $this->assertFileExists(array_map('dirname', $files));
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
      * Test for `safe_unserialize()` safe function
      * @test
      */

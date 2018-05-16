@@ -285,7 +285,11 @@ if (!function_exists('is_writable_resursive')) {
 
 if (!function_exists('rmdir_recursive')) {
     /**
-     * Removes directory and all its contents, including subdirectories and files
+     * Removes a directory and all its contents, including subdirectories and
+     *  files.
+     *
+     * To remove only the files contained in a directory and its
+     *  sub-directories, use the `unlink_recursive()` function instead.
      * @param string $dirname Path to the directory
      * @return void
      * @since 1.0.6
@@ -319,6 +323,32 @@ if (!function_exists('rtr')) {
         }
 
         return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+    }
+}
+
+if (!function_exists('unlink_resursive')) {
+    /**
+     * Recursively removes all the files contained in a directory and its
+     *  sub-directories
+     * @param string $dirname The directory path
+     * @param array|bool $exceptions Either an array of files to exclude
+     *  or boolean true to not grab dot files
+     * @return bool
+     * @since 1.0.7
+     */
+    function unlink_resursive($dirname, $exceptions = false)
+    {
+        list(, $files) = dir_tree($dirname, $exceptions);
+
+        $success = true;
+
+        foreach ($files as $file) {
+            if (!unlink($file)) {
+                $success = false;
+            }
+        }
+
+        return $success;
     }
 }
 

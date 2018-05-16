@@ -449,6 +449,23 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `unlink_resursive()` global function
+     * @test
+     */
+    public function testUnlinkRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        $this->assertTrue(unlink_resursive(TMP . 'exampleDir'));
+
+        //The files no longer exist, but the directories still exist
+        $this->assertFileNotExists($files);
+        $this->assertFileExists(array_map('dirname', $files));
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
      * Test for `which()` global function on Unix
      * @group onlyUnix
      * @test

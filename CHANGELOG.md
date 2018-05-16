@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.0 branch
 ### 1.0.7
-* added `dir_tree()` and `is_writable_resursive()` global functions.
+* added `dir_tree()` and `is_writable_resursive()` global functions;
+* added `unlink_recursive()` and `safe_unlink_recursive()` functions.
 
 ### 1.0.6
 * added `rmdir_recursive()` and `safe_rmdir_recursive()` functions;
