@@ -151,11 +151,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        if (substr($host, 0, 4) === 'www.') {
-            return substr($host, 4);
-        }
-
-        return $host;
+        return substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
     }
 }
 
@@ -253,20 +249,10 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        if (!is_dir($dirname)) {
-            return;
-        }
+        list($directories, $files) = dir_tree($dirname, false, false);
 
-        foreach (scandir($dirname) as $file) {
-            if (in_array($file, ['.', '..'])) {
-                continue;
-            }
-
-            $file = $dirname . DS . $file;
-            is_dir($file) ? rmdir_recursive($file) : unlink($file);
-        }
-
-        rmdir($dirname);
+        array_map('unlink', $files);
+        array_map('rmdir', array_reverse($directories));
     }
 }
 
