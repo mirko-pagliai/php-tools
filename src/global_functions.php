@@ -326,7 +326,7 @@ if (!function_exists('rtr')) {
     }
 }
 
-if (!function_exists('unlink_resursive')) {
+if (!function_exists('unlink_recursive')) {
     /**
      * Recursively removes all the files contained in a directory and its
      *  sub-directories
@@ -336,7 +336,7 @@ if (!function_exists('unlink_resursive')) {
      * @return bool
      * @since 1.0.7
      */
-    function unlink_resursive($dirname, $exceptions = false)
+    function unlink_recursive($dirname, $exceptions = false)
     {
         list(, $files) = dir_tree($dirname, $exceptions);
 

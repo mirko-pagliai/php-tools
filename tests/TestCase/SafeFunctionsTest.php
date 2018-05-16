@@ -129,7 +129,7 @@ class SafeFunctionsTest extends TestCase
     {
         $files = $this->createSomeFiles();
 
-        $this->assertTrue(safe_unlink_resursive(TMP . 'exampleDir'));
+        $this->assertTrue(safe_unlink_recursive(TMP . 'exampleDir'));
 
         //The files no longer exist, but the directories still exist
         $this->assertFileNotExists($files);

@@ -456,7 +456,7 @@ class GlobalFunctionsTest extends TestCase
     {
         $files = $this->createSomeFiles();
 
-        $this->assertTrue(unlink_resursive(TMP . 'exampleDir'));
+        $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
 
         //The files no longer exist, but the directories still exist
         $this->assertFileNotExists($files);
