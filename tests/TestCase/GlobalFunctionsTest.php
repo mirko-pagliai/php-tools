@@ -84,8 +84,8 @@ class GlobalFunctionsTest extends TestCase
         ] as $directory) {
             $result = dir_tree($directory, false);
             $this->assertCount(2, $result);
-            $this->assertArraySubset($expectedDirs, $result[0]);
-            $this->assertArraySubset($expectedFiles, $result[1]);
+            $this->assertEmpty(array_diff($expectedDirs, $result[0]));
+            $this->assertEmpty(array_diff($expectedFiles, $result[1]));
         }
 
         //With `order`
