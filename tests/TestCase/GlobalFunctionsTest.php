@@ -380,6 +380,20 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_writable_resursive()` global function
+     * @test
+     */
+    public function testIsWritableRecursive()
+    {
+        $this->createSomeFiles();
+
+        $this->assertTrue(is_writable_resursive(TMP . 'exampleDir'));
+        $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
+
+        rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
      * Test for `rmdir_recursive()` global function
      * @test
      */

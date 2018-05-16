@@ -254,6 +254,35 @@ if (!function_exists('is_win')) {
     }
 }
 
+if (!function_exists('is_writable_resursive')) {
+    /**
+     * Tells whether a directory and its subdirectories are writable.
+     *
+     * It can also check that all the files are writable.
+     * @param string $dirname Path to the directory
+     * @param bool $checkOnlyDir If `true`, also checks for all files
+     * @return bool
+     * @since 1.0.7
+     */
+    function is_writable_resursive($dirname, $checkOnlyDir = true)
+    {
+        list($directories, $files) = dir_tree($dirname);
+        $itemsToCheck = $checkOnlyDir ? $directories : array_merge($directories, $files);
+
+        if (!in_array($dirname, $itemsToCheck)) {
+            $itemsToCheck[] = $dirname;
+        }
+
+        foreach ($itemsToCheck as $item) {
+            if (!is_readable($item) || !is_writable($item)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
 if (!function_exists('rmdir_recursive')) {
     /**
      * Removes directory and all its contents, including subdirectories and files

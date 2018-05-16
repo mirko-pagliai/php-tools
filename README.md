@@ -22,6 +22,7 @@ You can install the package via composer:
 - `is_slash_term($path)` Checks if a path ends in a slash (i.e. is slash-terminated)
 - `is_url($string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
+- `is_writable_resursive($dirname, $checkOnlyDir = true)` - Tells whether a directory and its subdirectories are writable. It can also check that all the files are writable
 - `rmdir_recursive($dirname)` - Removes directory and all its contents, including subdirectories and files
 - `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
