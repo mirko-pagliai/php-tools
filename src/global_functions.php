@@ -28,13 +28,12 @@ if (!function_exists('dir_tree')) {
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param bool $order If you want to sort the results
-     * @param bool $skipHidden If you want to exclude files and directories
-     *  hidden from the results
+     * @param array|bool $exceptions Either an array of files/folder to exclude
+     *  or boolean true to not grab dot files/folders
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
      */
-    function dir_tree($path, $order = true, $skipHidden = false)
+    function dir_tree($path, $exceptions = false)
     {
         try {
             $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF);
@@ -46,6 +45,17 @@ if (!function_exists('dir_tree')) {
         $directories = $files = [];
         $directories[] = rtrim($path, DS);
 
+        if (is_bool($exceptions)) {
+            $exceptions = $exceptions ? ['.'] : [];
+        }
+        $exceptions = (array)$exceptions;
+
+        $skipHidden = false;
+        if (in_array('.', $exceptions)) {
+            $skipHidden = true;
+            unset($exceptions[array_search('.', $exceptions)]);
+        }
+
         foreach ($iterator as $itemPath => $fsIterator) {
             if ($fsIterator->isDot()) {
                 continue;
@@ -53,7 +63,13 @@ if (!function_exists('dir_tree')) {
 
             $subPathName = $fsIterator->getSubPathname();
 
+            //Excludes hidden files
             if ($skipHidden && ($subPathName{0} === '.' || strpos($subPathName, DS . '.') !== false)) {
+                continue;
+            }
+
+            //Excludes the listed files
+            if (in_array($fsIterator->getFilename(), $exceptions)) {
                 continue;
             }
 
@@ -64,10 +80,8 @@ if (!function_exists('dir_tree')) {
             }
         }
 
-        if ($order) {
-            sort($directories);
-            sort($files);
-        }
+        sort($directories);
+        sort($files);
 
         return [$directories, $files];
     }
@@ -249,7 +263,7 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        list($directories, $files) = dir_tree($dirname, false, false);
+        list($directories, $files) = dir_tree($dirname, false);
 
         array_map('unlink', $files);
         array_map('rmdir', array_reverse($directories));

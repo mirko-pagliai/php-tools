@@ -61,53 +61,67 @@ class GlobalFunctionsTest extends TestCase
 
         $expectedDirs = [
             TMP . 'exampleDir',
-            TMP . 'exampleDir' . DS . 'subDir1',
+            TMP . 'exampleDir' . DS . '.hiddenDir',
             TMP . 'exampleDir' . DS . 'emptyDir',
+            TMP . 'exampleDir' . DS . 'subDir1',
             TMP . 'exampleDir' . DS . 'subDir2',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
-            TMP . 'exampleDir' . DS . '.hiddenDir',
         ];
         $expectedFiles = [
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
-            TMP . 'exampleDir' . DS . 'file1',
-            TMP . 'exampleDir' . DS . '.hiddenFile',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
             TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
+            TMP . 'exampleDir' . DS . '.hiddenFile',
+            TMP . 'exampleDir' . DS . 'file1',
+            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
+            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
         ];
 
         foreach ([
             TMP . 'exampleDir',
             TMP . 'exampleDir' . DS,
         ] as $directory) {
-            $result = dir_tree($directory, false);
+            $result = dir_tree($directory);
             $this->assertCount(2, $result);
-            $this->assertEmpty(array_diff($expectedDirs, $result[0]));
-            $this->assertEmpty(array_diff($expectedFiles, $result[1]));
+            $this->assertEquals($expectedDirs, $result[0]);
+            $this->assertEquals($expectedFiles, $result[1]);
         }
 
-        //With `order`
-        sort($expectedDirs);
-        sort($expectedFiles);
-        $result = dir_tree(TMP . 'exampleDir');
+        //`$exceptions` as `false`
+        $result = dir_tree($directory, false);
         $this->assertCount(2, $result);
         $this->assertEquals($expectedDirs, $result[0]);
         $this->assertEquals($expectedFiles, $result[1]);
 
-        //With `order` and `hiddenFiles`
+        //Excludes some files
+        foreach ([
+            ['file2'],
+            ['file2', 'file3'],
+            ['.hiddenFile'],
+            ['.hiddenFile', 'file2', 'file3'],
+        ] as $exceptions) {
+            $currentExpected = array_values(array_filter($expectedFiles, function ($value) use ($exceptions) {
+                return !in_array(basename($value), $exceptions);
+            }));
+            $result = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertEquals($currentExpected, $result[1]);
+        }
+
+        //Excludes hidden files
         $removeHiddenDirsAndFiles = function ($values) {
             return array_values(array_filter($values, function ($value) {
                 return strpos($value, DS . '.') === false;
             }));
         };
-        $expectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
-        $expectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
-        $result = dir_tree(TMP . 'exampleDir', true, true);
-        $this->assertCount(2, $result);
-        $this->assertEquals($expectedDirs, $result[0]);
-        $this->assertEquals($expectedFiles, $result[1]);
+        $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
+        $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
+        foreach ([true, '.', ['.']] as $exceptions) {
+            $result = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertCount(2, $result);
+            $this->assertEquals($currentExpectedDirs, $result[0]);
+            $this->assertEquals($currentExpectedFiles, $result[1]);
+        }
 
         //Using a file or a no existing file
         foreach ([$files[0], TMP . 'noExisting'] as $directory) {
