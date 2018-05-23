@@ -338,7 +338,14 @@ if (!function_exists('unlink_recursive')) {
      */
     function unlink_recursive($dirname, $exceptions = false)
     {
-        list(, $files) = dir_tree($dirname, $exceptions);
+        list($directories, $files) = dir_tree($dirname, $exceptions);
+
+        //Adds links. `dir_tree()` returns links as directories
+        foreach ($directories as $directory) {
+            if (is_link($directory)) {
+                $files[] = $directory;
+            }
+        }
 
         $success = true;
 
