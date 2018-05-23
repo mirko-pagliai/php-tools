@@ -36,7 +36,7 @@ if (!function_exists('dir_tree')) {
     function dir_tree($path, $exceptions = false)
     {
         try {
-            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF);
+            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
             $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
         } catch (\Exception $e) {
             return [[], []];
@@ -57,10 +57,6 @@ if (!function_exists('dir_tree')) {
         }
 
         foreach ($iterator as $itemPath => $fsIterator) {
-            if ($fsIterator->isDot()) {
-                continue;
-            }
-
             $subPathName = $fsIterator->getSubPathname();
 
             //Excludes hidden files
