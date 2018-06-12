@@ -24,6 +24,65 @@ if (!function_exists('clean_url')) {
     }
 }
 
+if (!function_exists('dir_tree')) {
+    /**
+     * Returns an array of nested directories and files in each directory
+     * @param string $path The directory path to build the tree from
+     * @param array|bool $exceptions Either an array of files/folder to exclude
+     *  or boolean true to not grab dot files/folders
+     * @return array Array of nested directories and files in each directory
+     * @since 1.0.7
+     */
+    function dir_tree($path, $exceptions = false)
+    {
+        try {
+            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
+            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
+        } catch (\Exception $e) {
+            return [[], []];
+        }
+
+        $directories = $files = [];
+        $directories[] = rtrim($path, DS);
+
+        if (is_bool($exceptions)) {
+            $exceptions = $exceptions ? ['.'] : [];
+        }
+        $exceptions = (array)$exceptions;
+
+        $skipHidden = false;
+        if (in_array('.', $exceptions)) {
+            $skipHidden = true;
+            unset($exceptions[array_search('.', $exceptions)]);
+        }
+
+        foreach ($iterator as $itemPath => $fsIterator) {
+            $subPathName = $fsIterator->getSubPathname();
+
+            //Excludes hidden files
+            if ($skipHidden && ($subPathName{0} === '.' || strpos($subPathName, DS . '.') !== false)) {
+                continue;
+            }
+
+            //Excludes the listed files
+            if (in_array($fsIterator->getFilename(), $exceptions)) {
+                continue;
+            }
+
+            if ($fsIterator->isDir()) {
+                $directories[] = $itemPath;
+            } else {
+                $files[] = $itemPath;
+            }
+        }
+
+        sort($directories);
+        sort($files);
+
+        return [$directories, $files];
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -102,11 +161,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        if (substr($host, 0, 4) === 'www.') {
-            return substr($host, 4);
-        }
-
-        return $host;
+        return substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
     }
 }
 
@@ -195,6 +250,55 @@ if (!function_exists('is_win')) {
     }
 }
 
+if (!function_exists('is_writable_resursive')) {
+    /**
+     * Tells whether a directory and its subdirectories are writable.
+     *
+     * It can also check that all the files are writable.
+     * @param string $dirname Path to the directory
+     * @param bool $checkOnlyDir If `true`, also checks for all files
+     * @return bool
+     * @since 1.0.7
+     */
+    function is_writable_resursive($dirname, $checkOnlyDir = true)
+    {
+        list($directories, $files) = dir_tree($dirname);
+        $itemsToCheck = $checkOnlyDir ? $directories : array_merge($directories, $files);
+
+        if (!in_array($dirname, $itemsToCheck)) {
+            $itemsToCheck[] = $dirname;
+        }
+
+        foreach ($itemsToCheck as $item) {
+            if (!is_readable($item) || !is_writable($item)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+if (!function_exists('rmdir_recursive')) {
+    /**
+     * Removes a directory and all its contents, including subdirectories and
+     *  files.
+     *
+     * To remove only the files contained in a directory and its
+     *  sub-directories, use the `unlink_recursive()` function instead.
+     * @param string $dirname Path to the directory
+     * @return void
+     * @since 1.0.6
+     */
+    function rmdir_recursive($dirname)
+    {
+        list($directories, $files) = dir_tree($dirname, false);
+
+        array_map('unlink', $files);
+        array_map('rmdir', array_reverse($directories));
+    }
+}
+
 if (!function_exists('rtr')) {
     /**
      * Returns a path relative to the root.
@@ -215,6 +319,39 @@ if (!function_exists('rtr')) {
         }
 
         return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+    }
+}
+
+if (!function_exists('unlink_recursive')) {
+    /**
+     * Recursively removes all the files contained in a directory and its
+     *  sub-directories
+     * @param string $dirname The directory path
+     * @param array|bool $exceptions Either an array of files to exclude
+     *  or boolean true to not grab dot files
+     * @return bool
+     * @since 1.0.7
+     */
+    function unlink_recursive($dirname, $exceptions = false)
+    {
+        list($directories, $files) = dir_tree($dirname, $exceptions);
+
+        //Adds links. `dir_tree()` returns links as directories
+        foreach ($directories as $directory) {
+            if (is_link($directory)) {
+                $files[] = $directory;
+            }
+        }
+
+        $success = true;
+
+        foreach ($files as $file) {
+            if (!unlink($file)) {
+                $success = false;
+            }
+        }
+
+        return $success;
     }
 }
 

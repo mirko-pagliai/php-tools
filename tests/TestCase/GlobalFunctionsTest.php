@@ -52,6 +52,86 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `dir_tree()` global function
+     * @test
+     */
+    public function testDirTree()
+    {
+        $files = $this->createSomeFiles();
+
+        $expectedDirs = [
+            TMP . 'exampleDir',
+            TMP . 'exampleDir' . DS . '.hiddenDir',
+            TMP . 'exampleDir' . DS . 'emptyDir',
+            TMP . 'exampleDir' . DS . 'subDir1',
+            TMP . 'exampleDir' . DS . 'subDir2',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
+        ];
+        $expectedFiles = [
+            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
+            TMP . 'exampleDir' . DS . '.hiddenFile',
+            TMP . 'exampleDir' . DS . 'file1',
+            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
+            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
+            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
+        ];
+
+        foreach ([
+            TMP . 'exampleDir',
+            TMP . 'exampleDir' . DS,
+        ] as $directory) {
+            $result = dir_tree($directory);
+            $this->assertCount(2, $result);
+            $this->assertEquals($expectedDirs, $result[0]);
+            $this->assertEquals($expectedFiles, $result[1]);
+        }
+
+        //`$exceptions` as `false`
+        $result = dir_tree($directory, false);
+        $this->assertCount(2, $result);
+        $this->assertEquals($expectedDirs, $result[0]);
+        $this->assertEquals($expectedFiles, $result[1]);
+
+        //Excludes some files
+        foreach ([
+            ['file2'],
+            ['file2', 'file3'],
+            ['.hiddenFile'],
+            ['.hiddenFile', 'file2', 'file3'],
+        ] as $exceptions) {
+            $currentExpected = array_values(array_filter($expectedFiles, function ($value) use ($exceptions) {
+                return !in_array(basename($value), $exceptions);
+            }));
+            $result = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertEquals($currentExpected, $result[1]);
+        }
+
+        //Excludes hidden files
+        $removeHiddenDirsAndFiles = function ($values) {
+            return array_values(array_filter($values, function ($value) {
+                return strpos($value, DS . '.') === false;
+            }));
+        };
+        $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
+        $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
+        foreach ([true, '.', ['.']] as $exceptions) {
+            $result = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertCount(2, $result);
+            $this->assertEquals($currentExpectedDirs, $result[0]);
+            $this->assertEquals($currentExpectedFiles, $result[1]);
+        }
+
+        //Using a file or a no existing file
+        foreach ([$files[0], TMP . 'noExisting'] as $directory) {
+            $this->assertEquals([[], []], dir_tree($directory));
+        }
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
      * Test for `get_child_methods()` global function
      * @test
      */
@@ -300,6 +380,51 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_writable_resursive()` global function
+     * @test
+     */
+    public function testIsWritableRecursive()
+    {
+        $this->createSomeFiles();
+
+        $this->assertTrue(is_writable_resursive(TMP . 'exampleDir'));
+        $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
+
+        rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
+     * Test for `rmdir_recursive()` global function
+     * @test
+     */
+    public function testRmdirRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        foreach ($files as $file) {
+            $this->assertFileExists($file);
+        }
+
+        rmdir_recursive(TMP . 'exampleDir');
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file);
+            $this->assertFileNotExists(dirname($file));
+        }
+
+        //Does not delete a file
+        $file = TMP . 'exampleDir' . DS . 'exampleFile';
+        mkdir(dirname($file), 0777, true);
+        file_put_contents($file, null);
+        $this->assertFileExists($file);
+        rmdir_recursive($file);
+        $this->assertFileExists($file);
+
+        safe_unlink($file);
+        safe_rmdir(dirname($file));
+    }
+
+    /**
      * Test for `rtr()` global function
      * @test
      */
@@ -321,6 +446,23 @@ class GlobalFunctionsTest extends TestCase
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
+    }
+
+    /**
+     * Test for `unlink_resursive()` global function
+     * @test
+     */
+    public function testUnlinkRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
+
+        //The files no longer exist, but the directories still exist
+        $this->assertFileNotExists($files);
+        $this->assertFileExists(array_map('dirname', $files));
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**

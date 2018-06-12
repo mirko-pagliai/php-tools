@@ -71,6 +71,26 @@ class SafeFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `safe_rmdir_recursive()` safe function
+     * @test
+     */
+    public function testSafeRmdirRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        foreach ($files as $file) {
+            $this->assertFileExists($file);
+        }
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
+
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file);
+            $this->assertFileNotExists(dirname($file));
+        }
+    }
+
+    /**
      * Test for `safe_symlink()` safe function
      * @test
      */
@@ -99,6 +119,23 @@ class SafeFunctionsTest extends TestCase
 
         $this->assertTrue(safe_unlink($file));
         $this->assertFileNotExists($file);
+    }
+
+    /**
+     * Test for `safe_unlink_resursive()` safe function
+     * @test
+     */
+    public function testSafeUnlinkRecursive()
+    {
+        $files = $this->createSomeFiles();
+
+        $this->assertTrue(safe_unlink_recursive(TMP . 'exampleDir'));
+
+        //The files no longer exist, but the directories still exist
+        $this->assertFileNotExists($files);
+        $this->assertFileExists(array_map('dirname', $files));
+
+        safe_rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**

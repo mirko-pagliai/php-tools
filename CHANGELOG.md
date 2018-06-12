@@ -1,8 +1,13 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.7
+* added `dir_tree()` and `is_writable_resursive()` global functions;
+* added `unlink_recursive()` and `safe_unlink_recursive()` functions.
+
 ### 1.0.6
-* added `file_exists_or_fail()`, `is_readable_or_fail()`, `is_writable_or_fail()`
-    functions;
+* added `rmdir_recursive()` and `safe_rmdir_recursive()` functions;
+* added `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
+    `is_writable_or_fail()` "or fail" functions;
 * added `assertIsArrayNotEmpty()` assertion method.
 
 ### 1.0.5

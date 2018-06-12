@@ -57,6 +57,20 @@ if (!function_exists('safe_rmdir')) {
     }
 }
 
+if (!function_exists('safe_rmdir_recursive')) {
+    /**
+     * Safe alias for `rmdir_recursive()` function
+     * @param string $dirname Path to the directory
+     * @return void
+     * @since 1.0.6
+     */
+    function safe_rmdir_recursive($dirname)
+    {
+        //@codingStandardsIgnoreLine
+        @rmdir_recursive($dirname);
+    }
+}
+
 if (!function_exists('safe_symlink')) {
     /**
      * Safe alias for `symlink()` function
@@ -81,6 +95,22 @@ if (!function_exists('safe_unlink')) {
     {
         //@codingStandardsIgnoreLine
         return @unlink($filename);
+    }
+}
+
+if (!function_exists('safe_unlink_recursive')) {
+    /**
+     * Safe alias for `safe_unlink_recursive()` function
+     * @param string $dirname The directory path
+     * @param array|bool $exceptions Either an array of files to exclude
+     *  or boolean true to not grab dot files
+     * @return bool
+     * @since 1.0.7
+     */
+    function safe_unlink_recursive($dirname, $exceptions = false)
+    {
+        //@codingStandardsIgnoreLine
+        return @unlink_recursive($dirname, $exceptions);
     }
 }
 
