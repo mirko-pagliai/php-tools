@@ -339,7 +339,13 @@ if (!function_exists('unlink_recursive')) {
         //Adds symlinks. `dir_tree()` returns symlinks as directories
         $files += array_filter($directories, 'is_link');
 
-        array_map('unlink', $files);
+        foreach ($files as $file) {
+            if (is_link($file) && PHP_SHLIB_SUFFIX==='dll') {
+                rmdir($file);
+            } else {
+                unlink($file);
+            }
+        }
     }
 }
 
