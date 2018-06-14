@@ -340,7 +340,7 @@ if (!function_exists('unlink_recursive')) {
         $files += array_filter($directories, 'is_link');
 
         foreach ($files as $file) {
-            if (is_link($file) && PHP_SHLIB_SUFFIX==='dll') {
+            if (is_link($file) && is_dir($file) && PHP_SHLIB_SUFFIX==='dll') {
                 rmdir($file);
             } else {
                 unlink($file);
