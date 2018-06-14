@@ -329,29 +329,17 @@ if (!function_exists('unlink_recursive')) {
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
-     * @return bool
+     * @return void
      * @since 1.0.7
      */
     function unlink_recursive($dirname, $exceptions = false)
     {
         list($directories, $files) = dir_tree($dirname, $exceptions);
 
-        //Adds links. `dir_tree()` returns links as directories
-        foreach ($directories as $directory) {
-            if (is_link($directory)) {
-                $files[] = $directory;
-            }
-        }
+        //Adds symlinks. `dir_tree()` returns symlinks as directories
+        $files += array_filter($directories, 'is_link');
 
-        $success = true;
-
-        foreach ($files as $file) {
-            if (!unlink($file)) {
-                $success = false;
-            }
-        }
-
-        return $success;
+        array_map('unlink', $files);
     }
 }
 
