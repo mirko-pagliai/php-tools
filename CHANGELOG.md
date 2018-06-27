@@ -4,6 +4,7 @@
 * added `assertFilePerms()` assertion method.
 
 ### 1.0.8
+* fixed bug for `unlink_recursive()` method with symlinks under Windows;
 * `unlink_recursive()` returns void.
 
 ### 1.0.7

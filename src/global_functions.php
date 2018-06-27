@@ -339,7 +339,9 @@ if (!function_exists('unlink_recursive')) {
         //Adds symlinks. `dir_tree()` returns symlinks as directories
         $files += array_filter($directories, 'is_link');
 
-        array_map('unlink', $files);
+        foreach ($files as $file) {
+            is_link($file) && is_dir($file) && is_win() ? rmdir($file) : unlink($file);
+        }
     }
 }
 
