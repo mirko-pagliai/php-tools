@@ -109,6 +109,7 @@ class TestCaseTest extends TestCase
 
     /**
      * Tests for `assertFilePerms()` method
+     * @group onlyUnix
      * @test
      */
     public function testAssertFilePerms()
