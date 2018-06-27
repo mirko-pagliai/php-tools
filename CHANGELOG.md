@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.9
+* added `assertFilePerms()` assertion method.
+
 ### 1.0.8
 * `unlink_recursive()` returns void.
 

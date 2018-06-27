@@ -76,6 +76,7 @@ Available methods are:
     assertFileExtension($expectedExtension, $filename, $message = '')
     assertFileMime($filename, $expectedMime, $message = '')
     assertFileNotExists($filename, $message = '')
+    assertFilePerms($filename, $expectedPerms, $message = '')
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     assertInstanceOf($expectedInstance, $object, $message = '')
     assertIsArray($var, $message = '')
