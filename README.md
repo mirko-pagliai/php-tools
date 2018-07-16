@@ -56,7 +56,11 @@ Available methods are:
 `FileArray` is a class allows you to read and write arrays using text files.
 
 Available methods are:
+- `__construct($filename, array $data = [])` - Constructor
 - `append($data)` - Appends data to existing data
+- `delete($key)` - Deletes a value from its key number. Note that the keys will
+    be re-ordered.
+- `get($key)` - Gets a value from its key number
 - `prepend($data)` - Prepends data to existing data
 - `read()` - Reads data. The first time, the file content is read. The next time
     the property value will be returned. If there are no data or if the file

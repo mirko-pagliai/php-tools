@@ -13,6 +13,8 @@
  */
 namespace Tools;
 
+use Exception;
+
 /**
  * This class allows you to read and write arrays using text files
  */
@@ -29,18 +31,36 @@ class FileArray
     protected $filename;
 
     /**
-     * Construct
+     * Construct.
+     *
+     * If you want to create a file and you have an already prepared array,
+     *  instead of reading data from an existing file, you can use the `$data`
+     *  parameter.
      * @param string $filename Filename
+     * @param array $data Optional initial data
      * @uses read()
      * @uses $data
      * @uses $filename
      */
-    public function __construct($filename)
+    public function __construct($filename, array $data = [])
     {
         is_writable_or_fail(is_file($filename) ? $filename : dirname($filename));
 
         $this->filename = $filename;
-        $this->data = $this->read();
+        $this->data = $data ?: $this->read();
+    }
+
+    /**
+     * Internal method to throw an exception if a key doesn't exist
+     * @param int $key Key number
+     * @throws Exception
+     * @uses $data
+     */
+    protected function _keyExistsOrFail($key)
+    {
+        if (!key_exists($key, $this->data)) {
+            throw new Exception(sprintf('Key `%s` does not exist', $key));
+        }
     }
 
     /**
@@ -54,6 +74,40 @@ class FileArray
         $this->data[] = $data;
 
         return $this;
+    }
+
+    /**
+     * Deletes a value from its key number.
+     *
+     * Note that the keys will be re-ordered.
+     * @param int $key Key number
+     * @return $this
+     * @uses _keyExistsOrFail()
+     * @uses $data
+     */
+    public function delete($key)
+    {
+        $this->_keyExistsOrFail($key);
+
+        unset($this->data[$key]);
+
+        $this->data = array_values($this->data);
+
+        return $this;
+    }
+
+    /**
+     * Gets a value from its key number
+     * @param int $key Key number
+     * @return mixed
+     * @uses _keyExistsOrFail()
+     * @uses $data
+     */
+    public function get($key)
+    {
+        $this->_keyExistsOrFail($key);
+
+        return $this->data[$key];
     }
 
     /**

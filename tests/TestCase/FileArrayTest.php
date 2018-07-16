@@ -89,6 +89,51 @@ class FileArrayTest extends TestCase
     }
 
     /**
+     * Test for `delete()` method
+     * @test
+     */
+    public function testDelete()
+    {
+        $FileArray = new FileArray($this->file, ['first', 'second', 'third', 'fourth', 'fifth']);
+        $result = $FileArray->delete(1)->delete(2);
+        $this->assertInstanceof(FileArray::class, $result);
+        $this->assertEquals(['first', 'third', 'fifth'], $FileArray->read());
+    }
+
+    /**
+     * Test for `delete()` method, with a no existing key
+     * @expectedException Exception
+     * @expectedExceptionMessage Key `noExisting` does not exist
+     * @test
+     */
+    public function testDeleteNoExistingKey()
+    {
+        $this->FileArray->delete('noExisting');
+    }
+
+    /**
+     * Test for `get()` method
+     * @test
+     */
+    public function testGet()
+    {
+        $FileArray = new FileArray($this->file, ['first', 'second', 'third']);
+        $this->assertEquals('first', $FileArray->get(0));
+        $this->assertEquals('third', $FileArray->get(2));
+    }
+
+    /**
+     * Test for `get()` method, with a no existing key
+     * @expectedException Exception
+     * @expectedExceptionMessage Key `noExisting` does not exist
+     * @test
+     */
+    public function testGetNoExistingKey()
+    {
+        $this->FileArray->get('noExisting');
+    }
+
+    /**
      * Test for `prepend()` method
      * @test
      */
