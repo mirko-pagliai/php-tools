@@ -53,6 +53,7 @@ class FileArray
     /**
      * Internal method to throw an exception if a key doesn't exist
      * @param int $key Key number
+     * @return void
      * @throws Exception
      * @uses $data
      */
