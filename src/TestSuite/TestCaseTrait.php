@@ -114,6 +114,25 @@ trait TestCaseTrait
     }
 
     /**
+     * Asserts that a filename has file permissions
+     * @param mixed $filename Filename or filenames
+     * @param string $expectedPerms Expected permissions as a four-chars string
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.0.9
+     */
+    public static function assertFilePerms($filename, $expectedPerms, $message = '')
+    {
+        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+
+        foreach ($filename as $var) {
+            parent::assertFileExists($var);
+            self::assertContains(substr(sprintf('%o', fileperms($var)), -4), (array)$expectedPerms, $message);
+        }
+    }
+
+    /**
      * Asserts that an image file has size
      * @param string $filename Path to the tested file
      * @param int $expectedWidth Expected image width

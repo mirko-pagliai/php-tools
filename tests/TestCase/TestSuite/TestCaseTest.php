@@ -108,6 +108,27 @@ class TestCaseTest extends TestCase
     }
 
     /**
+     * Tests for `assertFilePerms()` method
+     * @group onlyUnix
+     * @test
+     */
+    public function testAssertFilePerms()
+    {
+        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
+
+        //As string, array and `Traversable`
+        $this->assertFilePerms($files[0], '0600');
+        $this->assertFilePerms($files[0], ['0600', '0666']);
+        $this->assertFilePerms($files, '0600');
+        $this->assertFilePerms($files, ['0600', '0666']);
+        $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
+        $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
+
+        safe_unlink($files[0]);
+        safe_unlink($files[1]);
+    }
+
+    /**
      * Tests for `assertInstanceOf` method
      * @test
      */

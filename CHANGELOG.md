@@ -1,5 +1,15 @@
 # 1.x branch
 ## 1.0 branch
+### 1.0.10
+* added `FileArray` class.
+
+### 1.0.9
+* added `assertFilePerms()` assertion method.
+
+### 1.0.8
+* fixed bug for `unlink_recursive()` method with symlinks under Windows;
+* `unlink_recursive()` returns void.
+
 ### 1.0.7
 * added `dir_tree()` and `is_writable_resursive()` global functions;
 * added `unlink_recursive()` and `safe_unlink_recursive()` functions.

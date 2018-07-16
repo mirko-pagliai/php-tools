@@ -456,11 +456,20 @@ class GlobalFunctionsTest extends TestCase
     {
         $files = $this->createSomeFiles();
 
-        $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
+        //Creates some symlinks
+        foreach ([0, 1] as $key) {
+            $link = dirname($files[0]) . DS . 'link_to_' . basename($files[$key]);
+            safe_symlink($files[$key], $link);
+            $files[] = $link;
+        }
 
-        //The files no longer exist, but the directories still exist
-        $this->assertFileNotExists($files);
-        $this->assertFileExists(array_map('dirname', $files));
+        unlink_recursive(TMP . 'exampleDir');
+
+        //Files no longer exist, but directories still exist
+        foreach ($files as $file) {
+            $this->assertFileNotExists($file);
+            $this->assertFileExists(dirname($file));
+        }
 
         safe_rmdir_recursive(TMP . 'exampleDir');
     }
