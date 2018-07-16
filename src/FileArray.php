@@ -94,7 +94,7 @@ class FileArray
             return [];
         }
 
-        $data = safe_json_decode(file_get_contents($this->filename), true);
+        $data = json_decode(file_get_contents($this->filename), true);
 
         return $data ?: [];
     }
