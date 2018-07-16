@@ -52,6 +52,17 @@ Available methods are:
 - `is_enabled($module)` - Checks if a module is enabled
 - `version()` - Gets the version
 
+### FileArray
+`FileArray` is a class allows you to read and write arrays using text files.
+
+Available methods are:
+- `append($data)` - Appends data to existing data
+- `prepend($data)` - Prepends data to existing data
+- `read()` - Reads data. The first time, the file content is read. The next time
+    the property value will be returned. If there are no data or if the file
+    does not exist, it still returns an empty array
+- `write()` - Writes data to the file
+
 ### ReflectionTrait
 `ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
 - invoke protected or private methods;
