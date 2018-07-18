@@ -66,6 +66,9 @@ Available methods are:
 - `read()` - Reads data. The first time, the file content is read. The next time
     the property value will be returned. If there are no data or if the file
     does not exist, it still returns an empty array
+- `take($size, $from = 0)` - Extract a slice of data, with maximum `$size` values.
+        If a second parameter is passed, it will determine from what position to
+        start taking values
 - `write()` - Writes data to the file
 
 ### ReflectionTrait
