@@ -26,6 +26,11 @@ class FileArrayTest extends TestCase
     protected $FileArray;
 
     /**
+     * @var array
+     */
+    protected $example;
+
+    /**
      * @var string
      */
     protected $file;
@@ -41,7 +46,8 @@ class FileArrayTest extends TestCase
         parent::setUp();
 
         $this->file = TMP . 'file_array_test';
-        $this->FileArray = new FileArray($this->file);
+        $this->example = ['first', 'second', 'third', 'fourth', 'fifth'];
+        $this->FileArray = new FileArray($this->file, $this->example);
     }
 
     /**
@@ -83,9 +89,9 @@ class FileArrayTest extends TestCase
      */
     public function testAppend()
     {
-        $result = $this->FileArray->append('first')->append('second');
+        $result = $this->FileArray->append('last');
         $this->assertInstanceof(FileArray::class, $result);
-        $this->assertEquals(['first', 'second'], $this->FileArray->read());
+        $this->assertEquals(array_merge($this->example, ['last']), $this->FileArray->read());
     }
 
     /**
@@ -94,10 +100,9 @@ class FileArrayTest extends TestCase
      */
     public function testDelete()
     {
-        $FileArray = new FileArray($this->file, ['first', 'second', 'third', 'fourth', 'fifth']);
-        $result = $FileArray->delete(1)->delete(2);
+        $result = $this->FileArray->delete(1)->delete(2);
         $this->assertInstanceof(FileArray::class, $result);
-        $this->assertEquals(['first', 'third', 'fifth'], $FileArray->read());
+        $this->assertEquals(['first', 'third', 'fifth'], $this->FileArray->read());
     }
 
     /**
@@ -112,14 +117,23 @@ class FileArrayTest extends TestCase
     }
 
     /**
+     * Test for `exists()` method
+     * @test
+     */
+    public function testExists()
+    {
+        $this->assertTrue($this->FileArray->exists(0));
+        $this->assertFalse($this->FileArray->exists(100));
+    }
+
+    /**
      * Test for `get()` method
      * @test
      */
     public function testGet()
     {
-        $FileArray = new FileArray($this->file, ['first', 'second', 'third']);
-        $this->assertEquals('first', $FileArray->get(0));
-        $this->assertEquals('third', $FileArray->get(2));
+        $this->assertEquals('first', $this->FileArray->get(0));
+        $this->assertEquals('third', $this->FileArray->get(2));
     }
 
     /**
@@ -139,9 +153,9 @@ class FileArrayTest extends TestCase
      */
     public function testPrepend()
     {
-        $result = $this->FileArray->prepend('first')->prepend('second');
+        $result = $this->FileArray->prepend('anotherFirst');
         $this->assertInstanceof(FileArray::class, $result);
-        $this->assertEquals(['second', 'first'], $this->FileArray->read());
+        $this->assertEquals(array_merge(['anotherFirst'], $this->example), $this->FileArray->read());
     }
 
     /**
@@ -150,10 +164,13 @@ class FileArrayTest extends TestCase
      */
     public function testRead()
     {
-        $this->assertEquals([], $this->FileArray->read());
+        $this->assertNotEmpty($this->FileArray->read());
 
-        //With invalid array, in any case returns a empty array
+        //With invalid array or no existing file, in any case returns a empty array
         file_put_contents($this->file, 'a string');
+        $this->assertEquals([], (new FileArray($this->file))->read());
+
+        safe_unlink($this->file);
         $this->assertEquals([], (new FileArray($this->file))->read());
     }
 
@@ -163,8 +180,8 @@ class FileArrayTest extends TestCase
      */
     public function testWrite()
     {
-        $result = $this->FileArray->append('first')->write();
+        $result = $this->FileArray->write();
         $this->assertTrue($result);
-        $this->assertEquals('["first"]', file_get_contents($this->file));
+        $this->assertEquals('["first","second","third","fourth","fifth"]', file_get_contents($this->file));
     }
 }

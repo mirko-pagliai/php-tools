@@ -60,6 +60,7 @@ Available methods are:
 - `append($data)` - Appends data to existing data
 - `delete($key)` - Deletes a value from its key number. Note that the keys will
     be re-ordered.
+- `exists($key)` - Checks if a key number exists
 - `get($key)` - Gets a value from its key number
 - `prepend($data)` - Prepends data to existing data
 - `read()` - Reads data. The first time, the file content is read. The next time
