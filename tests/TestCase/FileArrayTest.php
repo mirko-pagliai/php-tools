@@ -112,6 +112,17 @@ class FileArrayTest extends TestCase
     }
 
     /**
+     * Test for `exists()` method
+     * @test
+     */
+    public function testExists()
+    {
+        $FileArray = new FileArray($this->file, ['first', 'second', 'third', 'fourth', 'fifth']);
+        $this->assertTrue($FileArray->exists(0));
+        $this->assertFalse($FileArray->exists(100));
+    }
+
+    /**
      * Test for `get()` method
      * @test
      */

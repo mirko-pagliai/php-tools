@@ -98,6 +98,17 @@ class FileArray
     }
 
     /**
+     * Checks if a key number exists
+     * @param int $key Key number
+     * @return bool
+     * @uses $data
+     */
+    public function exists($key)
+    {
+        return isset($this->data[$key]);
+    }
+
+    /**
      * Gets a value from its key number
      * @param int $key Key number
      * @return mixed
