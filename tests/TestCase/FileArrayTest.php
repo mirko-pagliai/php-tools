@@ -175,6 +175,28 @@ class FileArrayTest extends TestCase
     }
 
     /**
+     * Test for `take()` method
+     * @test
+     */
+    public function testTake()
+    {
+        $result = $this->FileArray->take(2);
+        $this->assertInstanceof(FileArray::class, $result);
+        $this->assertEquals(['first', 'second'], $this->FileArray->read());
+    }
+
+    /**
+     * Test for `take()` method, with `$from` argument
+     * @test
+     */
+    public function testTakeWithFromArg()
+    {
+        $result = $this->FileArray->take(2, 3);
+        $this->assertInstanceof(FileArray::class, $result);
+        $this->assertEquals(['fourth', 'fifth'], $this->FileArray->read());
+    }
+
+    /**
      * Test for `write()` method
      * @test
      */
@@ -182,6 +204,6 @@ class FileArrayTest extends TestCase
     {
         $result = $this->FileArray->write();
         $this->assertTrue($result);
-        $this->assertEquals('["first","second","third","fourth","fifth"]', file_get_contents($this->file));
+        $this->assertEquals($this->example, safe_unserialize(file_get_contents($this->file)));
     }
 }

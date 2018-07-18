@@ -160,9 +160,25 @@ class FileArray
             return [];
         }
 
-        $data = json_decode(file_get_contents($this->filename), true);
+        $data = safe_unserialize(file_get_contents($this->filename), true);
 
         return $data ?: [];
+    }
+
+    /**
+     * Extract a slice of data, with maximum `$size` values. If a second
+     *  parameter is passed, it will determine from what position to start
+     *  taking values.
+     * @param int $size Maximun number of values
+     * @param int $from What position to start taking values
+     * @return $this
+     * @uses $data
+     */
+    public function take($size, $from = 0)
+    {
+        $this->data = array_slice($this->data, $from, $size);
+
+        return $this;
     }
 
     /**
@@ -173,6 +189,6 @@ class FileArray
      */
     public function write()
     {
-        return (bool)file_put_contents($this->filename, json_encode($this->data));
+        return (bool)file_put_contents($this->filename, serialize($this->data));
     }
 }
