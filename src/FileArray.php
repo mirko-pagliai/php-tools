@@ -166,6 +166,22 @@ class FileArray
     }
 
     /**
+     * Extract a slice of data, with maximum `$size` values. If a second
+     *  parameter is passed, it will determine from what position to start
+     *  taking values.
+     * @param int $size Maximun number of values
+     * @param int $from What position to start taking values
+     * @return $this
+     * @uses $data
+     */
+    public function take($size, $from = 0)
+    {
+        $this->data = array_slice($this->data, $from, $size);
+
+        return $this;
+    }
+
+    /**
      * Writes data to the file
      * @return bool
      * @uses $data
