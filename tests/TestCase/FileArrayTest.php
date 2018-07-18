@@ -204,6 +204,6 @@ class FileArrayTest extends TestCase
     {
         $result = $this->FileArray->write();
         $this->assertTrue($result);
-        $this->assertEquals('["first","second","third","fourth","fifth"]', file_get_contents($this->file));
+        $this->assertEquals($this->example, safe_unserialize(file_get_contents($this->file)));
     }
 }
