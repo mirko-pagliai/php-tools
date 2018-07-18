@@ -166,8 +166,11 @@ class FileArrayTest extends TestCase
     {
         $this->assertNotEmpty($this->FileArray->read());
 
-        //With invalid array, in any case returns a empty array
+        //With invalid array or no existing file, in any case returns a empty array
         file_put_contents($this->file, 'a string');
+        $this->assertEquals([], (new FileArray($this->file))->read());
+
+        safe_unlink($this->file);
         $this->assertEquals([], (new FileArray($this->file))->read());
     }
 
