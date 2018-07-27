@@ -36,6 +36,16 @@ class TestCaseTest extends TestCase
     }
 
     /**
+     * Tests for `assertContainsInstanceOf` method
+     * @test
+     */
+    public function testAssertContainsInstanceOf()
+    {
+        $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
+        $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
+    }
+
+    /**
      * Tests for `assertFileExists()` method
      * @test
      */
@@ -126,17 +136,6 @@ class TestCaseTest extends TestCase
 
         safe_unlink($files[0]);
         safe_unlink($files[1]);
-    }
-
-    /**
-     * Tests for `assertInstanceOf` method
-     * @test
-     */
-    public function testAssertInstanceOf()
-    {
-        $object = new stdClass;
-        $this->assertInstanceOf('stdClass', $object);
-        $this->assertInstanceOf('stdClass', [$object, &$object]);
     }
 
     /**

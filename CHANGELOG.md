@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.1 branch
+### 1.1.0
+* added `assertContainsInstanceOf()` assertion method. Removed
+    `assertInstanceOf()` (you can use the original method).
+
 ## 1.0 branch
 ### 1.0.10
 * added `FileArray` class.
