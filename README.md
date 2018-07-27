@@ -90,6 +90,7 @@ PHPUnit.
 Available methods are:
 
     assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    assertContainsInstanceOf($expectedInstance, $value, $message = '')
     assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
     assertFileExists($filename, $message = '')
     assertFileExtension($expectedExtension, $filename, $message = '')
@@ -97,7 +98,6 @@ Available methods are:
     assertFileNotExists($filename, $message = '')
     assertFilePerms($filename, $expectedPerms, $message = '')
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
-    assertInstanceOf($expectedInstance, $object, $message = '')
     assertIsArray($var, $message = '')
     assertIsArrayNotEmpty($var, $message = '')
     assertIsInt($var, $message = '')

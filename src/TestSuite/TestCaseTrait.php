@@ -35,6 +35,27 @@ trait TestCaseTrait
     }
 
     /**
+     * Asserts that an array or an instance of Traversable contains object that
+     *  are insances of `$expectedInstance`
+     * @param string $expectedInstance Expected instance
+     * @param array|Traversable $value Values
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.1.0
+     */
+    protected static function assertContainsInstanceOf($expectedInstance, $value, $message = '')
+    {
+        if (!is_array($value) && !$value instanceof Traversable) {
+            self::fail('The value is not an array or an instance of Traversable');
+        }
+
+        foreach ($value as $object) {
+            parent::assertInstanceOf($expectedInstance, $object, $message);
+        }
+    }
+
+    /**
      * Asserts that the object properties are equal to `$expectedProperties`
      * @param array $expectedProperties Expected properties
      * @param array $object Ojbect to check
@@ -148,23 +169,6 @@ trait TestCaseTrait
         list($width, $height) = getimagesize($filename);
         self::assertEquals($width, $expectedWidth);
         self::assertEquals($height, $expectedHeight);
-    }
-
-    /**
-     * Asserts that an object is an instance of `$expectedInstance`
-     * @param string $expectedInstance Expected instance
-     * @param mixed $object Object or objects
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public static function assertInstanceOf($expectedInstance, $object, $message = '')
-    {
-        $object = is_array($object) || $object instanceof Traversable ? $object : [$object];
-
-        foreach ($object as $var) {
-            parent::assertInstanceOf($expectedInstance, $var, $message);
-        }
     }
 
     /**
