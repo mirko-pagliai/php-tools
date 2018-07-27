@@ -36,13 +36,23 @@ class TestCaseTest extends TestCase
     }
 
     /**
-     * Tests for `assertContainsInstanceOf` method
+     * Tests for `assertContainsInstanceOf()` method
      * @test
      */
     public function testAssertContainsInstanceOf()
     {
         $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
         $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
+    }
+
+    /**
+     * Tests for `assertContainsInstanceOf()` method on failure
+     * @expectedException PHPUnit\Framework\AssertionFailedError
+     * @test
+     */
+    public function testAssertContainsInstanceOfOnFailure()
+    {
+        $this->assertContainsInstanceOf('stdClass', new stdClass);
     }
 
     /**
@@ -163,7 +173,7 @@ class TestCaseTest extends TestCase
      * @expectedException PHPUnit\Framework\AssertionFailedError
      * @test
      */
-    public function testAssertIsArrayNotEmptyFailureForEmptyArray()
+    public function testAssertIsArrayNotEmptyOnFailureForEmptyArray()
     {
         $this->assertIsArrayNotEmpty([]);
     }
@@ -173,7 +183,7 @@ class TestCaseTest extends TestCase
      * @expectedException PHPUnit\Framework\AssertionFailedError
      * @test
      */
-    public function testAssertIsArrayNotEmptyFailureForNoArray()
+    public function testAssertIsArrayNotEmptyOnFailureForNoArray()
     {
         $this->assertIsArrayNotEmpty('string');
     }
