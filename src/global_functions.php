@@ -83,6 +83,19 @@ if (!function_exists('dir_tree')) {
     }
 }
 
+if (!function_exists('first_value')) {
+    /**
+     * Returns the first value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.1
+     */
+    function first_value(array $array)
+    {
+        return array_values($array)[0];
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -276,6 +289,19 @@ if (!function_exists('is_writable_resursive')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('last_value')) {
+    /**
+     * Returns the last value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.1
+     */
+    function last_value(array $array)
+    {
+        return array_values(array_slice($array, -1))[0];
     }
 }
 
