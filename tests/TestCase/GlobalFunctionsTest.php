@@ -132,6 +132,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `first_value()` global function
+     * @test
+     */
+    public function testFirstValue()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('first', first_value($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('first', first_value($array));
+    }
+
+    /**
      * Test for `get_child_methods()` global function
      * @test
      */
@@ -391,6 +404,19 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
 
         rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
+     * Test for `last_value()` global function
+     * @test
+     */
+    public function testLastValue()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('third', last_value($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('third', last_value($array));
     }
 
     /**

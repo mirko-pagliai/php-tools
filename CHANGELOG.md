@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.1
+* added `first_value()` and `last_value()` global functions.
+
 ### 1.1.0
 * added `assertContainsInstanceOf()` assertion method. Removed
     `assertInstanceOf()` (you can use the original method).
