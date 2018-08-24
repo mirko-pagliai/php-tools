@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.2
+* added `$removeWWW` optional parameter to `clean_url()` global function.
+
 ### 1.1.1
 * added `first_value()` and `last_value()` global functions.
 

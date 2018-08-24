@@ -49,6 +49,11 @@ class GlobalFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('relative', clean_url($url));
         }
+
+        $this->assertEquals('mysite.com', clean_url('www.mysite.com', true));
+        $this->assertEquals('http://mysite.com', clean_url('http://www.mysite.com', true));
+        $this->assertEquals('https://mysite.com', clean_url('https://www.mysite.com', true));
+        $this->assertEquals('ftp://mysite.com', clean_url('ftp://www.mysite.com', true));
     }
 
     /**

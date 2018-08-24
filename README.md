@@ -13,7 +13,7 @@ You can install the package via composer:
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
 ## Global functions
-- `clean_url($url)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `clean_url($url, $removeWWW = false)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
 - `dir_tree($path, $exceptions = false)` Returns an array of nested directories and files in each directory
 - `first_value(array $array)` - Returns the first value of an array
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
