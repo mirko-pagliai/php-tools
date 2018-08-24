@@ -15,12 +15,19 @@ if (!function_exists('clean_url')) {
      * Cleans an url, removing all unnecessary parts, as fragment (#) and
      *  trailing slash
      * @param string $url Url
+     * @param bool $removeWWW Removes the `www` from the url
      * @return string
      * @since 1.0.3
      */
-    function clean_url($url)
+    function clean_url($url, $removeWWW = false)
     {
-        return trim(preg_replace('/(\#.*)$/', '', $url), '/');
+        $url = trim(preg_replace('/(\#.*)$/', '', $url), '/');
+
+        if ($removeWWW) {
+            $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
+        }
+
+        return $url;
     }
 }
 
