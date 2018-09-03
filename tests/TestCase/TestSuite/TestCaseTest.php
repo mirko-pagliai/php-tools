@@ -95,7 +95,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageSize()
     {
-        $this->assertImageSize(COMPARING_FILES . '400x400.jpg', 400, 400);
+        $this->assertImageSize(EXAMPLE_FILES . '400x400.jpg', 400, 400);
     }
 
     /**

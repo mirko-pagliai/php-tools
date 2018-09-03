@@ -49,6 +49,11 @@ class GlobalFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('relative', clean_url($url));
         }
+
+        $this->assertEquals('mysite.com', clean_url('www.mysite.com', true));
+        $this->assertEquals('http://mysite.com', clean_url('http://www.mysite.com', true));
+        $this->assertEquals('https://mysite.com', clean_url('https://www.mysite.com', true));
+        $this->assertEquals('ftp://mysite.com', clean_url('ftp://www.mysite.com', true));
     }
 
     /**
@@ -129,6 +134,19 @@ class GlobalFunctionsTest extends TestCase
         }
 
         safe_rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
+     * Test for `first_value()` global function
+     * @test
+     */
+    public function testFirstValue()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('first', first_value($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('first', first_value($array));
     }
 
     /**
@@ -391,6 +409,19 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
 
         rmdir_recursive(TMP . 'exampleDir');
+    }
+
+    /**
+     * Test for `last_value()` global function
+     * @test
+     */
+    public function testLastValue()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('third', last_value($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('third', last_value($array));
     }
 
     /**

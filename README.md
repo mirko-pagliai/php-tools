@@ -13,8 +13,9 @@ You can install the package via composer:
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
 ## Global functions
-- `clean_url($url)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `clean_url($url, $removeWWW = false)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
 - `dir_tree($path, $exceptions = false)` Returns an array of nested directories and files in each directory
+- `first_value(array $array)` - Returns the first value of an array
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_external_url($url, $hostname)` Checks if an url is external. The check is performed by comparing the URL with the passed hostname
 - `is_json($string)` Checks if a string is JSON
@@ -23,6 +24,7 @@ You can install the package via composer:
 - `is_url($string)` Checks if a string is a valid url
 - `is_win()` Returns `true` if the environment is Windows
 - `is_writable_resursive($dirname, $checkOnlyDir = true)` - Tells whether a directory and its subdirectories are writable. It can also check that all the files are writable
+- `last_value(array $array)` - Returns the last value of an array
 - `rmdir_recursive($dirname)` - Removes a directory and all its contents, including subdirectories and files
 - `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `unlink_resursive($dirname, $exceptions = false)` - Recursively removes all the files contained in a directory and its sub-directories
@@ -51,6 +53,15 @@ You can install the package via composer:
 Available methods are:
 - `is_enabled($module)` - Checks if a module is enabled
 - `version()` - Gets the version
+
+### BodyParser
+`BodyParser` is a class that can tell you if a body contains HTML code and can
+    extract links from body.
+
+Available methods are:
+- `__construct($body, $url)` - Constructor
+- `extractLinks()` - Extracs links from body
+- `isHtml()` - Returns `true` if the body contains HTML code
 
 ### FileArray
 `FileArray` is a class allows you to read and write arrays using text files.

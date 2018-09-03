@@ -15,12 +15,19 @@ if (!function_exists('clean_url')) {
      * Cleans an url, removing all unnecessary parts, as fragment (#) and
      *  trailing slash
      * @param string $url Url
+     * @param bool $removeWWW Removes the `www` from the url
      * @return string
      * @since 1.0.3
      */
-    function clean_url($url)
+    function clean_url($url, $removeWWW = false)
     {
-        return trim(preg_replace('/(\#.*)$/', '', $url), '/');
+        $url = trim(preg_replace('/(\#.*)$/', '', $url), '/');
+
+        if ($removeWWW) {
+            $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
+        }
+
+        return $url;
     }
 }
 
@@ -80,6 +87,19 @@ if (!function_exists('dir_tree')) {
         sort($files);
 
         return [$directories, $files];
+    }
+}
+
+if (!function_exists('first_value')) {
+    /**
+     * Returns the first value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.1
+     */
+    function first_value(array $array)
+    {
+        return array_values($array)[0];
     }
 }
 
@@ -276,6 +296,19 @@ if (!function_exists('is_writable_resursive')) {
         }
 
         return true;
+    }
+}
+
+if (!function_exists('last_value')) {
+    /**
+     * Returns the last value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.1
+     */
+    function last_value(array $array)
+    {
+        return array_values(array_slice($array, -1))[0];
     }
 }
 
