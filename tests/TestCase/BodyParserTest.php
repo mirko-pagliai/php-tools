@@ -92,7 +92,7 @@ class BodyParserTest extends TestCase
             'http://localhost/subtitles_en.vtt',
             'http://localhost/movie.mp4',
         ];
-        $html = file_get_contents(COMPARING_FILES . 'page_with_some_links.html');
+        $html = file_get_contents(EXAMPLE_FILES . 'page_with_some_links.html');
         $this->assertEquals($expected, $getExtractedLinksMethod($html));
 
         $html = '<html><body>' . $html . '</body></html>';
