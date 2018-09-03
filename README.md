@@ -54,6 +54,15 @@ Available methods are:
 - `is_enabled($module)` - Checks if a module is enabled
 - `version()` - Gets the version
 
+### BodyParser
+`BodyParser` is a class that can tell you if a body contains HTML code and can
+    extract links from body.
+
+Available methods are:
+- `__construct($body, $url)` - Constructor
+- `extractLinks()` - Extracs links from body
+- `isHtml()` - Returns `true` if the body contains HTML code
+
 ### FileArray
 `FileArray` is a class allows you to read and write arrays using text files.
 
