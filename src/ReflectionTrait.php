@@ -12,6 +12,8 @@
  */
 namespace Tools;
 
+use PHPUnit_Framework_MockObject_MockObject;
+use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
 
@@ -29,6 +31,42 @@ trait ReflectionTrait
     protected function getMethodInstance(&$object, $methodName)
     {
         return new ReflectionMethod(get_class($object), $methodName);
+    }
+
+    /**
+     * Gets all properties as array with property names as keys.
+     *
+     * If the object is a mock, it removes the properties added by PHPUnit.
+     * @param object $object Object from which to get properties
+     * @param int|null $filter The optional filter, for filtering desired property
+     *  types. It's configured using the ReflectionProperty constants, and
+     *  defaults to all property types
+     * @return array
+     * @since 1.1.4
+     */
+    protected function getProperties(&$object, $filter = null)
+    {
+        $filter = $filter ?: ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE;
+        $properties = (new ReflectionClass($object))->getProperties($filter);
+
+        //Removes the properties added by PHPUnit if the object is a mock
+        if ($object instanceof PHPUnit_Framework_MockObject_MockObject) {
+            $properties = array_filter($properties, function ($property) {
+                return substr($property->getName(), 0, 9) !== '__phpunit';
+            });
+        }
+
+        $keys = array_map(function ($property) {
+            return $property->getName();
+        }, $properties);
+
+        $properties = array_map(function ($property) use ($object) {
+            $property->setAccessible(true);
+
+            return $property->getValue($object);
+        }, $properties);
+
+        return array_combine($keys, $properties);
     }
 
     /**

@@ -88,6 +88,7 @@ Available methods are:
 - set/get protected or private properties.
 
 Available methods are:
+- `getProperties(&$object, $filter = null)` - Gets all properties as array with property names as keys. If the object is a mock, it removes the properties added by PHPUnit
 - `getProperty(&$object, $propertyName)` - Gets a property value
 - `invokeMethod(&$object, $methodName, array $parameters = [])` - Invokes a method
 - `setProperty(&$object, $propertyName, $propertyValue)` - Sets a property value
