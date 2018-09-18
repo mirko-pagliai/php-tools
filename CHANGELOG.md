@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.4
+* added `ReflectionTrait::getProperties()` method.
+
 ### 1.1.3
 * added `BodyParser` class.
 

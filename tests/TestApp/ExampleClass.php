@@ -17,19 +17,19 @@ namespace App;
  */
 class ExampleClass
 {
+    private $privateProperty = 'this is a private property';
+
     protected $firstProperty;
 
     protected $secondProperty = 'a protected property';
 
     public $publicProperty = 'this is public';
 
+    static public $staticProperty = 'a static property';
+
     protected function protectedMethod($var = null)
     {
-        if (empty($var)) {
-            return 'a protected method';
-        }
-
-        return $var;
+        return $var ?: 'a protected method';
     }
 
     public function __get($name)

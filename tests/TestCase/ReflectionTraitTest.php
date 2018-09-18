@@ -14,7 +14,9 @@ namespace Tools\Test;
 
 use App\ExampleClass;
 use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCaseTrait;
 
 /**
  * Reflection\ReflectionTrait Test Case
@@ -22,6 +24,35 @@ use Tools\ReflectionTrait;
 class ReflectionTraitTest extends TestCase
 {
     use ReflectionTrait;
+    use TestCaseTrait;
+
+    /**
+     * Tests for `getProperties()` method
+     * @test
+     */
+    public function testGetProperties()
+    {
+        $example = new ExampleClass;
+
+        $expected = [
+            'privateProperty' => 'this is a private property',
+            'firstProperty' => null,
+            'secondProperty' => 'a protected property',
+            'publicProperty' => 'this is public',
+            'staticProperty' => 'a static property',
+        ];
+        $this->assertEquals($expected, $this->getProperties($example));
+
+        $this->assertArrayKeysEqual(['publicProperty', 'staticProperty'], $this->getProperties($example, ReflectionProperty::IS_PUBLIC));
+        $this->assertArrayKeysEqual(['firstProperty', 'secondProperty'], $this->getProperties($example, ReflectionProperty::IS_PROTECTED));
+        $this->assertArrayKeysEqual(['privateProperty'], $this->getProperties($example, ReflectionProperty::IS_PRIVATE));
+        $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($example, ReflectionProperty::IS_STATIC));
+
+        unset($expected['privateProperty']);
+
+        $example = $this->getMockBuilder(ExampleClass::class)->getMock();
+        $this->assertEquals($expected, $this->getProperties($example));
+    }
 
     /**
      * Tests for `getProperty()` method
