@@ -29,12 +29,12 @@ class GlobalFunctionsTest extends TestCase
     public function testCleanUrl()
     {
         foreach ([
-            'http://mysite',
-            'http://mysite/',
-            'http://mysite#fragment',
-            'http://mysite/#fragment',
+            'http://mysite.com',
+            'http://mysite.com/',
+            'http://mysite.com#fragment',
+            'http://mysite.com/#fragment',
         ] as $url) {
-            $this->assertEquals('http://mysite', clean_url($url));
+            $this->assertRegExp('/^http:\/\/mysite\.com\/?$/', clean_url($url));
         }
 
         foreach ([
@@ -47,13 +47,26 @@ class GlobalFunctionsTest extends TestCase
             '/relative#fragment',
             '/relative/#fragment',
         ] as $url) {
-            $this->assertEquals('relative', clean_url($url));
+            $this->assertRegExp('/^\/?relative\/?$/', clean_url($url));
         }
 
-        $this->assertEquals('mysite.com', clean_url('www.mysite.com', true));
-        $this->assertEquals('http://mysite.com', clean_url('http://www.mysite.com', true));
-        $this->assertEquals('https://mysite.com', clean_url('https://www.mysite.com', true));
-        $this->assertEquals('ftp://mysite.com', clean_url('ftp://www.mysite.com', true));
+        foreach ([
+            'www.mysite.com',
+            'http://www.mysite.com',
+            'https://www.mysite.com',
+            'ftp://www.mysite.com',
+        ] as $url) {
+            $this->assertRegExp('/^((https?|ftp):\/\/)?mysite\.com$/', clean_url($url, true));
+        }
+
+        foreach ([
+            'http://mysite.com',
+            'http://mysite.com/',
+            'http://www.mysite.com',
+            'http://www.mysite.com/',
+        ] as $url) {
+            $this->assertEquals('http://mysite.com', clean_url($url, true, true));
+        }
     }
 
     /**

@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.5
+* fixed `clean_url()` function, added third parameter `$removeTrailingSlash`.
+
 ### 1.1.4
 * added `ReflectionTrait::getProperties()` method.
 
