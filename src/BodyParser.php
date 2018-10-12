@@ -86,11 +86,7 @@ class BodyParser
      */
     public function __construct($body, $url)
     {
-        if ($body instanceof StreamInterface) {
-            $body = (string)$body;
-        }
-
-        $this->body = $body;
+        $this->body = $body instanceof StreamInterface ? (string)$body : $body;
         $this->url = $url;
         $this->scheme = parse_url($url, PHP_URL_SCHEME);
         $this->host = parse_url($url, PHP_URL_HOST);
