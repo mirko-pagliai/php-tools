@@ -15,6 +15,7 @@ You can install the package via composer:
 ## Global functions
 - `clean_url($url, $removeWWW = false, $removeTrailingSlash = false)` Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
 - `dir_tree($path, $exceptions = false)` Returns an array of nested directories and files in each directory
+- `ends_with($haystack, $needle)` - Checks if a string ends with a string
 - `first_value(array $array)` - Returns the first value of an array
 - `get_child_methods($class)` Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_external_url($url, $hostname)` Checks if an url is external. The check is performed by comparing the URL with the passed hostname
@@ -27,6 +28,7 @@ You can install the package via composer:
 - `last_value(array $array)` - Returns the last value of an array
 - `rmdir_recursive($dirname)` - Removes a directory and all its contents, including subdirectories and files
 - `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
+- `starts_with($haystack, $needle)` - Checks if a string starts with a string
 - `unlink_resursive($dirname, $exceptions = false)` - Recursively removes all the files contained in a directory and its sub-directories
 - `which($command)` Executes the `which` command and shows the full path of (shell) commands
 
@@ -92,7 +94,7 @@ Available methods are:
 - `getProperty(&$object, $propertyName)` - Gets a property value
 - `invokeMethod(&$object, $methodName, array $parameters = [])` - Invokes a method
 - `setProperty(&$object, $propertyName, $propertyValue)` - Sets a property value
-    
+
 This trait comes to test protected and private methods and properties with
 PHPUnit.
 
@@ -131,6 +133,6 @@ On Windows, it must be done this way:
     vendor/bin/phpunit --exclude-group=onlyUnix
 
 ## Versioning
-For transparency and insight into our release cycle and to maintain backward 
-compatibility, *php-tools* will be maintained under the 
+For transparency and insight into our release cycle and to maintain backward
+compatibility, *php-tools* will be maintained under the
 [Semantic Versioning guidelines](http://semver.org).

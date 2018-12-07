@@ -150,6 +150,24 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `ends_with()` global function
+     * @test
+     */
+    public function testEndsWith()
+    {
+        $string = 'a test with some words';
+
+        $this->assertTrue(ends_with($string, ''));
+        $this->assertTrue(ends_with($string, 's'));
+        $this->assertTrue(ends_with($string, 'some words'));
+        $this->assertTrue(ends_with($string, $string));
+
+        $this->assertFalse(ends_with($string, ' '));
+        $this->assertFalse(ends_with($string, 'b'));
+        $this->assertFalse(ends_with($string, 'test'));
+    }
+
+    /**
      * Test for `first_value()` global function
      * @test
      */
@@ -490,6 +508,24 @@ class GlobalFunctionsTest extends TestCase
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
+    }
+
+    /**
+     * Test for `starts_with()` global function
+     * @test
+     */
+    public function testStartsWith()
+    {
+        $string = 'a test with some words';
+
+        $this->assertTrue(starts_with($string, ''));
+        $this->assertTrue(starts_with($string, 'a'));
+        $this->assertTrue(starts_with($string, 'a test'));
+        $this->assertTrue(starts_with($string, $string));
+
+        $this->assertFalse(starts_with($string, ' '));
+        $this->assertFalse(starts_with($string, 'b'));
+        $this->assertFalse(starts_with($string, 'test'));
     }
 
     /**
