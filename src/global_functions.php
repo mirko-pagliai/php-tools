@@ -95,6 +95,22 @@ if (!function_exists('dir_tree')) {
     }
 }
 
+if (!function_exists('ends_with')) {
+    /**
+     * Checks if a string ends with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.6
+     */
+    function ends_with($haystack, $needle)
+    {
+        $length = strlen($needle);
+
+        return !$length ?: substr($haystack, -$length) === $needle;
+    }
+}
+
 if (!function_exists('first_value')) {
     /**
      * Returns the first value of an array
@@ -357,6 +373,20 @@ if (!function_exists('rtr')) {
         }
 
         return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+    }
+}
+
+if (!function_exists('starts_with')) {
+    /**
+     * Checks if a string starts with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.6
+     */
+    function starts_with($haystack, $needle)
+    {
+         return substr($haystack, 0, strlen($needle)) === $needle;
     }
 }
 

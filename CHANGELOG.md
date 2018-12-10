@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.6
+* added `ends_with()` and `starts_with()` global functions.
+
 ### 1.1.5
 * fixed `clean_url()` function, added third parameter `$removeTrailingSlash`.
 
