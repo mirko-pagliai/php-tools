@@ -4,7 +4,7 @@
 * added `is_true_or_fail()` function;
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
     `is_writable_or_fail()` functions are now deprecated and they will be
-    removed from the `1.2.0` version.
+    removed from the `1.2.0` version. Use instead `is_true_or_fail()`.
 
 ### 1.1.6
 * added `ends_with()` and `starts_with()` global functions.
