@@ -63,8 +63,7 @@ class BodyParserTest extends TestCase
             '' => false,
             null => false,
         ] as $string => $expected) {
-            $BodyParser = new BodyParser($string, null);
-            $this->assertEquals($expected, $BodyParser->isHtml());
+            $this->assertEquals($expected, (new BodyParser($string, null))->isHtml());
         }
     }
 

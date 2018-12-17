@@ -213,7 +213,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetExtension()
     {
-        $extensions = [
+        foreach ([
             'backup.sql' => 'sql',
             'backup.sql.bz2' => 'sql.bz2',
             'backup.sql.gz' => 'sql.gz',
@@ -223,13 +223,11 @@ class GlobalFunctionsTest extends TestCase
             'txt' => null,
             '.txt' => null,
             '.hiddenFile' => null,
-        ];
-
-        foreach ($extensions as $filename => $expectedExtension) {
+        ] as $filename => $expectedExtension) {
             $this->assertEquals($expectedExtension, get_extension($filename));
         }
 
-        $filenames = [
+        foreach ([
             'backup.sql.gz',
             '/backup.sql.gz',
             '/full/path/to/backup.sql.gz',
@@ -239,20 +237,16 @@ class GlobalFunctionsTest extends TestCase
             'C:\backup.sql.gz',
             'C:\subdir\backup.sql.gz',
             'C:\withDot.\backup.sql.gz',
-        ];
-
-        foreach ($filenames as $filename) {
+        ] as $filename) {
             $this->assertEquals('sql.gz', get_extension($filename));
         }
 
-        $urls = [
+        foreach ([
             'http://example.com/backup.sql.gz',
             'http://example.com/backup.sql.gz#fragment',
             'http://example.com/backup.sql.gz?',
             'http://example.com/backup.sql.gz?name=value',
-        ];
-
-        foreach ($urls as $url) {
+        ] as $url) {
             $this->assertEquals('sql.gz', get_extension($url));
         }
     }
@@ -263,6 +257,8 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetHostnameFromUrl()
     {
+        $this->assertNull(get_hostname_from_url('page.html'));
+
         foreach (['http://127.0.0.1', 'http://127.0.0.1/'] as $url) {
             $this->assertEquals('127.0.0.1', get_hostname_from_url($url));
         }
@@ -282,8 +278,6 @@ class GlobalFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('google.com', get_hostname_from_url($url));
         }
-
-        $this->assertNull(get_hostname_from_url('page.html'));
     }
 
     /**
@@ -400,9 +394,9 @@ class GlobalFunctionsTest extends TestCase
         foreach ([
             'example.com',
             'folder',
-            DIRECTORY_SEPARATOR . 'folder',
-            DIRECTORY_SEPARATOR . 'folder' . DIRECTORY_SEPARATOR,
-            DIRECTORY_SEPARATOR . 'folder' . DIRECTORY_SEPARATOR . 'file.txt',
+            DS . 'folder',
+            DS . 'folder' . DS,
+            DS . 'folder' . DS . 'file.txt',
         ] as $url) {
             $this->assertFalse(is_url($url));
         }

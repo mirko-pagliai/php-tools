@@ -59,17 +59,15 @@ class OrFailFunctionsTest extends TestCase
     public function testFileExistsOrFail()
     {
         $this->assertNull(file_exists_or_fail($this->exampleFile));
-    }
 
-    /**
-     * Test for `file_exists_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
-     * @test
-     */
-    public function testFileExistsOrFailWithFailure()
-    {
-        file_exists_or_fail(TMP . 'noExisting');
+        //Failure
+        try {
+            file_exists_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` does not exist', $e->getMessage());
+        }
     }
 
     /**
@@ -79,28 +77,23 @@ class OrFailFunctionsTest extends TestCase
     public function testIsDirOrFail()
     {
         $this->assertNull(is_dir_or_fail(dirname($this->exampleFile)));
-    }
 
-    /**
-     * Test for `is_dir_or_fail()` "or fail" function
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
-     * @test
-     */
-    public function testIsDirOrFailWithFailure()
-    {
-        is_dir_or_fail(TMP . 'noExisting');
-    }
+        //Failures
+        try {
+            is_dir_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` does not exist', $e->getMessage());
+        }
 
-    /**
-     * Test for `is_dir_or_fail()` "or fail" function
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^`[\w\d\:\/\-\\]+` is not a directory$/
-     * @test
-     */
-    public function testIsDirOrFailWithFileFailure()
-    {
-        is_dir_or_fail($this->exampleFile);
+        try {
+            is_dir_or_fail($this->exampleFile);
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('`' . $this->exampleFile . '` is not a directory', $e->getMessage());
+        }
     }
 
     /**
@@ -110,17 +103,15 @@ class OrFailFunctionsTest extends TestCase
     public function testIsReadableOrFail()
     {
         $this->assertNull(is_readable_or_fail($this->exampleFile));
-    }
 
-    /**
-     * Test for `is_readable_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not readable$/
-     * @test
-     */
-    public function testIsReadableOrFailWithFailure()
-    {
-        is_readable_or_fail(TMP . 'noExisting');
+        //Failure
+        try {
+            is_readable_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` is not readable', $e->getMessage());
+        }
     }
 
     /**
@@ -198,16 +189,14 @@ class OrFailFunctionsTest extends TestCase
     public function testIsWritableOrFail()
     {
         $this->assertNull(is_writable_or_fail($this->exampleFile));
-    }
 
-    /**
-     * Test for `is_writable_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not writable$/
-     * @test
-     */
-    public function testIsWritableOrFailWithFailure()
-    {
-        is_writable_or_fail(TMP . 'noExisting');
+        //Failure
+        try {
+            is_writable_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` is not writable', $e->getMessage());
+        }
     }
 }
