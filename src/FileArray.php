@@ -44,7 +44,8 @@ class FileArray
      */
     public function __construct($filename, array $data = [])
     {
-        is_writable_or_fail(is_file($filename) ? $filename : dirname($filename));
+        $target = is_file($filename) ? $filename : dirname($filename);
+        is_true_or_fail(is_writable($target), sprintf('File or directory `%s` is not writable', rtr($target)));
 
         $this->filename = $filename;
         $this->data = $data ?: $this->read();
