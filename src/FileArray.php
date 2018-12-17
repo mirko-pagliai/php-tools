@@ -190,6 +190,6 @@ class FileArray
      */
     public function write()
     {
-        return (bool)file_put_contents($this->filename, serialize($this->data));
+        return create_file($this->filename, serialize($this->data));
     }
 }

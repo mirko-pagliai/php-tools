@@ -38,7 +38,7 @@ class OrFailFunctionsTest extends TestCase
     {
         parent::setUp();
 
-        file_put_contents($this->exampleFile, 'a string');
+        safe_create_file($this->exampleFile, 'a string');
     }
 
     /**

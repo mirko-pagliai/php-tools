@@ -506,14 +506,12 @@ class GlobalFunctionsTest extends TestCase
         }
 
         //Does not delete a file
-        $file = TMP . 'exampleDir' . DS . 'exampleFile';
-        mkdir(dirname($file), 0777, true);
-        file_put_contents($file, null);
-        $this->assertFileExists($file);
-        rmdir_recursive($file);
-        $this->assertFileExists($file);
+        $filename = TMP . 'exampleDir' . DS . 'exampleFile';
+        safe_create_file($filename);
+        rmdir_recursive($filename);
+        $this->assertFileExists($filename);
 
-        safe_unlink($file);
+        safe_unlink($filename);
         safe_rmdir(dirname($file));
     }
 

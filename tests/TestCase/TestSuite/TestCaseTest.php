@@ -104,13 +104,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        //@codingStandardsIgnoreLine
-        $filename = tempnam(TMP, 'test_file.txt');
-        file_put_contents($filename, 'this is a test file');
-
+        $filename = safe_create_tmp_file('this is a test file');
         $this->assertFileMime($filename, 'text/plain');
-
-        safe_unlink($filename);
     }
 
     /**

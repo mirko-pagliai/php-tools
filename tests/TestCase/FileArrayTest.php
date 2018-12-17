@@ -67,7 +67,7 @@ class FileArrayTest extends TestCase
     public function testConstruct()
     {
         //With a file that already exists
-        file_put_contents($this->file, null);
+        safe_create_file($this->file);
         $this->assertEquals([], (new FileArray($this->file))->read());
 
         //Failure
@@ -160,7 +160,7 @@ class FileArrayTest extends TestCase
         $this->assertNotEmpty($this->FileArray->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        file_put_contents($this->file, 'a string');
+        safe_create_file($this->file, 'a string');
         $this->assertEquals([], (new FileArray($this->file))->read());
 
         safe_unlink($this->file);
