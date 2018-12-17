@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.7
+* added `is_true_or_fail()` function.
+
 ### 1.1.6
 * added `ends_with()` and `starts_with()` global functions.
 

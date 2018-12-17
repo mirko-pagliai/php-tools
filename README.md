@@ -43,6 +43,7 @@ You can install the package via composer:
 - `is_dir_or_fail($filename)` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
 - `is_readable_or_fail($filename)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
 - `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
+- `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = null)` - Throws an exception if the value is not equal to `true`
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function
