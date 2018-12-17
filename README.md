@@ -20,6 +20,8 @@ You can install the package via composer:
 
 ## Global functions
 - `clean_url($url, $removeWWW = false, $removeTrailingSlash = false)` - Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `create_file($filename, $data = null)` - Creates a file. It also recursively creates the directory where the file will be created
+- `create_tmp_file($data = null)` - Creates a tenporary file. The file will be created in `TMP`, if the constant is defined, otherwise in the temporary directory of the system
 - `dir_tree($path, $exceptions = false)` - Returns an array of nested directories and files in each directory
 - `ends_with($haystack, $needle)` - Checks if a string ends with a string
 - `first_value(array $array)` - Returns the first value of an array

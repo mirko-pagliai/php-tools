@@ -70,6 +70,43 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `create_file()` global function
+     * @test
+     */
+    public function testCreateFile()
+    {
+        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
+        $this->assertTrue(create_file($filename));
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+
+        $content = 'string';
+        safe_unlink($filename);
+        $this->assertTrue(create_file($filename, $content));
+        $this->assertFileExists($filename);
+        $this->assertEquals($content, file_get_contents($filename));
+    }
+
+    /**
+     * Test for `create_tmp_file()` global function
+     * @test
+     */
+    public function testCreateTmpFile()
+    {
+        $filename = create_tmp_file();
+        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+
+        $content = 'string';
+        safe_unlink($filename);
+        $filename = create_tmp_file($content);
+        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEquals($content, file_get_contents($filename));
+    }
+
+    /**
      * Test for `dir_tree()` global function
      * @test
      */
