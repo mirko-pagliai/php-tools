@@ -7,6 +7,12 @@
 
 *php-tools* adds some useful global functions and some classes and methods.
 
+Did you like this plugin? Its development requires a lot of time for me.
+Please consider the possibility of making [a donation](//paypal.me/mirkopagliai):  
+even a coffee is enough! Thank you.
+
+[![Make a donation](https://www.paypalobjects.com/webstatic/mktg/logo-center/logo_paypal_carte.jpg)](//paypal.me/mirkopagliai)
+
 ## Installation
 You can install the package via composer:
 
