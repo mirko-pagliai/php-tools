@@ -42,6 +42,30 @@ class SafeFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `safe_create_file()` safe function
+     * @test
+     */
+    public function testSafeCreateFile()
+    {
+        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
+        $this->assertTrue(safe_create_file($filename));
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+    }
+
+    /**
+     * Test for `safe_create_tmp_file()` safe function
+     * @test
+     */
+    public function testSafeCreateTmpFile()
+    {
+        $filename = safe_create_tmp_file();
+        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+    }
+
+    /**
      * Test for `safe_mkdir()` safe function
      * @test
      */

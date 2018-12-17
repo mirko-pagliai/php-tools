@@ -49,6 +49,8 @@ You can install the package via composer:
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function
+- `safe_create_file($filename, $data = null)` - Safe alias for `create_file()` function
+- `safe_create_tmp_file($data = null)` - Safe alias for `create_tmp_file()` function
 - `safe_mkdir($pathname, $mode = 0777, $recursive = false)` - Safe alias for `mkdir()` function
 - `safe_rmdir($dirname)` - Safe alias for `rmdir()` function
 - `safe_rmdir_recursive($dirname)` - Safe alias for `rmdir_recursive()` function
