@@ -59,6 +59,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testFileExistsOrFail()
     {
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
         $this->assertNull(file_exists_or_fail($this->exampleFile));
 
         //Failure
@@ -69,6 +71,8 @@ class OrFailFunctionsTest extends TestCase
             $this->assertInstanceof(ErrorException::class, $e);
             $this->assertEquals('File or directory `' . TMP . 'noExisting` does not exist', $e->getMessage());
         }
+
+        error_reporting($currentErrorReporting);
     }
 
     /**
@@ -77,6 +81,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsDirOrFail()
     {
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
         $this->assertNull(is_dir_or_fail(dirname($this->exampleFile)));
 
         //Failures
@@ -95,6 +101,8 @@ class OrFailFunctionsTest extends TestCase
             $this->assertInstanceof(ErrorException::class, $e);
             $this->assertEquals('`' . $this->exampleFile . '` is not a directory', $e->getMessage());
         }
+
+        error_reporting($currentErrorReporting);
     }
 
     /**
@@ -103,6 +111,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
         $this->assertNull(is_readable_or_fail($this->exampleFile));
 
         //Failure
@@ -113,6 +123,8 @@ class OrFailFunctionsTest extends TestCase
             $this->assertInstanceof(ErrorException::class, $e);
             $this->assertEquals('File or directory `' . TMP . 'noExisting` is not readable', $e->getMessage());
         }
+
+        error_reporting($currentErrorReporting);
     }
 
     /**
@@ -188,6 +200,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
         $this->assertNull(is_writable_or_fail($this->exampleFile));
 
         //Failure
@@ -198,5 +212,7 @@ class OrFailFunctionsTest extends TestCase
             $this->assertInstanceof(ErrorException::class, $e);
             $this->assertEquals('File or directory `' . TMP . 'noExisting` is not writable', $e->getMessage());
         }
+
+        error_reporting($currentErrorReporting);
     }
 }

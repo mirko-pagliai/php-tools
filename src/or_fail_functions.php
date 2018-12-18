@@ -22,6 +22,7 @@ if (!function_exists('file_exists_or_fail')) {
      */
     function file_exists_or_fail($filename)
     {
+        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
         is_true_or_fail(file_exists($filename), sprintf('File or directory `%s` does not exist', rtr($filename)), ErrorException::class);
     }
 }
@@ -36,6 +37,7 @@ if (!function_exists('is_dir_or_fail')) {
      */
     function is_dir_or_fail($filename)
     {
+        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
         file_exists_or_fail($filename);
         is_true_or_fail(is_dir($filename), sprintf('`%s` is not a directory', rtr($filename)), ErrorException::class);
     }
@@ -51,6 +53,7 @@ if (!function_exists('is_readable_or_fail')) {
      */
     function is_readable_or_fail($filename)
     {
+        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
         is_true_or_fail(is_readable($filename), sprintf('File or directory `%s` is not readable', rtr($filename)), ErrorException::class);
     }
 }
@@ -99,6 +102,7 @@ if (!function_exists('is_writable_or_fail')) {
      */
     function is_writable_or_fail($filename)
     {
+        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
         is_true_or_fail(is_writable($filename), sprintf('File or directory `%s` is not writable', rtr($filename)), ErrorException::class);
     }
 }
