@@ -12,6 +12,7 @@
  */
 namespace Tools\Test;
 
+use Exception;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 use Tools\TestSuite\TestCaseTrait;
@@ -113,22 +114,26 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testDeprecationWarning()
     {
-        $currentErrorReporting =  error_reporting(~E_USER_DEPRECATED);
+        $currentErrorReporting =  error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
         try {
             deprecationWarning('This method is deprecated');
-        } catch (Deprecated $e) {
+        } catch (Deprecated $dep) {
             $this->fail('Deprecated was raised');
-        } finally {
-            error_reporting($currentErrorReporting);
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
         }
 
+        error_reporting($currentErrorReporting);
+
         try {
             deprecationWarning('This method is deprecated');
-        } catch (Deprecated $e) {
+        } catch (Deprecated $dep) {
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
         } finally {
             $this->assertEquals('This method is deprecated - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.', $e->getMessage());
+ You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.', $dep->getMessage());
         }
     }
 
