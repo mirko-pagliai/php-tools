@@ -312,38 +312,6 @@ if (!function_exists('is_slash_term')) {
     }
 }
 
-if (!function_exists('is_true_or_fail')) {
-    /**
-     * Throws an exception if the value is not equal to `true`
-     * @param mixed $value The value you want to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @param string|Expection|null $exception The exception class you want to
-     *  set. If `null`, a default `ErrorException` will be used
-     * @return void
-     * @since 1.1.7
-     * @throws ErrorException
-     */
-    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = null)
-    {
-        if ((bool)$value) {
-            return;
-        }
-
-        if (is_string($exception) && class_exists($exception)) {
-            $exception = new $exception;
-
-            if (!$exception instanceof \Exception) {
-                trigger_error('Invalid Exception');
-            }
-        } else {
-            $exception = \ErrorException::class;
-        }
-
-        throw new $exception($message);
-    }
-}
-
 if (!function_exists('is_url')) {
     /**
      * Checks if a string is a valid url
