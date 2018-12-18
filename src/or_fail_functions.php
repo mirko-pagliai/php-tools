@@ -61,29 +61,31 @@ if (!function_exists('is_true_or_fail')) {
      * @param mixed $value The value you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
-     * @param string|Expection|null $exception The exception class you want to
-     *  set. If `null`, a default `ErrorException` will be used
+     * @param string $exception The exception class you want to set
      * @return void
      * @since 1.1.7
-     * @throws ErrorException
+     * @throws Exception
      */
-    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = null)
+    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
     {
-        if ((bool)$value) {
+        if ($value) {
             return;
         }
 
-        if (is_string($exception) && class_exists($exception)) {
-            $exception = new $exception;
-
-            if (!$exception instanceof \Exception) {
-                trigger_error('Invalid Exception');
-            }
-        } else {
-            $exception = \ErrorException::class;
+        if (!is_string($exception)) {
+            trigger_error('`$exception` argument must be a string');
+        }
+        if (!class_exists($exception)) {
+            trigger_error(sprintf('Class `%s` does not exist', $exception));
         }
 
-        throw new $exception($message);
+        $exception = new $exception($message);
+
+        if (!$exception instanceof \Exception) {
+            trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
+        }
+
+        throw $exception;
     }
 }
 

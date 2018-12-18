@@ -15,6 +15,7 @@ namespace Tools\Test;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_Error_Notice;
 use RuntimeException;
 use stdClass;
 
@@ -118,29 +119,24 @@ class OrFailFunctionsTest extends TestCase
      * Test for `is_true_or_fail()` function
      * @test
      */
-    public function testIsTrueOrFailure()
+    public function testIsTrueOrFail()
     {
-        foreach (['string', ['array'], false, new stdClass, true, 1, 0.1] as $value) {
+        foreach (['string', ['array'], new stdClass, true, 1, 0.1] as $value) {
             try {
-                $e = false;
                 $result = is_true_or_fail($value);
-            } catch (Exception $ex) {
+            } catch (Exception $e) {
+                $this->fail($e->getMessage());
             } finally {
-                if ($e && $e instanceof ErrorException) {
-                    $this->fail(sprintf('Exception was raised for `%s` value', $value));
-                }
-
                 $this->assertNull($result);
             }
         }
 
         foreach ([null, false, 0, '0', []] as $value) {
             try {
-                $e = false;
                 $result = is_true_or_fail($value);
             } catch (Exception $e) {
             } finally {
-                if (!$e || !$e instanceof ErrorException) {
+                if (!isset($e) || !$e instanceof ErrorException) {
                     $this->fail(sprintf('Exception was not raised for `%s` value', $value));
                 }
 
@@ -148,15 +144,6 @@ class OrFailFunctionsTest extends TestCase
                 $this->assertInstanceof(ErrorException::class, $e);
                 $this->assertEquals('The value is not equal to `true`', $e->getMessage());
             }
-        }
-
-        try {
-            $result = is_true_or_fail(false, '`false` is not `true`');
-        } catch (Exception $e) {
-        } finally {
-            $this->assertNull($result);
-            $this->assertInstanceof(ErrorException::class, $e);
-            $this->assertEquals('`false` is not `true`', $e->getMessage());
         }
 
         //Failure with a custom message
@@ -169,15 +156,33 @@ class OrFailFunctionsTest extends TestCase
             $this->assertEquals('`false` is not `true`', $e->getMessage());
         }
 
-        //Failure with a custom message and exception classes
+        //Failure with a custom message and exception class
         foreach ([RuntimeException::class, 'RuntimeException'] as $exceptionClass) {
             try {
                 $result = is_true_or_fail(false, '`false` is not `true`', $exceptionClass);
-            } catch (Exception $e) {
+            } catch (RuntimeException $e) {
             } finally {
                 $this->assertNull($result);
                 $this->assertInstanceof(RuntimeException::class, $e);
                 $this->assertEquals('`false` is not `true`', $e->getMessage());
+            }
+        }
+
+        //Failures with bad exception classes
+        foreach ([
+            [new stdClass, '`$exception` argument must be a string'],
+            [stdClass::class, '`stdClass` is not and instance of `Exception`'],
+            ['noExisting\Class', 'Class `noExisting\Class` does not exist'],
+        ] as $exceptionClasses) {
+            list($exceptionClass, $expectedMessage) = $exceptionClasses;
+
+            try {
+                $result = is_true_or_fail(false, null, $exceptionClass);
+            } catch (Exception $e) {
+            } finally {
+                $this->assertNull($result);
+                $this->assertInstanceof(PHPUnit_Framework_Error_Notice::class, $e);
+                $this->assertEquals($expectedMessage, $e->getMessage());
             }
         }
     }
