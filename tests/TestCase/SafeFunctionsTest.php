@@ -58,7 +58,7 @@ class SafeFunctionsTest extends TestCase
     public function testSafeCreateTmpFile()
     {
         $filename = safe_create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
         $this->assertFileExists($filename);
         $this->assertEmpty(file_get_contents($filename));
     }

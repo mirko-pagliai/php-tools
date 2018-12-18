@@ -94,14 +94,14 @@ class GlobalFunctionsTest extends TestCase
     public function testCreateTmpFile()
     {
         $filename = create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
         $this->assertFileExists($filename);
         $this->assertEmpty(file_get_contents($filename));
 
         $content = 'string';
         safe_unlink($filename);
         $filename = create_tmp_file($content);
-        $this->assertRegexp(sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
         $this->assertFileExists($filename);
         $this->assertEquals($content, file_get_contents($filename));
     }
