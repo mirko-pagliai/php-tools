@@ -29,16 +29,38 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeCopy()
     {
-        $source = tempnam(TMP, 'file');
+        $source = safe_create_tmp_file();
         $dest = TMP . 'copy_' . md5(time());
-        file_put_contents($source, null);
         $this->assertFileNotExists($dest);
 
         $this->assertTrue(safe_copy($source, $dest));
         $this->assertFileExists($dest);
 
-        safe_unlink($source);
         safe_unlink($dest);
+    }
+
+    /**
+     * Test for `safe_create_file()` safe function
+     * @test
+     */
+    public function testSafeCreateFile()
+    {
+        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
+        $this->assertTrue(safe_create_file($filename));
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+    }
+
+    /**
+     * Test for `safe_create_tmp_file()` safe function
+     * @test
+     */
+    public function testSafeCreateTmpFile()
+    {
+        $filename = safe_create_tmp_file();
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
     }
 
     /**

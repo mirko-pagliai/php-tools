@@ -20,6 +20,8 @@ You can install the package via composer:
 
 ## Global functions
 - `clean_url($url, $removeWWW = false, $removeTrailingSlash = false)` - Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
+- `create_file($filename, $data = null)` - Creates a file. It also recursively creates the directory where the file will be created
+- `create_tmp_file($data = null)` - Creates a tenporary file. The file will be created in `TMP`, if the constant is defined, otherwise in the temporary directory of the system
 - `dir_tree($path, $exceptions = false)` - Returns an array of nested directories and files in each directory
 - `ends_with($haystack, $needle)` - Checks if a string ends with a string
 - `first_value(array $array)` - Returns the first value of an array
@@ -43,9 +45,12 @@ You can install the package via composer:
 - `is_dir_or_fail($filename)` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
 - `is_readable_or_fail($filename)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
 - `is_writable_or_fail($filename)` - Tells whether the filename is writable and throws an exception if the file is not writable
+- `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)` - Throws an exception if the value is not equal to `true`
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function
+- `safe_create_file($filename, $data = null)` - Safe alias for `create_file()` function
+- `safe_create_tmp_file($data = null)` - Safe alias for `create_tmp_file()` function
 - `safe_mkdir($pathname, $mode = 0777, $recursive = false)` - Safe alias for `mkdir()` function
 - `safe_rmdir($dirname)` - Safe alias for `rmdir()` function
 - `safe_rmdir_recursive($dirname)` - Safe alias for `rmdir_recursive()` function

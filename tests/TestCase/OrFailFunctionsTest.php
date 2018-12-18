@@ -12,7 +12,12 @@
  */
 namespace Tools\Test;
 
+use ErrorException;
+use Exception;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use stdClass;
 
 /**
  * OrFailFunctionsTest class
@@ -22,7 +27,7 @@ class OrFailFunctionsTest extends TestCase
     /**
      * @var string
      */
-    protected $exampleFile;
+    protected $exampleFile = TMP . 'exampleFile';
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -34,8 +39,7 @@ class OrFailFunctionsTest extends TestCase
     {
         parent::setUp();
 
-        $this->exampleFile = TMP . 'exampleFile';
-        file_put_contents($this->exampleFile, 'a string');
+        safe_create_file($this->exampleFile, 'a string');
     }
 
     /**
@@ -56,17 +60,15 @@ class OrFailFunctionsTest extends TestCase
     public function testFileExistsOrFail()
     {
         $this->assertNull(file_exists_or_fail($this->exampleFile));
-    }
 
-    /**
-     * Test for `file_exists_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
-     * @test
-     */
-    public function testFileExistsOrFailWithFailure()
-    {
-        file_exists_or_fail(TMP . 'noExisting');
+        //Failure
+        try {
+            file_exists_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` does not exist', $e->getMessage());
+        }
     }
 
     /**
@@ -76,28 +78,23 @@ class OrFailFunctionsTest extends TestCase
     public function testIsDirOrFail()
     {
         $this->assertNull(is_dir_or_fail(dirname($this->exampleFile)));
-    }
 
-    /**
-     * Test for `is_dir_or_fail()` "or fail" function
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` does not exist$/
-     * @test
-     */
-    public function testIsDirOrFailWithFailure()
-    {
-        is_dir_or_fail(TMP . 'noExisting');
-    }
+        //Failures
+        try {
+            is_dir_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` does not exist', $e->getMessage());
+        }
 
-    /**
-     * Test for `is_dir_or_fail()` "or fail" function
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^`[\w\d\:\/\-\\]+` is not a directory$/
-     * @test
-     */
-    public function testIsDirOrFailWithFileFailure()
-    {
-        is_dir_or_fail($this->exampleFile);
+        try {
+            is_dir_or_fail($this->exampleFile);
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('`' . $this->exampleFile . '` is not a directory', $e->getMessage());
+        }
     }
 
     /**
@@ -107,17 +104,87 @@ class OrFailFunctionsTest extends TestCase
     public function testIsReadableOrFail()
     {
         $this->assertNull(is_readable_or_fail($this->exampleFile));
+
+        //Failure
+        try {
+            is_readable_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` is not readable', $e->getMessage());
+        }
     }
 
     /**
-     * Test for `is_readable_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not readable$/
+     * Test for `is_true_or_fail()` function
      * @test
      */
-    public function testIsReadableOrFailWithFailure()
+    public function testIsTrueOrFail()
     {
-        is_readable_or_fail(TMP . 'noExisting');
+        foreach (['string', ['array'], new stdClass, true, 1, 0.1] as $value) {
+            try {
+                $result = is_true_or_fail($value);
+            } catch (Exception $e) {
+                $this->fail($e->getMessage());
+            } finally {
+                $this->assertNull($result);
+            }
+        }
+
+        foreach ([null, false, 0, '0', []] as $value) {
+            try {
+                $result = is_true_or_fail($value);
+            } catch (Exception $e) {
+            } finally {
+                if (!isset($e) || !$e instanceof ErrorException) {
+                    $this->fail(sprintf('Exception was not raised for `%s` value', $value));
+                }
+
+                $this->assertNull($result);
+                $this->assertInstanceof(ErrorException::class, $e);
+                $this->assertEquals('The value is not equal to `true`', $e->getMessage());
+            }
+        }
+
+        //Failure with a custom message
+        try {
+            $result = is_true_or_fail(false, '`false` is not `true`');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertNull($result);
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('`false` is not `true`', $e->getMessage());
+        }
+
+        //Failure with a custom message and exception class
+        foreach ([RuntimeException::class, 'RuntimeException'] as $exceptionClass) {
+            try {
+                $result = is_true_or_fail(false, '`false` is not `true`', $exceptionClass);
+            } catch (RuntimeException $e) {
+            } finally {
+                $this->assertNull($result);
+                $this->assertInstanceof(RuntimeException::class, $e);
+                $this->assertEquals('`false` is not `true`', $e->getMessage());
+            }
+        }
+
+        //Failures with bad exception classes
+        foreach ([
+            [new stdClass, '`$exception` argument must be a string'],
+            [stdClass::class, '`stdClass` is not and instance of `Exception`'],
+            ['noExisting\Class', 'Class `noExisting\Class` does not exist'],
+        ] as $exceptionClasses) {
+            list($exceptionClass, $expectedMessage) = $exceptionClasses;
+
+            try {
+                $result = is_true_or_fail(false, null, $exceptionClass);
+            } catch (Exception $e) {
+            } finally {
+                $this->assertNull($result);
+                $this->assertInstanceof(Notice::class, $e);
+                $this->assertEquals($expectedMessage, $e->getMessage());
+            }
+        }
     }
 
     /**
@@ -127,16 +194,14 @@ class OrFailFunctionsTest extends TestCase
     public function testIsWritableOrFail()
     {
         $this->assertNull(is_writable_or_fail($this->exampleFile));
-    }
 
-    /**
-     * Test for `is_writable_or_fail()` "or fail" function, with a failure
-     * @expectedException ErrorException
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+` is not writable$/
-     * @test
-     */
-    public function testIsWritableOrFailWithFailure()
-    {
-        is_writable_or_fail(TMP . 'noExisting');
+        //Failure
+        try {
+            is_writable_or_fail(TMP . 'noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(ErrorException::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExisting` is not writable', $e->getMessage());
+        }
     }
 }

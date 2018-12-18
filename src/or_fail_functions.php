@@ -11,19 +11,18 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.0.6
  */
+
 if (!function_exists('file_exists_or_fail')) {
     /**
      * Checks whether a file or directory exists and throws an exception if the
      *  file does not exist
+     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
-     * @throws \ErrorException
      */
     function file_exists_or_fail($filename)
     {
-        if (!file_exists($filename)) {
-            throw new \ErrorException(sprintf('File or directory `%s` does not exist', rtr($filename)));
-        }
+        is_true_or_fail(file_exists($filename), sprintf('File or directory `%s` does not exist', rtr($filename)), ErrorException::class);
     }
 }
 
@@ -31,17 +30,14 @@ if (!function_exists('is_dir_or_fail')) {
     /**
      * Tells whether the filename is a directory and throws an exception if the
      *  filename is not a directory
+     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the directory
      * @return void
-     * @throws \ErrorException
      */
     function is_dir_or_fail($filename)
     {
         file_exists_or_fail($filename);
-
-        if (!is_dir($filename)) {
-            throw new \ErrorException(sprintf('`%s` is not a directory', rtr($filename)));
-        }
+        is_true_or_fail(is_dir($filename), sprintf('`%s` is not a directory', rtr($filename)), ErrorException::class);
     }
 }
 
@@ -49,15 +45,47 @@ if (!function_exists('is_readable_or_fail')) {
     /**
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
+     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
-     * @throws \ErrorException
      */
     function is_readable_or_fail($filename)
     {
-        if (!is_readable($filename)) {
-            throw new \ErrorException(sprintf('File or directory `%s` is not readable', rtr($filename)));
+        is_true_or_fail(is_readable($filename), sprintf('File or directory `%s` is not readable', rtr($filename)), ErrorException::class);
+    }
+}
+
+if (!function_exists('is_true_or_fail')) {
+    /**
+     * Throws an exception if the value is not equal to `true`
+     * @param mixed $value The value you want to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @since 1.1.7
+     * @throws Exception
+     */
+    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
+    {
+        if ($value) {
+            return;
         }
+
+        if (!is_string($exception)) {
+            trigger_error('`$exception` argument must be a string');
+        }
+        if (!class_exists($exception)) {
+            trigger_error(sprintf('Class `%s` does not exist', $exception));
+        }
+
+        $exception = new $exception($message);
+
+        if (!$exception instanceof \Exception) {
+            trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
+        }
+
+        throw $exception;
     }
 }
 
@@ -65,14 +93,12 @@ if (!function_exists('is_writable_or_fail')) {
     /**
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
+     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
-     * @throws \ErrorException
      */
     function is_writable_or_fail($filename)
     {
-        if (!is_writable($filename)) {
-            throw new \ErrorException(sprintf('File or directory `%s` is not writable', rtr($filename)));
-        }
+        is_true_or_fail(is_writable($filename), sprintf('File or directory `%s` is not writable', rtr($filename)), ErrorException::class);
     }
 }

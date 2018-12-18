@@ -70,6 +70,43 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `create_file()` global function
+     * @test
+     */
+    public function testCreateFile()
+    {
+        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
+        $this->assertTrue(create_file($filename));
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+
+        $content = 'string';
+        safe_unlink($filename);
+        $this->assertTrue(create_file($filename, $content));
+        $this->assertFileExists($filename);
+        $this->assertEquals($content, file_get_contents($filename));
+    }
+
+    /**
+     * Test for `create_tmp_file()` global function
+     * @test
+     */
+    public function testCreateTmpFile()
+    {
+        $filename = create_tmp_file();
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEmpty(file_get_contents($filename));
+
+        $content = 'string';
+        safe_unlink($filename);
+        $filename = create_tmp_file($content);
+        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+        $this->assertFileExists($filename);
+        $this->assertEquals($content, file_get_contents($filename));
+    }
+
+    /**
      * Test for `dir_tree()` global function
      * @test
      */
@@ -213,7 +250,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetExtension()
     {
-        $extensions = [
+        foreach ([
             'backup.sql' => 'sql',
             'backup.sql.bz2' => 'sql.bz2',
             'backup.sql.gz' => 'sql.gz',
@@ -223,13 +260,11 @@ class GlobalFunctionsTest extends TestCase
             'txt' => null,
             '.txt' => null,
             '.hiddenFile' => null,
-        ];
-
-        foreach ($extensions as $filename => $expectedExtension) {
+        ] as $filename => $expectedExtension) {
             $this->assertEquals($expectedExtension, get_extension($filename));
         }
 
-        $filenames = [
+        foreach ([
             'backup.sql.gz',
             '/backup.sql.gz',
             '/full/path/to/backup.sql.gz',
@@ -239,20 +274,16 @@ class GlobalFunctionsTest extends TestCase
             'C:\backup.sql.gz',
             'C:\subdir\backup.sql.gz',
             'C:\withDot.\backup.sql.gz',
-        ];
-
-        foreach ($filenames as $filename) {
+        ] as $filename) {
             $this->assertEquals('sql.gz', get_extension($filename));
         }
 
-        $urls = [
+        foreach ([
             'http://example.com/backup.sql.gz',
             'http://example.com/backup.sql.gz#fragment',
             'http://example.com/backup.sql.gz?',
             'http://example.com/backup.sql.gz?name=value',
-        ];
-
-        foreach ($urls as $url) {
+        ] as $url) {
             $this->assertEquals('sql.gz', get_extension($url));
         }
     }
@@ -263,6 +294,8 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetHostnameFromUrl()
     {
+        $this->assertNull(get_hostname_from_url('page.html'));
+
         foreach (['http://127.0.0.1', 'http://127.0.0.1/'] as $url) {
             $this->assertEquals('127.0.0.1', get_hostname_from_url($url));
         }
@@ -282,8 +315,6 @@ class GlobalFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('google.com', get_hostname_from_url($url));
         }
-
-        $this->assertNull(get_hostname_from_url('page.html'));
     }
 
     /**
@@ -400,9 +431,9 @@ class GlobalFunctionsTest extends TestCase
         foreach ([
             'example.com',
             'folder',
-            DIRECTORY_SEPARATOR . 'folder',
-            DIRECTORY_SEPARATOR . 'folder' . DIRECTORY_SEPARATOR,
-            DIRECTORY_SEPARATOR . 'folder' . DIRECTORY_SEPARATOR . 'file.txt',
+            DS . 'folder',
+            DS . 'folder' . DS,
+            DS . 'folder' . DS . 'file.txt',
         ] as $url) {
             $this->assertFalse(is_url($url));
         }
@@ -475,14 +506,12 @@ class GlobalFunctionsTest extends TestCase
         }
 
         //Does not delete a file
-        $file = TMP . 'exampleDir' . DS . 'exampleFile';
-        mkdir(dirname($file), 0777, true);
-        file_put_contents($file, null);
-        $this->assertFileExists($file);
-        rmdir_recursive($file);
-        $this->assertFileExists($file);
+        $filename = TMP . 'exampleDir' . DS . 'exampleFile';
+        safe_create_file($filename);
+        rmdir_recursive($filename);
+        $this->assertFileExists($filename);
 
-        safe_unlink($file);
+        safe_unlink($filename);
         safe_rmdir(dirname($file));
     }
 

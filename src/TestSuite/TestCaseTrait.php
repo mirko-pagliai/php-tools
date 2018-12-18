@@ -267,11 +267,7 @@ trait TestCaseTrait
         ];
 
         //Creates directories and files
-        foreach ($files as $file) {
-            safe_mkdir(dirname($file), 0777, true);
-            file_put_contents($file, null);
-        }
-
+        array_walk($files, 'safe_create_file');
         safe_mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;

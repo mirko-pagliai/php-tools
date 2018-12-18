@@ -36,6 +36,50 @@ if (!function_exists('clean_url')) {
     }
 }
 
+if (!function_exists('create_file')) {
+    /**
+     * Creates a file.
+     *
+     * It also recursively creates the directory where the file will be created.
+     * @param string $filename Path to the file where to write the data
+     * @param mixed $data The data to write. Can be either a string, an array or
+     *  a stream resource
+     * @return bool
+     * @since 1.1.7
+     */
+    function create_file($filename, $data = null)
+    {
+        if (!file_exists(dirname($filename))) {
+            mkdir(dirname($filename), 0777, true);
+        }
+
+        return file_put_contents($filename, $data) !== false;
+    }
+}
+
+if (!function_exists('create_tmp_file')) {
+    /**
+     * Creates a tenporary file.
+     *
+     * The file will be created in `TMP`, if the constant is defined, otherwise
+     *  in the temporary directory of the system.
+     * @param mixed $data The data to write. Can be either a string, an array or
+     *  a stream resource
+     * @return string|bool Path of temporary filename or FALSE on failure
+     * @since 1.1.7
+     */
+    function create_tmp_file($data = null)
+    {
+        $filename = tempnam(defined('TMP') ? TMP : sys_get_temp_dir(), 'tmp');
+
+        if ($data) {
+            file_put_contents($filename, $data);
+        }
+
+        return $filename;
+    }
+}
+
 if (!function_exists('dir_tree')) {
     /**
      * Returns an array of nested directories and files in each directory

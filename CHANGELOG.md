@@ -1,5 +1,13 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.7
+* added `is_true_or_fail()` function;
+* added `create_file()` and `create_tmp_file()` global functions and
+    `safe_create_file()` and `safe_create_tmp_file()` safe functions;
+* `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
+    `is_writable_or_fail()` functions are now deprecated and they will be
+    removed from the `1.2.0` version. Use instead `is_true_or_fail()`.
+
 ### 1.1.6
 * added `ends_with()` and `starts_with()` global functions.
 

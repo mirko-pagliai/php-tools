@@ -27,6 +27,37 @@ if (!function_exists('safe_copy')) {
     }
 }
 
+if (!function_exists('safe_create_file')) {
+    /**
+     * Safe alias for `create_file()` function
+     * @param string $filename Path to the file where to write the data
+     * @param mixed $data The data to write. Can be either a string, an array or
+     *  a stream resource
+     * @return bool
+     * @since 1.1.7
+     */
+    function safe_create_file($filename, $data = null)
+    {
+        //@codingStandardsIgnoreLine
+        return @create_file($filename, $data);
+    }
+}
+
+if (!function_exists('safe_create_tmp_file')) {
+    /**
+     * Safe alias for `create_tmp_file()` function
+     * @param mixed $data The data to write. Can be either a string, an array or
+     *  a stream resource
+     * @return string|bool Path of temporary filename or FALSE on failure
+     * @since 1.1.7
+     */
+    function safe_create_tmp_file($data = null)
+    {
+        //@codingStandardsIgnoreLine
+        return @create_tmp_file($data);
+    }
+}
+
 if (!function_exists('safe_mkdir')) {
     /**
      * Safe alias for `mkdir()` function

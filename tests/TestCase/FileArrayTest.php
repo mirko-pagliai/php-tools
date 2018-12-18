@@ -12,6 +12,7 @@
  */
 namespace Tools\Test;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Tools\FileArray;
 
@@ -28,12 +29,12 @@ class FileArrayTest extends TestCase
     /**
      * @var array
      */
-    protected $example;
+    protected $example = ['first', 'second', 'third', 'fourth', 'fifth'];
 
     /**
      * @var string
      */
-    protected $file;
+    protected $file = TMP . 'file_array_test';
 
     /**
      * Setup the test case, backup the static object values so they can be
@@ -45,8 +46,6 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->file = TMP . 'file_array_test';
-        $this->example = ['first', 'second', 'third', 'fourth', 'fifth'];
         $this->FileArray = new FileArray($this->file, $this->example);
     }
 
@@ -62,25 +61,23 @@ class FileArrayTest extends TestCase
     }
 
     /**
-     * Test for `__construct()` method, using a not writable file
-     * @expectedException Exception
-     * @expectedExceptionMessageRegExp /^File or directory `[\w\d\:\/\-\\]+noExistingDir` is not writable$/
+     * Test for `__construct()` method
      * @test
      */
-    public function testConstructNoWritableFile()
+    public function testConstruct()
     {
-        new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
-    }
-
-    /**
-     * Test for `__construct()` method, with a file that already exists
-     * @test
-     */
-    public function testConstructFileAlreadyExists()
-    {
-        file_put_contents($this->file, null);
-
+        //With a file that already exists
+        safe_create_file($this->file);
         $this->assertEquals([], (new FileArray($this->file))->read());
+
+        //Failure
+        try {
+            new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(Exception::class, $e);
+            $this->assertEquals('File or directory `' . TMP . 'noExistingDir` is not writable', $e->getMessage());
+        }
     }
 
     /**
@@ -103,17 +100,15 @@ class FileArrayTest extends TestCase
         $result = $this->FileArray->delete(1)->delete(2);
         $this->assertInstanceof(FileArray::class, $result);
         $this->assertEquals(['first', 'third', 'fifth'], $this->FileArray->read());
-    }
 
-    /**
-     * Test for `delete()` method, with a no existing key
-     * @expectedException Exception
-     * @expectedExceptionMessage Key `noExisting` does not exist
-     * @test
-     */
-    public function testDeleteNoExistingKey()
-    {
-        $this->FileArray->delete('noExisting');
+        //Failure
+        try {
+            $this->FileArray->delete('noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(Exception::class, $e);
+            $this->assertEquals('Key `noExisting` does not exist', $e->getMessage());
+        }
     }
 
     /**
@@ -134,17 +129,15 @@ class FileArrayTest extends TestCase
     {
         $this->assertEquals('first', $this->FileArray->get(0));
         $this->assertEquals('third', $this->FileArray->get(2));
-    }
 
-    /**
-     * Test for `get()` method, with a no existing key
-     * @expectedException Exception
-     * @expectedExceptionMessage Key `noExisting` does not exist
-     * @test
-     */
-    public function testGetNoExistingKey()
-    {
-        $this->FileArray->get('noExisting');
+        //Failure
+        try {
+            $this->FileArray->get('noExisting');
+        } catch (Exception $e) {
+        } finally {
+            $this->assertInstanceof(Exception::class, $e);
+            $this->assertEquals('Key `noExisting` does not exist', $e->getMessage());
+        }
     }
 
     /**
@@ -167,7 +160,7 @@ class FileArrayTest extends TestCase
         $this->assertNotEmpty($this->FileArray->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        file_put_contents($this->file, 'a string');
+        safe_create_file($this->file, 'a string');
         $this->assertEquals([], (new FileArray($this->file))->read());
 
         safe_unlink($this->file);
