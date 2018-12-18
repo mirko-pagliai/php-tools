@@ -136,10 +136,6 @@ class OrFailFunctionsTest extends TestCase
                 $result = is_true_or_fail($value);
             } catch (Exception $e) {
             } finally {
-                if (!isset($e) || !$e instanceof ErrorException) {
-                    $this->fail(sprintf('Exception was not raised for `%s` value', $value));
-                }
-
                 $this->assertNull($result);
                 $this->assertInstanceof(ErrorException::class, $e);
                 $this->assertEquals('The value is not equal to `true`', $e->getMessage());
@@ -174,9 +170,8 @@ class OrFailFunctionsTest extends TestCase
             [stdClass::class, '`stdClass` is not and instance of `Exception`'],
             ['noExisting\Class', 'Class `noExisting\Class` does not exist'],
         ] as $exceptionClasses) {
-            list($exceptionClass, $expectedMessage) = $exceptionClasses;
-
             try {
+                list($exceptionClass, $expectedMessage) = $exceptionClasses;
                 $result = is_true_or_fail(false, null, $exceptionClass);
             } catch (Exception $e) {
             } finally {
