@@ -114,7 +114,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testDeprecationWarning()
     {
-        $currentErrorReporting =  error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
         try {
             deprecationWarning('This method is deprecated');
