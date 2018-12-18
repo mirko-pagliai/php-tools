@@ -80,6 +80,40 @@ if (!function_exists('create_tmp_file')) {
     }
 }
 
+if (!function_exists('deprecationWarning')) {
+    /**
+     * Helper method for outputting deprecation warnings
+     * @param string $message The message to output as a deprecation warning
+     * @param int $stackFrame The stack frame to include in the error. Defaults to 1
+     *   as that should point to application/plugin code
+     * @return void
+     * @since 1.1.7
+     */
+    function deprecationWarning($message, $stackFrame = 1)
+    {
+        if (!(error_reporting() & E_USER_DEPRECATED)) {
+            return;
+        }
+
+        $trace = debug_backtrace();
+        if (isset($trace[$stackFrame])) {
+            $frame = $trace[$stackFrame];
+            $frame += ['file' => '[internal]', 'line' => '??'];
+
+            $message = sprintf(
+                '%s - %s, line: %s' . "\n" .
+                ' You can disable deprecation warnings by setting `error_reporting()` to' .
+                ' `E_ALL & ~E_USER_DEPRECATED`.',
+                $message,
+                $frame['file'],
+                $frame['line']
+            );
+        }
+
+        trigger_error($message, E_USER_DEPRECATED);
+    }
+}
+
 if (!function_exists('dir_tree')) {
     /**
      * Returns an array of nested directories and files in each directory

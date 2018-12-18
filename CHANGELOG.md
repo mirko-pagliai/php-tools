@@ -1,7 +1,7 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.7
-* added `is_true_or_fail()` function;
+* added `is_true_or_fail()` and `deprecationWarning()` global functions;
 * added `create_file()` and `create_tmp_file()` global functions and
     `safe_create_file()` and `safe_create_tmp_file()` safe functions;
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
