@@ -14,8 +14,8 @@ namespace Tools\Test;
 
 use ErrorException;
 use Exception;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_Error_Notice;
 use RuntimeException;
 use stdClass;
 
@@ -181,7 +181,7 @@ class OrFailFunctionsTest extends TestCase
             } catch (Exception $e) {
             } finally {
                 $this->assertNull($result);
-                $this->assertInstanceof(PHPUnit_Framework_Error_Notice::class, $e);
+                $this->assertInstanceof(Notice::class, $e);
                 $this->assertEquals($expectedMessage, $e->getMessage());
             }
         }
