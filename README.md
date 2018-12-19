@@ -114,7 +114,7 @@ PHPUnit.
 Available methods are:
     assertArrayKeysEqual($expectedKeys, $array, $message = '')
     assertContainsInstanceOf($expectedInstance, $value, $message = '')
-    assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    assertException($expectedException, callable $function, $expectedMessage = null)
     assertFileExists($filename, $message = '')
     assertFileExtension($expectedExtension, $filename, $message = '')
     assertFileMime($filename, $expectedMime, $message = '')
@@ -126,6 +126,7 @@ Available methods are:
     assertIsInt($var, $message = '')
     assertIsObject($var, $message = '')
     assertIsString($var, $message = '')
+    assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
     assertSameMethods($firstClass, $secondClass, $message = '')
 
 ## Tests

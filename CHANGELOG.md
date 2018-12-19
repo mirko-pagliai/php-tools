@@ -4,6 +4,7 @@
 * added `is_true_or_fail()` and `deprecationWarning()` global functions;
 * added `create_file()` and `create_tmp_file()` global functions and
     `safe_create_file()` and `safe_create_tmp_file()` safe functions;
+* added `assertException()` assert method;
 * starting from this release, deprecated methods will generate a user-level error;
 * added some exception classes;
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and

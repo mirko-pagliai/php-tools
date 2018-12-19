@@ -14,7 +14,10 @@ namespace Tools\Test\TestSuite;
 
 use App\ExampleClass;
 use App\ExampleOfTraversable;
+use Exception;
+use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use stdClass;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -53,6 +56,65 @@ class TestCaseTest extends TestCase
     public function testAssertContainsInstanceOfOnFailure()
     {
         $this->assertContainsInstanceOf('stdClass', new stdClass);
+    }
+
+    /**
+     * Tests for `assertException()` method
+     * @test
+     */
+    public function testAssertException()
+    {
+        $this->assertException(Exception::class, function () {
+            throw new Exception;
+        });
+        $this->assertException(Exception::class, function () {
+            throw new Exception('right exception message');
+        });
+        $this->assertException(Exception::class, function () {
+            throw new Exception('right exception message');
+        }, 'right exception message');
+
+        try {
+            $this->assertException(Exception::class, function () {
+                return true;
+            });
+        } catch (AssertionFailedError $e) {
+        } finally {
+            $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
+        }
+
+        try {
+            $this->assertException(RuntimeException::class, function () {
+                throw new Exception('right exception message');
+            });
+        } catch (AssertionFailedError $e) {
+        } finally {
+            $this->assertStringStartsWith('Expected exception `RuntimeException`, unexpected type `Exception`', $e->getMessage());
+        }
+
+        try {
+            $this->assertException(Exception::class, function () {
+                throw new Exception('wrong exception message');
+            }, 'right exception message');
+        } catch (AssertionFailedError $e) {
+        } finally {
+            $this->assertStringStartsWith(
+                'Expected message exception `right exception message`, unexpected message `wrong exception message`',
+                $e->getMessage()
+            );
+        }
+
+        try {
+            $this->assertException(Exception::class, function () {
+                throw new Exception;
+            }, 'right exception message');
+        } catch (AssertionFailedError $e) {
+        } finally {
+            $this->assertStringStartsWith(
+                'Expected message exception `right exception message`, but no message for the exception',
+                $e->getMessage()
+            );
+        }
     }
 
     /**
