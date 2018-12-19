@@ -76,6 +76,7 @@ trait TestCaseTrait
      * @param callable $function A callable you want to test and that should
      *  raise the expected exception
      * @param string|null $expectedMessage The expected message or `null`
+     * @return void
      * @since 1.1.7
      */
     protected function assertException($expectedException, callable $function, $expectedMessage = null)
