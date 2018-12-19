@@ -12,6 +12,8 @@
  */
 namespace Tools\Test;
 
+use Exception;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 use Tools\TestSuite\TestCaseTrait;
 
@@ -104,6 +106,35 @@ class GlobalFunctionsTest extends TestCase
         $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
         $this->assertFileExists($filename);
         $this->assertEquals($content, file_get_contents($filename));
+    }
+
+    /**
+     * Test for `deprecationWarning()` global function
+     * @test
+     */
+    public function testDeprecationWarning()
+    {
+        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
+        try {
+            deprecationWarning('This method is deprecated');
+        } catch (Deprecated $dep) {
+            $this->fail('Deprecated was raised');
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+
+        error_reporting($currentErrorReporting);
+
+        try {
+            deprecationWarning('This method is deprecated');
+        } catch (Deprecated $dep) {
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        } finally {
+            $this->assertEquals('This method is deprecated - [internal], line: ??
+ You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.', $dep->getMessage());
+        }
     }
 
     /**

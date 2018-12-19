@@ -13,6 +13,7 @@
  */
 namespace Tools\TestSuite;
 
+use Exception;
 use Traversable;
 
 /**
@@ -67,6 +68,32 @@ trait TestCaseTrait
     {
         self::assertIsObject($object);
         self::assertEquals($expectedProperties, array_keys((array)$object), $message);
+    }
+
+    /**
+     * Asserts that a callable throws an exception
+     * @param string $expectedException Expected exception
+     * @param callable $function A callable you want to test and that should
+     *  raise the expected exception
+     * @param string|null $expectedMessage The expected message or `null`
+     * @return void
+     * @since 1.1.7
+     */
+    protected function assertException($expectedException, callable $function, $expectedMessage = null)
+    {
+        $e = false;
+        try {
+            call_user_func($function);
+        } catch (Exception $e) {
+            parent::assertInstanceof($expectedException, $e, sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
+
+            if ($expectedMessage) {
+                parent::assertNotEmpty($e->getMessage(), sprintf('Expected message exception `%s`, but no message for the exception', $expectedMessage));
+                parent::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
+            }
+        } finally {
+            parent::assertNotFalse($e, sprintf('Expected exception `%s`, but no exception throw', $expectedException));
+        }
     }
 
     /**
