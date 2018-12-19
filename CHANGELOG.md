@@ -8,8 +8,7 @@
 * starting from this release, deprecated methods will generate a user-level error;
 * added some exception classes;
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
-    `is_writable_or_fail()` functions are now deprecated and they will be
-    removed from the `1.2.0` version. Use instead `is_true_or_fail()`.
+    `is_writable_or_fail()` functions now throw specific exception classes.
 
 ### 1.1.6
 * added `ends_with()` and `starts_with()` global functions.

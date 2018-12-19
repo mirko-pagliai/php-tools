@@ -11,19 +11,24 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.0.6
  */
+use ErrorException as ErrorException;
+use Exception as Exception;
+use Tools\Exception\FileNotExistsException;
+use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 
 if (!function_exists('file_exists_or_fail')) {
     /**
      * Checks whether a file or directory exists and throws an exception if the
      *  file does not exist
-     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
+     * @throws FileNotExistsException
      */
     function file_exists_or_fail($filename)
     {
-        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
-        is_true_or_fail(file_exists($filename), sprintf('File or directory `%s` does not exist', rtr($filename)), ErrorException::class);
+        is_true_or_fail(file_exists($filename), FileNotExistsException::class);
     }
 }
 
@@ -31,15 +36,15 @@ if (!function_exists('is_dir_or_fail')) {
     /**
      * Tells whether the filename is a directory and throws an exception if the
      *  filename is not a directory
-     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the directory
      * @return void
+     * @throws FileNotExistsException
+     * @throws NotDirectoryException
      */
     function is_dir_or_fail($filename)
     {
-        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
-        file_exists_or_fail($filename);
-        is_true_or_fail(is_dir($filename), sprintf('`%s` is not a directory', rtr($filename)), ErrorException::class);
+        is_true_or_fail(file_exists($filename), FileNotExistsException::class);
+        is_true_or_fail(is_dir($filename), NotDirectoryException::class);
     }
 }
 
@@ -47,20 +52,22 @@ if (!function_exists('is_readable_or_fail')) {
     /**
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
-     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
+     * @throws NotReadableException
      */
     function is_readable_or_fail($filename)
     {
-        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
-        is_true_or_fail(is_readable($filename), sprintf('File or directory `%s` is not readable', rtr($filename)), ErrorException::class);
+        is_true_or_fail(is_readable($filename), NotReadableException::class);
     }
 }
 
 if (!function_exists('is_true_or_fail')) {
     /**
-     * Throws an exception if the value is not equal to `true`
+     * Throws an exception if the value is not equal to `true`.
+     *
+     * You can also pass the exception as a second parameter, instead of the
+     *  message.
      * @param mixed $value The value you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -69,22 +76,25 @@ if (!function_exists('is_true_or_fail')) {
      * @since 1.1.7
      * @throws Exception
      */
-    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
+    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)
     {
         if ($value) {
             return;
         }
 
-        if (!is_string($exception)) {
-            trigger_error('`$exception` argument must be a string');
-        }
-        if (!class_exists($exception)) {
-            trigger_error(sprintf('Class `%s` does not exist', $exception));
+        if (func_num_args() === 2 && is_string($message) && class_exists($message)) {
+            $exception = new $message;
+        } else {
+            if (!is_string($exception)) {
+                trigger_error('`$exception` parameter must be a string');
+            }
+            if (!class_exists($exception)) {
+                trigger_error(sprintf('Class `%s` does not exist', $exception));
+            }
+            $exception = new $exception($message);
         }
 
-        $exception = new $exception($message);
-
-        if (!$exception instanceof \Exception) {
+        if (!$exception instanceof Exception) {
             trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
         }
 
@@ -96,13 +106,12 @@ if (!function_exists('is_writable_or_fail')) {
     /**
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
-     * @deprecated 1.1.7 Use instead `is_true_or_failure()`. It will removed from 1.2.0
      * @param string $filename Path to the file or directory
      * @return void
+     * @throws NotWritableException
      */
     function is_writable_or_fail($filename)
     {
-        deprecationWarning(sprintf('`%s` is deprecated. Use instead `is_true_or_fail()`', __METHOD__));
-        is_true_or_fail(is_writable($filename), sprintf('File or directory `%s` is not writable', rtr($filename)), ErrorException::class);
+        is_true_or_fail(is_writable($filename), NotWritableException::class);
     }
 }
