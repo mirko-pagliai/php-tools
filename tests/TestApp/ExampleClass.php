@@ -25,7 +25,7 @@ class ExampleClass
 
     public $publicProperty = 'this is public';
 
-    static public $staticProperty = 'a static property';
+    public static $staticProperty = 'a static property';
 
     protected function protectedMethod($var = null)
     {
