@@ -61,16 +61,19 @@ if (!function_exists('create_tmp_file')) {
     /**
      * Creates a tenporary file.
      *
-     * The file will be created in `TMP`, if the constant is defined, otherwise
-     *  in the temporary directory of the system.
+     * You can pass a directory where to create the file. If `null`, the file
+     *  will be created in `TMP`, if the constant is defined, otherwise in the
+     *  temporary directory of the system.
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
-     * @return string|bool Path of temporary filename or FALSE on failure
+     * @param string|null $dir The directory where the temporary filename will be created
+     * @param string|null $prefix The prefix of the generated temporary filename
+     * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
      */
-    function create_tmp_file($data = null)
+    function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        $filename = tempnam(defined('TMP') ? TMP : sys_get_temp_dir(), 'tmp');
+        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
 
         if ($data) {
             file_put_contents($filename, $data);

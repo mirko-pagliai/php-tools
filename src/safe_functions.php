@@ -48,13 +48,15 @@ if (!function_exists('safe_create_tmp_file')) {
      * Safe alias for `create_tmp_file()` function
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
-     * @return string|bool Path of temporary filename or FALSE on failure
+     * @param string|null $dir The directory where the temporary filename will be created
+     * @param string|null $prefix The prefix of the generated temporary filename
+     * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
      */
-    function safe_create_tmp_file($data = null)
+    function safe_create_tmp_file($data = null, $dir = null, $prefix = null)
     {
         //@codingStandardsIgnoreLine
-        return @create_tmp_file($data);
+        return @create_tmp_file($data, $dir, $prefix);
     }
 }
 

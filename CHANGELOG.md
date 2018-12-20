@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.8
+* `create_tmp_file()` and `safe_create_tmp_file()` methods now accept a 
+    directory as a second argument and a prefix as the third argument.
+
 ### 1.1.7
 * added `is_true_or_fail()` and `deprecationWarning()` global functions;
 * added `create_file()` and `create_tmp_file()` global functions and
