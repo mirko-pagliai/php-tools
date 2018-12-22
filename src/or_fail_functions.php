@@ -23,12 +23,16 @@ if (!function_exists('file_exists_or_fail')) {
      * Checks whether a file or directory exists and throws an exception if the
      *  file does not exist
      * @param string $filename Path to the file or directory
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
      * @throws FileNotExistsException
      */
-    function file_exists_or_fail($filename)
+    function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist')
     {
-        is_true_or_fail(file_exists($filename), FileNotExistsException::class);
+        if (!file_exists($filename)) {
+            throw new FileNotExistsException(sprintf($message, rtr($filename)));
+        }
     }
 }
 
@@ -37,14 +41,16 @@ if (!function_exists('is_dir_or_fail')) {
      * Tells whether the filename is a directory and throws an exception if the
      *  filename is not a directory
      * @param string $filename Path to the directory
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
-     * @throws FileNotExistsException
      * @throws NotDirectoryException
      */
-    function is_dir_or_fail($filename)
+    function is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory')
     {
-        is_true_or_fail(file_exists($filename), FileNotExistsException::class);
-        is_true_or_fail(is_dir($filename), NotDirectoryException::class);
+        if (!is_dir($filename)) {
+            throw new NotDirectoryException(sprintf($message, rtr($filename)));
+        }
     }
 }
 
@@ -53,12 +59,16 @@ if (!function_exists('is_readable_or_fail')) {
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
      * @param string $filename Path to the file or directory
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
      * @throws NotReadableException
      */
-    function is_readable_or_fail($filename)
+    function is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable')
     {
-        is_true_or_fail(is_readable($filename), NotReadableException::class);
+        if (!is_readable($filename)) {
+            throw new NotReadableException(sprintf($message, rtr($filename)));
+        }
     }
 }
 
@@ -107,11 +117,15 @@ if (!function_exists('is_writable_or_fail')) {
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
      * @param string $filename Path to the file or directory
+     * @param string $message The failure message that will be appended to the
+     *  generated message
      * @return void
      * @throws NotWritableException
      */
-    function is_writable_or_fail($filename)
+    function is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable')
     {
-        is_true_or_fail(is_writable($filename), NotWritableException::class);
+        if (!is_writable($filename)) {
+            throw new NotWritableException(sprintf($message, rtr($filename)));
+        }
     }
 }
