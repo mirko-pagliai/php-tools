@@ -2,7 +2,8 @@
 ## 1.1 branch
 ### 1.1.9
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
-    `is_writable_or_fail()` functions now have `$message` the second argument.
+    `is_writable_or_fail()` functions now have `$message` as second argument and
+    `$exception` as third argument.
 
 ### 1.1.8
 * `create_tmp_file()` and `safe_create_tmp_file()` methods now accept a 

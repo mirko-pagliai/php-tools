@@ -42,11 +42,11 @@ You can install the package via composer:
 - `which($command)` - Executes the `which` command and shows the full path of (shell) commands
 
 ## "Or fail" functions
-- `file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist')` - Checks whether a file or directory exists and throws an exception if the file does not exist
-- `is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory')` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
-- `is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable')` - Tells whether a file exists and is readable and throws an exception if the file is not readable
-- `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)` - Throws an exception if the value is not equal to `true`
-- `is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable')` - Tells whether the filename is writable and throws an exception if the file is not writable
+- `file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)` - Checks whether a file or directory exists and throws an exception if the file does not exist
+- `is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory', $exception = NotDirectoryException::class)` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
+- `is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
+- `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)` - Throws an exception if the value is not equal to `true`
+- `is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)` - Tells whether the filename is writable and throws an exception if the file is not writable
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function
