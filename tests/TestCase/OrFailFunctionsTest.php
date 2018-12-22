@@ -14,7 +14,6 @@ namespace Tools\Test;
 
 use ErrorException;
 use Exception;
-use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -70,7 +69,7 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(FileNotExistsException::class, function () {
             file_exists_or_fail(TMP . 'noExisting');
-        }, 'File or directory does not exist');
+        }, 'File or directory `' . TMP . 'noExisting` does not exist');
     }
 
     /**
@@ -81,13 +80,9 @@ class OrFailFunctionsTest extends TestCase
     {
         is_dir_or_fail(dirname($this->exampleFile));
 
-        $this->assertException(FileNotExistsException::class, function () {
-            is_dir_or_fail(TMP . 'noExisting');
-        }, 'File or directory does not exist');
-
         $this->assertException(NotDirectoryException::class, function () {
             is_dir_or_fail($this->exampleFile);
-        }, 'The filename is not a directory');
+        }, 'Filename `' . $this->exampleFile . '` is not a directory');
     }
 
     /**
@@ -100,7 +95,7 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting');
-        }, 'File or directory is not readable');
+        }, 'File or directory `' . TMP . 'noExisting` is not readable');
     }
 
     /**
@@ -158,6 +153,6 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting');
-        }, 'File or directory is not writable');
+        }, 'File or directory `' . TMP . 'noExisting` is not writable');
     }
 }
