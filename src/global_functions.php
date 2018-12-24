@@ -192,6 +192,19 @@ if (!function_exists('ends_with')) {
     }
 }
 
+if (!function_exists('first_key')) {
+    /**
+     * Returns the first key of an array
+     * @param array $array Array
+     * @return int|string
+     * @since 1.1.10
+     */
+    function first_key(array $array)
+    {
+        return first_value(array_keys($array));
+    }
+}
+
 if (!function_exists('first_value')) {
     /**
      * Returns the first value of an array
@@ -202,6 +215,23 @@ if (!function_exists('first_value')) {
     function first_value(array $array)
     {
         return array_values($array)[0];
+    }
+}
+
+if (!function_exists('first_value_recursive')) {
+    /**
+     * Returns the first value of an array recursively.
+     *
+     * In other words, it returns the first value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.10
+     */
+    function first_value_recursive(array $array)
+    {
+        $value = first_value($array);
+
+        return is_array($value) ? first_value_recursive($value) : $value;
     }
 }
 
@@ -401,6 +431,19 @@ if (!function_exists('is_writable_resursive')) {
     }
 }
 
+if (!function_exists('last_key')) {
+    /**
+     * Returns the last key of an array
+     * @param array $array Array
+     * @return int|string
+     * @since 1.1.10
+     */
+    function last_key(array $array)
+    {
+        return last_value(array_keys($array));
+    }
+}
+
 if (!function_exists('last_value')) {
     /**
      * Returns the last value of an array
@@ -411,6 +454,23 @@ if (!function_exists('last_value')) {
     function last_value(array $array)
     {
         return array_values(array_slice($array, -1))[0];
+    }
+}
+
+if (!function_exists('last_value_recursive')) {
+    /**
+     * Returns the last value of an array recursively.
+     *
+     * In other words, it returns the last value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.10
+     */
+    function last_value_recursive(array $array)
+    {
+        $value = last_value($array);
+
+        return is_array($value) ? last_value_recursive($value) : $value;
     }
 }
 

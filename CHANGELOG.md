@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.10
+* added `first_key()`, `first_value_recursive()`, `last_key()` and
+    `last_value_recursive()` global functions.
+
 ### 1.1.9
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and
     `is_writable_or_fail()` functions now have `$message` as second argument and
