@@ -14,6 +14,7 @@
 use ErrorException as ErrorException;
 use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
+use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -32,6 +33,27 @@ if (!function_exists('file_exists_or_fail')) {
     function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)
     {
         is_true_or_fail(file_exists($filename), sprintf($message, rtr($filename)), $exception);
+    }
+}
+
+if (!function_exists('key_exists_or_fail')) {
+    /**
+     * Checks if the given key or index exists in the array and throws an
+     *  exception if the key does not exist.
+     *
+     * If you pass an array of keys, they will all be checked.
+     * @param string|int|array $key Key to check or an array of keys
+     * @param array $array An array with keys to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     */
+    function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
+    {
+        foreach ((array)$key as $name) {
+            is_true_or_fail(array_key_exists($name, $array), sprintf($message, $name), $exception);
+        }
     }
 }
 

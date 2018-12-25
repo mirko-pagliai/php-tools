@@ -236,6 +236,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `first_key()` global function
+     * @test
+     */
+    public function testFirstKey()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(0, first_key($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('a', first_key($array));
+    }
+
+    /**
      * Test for `first_value()` global function
      * @test
      */
@@ -246,6 +259,22 @@ class GlobalFunctionsTest extends TestCase
 
         $array = array_combine(['a', 'b', 'c'], $array);
         $this->assertEquals('first', first_value($array));
+    }
+
+    /**
+     * Test for `first_value_recursive()` global function
+     * @test
+     */
+    public function testFirstValueRecursive()
+    {
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('first', first_value_recursive($array));
+        }
     }
 
     /**
@@ -505,6 +534,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `last_key()` global function
+     * @test
+     */
+    public function testLastKey()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(2, last_key($array));
+
+        $array = array_combine(['a', 'b', 'c'], $array);
+        $this->assertEquals('c', last_key($array));
+    }
+
+    /**
      * Test for `last_value()` global function
      * @test
      */
@@ -515,6 +557,22 @@ class GlobalFunctionsTest extends TestCase
 
         $array = array_combine(['a', 'b', 'c'], $array);
         $this->assertEquals('third', last_value($array));
+    }
+
+    /**
+     * Test for `last_value_recursive()` global function
+     * @test
+     */
+    public function testLastValueRecursive()
+    {
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('fourth', last_value_recursive($array));
+        }
     }
 
     /**

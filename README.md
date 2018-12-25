@@ -25,7 +25,9 @@ You can install the package via composer:
 - `deprecationWarning($message, $stackFrame = 1)` - Helper method for outputting deprecation warnings
 - `dir_tree($path, $exceptions = false)` - Returns an array of nested directories and files in each directory
 - `ends_with($haystack, $needle)` - Checks if a string ends with a string
+- `first_key(array $array)` - Returns the first key of an array
 - `first_value(array $array)` - Returns the first value of an array
+- `first_value_recursive(array $array)` - Returns the first value of an array recursively. In other words, it returns the first value found that is not an array
 - `get_child_methods($class)` - Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
 - `is_external_url($url, $hostname)` - Checks if an url is external. The check is performed by comparing the URL with the passed hostname
 - `is_json($string)` - Checks if a string is JSON
@@ -34,7 +36,9 @@ You can install the package via composer:
 - `is_url($string)` - Checks if a string is a valid url
 - `is_win()` - Returns `true` if the environment is Windows
 - `is_writable_resursive($dirname, $checkOnlyDir = true)` - Tells whether a directory and its subdirectories are writable. It can also check that all the files are writable
+- `last_key(array $array)` - Returns the last key of an array
 - `last_value(array $array)` - Returns the last value of an array
+- `last_value_recursive(array $array)` - Returns the last value of an array recursively. In other words, it returns the last value found that is not an array
 - `rmdir_recursive($dirname)` - Removes a directory and all its contents, including subdirectories and files
 - `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
 - `starts_with($haystack, $needle)` - Checks if a string starts with a string
@@ -47,6 +51,7 @@ You can install the package via composer:
 - `is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
 - `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)` - Throws an exception if the value is not equal to `true`
 - `is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)` - Tells whether the filename is writable and throws an exception if the file is not writable
+- `key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)` - Checks if the given key or index exists in the array and throws an exception if the key does not exist. If you pass an array of keys, they will all be checked
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function
