@@ -2,7 +2,8 @@
 ## 1.1 branch
 ### 1.1.10
 * added `first_key()`, `first_value_recursive()`, `last_key()` and
-    `last_value_recursive()` global functions.
+    `last_value_recursive()` global functions;
+* added `key_exists_or_fail()` function.
 
 ### 1.1.9
 * `file_exists_or_fail()`, `is_dir_or_fail()`, `is_readable_or_fail()` and

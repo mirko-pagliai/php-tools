@@ -51,6 +51,7 @@ You can install the package via composer:
 - `is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
 - `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)` - Throws an exception if the value is not equal to `true`
 - `is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)` - Tells whether the filename is writable and throws an exception if the file is not writable
+- `key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)` - Checks if the given key or index exists in the array and throws an exception if the key does not exist. If you pass an array of keys, they will all be checked
 
 ## Safe functions
 - `safe_copy($source, $dest)` - Safe alias for `copy()` function

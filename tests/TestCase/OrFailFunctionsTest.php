@@ -18,6 +18,7 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
+use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -70,6 +71,28 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(FileNotExistsException::class, function () {
             file_exists_or_fail(TMP . 'noExisting');
         }, 'File or directory `' . TMP . 'noExisting` does not exist');
+    }
+
+    /**
+     * Test for `key_exists_or_fail()` "or fail" function
+     * @test
+     */
+    public function testKeyExistsOrFail()
+    {
+        $array = ['a' => 'alfa', 'beta', 'gamma'];
+
+        key_exists_or_fail('a', $array);
+        key_exists_or_fail(['a', 1], $array);
+
+        foreach ([
+            'b',
+            ['a', 'b'],
+            ['b', 'c'],
+        ] as $key) {
+            $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
+                key_exists_or_fail($key, $array);
+            }, 'Key `b` does not exist');
+        }
     }
 
     /**
