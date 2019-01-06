@@ -251,7 +251,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertIsDeprecated()
     {
-        $deprecatedMethod = function() {
+        $deprecatedMethod = function () {
             deprecationWarning('this method is deprecated');
         };
 
