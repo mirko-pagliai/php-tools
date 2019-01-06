@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.11
+* fixed bug for `is_url()` function with no-string values.
+
 ### 1.1.10
 * added `first_key()`, `first_value_recursive()`, `last_key()` and
     `last_value_recursive()` global functions;
