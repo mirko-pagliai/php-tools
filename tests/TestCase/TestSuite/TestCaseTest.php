@@ -246,6 +246,20 @@ class TestCaseTest extends TestCase
     }
 
     /**
+     * Tests for `assertIsDeprecated()` method
+     * @test
+     */
+    public function testAssertIsDeprecated()
+    {
+        $deprecatedMethod = function() {
+            deprecationWarning('this method is deprecated');
+        };
+
+        $this->assertIsDeprecated($deprecatedMethod);
+        $this->assertIsDeprecated($deprecatedMethod, 'this method is deprecated');
+    }
+
+    /**
      * Tests for `assertIsInt()` method
      * @test
      */

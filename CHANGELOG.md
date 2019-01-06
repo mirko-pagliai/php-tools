@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.11
+* added `assertIsDeprecated()` assert method;
 * fixed bug for `is_url()` function with no-string values.
 
 ### 1.1.10

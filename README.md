@@ -128,6 +128,7 @@ Available methods are:
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     assertIsArray($var, $message = '')
     assertIsArrayNotEmpty($var, $message = '')
+    assertIsDeprecated(callable $function, $expectedMessage = null)
     assertIsInt($var, $message = '')
     assertIsObject($var, $message = '')
     assertIsString($var, $message = '')

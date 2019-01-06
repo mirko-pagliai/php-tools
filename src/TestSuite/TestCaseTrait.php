@@ -14,6 +14,7 @@
 namespace Tools\TestSuite;
 
 use Exception;
+use PHPUnit\Framework\Error\Deprecated;
 use Traversable;
 
 /**
@@ -222,6 +223,26 @@ trait TestCaseTrait
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty($var, $message);
+    }
+
+    /**
+     * Asserts that a callable function is deprecated
+     * @param callable $function A callable you want to test and that is marked
+     *  as deprecated
+     * @param string|null $expectedMessage The expected message or `null`
+     * @return void
+     * @since 1.1.11
+     */
+    protected static function assertIsDeprecated(callable $function, $expectedMessage = null)
+    {
+        $deprecatedText = ' - [internal], line: ??' . PHP_EOL .
+            ' You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
+
+        if ($expectedMessage && !ends_with($expectedMessage, $deprecatedText)) {
+            $expectedMessage .= $deprecatedText;
+        }
+
+        self::assertException(Deprecated::class, $function, $expectedMessage);
     }
 
     /**
