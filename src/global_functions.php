@@ -553,7 +553,7 @@ if (!function_exists('unlink_recursive')) {
         $files += array_filter($directories, 'is_link');
 
         foreach ($files as $file) {
-            is_link($file) && is_dir($file) && is_win() ? rmdir($file) : unlink($file);
+            is_link($file) && is_dir($file) && IS_WIN ? rmdir($file) : unlink($file);
         }
     }
 }
