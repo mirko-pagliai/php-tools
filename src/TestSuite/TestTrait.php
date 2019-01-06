@@ -80,7 +80,7 @@ trait TestTrait
      * @return void
      * @since 1.1.7
      */
-    protected function assertException($expectedException, callable $function, $expectedMessage = null)
+    protected static function assertException($expectedException, callable $function, $expectedMessage = null)
     {
         $e = false;
         try {
