@@ -235,8 +235,8 @@ trait TestCaseTrait
      */
     protected static function assertIsDeprecated(callable $function, $expectedMessage = null)
     {
-        $deprecatedText = ' - [internal], line: ??' . PHP_EOL .
-            ' You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
+        $deprecatedText = ' - [internal], line: ??
+ You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
 
         if ($expectedMessage && !ends_with($expectedMessage, $deprecatedText)) {
             $expectedMessage .= $deprecatedText;
