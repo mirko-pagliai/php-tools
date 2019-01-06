@@ -16,7 +16,7 @@ use App\ExampleClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * Reflection\ReflectionTrait Test Case
@@ -24,7 +24,7 @@ use Tools\TestSuite\TestCaseTrait;
 class ReflectionTraitTest extends TestCase
 {
     use ReflectionTrait;
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Tests for `getProperties()` method

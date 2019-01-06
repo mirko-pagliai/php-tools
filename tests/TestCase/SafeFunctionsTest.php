@@ -14,14 +14,14 @@
 namespace Tools\Test;
 
 use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * SafeFunctionsTest class
  */
 class SafeFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Test for `safe_copy()` safe function

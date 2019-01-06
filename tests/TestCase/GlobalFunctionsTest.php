@@ -15,14 +15,14 @@ namespace Tools\Test;
 use Exception;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Test for `clean_url()` global function

@@ -22,14 +22,14 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * OrFailFunctionsTest class
  */
 class OrFailFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * @var string

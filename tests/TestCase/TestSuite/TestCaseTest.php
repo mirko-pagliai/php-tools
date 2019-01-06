@@ -19,14 +19,14 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * TestCaseTest class
  */
 class TestCaseTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Tests for `assertArrayKeysEqual()` method
