@@ -32,11 +32,7 @@ if (!function_exists('clean_url')) {
             $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
         }
 
-        if ($removeTrailingSlash) {
-            $url = rtrim($url, '/');
-        }
-
-        return $url;
+        return $removeTrailingSlash ? rtrim($url, '/') : $url;
     }
 }
 
@@ -135,7 +131,7 @@ if (!function_exists('dir_tree')) {
         try {
             $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
             $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [[], []];
         }
 
@@ -269,7 +265,7 @@ if (!function_exists('get_class_short_name')) {
      */
     function get_class_short_name($class)
     {
-        return (new \ReflectionClass($class))->getShortName();
+        return (new ReflectionClass($class))->getShortName();
     }
 }
 
@@ -570,10 +566,7 @@ if (!function_exists('which')) {
      */
     function which($command)
     {
-        $executable = IS_WIN ? 'where' : 'which';
-
-        exec(sprintf('%s %s 2>&1', $executable, $command), $path, $exitCode);
-
+        exec(sprintf('%s %s 2>&1', IS_WIN ? 'where' : 'which', $command), $path, $exitCode);
         $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;
 
         return $exitCode === 0 && !empty($path[0]) ? $path[0] : null;
