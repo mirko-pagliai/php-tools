@@ -506,7 +506,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnUnix()
     {
-        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use instead the `IS_WIN` constant');
+        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
 
         $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertFalse(is_win());
@@ -520,7 +520,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnWin()
     {
-        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use instead the `IS_WIN` constant');
+        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
 
         $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_win());

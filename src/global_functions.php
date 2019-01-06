@@ -395,12 +395,12 @@ if (!function_exists('is_url')) {
 if (!function_exists('is_win')) {
     /**
      * Returns `true` if the environment is Windows
-     * @deprecated 1.1.11 Use instead the `IS_WIN` constant
+     * @deprecated 1.1.11 Use the `IS_WIN` constant instead
      * @return bool
      */
     function is_win()
     {
-        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use instead the `IS_WIN` constant');
+        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
 
         return IS_WIN;
     }
