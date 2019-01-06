@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.11
+* added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
+    removed in a later version;
 * added `assertIsDeprecated()` assert method;
 * fixed bug for `is_url()` function with no-string values.
 

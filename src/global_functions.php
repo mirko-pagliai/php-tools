@@ -10,6 +10,10 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!defined('IS_WIN')) {
+    define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url, removing all unnecessary parts, as fragment (#),
@@ -395,11 +399,14 @@ if (!function_exists('is_url')) {
 if (!function_exists('is_win')) {
     /**
      * Returns `true` if the environment is Windows
+     * @deprecated 1.1.11 Use instead the `IS_WIN` constant
      * @return bool
      */
     function is_win()
     {
-        return DIRECTORY_SEPARATOR === '\\';
+        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use instead the `IS_WIN` constant');
+
+        return IS_WIN;
     }
 }
 
@@ -563,11 +570,11 @@ if (!function_exists('which')) {
      */
     function which($command)
     {
-        $executable = is_win() ? 'where' : 'which';
+        $executable = IS_WIN ? 'where' : 'which';
 
         exec(sprintf('%s %s 2>&1', $executable, $command), $path, $exitCode);
 
-        $path = is_win() && !empty($path) ? array_map('escapeshellarg', $path) : $path;
+        $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;
 
         return $exitCode === 0 && !empty($path[0]) ? $path[0] : null;
     }
