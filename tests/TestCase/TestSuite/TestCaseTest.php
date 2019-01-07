@@ -46,15 +46,9 @@ class TestCaseTest extends TestCase
     {
         $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
         $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
-    }
 
-    /**
-     * Tests for `assertContainsInstanceOf()` method on failure
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertContainsInstanceOfOnFailure()
-    {
+        //On failure
+        $this->expectException(AssertionFailedError::class);
         $this->assertContainsInstanceOf('stdClass', new stdClass);
     }
 
@@ -151,15 +145,6 @@ class TestCaseTest extends TestCase
     }
 
     /**
-     * Test for `assertImageSize()` method
-     * @ŧest
-     */
-    public function testAssertImageSize()
-    {
-        $this->assertImageSize(EXAMPLE_FILES . '400x400.jpg', 400, 400);
-    }
-
-    /**
      * Test for `assertFileMime()` method
      * @ŧest
      */
@@ -212,6 +197,15 @@ class TestCaseTest extends TestCase
 
         safe_unlink($files[0]);
         safe_unlink($files[1]);
+    }
+
+    /**
+     * Test for `assertImageSize()` method
+     * @ŧest
+     */
+    public function testAssertImageSize()
+    {
+        $this->assertImageSize(EXAMPLE_FILES . '400x400.jpg', 400, 400);
     }
 
     /**
@@ -283,7 +277,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertIsObject()
     {
-        $this->assertIsObject(new \stdClass);
+        $this->assertIsObject(new stdClass);
         $this->assertIsObject((object)[]);
     }
 
