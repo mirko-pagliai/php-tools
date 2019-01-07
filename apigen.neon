@@ -35,14 +35,14 @@ deprecated: true
 #    - logs/
 
 # The way elements are grouped in menu. (default: "auto") (options: auto, namespaces[=default], packages)
-groups:  packages
+groups:  namespaces
 
 # Charset of scanned files. (multiple values allowed)
 #charset:
 #    - utf-8              
 
 # Elements with this name prefix will be first in tree.
-#main: Tools
+main: Tools
 
 # Include elements marked as @internal.
 internal: true
@@ -54,7 +54,7 @@ internal: true
 #noSourceCode:       
 
 # ApiGen template theme name. (default: "default")
-templateTheme: bootstrap
+#templateTheme: bootstrap
 
 # Your own template config, has higher priority templateTheme.
 #templateConfig:      
