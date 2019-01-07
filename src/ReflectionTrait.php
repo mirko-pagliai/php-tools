@@ -116,14 +116,18 @@ trait ReflectionTrait
      * @param object $object Instantiated object that has the property
      * @param string $propertyName Property name
      * @param mixed $propertyValue Property value you want to set
-     * @return void
-     * @todo it should return the old value
+     * @return mixed Old property value
+     * @uses getProperty()
      * @uses getPropertyInstance()
      */
     public function setProperty(&$object, $propertyName, $propertyValue)
     {
+        $oldValue = $this->getProperty($object, $propertyName);
+
         $property = $this->getPropertyInstance($object, $propertyName);
         $property->setAccessible(true);
         $property->setValue($object, $propertyValue);
+
+        return $oldValue;
     }
 }
