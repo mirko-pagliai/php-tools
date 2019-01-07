@@ -93,7 +93,7 @@ trait ReflectionTrait
      * @return mixed Property value
      * @uses getPropertyInstance()
      */
-    public function getProperty(&$object, $name)
+    protected function getProperty(&$object, $name)
     {
         return $this->getPropertyInstance($object, $name)->getValue($object);
     }
@@ -106,7 +106,7 @@ trait ReflectionTrait
      * @return mixed Method return
      * @uses getMethodInstance()
      */
-    public function invokeMethod(&$object, $methodName, array $parameters = [])
+    protected function invokeMethod(&$object, $methodName, array $parameters = [])
     {
         return $this->getMethodInstance($object, $methodName)->invokeArgs($object, $parameters);
     }
@@ -119,7 +119,7 @@ trait ReflectionTrait
      * @return mixed Old property value
      * @uses getPropertyInstance()
      */
-    public function setProperty(&$object, $name, $value)
+    protected function setProperty(&$object, $name, $value)
     {
         $property = $this->getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);

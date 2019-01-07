@@ -4,7 +4,8 @@
 * added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
     removed in a later version;
 * added `assertIsDeprecated()` assert method;
-* `ReflectionTrait::setProperty()` now returns the old value or `null`;
+* all `ReflectionTrait` methods are now protected. The `setProperty()` method
+    now returns the old value or `null`;
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
     `TestTrait` instead;
 * fixed bug for `is_url()` function with no-string values.
