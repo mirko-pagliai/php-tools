@@ -122,6 +122,7 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
+     * @todo $filename and $expectedMime arguments should be reversed
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
@@ -149,9 +150,14 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a filename has file permissions
-     * @param mixed $filename Filename or filenames
-     * @param string $expectedPerms Expected permissions as a four-chars string
+     * Asserts that one or more filename has some file permissions.
+     *
+     * If only one permission value is passed, asserts that all files have that
+     *  value. If more permission values are passed, asserts that all files have
+     *  at least one of those values.
+     * @param string|array|Traversable $filename Filenames
+     * @param string|int|array $expectedPerms Expected permission values as a
+     *  four-chars string or octal value
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
@@ -159,11 +165,15 @@ trait TestTrait
      */
     public static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
 
-        foreach ($filename as $var) {
-            parent::assertFileExists($var);
-            self::assertContains(substr(sprintf('%o', fileperms($var)), -4), (array)$expectedPerms, $message);
+        $expectedPerms = array_map(function ($perm) {
+            return is_string($perm) ? $perm : sprintf("%04o", $perm);
+        }, is_array($expectedPerms) ? $expectedPerms : [$expectedPerms]);
+
+        foreach ($filenames as $filename) {
+            parent::assertFileExists($filename);
+            self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
         }
     }
 

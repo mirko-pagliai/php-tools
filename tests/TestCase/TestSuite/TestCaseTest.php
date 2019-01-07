@@ -195,9 +195,13 @@ class TestCaseTest extends TestCase
 
         //As string, array and `Traversable`
         $this->assertFilePerms($files[0], '0600');
+        $this->assertFilePerms($files[0], 0600);
         $this->assertFilePerms($files[0], ['0600', '0666']);
+        $this->assertFilePerms($files[0], [0600, 0666]);
         $this->assertFilePerms($files, '0600');
+        $this->assertFilePerms($files, 0600);
         $this->assertFilePerms($files, ['0600', '0666']);
+        $this->assertFilePerms($files, [0600, 0666]);
         $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
         $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
 
