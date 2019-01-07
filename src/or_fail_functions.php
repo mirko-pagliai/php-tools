@@ -29,6 +29,7 @@ if (!function_exists('file_exists_or_fail')) {
      * @param string $exception The exception class you want to set
      * @return void
      * @throws FileNotExistsException
+     * @todo $message should be able to be `null`
      */
     function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)
     {
@@ -48,6 +49,8 @@ if (!function_exists('key_exists_or_fail')) {
      *  generated message
      * @param string $exception The exception class you want to set
      * @return void
+     * @throws KeyNotExistsException
+     * @todo $message should be able to be `null`
      */
     function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
     {
@@ -84,6 +87,7 @@ if (!function_exists('is_readable_or_fail')) {
      * @param string $exception The exception class you want to set
      * @return void
      * @throws NotReadableException
+     * @todo $message should be able to be `null`
      */
     function is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)
     {
@@ -104,6 +108,7 @@ if (!function_exists('is_true_or_fail')) {
      * @return void
      * @since 1.1.7
      * @throws Exception
+     * @todo $message should be able to be `null`
      */
     function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)
     {
@@ -141,6 +146,7 @@ if (!function_exists('is_writable_or_fail')) {
      * @param string $exception The exception class you want to set
      * @return void
      * @throws NotWritableException
+     * @todo $message should be able to be `null`
      */
     function is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)
     {

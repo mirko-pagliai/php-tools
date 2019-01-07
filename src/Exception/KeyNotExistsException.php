@@ -16,7 +16,7 @@ namespace Tools\Exception;
 use Exception;
 
 /**
- * Array key not exists exception
+ * "Array key does not exist" exception
  */
 class KeyNotExistsException extends Exception
 {
@@ -24,7 +24,8 @@ class KeyNotExistsException extends Exception
      * Constructor
      * @param string $message The string of the error message
      * @param int|null $code The code of the error
-     * @param \Exception|null $previous the previous exception
+     * @param Exception|null $previous the previous exception
+     * @todo fix $message
      */
     public function __construct($message = 'Key does not exist', $code = null, $previous = null)
     {

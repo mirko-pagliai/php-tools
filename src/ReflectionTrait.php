@@ -117,6 +117,7 @@ trait ReflectionTrait
      * @param string $propertyName Property name
      * @param mixed $propertyValue Property value you want to set
      * @return void
+     * @todo it should return the old value
      * @uses getPropertyInstance()
      */
     public function setProperty(&$object, $propertyName, $propertyValue)

@@ -17,7 +17,7 @@ namespace Tools\Exception;
 use Exception;
 
 /**
- * Filename not a directory exception
+ * "Filename is not a directory" exception
  */
 class NotDirectoryException extends Exception
 {
@@ -25,7 +25,8 @@ class NotDirectoryException extends Exception
      * Constructor
      * @param string $message The string of the error message
      * @param int|null $code The code of the error
-     * @param \Exception|null $previous the previous exception
+     * @param Exception|null $previous the previous exception
+     * @todo fix $message
      */
     public function __construct($message = 'The filename is not a directory', $code = null, $previous = null)
     {

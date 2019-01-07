@@ -19,7 +19,7 @@ if (!function_exists('clean_url')) {
      * Cleans an url, removing all unnecessary parts, as fragment (#),
      *  trailing slash and `www` prefix
      * @param string $url Url
-     * @param bool $removeWWW Removes the `www` prefix
+     * @param bool $removeWWW Removes the www prefix
      * @param bool $removeTrailingSlash Removes the trailing slash
      * @return string
      * @since 1.0.3
@@ -38,7 +38,7 @@ if (!function_exists('clean_url')) {
 
 if (!function_exists('create_file')) {
     /**
-     * Creates a file.
+     * Creates a file. Alias for `mkdir()` and `file_put_contents()`.
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
@@ -59,7 +59,7 @@ if (!function_exists('create_file')) {
 
 if (!function_exists('create_tmp_file')) {
     /**
-     * Creates a tenporary file.
+     * Creates a tenporary file. Alias for `tempnam()` and `file_put_contents()`.
      *
      * You can pass a directory where to create the file. If `null`, the file
      *  will be created in `TMP`, if the constant is defined, otherwise in the
@@ -70,6 +70,7 @@ if (!function_exists('create_tmp_file')) {
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
+     * @todo shold use create_file()
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
@@ -304,10 +305,11 @@ if (!function_exists('get_hostname_from_url')) {
     /**
      * Gets the host name from an url.
      *
-     * It also removes the `www.` prefix
+     * It also removes the `www` prefix.
      * @param string $url Url
      * @return string|null
      * @since 1.0.2
+     * @todo should use starts_with()
      */
     function get_hostname_from_url($url)
     {
@@ -319,13 +321,12 @@ if (!function_exists('get_hostname_from_url')) {
 
 if (!function_exists('is_external_url')) {
     /**
-     * Checks if an url is external.
-     *
-     * The check is performed by comparing the URL with the passed hostname.
+     * Checks if an url is external, relative to the passed hostname
      * @param string $url Url to check
      * @param string $hostname Hostname for the comparison
      * @return bool
      * @since 1.0.4
+     * @todo $currentHost is ambiguous
      */
     function is_external_url($url, $hostname)
     {
@@ -480,13 +481,14 @@ if (!function_exists('last_value_recursive')) {
 
 if (!function_exists('rmdir_recursive')) {
     /**
-     * Removes a directory and all its contents, including subdirectories and
-     *  files.
+     * Removes the directory itself and all its contents, including
+     *  subdirectories and files.
      *
-     * To remove only the files contained in a directory and its
-     *  sub-directories, use the `unlink_recursive()` function instead.
+     * To remove only files and sub-directories, use the `unlink_recursive()`
+     *  function instead.
      * @param string $dirname Path to the directory
      * @return void
+     * @see unlink_recursive()
      * @since 1.0.6
      */
     function rmdir_recursive($dirname)
@@ -538,11 +540,15 @@ if (!function_exists('starts_with')) {
 if (!function_exists('unlink_recursive')) {
     /**
      * Recursively removes all the files contained in a directory and its
-     *  sub-directories
+     *  sub-directories.
+     *
+     * To remove the directory itself and all its contents, use the
+     *  `rmdir_recursive()` function instead.
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
      * @return void
+     * @see rmdir_recursive()
      * @since 1.0.7
      */
     function unlink_recursive($dirname, $exceptions = false)

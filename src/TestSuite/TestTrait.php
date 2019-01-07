@@ -37,8 +37,8 @@ trait TestTrait
     }
 
     /**
-     * Asserts that an array or an instance of Traversable contains object that
-     *  are insances of `$expectedInstance`
+     * Asserts that an array or an instance of `Traversable` contains objects
+     *  that are instances of `$expectedInstance`
      * @param string $expectedInstance Expected instance
      * @param array|Traversable $value Values
      * @param string $message The failure message that will be appended to the
@@ -68,7 +68,7 @@ trait TestTrait
     protected function assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
     {
         self::assertIsObject($object);
-        self::assertEquals($expectedProperties, array_keys((array)$object), $message);
+        self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
     /**
@@ -98,11 +98,11 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a filename exists.
+     * Asserts that one or more filename exist.
      *
-     * Unlike the original method, this method taks arrays and `Traversable`
-     *  instances.
-     * @param mixed $filename Filename or filenames
+     * Unlike the original method, this method can take an array or a
+     *  `Traversable` instance.
+     * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
@@ -117,7 +117,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts for the extension of a file
+     * Asserts that a filename has the `$expectedExtension`
      * @param string $expectedExtension Expected extension
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the
@@ -144,11 +144,11 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a filename not exists
+     * Asserts that one or more filename do not exist.
      *
-     * Unlike the original method, this method taks arrays and `Traversable`
-     *  instances.
-     * @param mixed $filename Filename or filenames
+     * Unlike the original method, this method can take an array or a
+     *  `Traversable` instance.
+     * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
@@ -182,7 +182,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that an image file has size
+     * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
      * @param string $filename Path to the tested file
      * @param int $expectedWidth Expected image width
      * @param int $expectedHeight Expected mage height
@@ -200,7 +200,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a variable is an array
+     * Asserts that `$var` is an array
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -212,7 +212,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a variable is an array and is not empty
+     * Asserts that `$var` is an array and is not empty
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -226,14 +226,14 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a callable function is deprecated
-     * @param callable $function A callable you want to test and that is marked
+     * Asserts that `$callable` function is deprecated
+     * @param callable $callable A callable you want to test and that is marked
      *  as deprecated
      * @param string|null $expectedMessage The expected message or `null`
      * @return void
      * @since 1.1.11
      */
-    protected static function assertIsDeprecated(callable $function, $expectedMessage = null)
+    protected static function assertIsDeprecated(callable $callable, $expectedMessage = null)
     {
         $deprecatedText = ' - [internal], line: ??
  You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
@@ -242,11 +242,11 @@ trait TestTrait
             $expectedMessage .= $deprecatedText;
         }
 
-        self::assertException(Deprecated::class, $function, $expectedMessage);
+        self::assertException(Deprecated::class, $callable, $expectedMessage);
     }
 
     /**
-     * Asserts that a variable is an integer
+     * Asserts that `$var` is an integer
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -259,7 +259,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a variable is an object
+     * Asserts that `$var` is an object
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -271,7 +271,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a variable is a string
+     * Asserts that `$var` is a string
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -283,7 +283,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that two classes or objects have the same methods
+     * Asserts that `$firstClass` and `$secondClass` have the same methods
      * @param mixed $firstClass First class as string or object
      * @param mixed $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the
@@ -300,6 +300,7 @@ trait TestTrait
      * @param array $files Files
      * @return array
      * @since 1.0.6
+     * @todo to move elsewhere
      */
     protected function createSomeFiles(array $files = [])
     {
