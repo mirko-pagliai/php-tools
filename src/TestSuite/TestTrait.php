@@ -166,10 +166,11 @@ trait TestTrait
     public static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
         $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+        $expectedPerms = is_array($expectedPerms) ? $expectedPerms : [$expectedPerms];
 
         $expectedPerms = array_map(function ($perm) {
             return is_string($perm) ? $perm : sprintf("%04o", $perm);
-        }, is_array($expectedPerms) ? $expectedPerms : [$expectedPerms]);
+        }, $expectedPerms);
 
         foreach ($filenames as $filename) {
             parent::assertFileExists($filename);
