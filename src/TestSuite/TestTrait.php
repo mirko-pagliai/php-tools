@@ -58,20 +58,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that the object properties are equal to `$expectedProperties`
-     * @param array $expectedProperties Expected properties
-     * @param array $object Ojbect to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    protected function assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
-    {
-        self::assertIsObject($object);
-        self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
-    }
-
-    /**
      * Asserts that a callable throws an exception
      * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
@@ -280,6 +266,20 @@ trait TestTrait
     protected static function assertIsString($var, $message = '')
     {
         self::assertTrue(is_string($var), $message);
+    }
+
+    /**
+     * Asserts that the object properties are equal to `$expectedProperties`
+     * @param array $expectedProperties Expected properties
+     * @param array $object Ojbect to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     */
+    protected function assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    {
+        self::assertIsObject($object);
+        self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
     /**
