@@ -95,10 +95,10 @@ trait TestTrait
      */
     public static function assertFileExists($filename, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
 
-        foreach ($filename as $var) {
-            parent::assertFileExists($var, $message);
+        foreach ($filenames as $filename) {
+            parent::assertFileExists($filename, $message);
         }
     }
 
@@ -126,7 +126,7 @@ trait TestTrait
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
-        self::assertFileExists($filename, $message);
+        self::assertFileExists($filename);
         self::assertEquals($expectedMime, mime_content_type($filename), $message);
     }
 
