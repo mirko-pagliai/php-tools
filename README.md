@@ -113,8 +113,8 @@ Available methods are:
 This trait comes to test protected and private methods and properties with
 PHPUnit.
 
-### TestCaseTrait
-`TestCaseTrait` is a trait that provides some assertion methods.
+### TestTrait
+`TestTrait` is a trait that provides some assertion methods.
 
 Available methods are:
     assertArrayKeysEqual($expectedKeys, $array, $message = '')
@@ -128,6 +128,7 @@ Available methods are:
     assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     assertIsArray($var, $message = '')
     assertIsArrayNotEmpty($var, $message = '')
+    assertIsDeprecated(callable $function, $expectedMessage = null)
     assertIsInt($var, $message = '')
     assertIsObject($var, $message = '')
     assertIsString($var, $message = '')

@@ -29,7 +29,7 @@ class Apache
     }
 
     /**
-     * Gets the version
+     * Returns the version number
      * @return string
      */
     public static function version()

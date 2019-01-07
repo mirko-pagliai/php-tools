@@ -19,14 +19,14 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * TestCaseTest class
  */
 class TestCaseTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Tests for `assertArrayKeysEqual()` method
@@ -243,6 +243,20 @@ class TestCaseTest extends TestCase
     public function testAssertIsArrayNotEmptyOnFailureForNoArray()
     {
         $this->assertIsArrayNotEmpty('string');
+    }
+
+    /**
+     * Tests for `assertIsDeprecated()` method
+     * @test
+     */
+    public function testAssertIsDeprecated()
+    {
+        $deprecatedMethod = function () {
+            deprecationWarning('this method is deprecated');
+        };
+
+        $this->assertIsDeprecated($deprecatedMethod);
+        $this->assertIsDeprecated($deprecatedMethod, 'this method is deprecated');
     }
 
     /**

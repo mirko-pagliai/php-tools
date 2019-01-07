@@ -14,14 +14,14 @@
 namespace Tools\Test;
 
 use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * SafeFunctionsTest class
  */
 class SafeFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Test for `safe_copy()` safe function
@@ -98,7 +98,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeRmdirRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         foreach ($files as $file) {
             $this->assertFileExists($file);
@@ -149,7 +149,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlinkRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         //Creates some symlinks
         foreach ([0, 1] as $key) {

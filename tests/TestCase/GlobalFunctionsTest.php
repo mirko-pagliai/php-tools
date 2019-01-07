@@ -15,14 +15,14 @@ namespace Tools\Test;
 use Exception;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Test for `clean_url()` global function
@@ -143,7 +143,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testDirTree()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         $expectedDirs = [
             TMP . 'exampleDir',
@@ -506,7 +506,11 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnUnix()
     {
+        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertFalse(is_win());
+        error_reporting($errorReporting);
     }
 
     /**
@@ -516,7 +520,11 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnWin()
     {
+        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_win());
+        error_reporting($errorReporting);
     }
 
     /**
@@ -525,11 +533,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWritableRecursive()
     {
-        $this->createSomeFiles();
-
+        createSomeFiles();
         $this->assertTrue(is_writable_resursive(TMP . 'exampleDir'));
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-
         rmdir_recursive(TMP . 'exampleDir');
     }
 
@@ -581,7 +587,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRmdirRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         foreach ($files as $file) {
             $this->assertFileExists($file);
@@ -652,7 +658,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         //Creates some symlinks
         foreach ([0, 1] as $key) {

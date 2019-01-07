@@ -16,7 +16,7 @@ use App\ExampleClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * Reflection\ReflectionTrait Test Case
@@ -24,7 +24,7 @@ use Tools\TestSuite\TestCaseTrait;
 class ReflectionTraitTest extends TestCase
 {
     use ReflectionTrait;
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * Tests for `getProperties()` method
@@ -79,17 +79,20 @@ class ReflectionTraitTest extends TestCase
     }
 
     /**
-     * Tests for `getProperty()` method
+     * Tests for `setProperty()` method
      * @test
      */
     public function testSetProperty()
     {
         $example = new ExampleClass;
 
-        $this->setProperty($example, 'firstProperty', 'example string');
+        $result = $this->setProperty($example, 'firstProperty', 'example string');
+        $this->assertNull($result);
         $this->assertEquals('example string', $example->firstProperty);
 
-        $this->setProperty($example, 'secondProperty', null);
+        $expectedResult = $example->secondProperty;
+        $result = $this->setProperty($example, 'secondProperty', null);
+        $this->assertEquals($expectedResult, $result);
         $this->assertNull($example->secondProperty);
     }
 }

@@ -10,12 +10,16 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+if (!defined('IS_WIN')) {
+    define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url, removing all unnecessary parts, as fragment (#),
      *  trailing slash and `www` prefix
      * @param string $url Url
-     * @param bool $removeWWW Removes the `www` prefix
+     * @param bool $removeWWW Removes the www prefix
      * @param bool $removeTrailingSlash Removes the trailing slash
      * @return string
      * @since 1.0.3
@@ -28,17 +32,13 @@ if (!function_exists('clean_url')) {
             $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
         }
 
-        if ($removeTrailingSlash) {
-            $url = rtrim($url, '/');
-        }
-
-        return $url;
+        return $removeTrailingSlash ? rtrim($url, '/') : $url;
     }
 }
 
 if (!function_exists('create_file')) {
     /**
-     * Creates a file.
+     * Creates a file. Alias for `mkdir()` and `file_put_contents()`.
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
@@ -59,7 +59,7 @@ if (!function_exists('create_file')) {
 
 if (!function_exists('create_tmp_file')) {
     /**
-     * Creates a tenporary file.
+     * Creates a tenporary file. Alias for `tempnam()` and `file_put_contents()`.
      *
      * You can pass a directory where to create the file. If `null`, the file
      *  will be created in `TMP`, if the constant is defined, otherwise in the
@@ -73,13 +73,12 @@ if (!function_exists('create_tmp_file')) {
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
-
-        if ($data) {
-            file_put_contents($filename, $data);
+        if (!$dir) {
+            $dir = defined('TMP') ? TMP : sys_get_temp_dir();
         }
+        $filename = tempnam($dir, $prefix);
 
-        return $filename;
+        return create_file($filename, $data) ? $filename : false;
     }
 }
 
@@ -131,7 +130,7 @@ if (!function_exists('dir_tree')) {
         try {
             $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
             $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [[], []];
         }
 
@@ -265,7 +264,7 @@ if (!function_exists('get_class_short_name')) {
      */
     function get_class_short_name($class)
     {
-        return (new \ReflectionClass($class))->getShortName();
+        return (new ReflectionClass($class))->getShortName();
     }
 }
 
@@ -304,7 +303,7 @@ if (!function_exists('get_hostname_from_url')) {
     /**
      * Gets the host name from an url.
      *
-     * It also removes the `www.` prefix
+     * It also removes the `www` prefix.
      * @param string $url Url
      * @return string|null
      * @since 1.0.2
@@ -313,15 +312,13 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
+        return starts_with($host, 'www.') ? substr($host, 4) : $host;
     }
 }
 
 if (!function_exists('is_external_url')) {
     /**
-     * Checks if an url is external.
-     *
-     * The check is performed by comparing the URL with the passed hostname.
+     * Checks if an url is external, relative to the passed hostname
      * @param string $url Url to check
      * @param string $hostname Hostname for the comparison
      * @return bool
@@ -329,10 +326,10 @@ if (!function_exists('is_external_url')) {
      */
     function is_external_url($url, $hostname)
     {
-        $currentHost = get_hostname_from_url($url);
+        $hostForUrl = get_hostname_from_url($url);
 
         //Url with the same host and relative url are not external
-        return $currentHost && strcasecmp($currentHost, $hostname) !== 0;
+        return $hostForUrl && strcasecmp($hostForUrl, $hostname) !== 0;
     }
 }
 
@@ -387,18 +384,22 @@ if (!function_exists('is_url')) {
      */
     function is_url($string)
     {
-        return (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $string);
+        return is_string($string)
+            && (bool)preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $string);
     }
 }
 
 if (!function_exists('is_win')) {
     /**
      * Returns `true` if the environment is Windows
+     * @deprecated 1.1.11 Use the `IS_WIN` constant instead
      * @return bool
      */
     function is_win()
     {
-        return DIRECTORY_SEPARATOR === '\\';
+        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
+
+        return IS_WIN;
     }
 }
 
@@ -476,13 +477,14 @@ if (!function_exists('last_value_recursive')) {
 
 if (!function_exists('rmdir_recursive')) {
     /**
-     * Removes a directory and all its contents, including subdirectories and
-     *  files.
+     * Removes the directory itself and all its contents, including
+     *  subdirectories and files.
      *
-     * To remove only the files contained in a directory and its
-     *  sub-directories, use the `unlink_recursive()` function instead.
+     * To remove only files and sub-directories, use the `unlink_recursive()`
+     *  function instead.
      * @param string $dirname Path to the directory
      * @return void
+     * @see unlink_recursive()
      * @since 1.0.6
      */
     function rmdir_recursive($dirname)
@@ -534,11 +536,15 @@ if (!function_exists('starts_with')) {
 if (!function_exists('unlink_recursive')) {
     /**
      * Recursively removes all the files contained in a directory and its
-     *  sub-directories
+     *  sub-directories.
+     *
+     * To remove the directory itself and all its contents, use the
+     *  `rmdir_recursive()` function instead.
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
      * @return void
+     * @see rmdir_recursive()
      * @since 1.0.7
      */
     function unlink_recursive($dirname, $exceptions = false)
@@ -549,7 +555,7 @@ if (!function_exists('unlink_recursive')) {
         $files += array_filter($directories, 'is_link');
 
         foreach ($files as $file) {
-            is_link($file) && is_dir($file) && is_win() ? rmdir($file) : unlink($file);
+            is_link($file) && is_dir($file) && IS_WIN ? rmdir($file) : unlink($file);
         }
     }
 }
@@ -562,11 +568,8 @@ if (!function_exists('which')) {
      */
     function which($command)
     {
-        $executable = is_win() ? 'where' : 'which';
-
-        exec(sprintf('%s %s 2>&1', $executable, $command), $path, $exitCode);
-
-        $path = is_win() && !empty($path) ? array_map('escapeshellarg', $path) : $path;
+        exec(sprintf('%s %s 2>&1', IS_WIN ? 'where' : 'which', $command), $path, $exitCode);
+        $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;
 
         return $exitCode === 0 && !empty($path[0]) ? $path[0] : null;
     }

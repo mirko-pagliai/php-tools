@@ -22,14 +22,14 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
-use Tools\TestSuite\TestCaseTrait;
+use Tools\TestSuite\TestTrait;
 
 /**
  * OrFailFunctionsTest class
  */
 class OrFailFunctionsTest extends TestCase
 {
-    use TestCaseTrait;
+    use TestTrait;
 
     /**
      * @var string
@@ -135,6 +135,14 @@ class OrFailFunctionsTest extends TestCase
             $this->assertException(ErrorException::class, function () use ($value) {
                 is_true_or_fail($value);
             }, 'The value is not equal to `true`');
+        }
+
+        //Failure with a `null` message
+        try {
+            is_true_or_fail(false, null);
+        } catch (Exception $e) {
+        } finally {
+            $this->assertEmpty($e->getMessage());
         }
 
         //Failure with a custom message

@@ -30,9 +30,8 @@ class BodyParser
     protected $body;
 
     /**
-     * Extracted links by the `extractLinks()` method.
-     * This property works as a cache of values.
-     * A `null` value indicates that the links have not yet been extracted.
+     * Extracted links. This property works as a cache of values. A `null` value
+     *  indicates that the links have not yet been extracted
      * @var array|null
      */
     protected $extractedLinks = null;
@@ -56,8 +55,9 @@ class BodyParser
     protected $scheme;
 
     /**
-     * HTML tags to be scanned, because they can contain links to other
-     *  resources. Tag name as key and attribute name as value
+     * HTML tags that may contain links and therefore need to be scanned.
+     *
+     * Array with tag names as keys and attribute names as values.
      * @var array
      */
     protected $tags = [
@@ -161,7 +161,7 @@ class BodyParser
     }
 
     /**
-     * Returns `true` if the body contains HTML code
+     * Checks if the body contains HTML code
      * @return bool
      * @uses $body
      */
