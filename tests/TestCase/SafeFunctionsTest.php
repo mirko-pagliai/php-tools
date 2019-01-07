@@ -98,7 +98,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeRmdirRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         foreach ($files as $file) {
             $this->assertFileExists($file);
@@ -149,7 +149,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlinkRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         //Creates some symlinks
         foreach ([0, 1] as $key) {

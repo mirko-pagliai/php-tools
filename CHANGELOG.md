@@ -7,7 +7,8 @@
 * all `ReflectionTrait` methods are now protected. The `setProperty()` method
     now returns the old value or `null`;
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
-    `TestTrait` instead;
+    `TestTrait` instead. The `createSomeFiles()` method has been removed and now
+    it is a global function only for tests;
 * fixed bug for `is_url()` function with no-string values.
 
 ### 1.1.10

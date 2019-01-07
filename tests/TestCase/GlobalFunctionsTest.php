@@ -143,7 +143,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testDirTree()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         $expectedDirs = [
             TMP . 'exampleDir',
@@ -533,11 +533,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWritableRecursive()
     {
-        $this->createSomeFiles();
-
+        createSomeFiles();
         $this->assertTrue(is_writable_resursive(TMP . 'exampleDir'));
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-
         rmdir_recursive(TMP . 'exampleDir');
     }
 
@@ -589,7 +587,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRmdirRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         foreach ($files as $file) {
             $this->assertFileExists($file);
@@ -660,7 +658,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        $files = $this->createSomeFiles();
+        $files = createSomeFiles();
 
         //Creates some symlinks
         foreach ([0, 1] as $key) {

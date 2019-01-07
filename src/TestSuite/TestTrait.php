@@ -294,31 +294,4 @@ trait TestTrait
     {
         static::assertEquals(get_class_methods($firstClass), get_class_methods($secondClass), $message);
     }
-
-    /**
-     * Internal method to create some files for tests
-     * @param array $files Files
-     * @return array
-     * @since 1.0.6
-     * @todo to move elsewhere
-     */
-    protected function createSomeFiles(array $files = [])
-    {
-        $files = $files ?: [
-            TMP . 'exampleDir' . DS . 'file1',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-            TMP . 'exampleDir' . DS . '.hiddenFile',
-            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
-        ];
-
-        //Creates directories and files
-        array_walk($files, 'safe_create_file');
-        safe_mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
-
-        return $files;
-    }
 }
