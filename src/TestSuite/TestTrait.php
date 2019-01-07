@@ -103,22 +103,30 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a filename has the `$expectedExtension`
+     * Asserts that a filename has the `$expectedExtension`.
+     *
+     * It is not necessary for the file to actually exist.
+     * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
+     *  extension is `jpg`).
      * @param string $expectedExtension Expected extension
-     * @param string $filename Path to the tested file
+     * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        self::assertEquals($expectedExtension, get_extension($filename), $message);
+        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+
+        foreach ($filenames as $filename) {
+            self::assertEquals($expectedExtension, get_extension($filename), $message);
+        }
     }
 
     /**
      * Asserts that a file has a MIME content type
-     * @param string $filename Path to the tested file
-     * @param string $expectedMime MIME content type, like `text/plain` or `application/octet-stream`
+     * @param string|array|Traversable $filename Filenames
+     * @param string $expectedMime MIME content type
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
@@ -126,8 +134,12 @@ trait TestTrait
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
-        self::assertFileExists($filename);
-        self::assertEquals($expectedMime, mime_content_type($filename), $message);
+        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+
+        foreach ($filenames as $filename) {
+            self::assertFileExists($filename);
+            self::assertEquals($expectedMime, mime_content_type($filename), $message);
+        }
     }
 
     /**
@@ -142,10 +154,10 @@ trait TestTrait
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
 
-        foreach ($filename as $var) {
-            parent::assertFileNotExists($var, $message);
+        foreach ($filenames as $filename) {
+            parent::assertFileNotExists($filename, $message);
         }
     }
 

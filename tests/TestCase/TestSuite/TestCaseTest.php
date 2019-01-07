@@ -140,15 +140,14 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileExtension()
     {
-        foreach ([
-            'jpg' => 'file.jpg',
-            'jpg' => 'file.JPG',
-            'jpeg' => 'file.jpeg',
-            'jpg' => 'path/to/file.jpg',
-            'jpg' => '/full/path/to/file.jpg',
-        ] as $extension => $filename) {
-            $this->assertFileExtension($extension, $filename);
-        }
+        $this->assertFileExtension('jpg', 'file.jpg');
+        $this->assertFileExtension('jpeg', 'FILE.JPEG');
+        $this->assertFileExtension('jpg', [
+            'file.jpg',
+            'file.JPG',
+            'path/to/file.jpg',
+            '/full/path/to/file.jpg',
+        ]);
     }
 
     /**
@@ -168,6 +167,12 @@ class TestCaseTest extends TestCase
     {
         $filename = safe_create_tmp_file('this is a test file');
         $this->assertFileMime($filename, 'text/plain');
+
+        $files = [
+            safe_create_tmp_file('first'),
+            safe_create_tmp_file('second'),
+        ];
+        $this->assertFileMime($files, 'text/plain');
     }
 
     /**

@@ -4,6 +4,8 @@
 * added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
     removed in a later version;
 * added `assertIsDeprecated()` assert method;
+* `assertFileExtension()` and `assertFileMime()` assert methods can take string
+    or an array or a `Traversable` of files;
 * all `ReflectionTrait` methods are now protected. The `setProperty()` method
     now returns the old value or `null`;
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
