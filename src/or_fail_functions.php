@@ -29,7 +29,6 @@ if (!function_exists('file_exists_or_fail')) {
      * @param string $exception The exception class you want to set
      * @return void
      * @throws FileNotExistsException
-     * @todo $message should be able to be `null`
      */
     function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)
     {
