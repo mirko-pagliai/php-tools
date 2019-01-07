@@ -1,7 +1,6 @@
 .directory
 *_old
 *.old.*
-api/
 composer.lock
 coverage/
 vendor/
