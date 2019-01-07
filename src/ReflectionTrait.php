@@ -30,7 +30,10 @@ trait ReflectionTrait
      */
     protected function getMethodInstance(&$object, $methodName)
     {
-        return new ReflectionMethod(get_class($object), $methodName);
+        $method = new ReflectionMethod(get_class($object), $methodName);
+        $method->setAccessible(true);
+
+        return $method;
     }
 
     /**
@@ -72,27 +75,27 @@ trait ReflectionTrait
     /**
      * Internal method to get the `ReflectionProperty` instance
      * @param object $object Instantiated object that has the property
-     * @param string $propertyName Property name
+     * @param string $name Property name
      * @return ReflectionProperty
      */
-    protected function getPropertyInstance(&$object, $propertyName)
+    protected function getPropertyInstance(&$object, $name)
     {
-        return new ReflectionProperty(get_class($object), $propertyName);
+        $property = new ReflectionProperty(get_class($object), $name);
+        $property->setAccessible(true);
+
+        return $property;
     }
 
     /**
      * Gets a property value
      * @param object $object Instantiated object that has the property
-     * @param string $propertyName Property name
+     * @param string $name Property name
      * @return mixed Property value
      * @uses getPropertyInstance()
      */
-    public function getProperty(&$object, $propertyName)
+    public function getProperty(&$object, $name)
     {
-        $property = $this->getPropertyInstance($object, $propertyName);
-        $property->setAccessible(true);
-
-        return $property->getValue($object);
+        return $this->getPropertyInstance($object, $name)->getValue($object);
     }
 
     /**
@@ -105,28 +108,22 @@ trait ReflectionTrait
      */
     public function invokeMethod(&$object, $methodName, array $parameters = [])
     {
-        $method = $this->getMethodInstance($object, $methodName);
-        $method->setAccessible(true);
-
-        return $method->invokeArgs($object, $parameters);
+        return $this->getMethodInstance($object, $methodName)->invokeArgs($object, $parameters);
     }
 
     /**
      * Sets a property value
      * @param object $object Instantiated object that has the property
-     * @param string $propertyName Property name
-     * @param mixed $propertyValue Property value you want to set
+     * @param string $name Property name
+     * @param mixed $value Value you want to set
      * @return mixed Old property value
-     * @uses getProperty()
      * @uses getPropertyInstance()
      */
-    public function setProperty(&$object, $propertyName, $propertyValue)
+    public function setProperty(&$object, $name, $value)
     {
-        $oldValue = $this->getProperty($object, $propertyName);
-
-        $property = $this->getPropertyInstance($object, $propertyName);
-        $property->setAccessible(true);
-        $property->setValue($object, $propertyValue);
+        $property = $this->getPropertyInstance($object, $name);
+        $oldValue = $property->getValue($object);
+        $property->setValue($object, $value);
 
         return $oldValue;
     }

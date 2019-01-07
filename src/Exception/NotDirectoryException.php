@@ -26,9 +26,8 @@ class NotDirectoryException extends Exception
      * @param string $message The string of the error message
      * @param int|null $code The code of the error
      * @param Exception|null $previous the previous exception
-     * @todo fix $message
      */
-    public function __construct($message = 'The filename is not a directory', $code = null, $previous = null)
+    public function __construct($message = 'Filename is not a directory', $code = null, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
