@@ -137,6 +137,14 @@ class OrFailFunctionsTest extends TestCase
             }, 'The value is not equal to `true`');
         }
 
+        //Failure with a `null` message
+        try {
+            is_true_or_fail(false, null);
+        } catch (Exception $e) {
+        } finally {
+            $this->assertEmpty($e->getMessage());
+        }
+
         //Failure with a custom message
         $this->assertException(ErrorException::class, function () {
             is_true_or_fail(false, '`false` is not `true`');

@@ -45,12 +45,11 @@ if (!function_exists('key_exists_or_fail')) {
      * If you pass an array of keys, they will all be checked.
      * @param string|int|array $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @throws KeyNotExistsException
-     * @todo $message should be able to be `null`
      */
     function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
     {
@@ -65,8 +64,8 @@ if (!function_exists('is_dir_or_fail')) {
      * Tells whether the filename is a directory and throws an exception if the
      *  filename is not a directory
      * @param string $filename Path to the directory
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @throws NotDirectoryException
@@ -82,12 +81,11 @@ if (!function_exists('is_readable_or_fail')) {
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
      * @param string $filename Path to the file or directory
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @throws NotReadableException
-     * @todo $message should be able to be `null`
      */
     function is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)
     {
@@ -102,13 +100,12 @@ if (!function_exists('is_true_or_fail')) {
      * You can also pass the exception as a second parameter, instead of the
      *  message.
      * @param mixed $value The value you want to check
-     * @param string $message The failure message that will be appended to the
+     * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @since 1.1.7
      * @throws Exception
-     * @todo $message should be able to be `null`
      */
     function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)
     {
@@ -141,12 +138,11 @@ if (!function_exists('is_writable_or_fail')) {
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
      * @param string $filename Path to the file or directory
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @throws NotWritableException
-     * @todo $message should be able to be `null`
      */
     function is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)
     {

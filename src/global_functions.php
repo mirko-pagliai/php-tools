@@ -70,17 +70,15 @@ if (!function_exists('create_tmp_file')) {
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
-     * @todo shold use create_file()
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
-
-        if ($data) {
-            file_put_contents($filename, $data);
+        if (!$dir) {
+            $dir = defined('TMP') ? TMP : sys_get_temp_dir();
         }
+        $filename = tempnam($dir, $prefix);
 
-        return $filename;
+        return create_file($filename, $data) ? $filename : false;
     }
 }
 
@@ -309,13 +307,12 @@ if (!function_exists('get_hostname_from_url')) {
      * @param string $url Url
      * @return string|null
      * @since 1.0.2
-     * @todo should use starts_with()
      */
     function get_hostname_from_url($url)
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return substr($host, 0, 4) === 'www.' ? substr($host, 4) : $host;
+        return starts_with($host, 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -326,14 +323,13 @@ if (!function_exists('is_external_url')) {
      * @param string $hostname Hostname for the comparison
      * @return bool
      * @since 1.0.4
-     * @todo $currentHost is ambiguous
      */
     function is_external_url($url, $hostname)
     {
-        $currentHost = get_hostname_from_url($url);
+        $hostForUrl = get_hostname_from_url($url);
 
         //Url with the same host and relative url are not external
-        return $currentHost && strcasecmp($currentHost, $hostname) !== 0;
+        return $hostForUrl && strcasecmp($hostForUrl, $hostname) !== 0;
     }
 }
 
