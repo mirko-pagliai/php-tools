@@ -1,10 +1,6 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.11
-* added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
-    removed in a later version;
-* `assertContainsInstanceOf()` method is deprecated and will be removed in a
-    later version. Use `assertContainsOnlyInstancesOf()` instead';
 * added `assertIsDeprecated()` assert method;
 * `assertFileExtension()` and `assertFileMime()` assert methods can take string
     or an array or a `Traversable` of files;
@@ -17,7 +13,11 @@
     the assert failed if the methods were the same but in a different order;
 * fixed bug for `assertFilePerms()`. Now it works correctly and take permission
     values as string or octal value;
-* fixed bug for `is_url()` function with no-string values.
+* fixed bug for `is_url()` function with no-string values;
+* `is_win()` method is now deprecated and will be
+    removed in a later version; Use the `IS_WIN` constant instead;
+* `assertContainsInstanceOf()` method is deprecated and will be removed in a
+    later version. Use `assertContainsOnlyInstancesOf()` instead'.
 
 ### 1.1.10
 * added `first_key()`, `first_value_recursive()`, `last_key()` and
