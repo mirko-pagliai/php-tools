@@ -1,7 +1,6 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.11
-* added `assertIsDeprecated()` assert method;
 * `assertFileExtension()` and `assertFileMime()` assert methods can take string
     or an array or a `Traversable` of files;
 * all `ReflectionTrait` methods are now protected. The `setProperty()` method

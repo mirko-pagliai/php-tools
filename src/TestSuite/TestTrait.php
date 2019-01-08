@@ -233,26 +233,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that `$callable` function is deprecated
-     * @param callable $callable A callable you want to test and that is marked
-     *  as deprecated
-     * @param string|null $expectedMessage The expected message or `null`
-     * @return void
-     * @since 1.1.11
-     */
-    protected static function assertIsDeprecated(callable $callable, $expectedMessage = null)
-    {
-        $deprecatedText = ' - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
-
-        if ($expectedMessage && !ends_with($expectedMessage, $deprecatedText)) {
-            $expectedMessage .= $deprecatedText;
-        }
-
-        self::assertException(Deprecated::class, $callable, $expectedMessage);
-    }
-
-    /**
      * Asserts that `$var` is an integer
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the

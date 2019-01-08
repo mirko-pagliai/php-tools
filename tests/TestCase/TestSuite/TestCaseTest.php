@@ -12,9 +12,9 @@
  */
 namespace Tools\Test\TestSuite;
 
+use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\AnotherExampleChildClass;
 use App\ExampleOfTraversable;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
@@ -250,20 +250,6 @@ class TestCaseTest extends TestCase
     public function testAssertIsArrayNotEmptyOnFailureForNoArray()
     {
         $this->assertIsArrayNotEmpty('string');
-    }
-
-    /**
-     * Tests for `assertIsDeprecated()` method
-     * @test
-     */
-    public function testAssertIsDeprecated()
-    {
-        $deprecatedMethod = function () {
-            deprecationWarning('this method is deprecated');
-        };
-
-        $this->assertIsDeprecated($deprecatedMethod);
-        $this->assertIsDeprecated($deprecatedMethod, 'this method is deprecated');
     }
 
     /**
