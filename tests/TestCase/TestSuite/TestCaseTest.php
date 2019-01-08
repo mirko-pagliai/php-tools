@@ -18,6 +18,7 @@ use App\AnotherExampleChildClass;
 use App\ExampleOfTraversable;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
