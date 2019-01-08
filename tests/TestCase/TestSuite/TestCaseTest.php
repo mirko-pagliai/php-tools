@@ -46,11 +46,12 @@ class TestCaseTest extends TestCase
      */
     public function testAssertContainsInstanceOf()
     {
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
         $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
+        error_reporting($errorReporting);
 
-        //On failure
-        $this->expectException(AssertionFailedError::class);
+        $this->expectException(Deprecated::class);
         $this->assertContainsInstanceOf('stdClass', new stdClass);
     }
 

@@ -3,6 +3,8 @@
 ### 1.1.11
 * added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
     removed in a later version;
+* `assertContainsInstanceOf()` method is deprecated and will be removed in a
+    later version. Use `assertContainsOnlyInstancesOf()` instead';
 * added `assertIsDeprecated()` assert method;
 * `assertFileExtension()` and `assertFileMime()` assert methods can take string
     or an array or a `Traversable` of files;

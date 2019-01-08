@@ -39,6 +39,7 @@ trait TestTrait
     /**
      * Asserts that an array or an instance of `Traversable` contains objects
      *  that are instances of `$expectedInstance`
+     * @deprecated 1.1.11 Use `assertContainsOnlyInstancesOf()` instead
      * @param string $expectedInstance Expected instance
      * @param array|Traversable $value Values
      * @param string $message The failure message that will be appended to the
@@ -48,13 +49,9 @@ trait TestTrait
      */
     protected static function assertContainsInstanceOf($expectedInstance, $value, $message = '')
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
-            self::fail('The value is not an array or an instance of Traversable');
-        }
+        deprecationWarning('The `assertContainsInstanceOf()` method is deprecated and will be removed in a later version. Use `assertContainsOnlyInstancesOf()` instead');
 
-        foreach ($value as $object) {
-            parent::assertInstanceOf($expectedInstance, $object, $message);
-        }
+        parent::assertContainsOnlyInstancesOf($expectedInstance, $value, $message);
     }
 
     /**
