@@ -14,7 +14,6 @@
 namespace Tools\TestSuite;
 
 use Exception;
-use PHPUnit\Framework\Error\Deprecated;
 use Traversable;
 
 /**
@@ -92,9 +91,7 @@ trait TestTrait
      */
     public static function assertFileExists($filename, $message = '')
     {
-        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filenames as $filename) {
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileExists($filename, $message);
         }
     }
@@ -113,9 +110,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filenames as $filename) {
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             self::assertEquals($expectedExtension, get_extension($filename), $message);
         }
     }
@@ -131,9 +126,7 @@ trait TestTrait
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
-        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filenames as $filename) {
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             self::assertFileExists($filename);
             self::assertEquals($expectedMime, mime_content_type($filename), $message);
         }
@@ -151,9 +144,7 @@ trait TestTrait
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filenames as $filename) {
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileNotExists($filename, $message);
         }
     }
@@ -172,16 +163,14 @@ trait TestTrait
      * @return void
      * @since 1.0.9
      */
-    public static function assertFilePerms($filename, $expectedPerms, $message = '')
+    protected static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
-        $filenames = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
         $expectedPerms = is_array($expectedPerms) ? $expectedPerms : [$expectedPerms];
-
         $expectedPerms = array_map(function ($perm) {
             return is_string($perm) ? $perm : sprintf("%04o", $perm);
         }, $expectedPerms);
 
-        foreach ($filenames as $filename) {
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileExists($filename);
             self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
         }
@@ -214,7 +203,7 @@ trait TestTrait
      */
     protected static function assertIsArray($var, $message = '')
     {
-        self::assertTrue(is_array($var), $message);
+        parent::assertInternalType('array', $var, $message);
     }
 
     /**
@@ -242,7 +231,7 @@ trait TestTrait
      */
     protected static function assertIsInt($var, $message = '')
     {
-        self::assertTrue(is_int($var), $message);
+        parent::assertInternalType('int', $var, $message);
     }
 
     /**
@@ -254,7 +243,7 @@ trait TestTrait
      */
     protected static function assertIsObject($var, $message = '')
     {
-        self::assertTrue(is_object($var), $message);
+        parent::assertInternalType('object', $var, $message);
     }
 
     /**
@@ -266,7 +255,7 @@ trait TestTrait
      */
     protected static function assertIsString($var, $message = '')
     {
-        self::assertTrue(is_string($var), $message);
+        parent::assertInternalType('string', $var, $message);
     }
 
     /**
