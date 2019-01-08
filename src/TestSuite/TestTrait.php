@@ -227,6 +227,7 @@ trait TestTrait
      *  generated message
      * @return void
      * @since 1.0.6
+     * @todo array_filter?
      */
     protected static function assertIsArrayNotEmpty($var, $message = '')
     {
@@ -315,6 +316,10 @@ trait TestTrait
      */
     protected static function assertSameMethods($firstClass, $secondClass, $message = '')
     {
-        static::assertEquals(get_class_methods($firstClass), get_class_methods($secondClass), $message);
+        list($firstClass, $secondClass) = [get_class_methods($firstClass), get_class_methods($secondClass)];
+        sort($firstClass);
+        sort($secondClass);
+
+        static::assertEquals($firstClass, $secondClass, $message);
     }
 }

@@ -12,7 +12,9 @@
  */
 namespace Tools\Test\TestSuite;
 
+use App\ExampleChildClass;
 use App\ExampleClass;
+use App\AnotherExampleChildClass;
 use App\ExampleOfTraversable;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
@@ -313,12 +315,12 @@ class TestCaseTest extends TestCase
     public function testAssertSameMethods()
     {
         $exampleClass = new ExampleClass;
-
         $this->assertSameMethods($exampleClass, ExampleClass::class);
         $this->assertSameMethods($exampleClass, get_class($exampleClass));
 
         $copyExampleClass = &$exampleClass;
-
         $this->assertSameMethods($exampleClass, $copyExampleClass);
+
+        $this->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
     }
 }
