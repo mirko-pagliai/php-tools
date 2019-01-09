@@ -64,7 +64,6 @@ class SafeFunctionsTest extends TestCase
         $dir = TMP . 'dir_' . md5(time());
         $this->assertTrue(safe_mkdir($dir));
         $this->assertDirectoryExists($dir);
-
     }
 
     /**

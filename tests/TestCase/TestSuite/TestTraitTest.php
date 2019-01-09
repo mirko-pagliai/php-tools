@@ -89,7 +89,7 @@ class TestTraitTest extends TestCase
             });
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith('Expected exception `' . Deprecated::class .'`, unexpected type `Exception`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `Exception`', $e->getMessage());
             unset($e);
         }
 
