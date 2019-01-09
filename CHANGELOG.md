@@ -18,8 +18,9 @@
 * fixed bug for `is_url()` function with no-string values;
 * `is_win()` method is now deprecated and will be
     removed in a later version; Use the `IS_WIN` constant instead;
-* `assertContainsInstanceOf()` method is deprecated and will be removed in a
-    later version. Use `assertContainsOnlyInstancesOf()` instead'.
+* `assertContainsInstanceOf()` method is now deprecated and will be removed in a
+    later version. Use `assertContainsOnlyInstancesOf()` instead';
+* all "safe" methods are now deprecated and will be removed in a later version.
 
 ### 1.1.10
 * added `first_key()`, `first_value_recursive()`, `last_key()` and

@@ -13,6 +13,7 @@
  */
 namespace Tools\Test;
 
+use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -26,11 +27,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeCopy()
     {
-        $source = safe_create_tmp_file();
-        $dest = TMP . 'copy_' . md5(time());
-        $this->assertFileNotExists($dest);
-        $this->assertTrue(safe_copy($source, $dest));
-        $this->assertFileExists($dest);
+        $this->expectException(Deprecated::class);
+        safe_copy(create_tmp_file(), TMP . 'copy');
     }
 
     /**
@@ -39,9 +37,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeCreateFile()
     {
-        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
-        $this->assertTrue(safe_create_file($filename));
-        $this->assertStringEqualsFile($filename, '');
+        $this->expectException(Deprecated::class);
+        safe_create_file(TMP . 'example');
     }
 
     /**
@@ -50,9 +47,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeCreateTmpFile()
     {
-        $filename = safe_create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, '');
+        $this->expectException(Deprecated::class);
+        safe_create_tmp_file();
     }
 
     /**
@@ -61,9 +57,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeMkdir()
     {
-        $dir = TMP . 'dir_' . md5(time());
-        $this->assertTrue(safe_mkdir($dir));
-        $this->assertDirectoryExists($dir);
+        $this->expectException(Deprecated::class);
+        safe_mkdir(TMP . 'dir');
     }
 
     /**
@@ -72,10 +67,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeRmdir()
     {
-        $dir = TMP . 'dir_' . md5(time());
-        safe_mkdir($dir);
-        $this->assertTrue(safe_rmdir($dir));
-        $this->assertDirectoryNotExists($dir);
+        $this->expectException(Deprecated::class);
+        safe_rmdir(TMP . 'dir');
     }
 
     /**
@@ -84,10 +77,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeRmdirRecursive()
     {
-        $files = createSomeFiles();
-        safe_rmdir_recursive(TMP . 'exampleDir');
-        $this->assertFileNotExists($files);
-        array_map([$this, 'assertDirectoryNotExists'], array_unique(array_filter($files, 'is_dir')));
+        $this->expectException(Deprecated::class);
+        safe_rmdir_recursive(TMP . 'dir');
     }
 
     /**
@@ -96,11 +87,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeSymlink()
     {
-        $link = TMP . 'link_' . md5(time());
-        $this->assertFileNotExists($link);
-        $this->assertTrue(safe_symlink(safe_create_tmp_file(), $link));
-        $this->assertFileExists($link);
-        $this->assertTrue(is_link($link));
+        $this->expectException(Deprecated::class);
+        safe_symlink(create_tmp_file(), TMP . 'link');
     }
 
     /**
@@ -109,9 +97,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlink()
     {
-        $file = safe_create_tmp_file();
-        $this->assertTrue(safe_unlink($file));
-        $this->assertFileNotExists($file);
+        $this->expectException(Deprecated::class);
+        safe_unlink(create_tmp_file());
     }
 
     /**
@@ -120,18 +107,8 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlinkRecursive()
     {
-        //Creates some files and some symlinks
-        $files = createSomeFiles();
-        foreach ([safe_create_tmp_file(), safe_create_tmp_file()] as $filename) {
-            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            safe_symlink($filename, $link);
-            $files[] = $link;
-        }
-        safe_unlink_recursive(TMP . 'exampleDir');
-
-        //Files no longer exist, but directories still exist
-        $this->assertFileNotExists($files);
-        array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
+        $this->expectException(Deprecated::class);
+        safe_unlink_recursive(TMP . 'dir');
     }
 
     /**
@@ -140,10 +117,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnserialize()
     {
-        $expected = ['test'];
-        $str = serialize($expected);
-        $this->assertEquals($expected, safe_unserialize($str));
-
-        $this->assertFalse(safe_unserialize('invalidString'));
+        $this->expectException(Deprecated::class);
+        safe_unserialize(serialize(['test']));
     }
 }
