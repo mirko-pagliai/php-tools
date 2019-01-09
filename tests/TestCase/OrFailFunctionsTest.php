@@ -14,7 +14,6 @@ namespace Tools\Test;
 
 use ErrorException;
 use Exception;
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
@@ -22,26 +21,13 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * OrFailFunctionsTest class
  */
 class OrFailFunctionsTest extends TestCase
 {
-    use TestTrait;
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink_recursive(TMP);
-    }
-
     /**
      * Test for `file_exists_or_fail()` "or fail" function
      * @test

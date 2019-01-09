@@ -13,16 +13,13 @@
  */
 namespace Tools\Test;
 
-use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * SafeFunctionsTest class
  */
 class SafeFunctionsTest extends TestCase
 {
-    use TestTrait;
-
     /**
      * Test for `safe_copy()` safe function
      * @test
@@ -32,11 +29,8 @@ class SafeFunctionsTest extends TestCase
         $source = safe_create_tmp_file();
         $dest = TMP . 'copy_' . md5(time());
         $this->assertFileNotExists($dest);
-
         $this->assertTrue(safe_copy($source, $dest));
         $this->assertFileExists($dest);
-
-        safe_unlink($dest);
     }
 
     /**
@@ -47,8 +41,7 @@ class SafeFunctionsTest extends TestCase
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
         $this->assertTrue(safe_create_file($filename));
-        $this->assertFileExists($filename);
-        $this->assertEmpty(file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, '');
     }
 
     /**
@@ -59,8 +52,7 @@ class SafeFunctionsTest extends TestCase
     {
         $filename = safe_create_tmp_file();
         $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertFileExists($filename);
-        $this->assertEmpty(file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, '');
     }
 
     /**
@@ -70,13 +62,9 @@ class SafeFunctionsTest extends TestCase
     public function testSafeMkdir()
     {
         $dir = TMP . 'dir_' . md5(time());
-        $this->assertFileNotExists($dir);
+        $this->assertTrue(safe_mkdir($dir));
+        $this->assertDirectoryExists($dir);
 
-        $this->assertTrue(safe_mkdir($dir, 0777, true));
-        $this->assertFileExists($dir);
-        $this->assertTrue(is_dir($dir));
-
-        safe_rmdir($dir);
     }
 
     /**
@@ -86,10 +74,9 @@ class SafeFunctionsTest extends TestCase
     public function testSafeRmdir()
     {
         $dir = TMP . 'dir_' . md5(time());
-        safe_mkdir($dir, 0777, true);
-
+        safe_mkdir($dir);
         $this->assertTrue(safe_rmdir($dir));
-        $this->assertFileNotExists($dir);
+        $this->assertDirectoryNotExists($dir);
     }
 
     /**
@@ -99,17 +86,9 @@ class SafeFunctionsTest extends TestCase
     public function testSafeRmdirRecursive()
     {
         $files = createSomeFiles();
-
-        foreach ($files as $file) {
-            $this->assertFileExists($file);
-        }
-
         safe_rmdir_recursive(TMP . 'exampleDir');
-
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-            $this->assertFileNotExists(dirname($file));
-        }
+        $this->assertFileNotExists($files);
+        array_map([$this, 'assertDirectoryNotExists'], array_unique(array_filter($files, 'is_dir')));
     }
 
     /**
@@ -118,16 +97,11 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeSymlink()
     {
-        $target = tempnam(TMP, 'safe_file');
-        $link = TMP . 'file_' . md5(time());
+        $link = TMP . 'link_' . md5(time());
         $this->assertFileNotExists($link);
-
-        $this->assertTrue(safe_symlink($target, $link));
+        $this->assertTrue(safe_symlink(safe_create_tmp_file(), $link));
         $this->assertFileExists($link);
         $this->assertTrue(is_link($link));
-
-        safe_unlink($target);
-        safe_unlink($link);
     }
 
     /**
@@ -136,9 +110,7 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlink()
     {
-        $file = tempnam(TMP, 'safe_file');
-        $this->assertFileExists($file);
-
+        $file = safe_create_tmp_file();
         $this->assertTrue(safe_unlink($file));
         $this->assertFileNotExists($file);
     }
@@ -149,24 +121,18 @@ class SafeFunctionsTest extends TestCase
      */
     public function testSafeUnlinkRecursive()
     {
+        //Creates some files and some symlinks
         $files = createSomeFiles();
-
-        //Creates some symlinks
-        foreach ([0, 1] as $key) {
-            $link = dirname($files[0]) . DS . 'link_to_' . basename($files[$key]);
-            safe_symlink($files[$key], $link);
+        foreach ([safe_create_tmp_file(), safe_create_tmp_file()] as $filename) {
+            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
+            safe_symlink($filename, $link);
             $files[] = $link;
         }
-
         safe_unlink_recursive(TMP . 'exampleDir');
 
         //Files no longer exist, but directories still exist
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-            $this->assertFileExists(dirname($file));
-        }
-
-        safe_rmdir_recursive(TMP . 'exampleDir');
+        $this->assertFileNotExists($files);
+        array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 
     /**

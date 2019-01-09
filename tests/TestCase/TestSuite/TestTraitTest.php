@@ -19,28 +19,14 @@ use App\ExampleOfTraversable;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\TestCase;
 use stdClass;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * TestTraitTest class
  */
 class TestTraitTest extends TestCase
 {
-    use TestTrait;
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink_recursive(TMP);
-    }
-
     /**
      * Tests for `assertArrayKeysEqual()` method
      * @test

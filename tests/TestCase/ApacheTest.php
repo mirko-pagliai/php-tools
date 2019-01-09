@@ -12,8 +12,8 @@
  */
 namespace Tools\Test;
 
-use PHPUnit\Framework\TestCase;
 use Tools\Apache;
+use Tools\TestSuite\TestCase;
 
 /**
  * ApacheTest class

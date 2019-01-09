@@ -15,27 +15,13 @@ namespace Tools\Test;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
-    use TestTrait;
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink_recursive(TMP);
-    }
-
     /**
      * Test for `clean_url()` global function
      * @test

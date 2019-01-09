@@ -12,17 +12,14 @@
  */
 namespace Tools;
 
-use PHPUnit\Framework\TestCase;
 use Tools\BodyParser;
-use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * BodyParserTest class
  */
 class BodyParserTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Test for `_turnUrlAsAbsolute()` method
      * @test

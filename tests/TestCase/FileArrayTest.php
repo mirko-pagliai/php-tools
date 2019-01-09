@@ -13,8 +13,8 @@
 namespace Tools\Test;
 
 use Exception;
-use PHPUnit\Framework\TestCase;
 use Tools\FileArray;
+use Tools\TestSuite\TestCase;
 
 /**
  * FileArrayTest class
@@ -32,11 +32,6 @@ class FileArrayTest extends TestCase
     protected $example = ['first', 'second', 'third', 'fourth', 'fifth'];
 
     /**
-     * @var string
-     */
-    protected $file = TMP . 'file_array_test';
-
-    /**
      * Setup the test case, backup the static object values so they can be
      * restored. Specifically backs up the contents of Configure and paths in
      *  App if they have not already been backed up
@@ -46,33 +41,7 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->FileArray = new FileArray($this->file, $this->example);
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink($this->file);
-    }
-
-    /**
-     * Test for `__construct()` method
-     * @test
-     */
-    public function testConstruct()
-    {
-        //With a file that already exists
-        safe_create_file($this->file);
-        $this->assertEquals([], (new FileArray($this->file))->read());
-
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('File or directory `' . TMP . 'noExistingDir` is not writable');
-        new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
+        $this->FileArray = new FileArray(safe_create_tmp_file(), $this->example);
     }
 
     /**
@@ -142,14 +111,11 @@ class FileArrayTest extends TestCase
      */
     public function testRead()
     {
-        $this->assertNotEmpty($this->FileArray->read());
+        $this->assertEquals($this->example, $this->FileArray->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        safe_create_file($this->file, 'a string');
-        $this->assertEquals([], (new FileArray($this->file))->read());
-
-        safe_unlink($this->file);
-        $this->assertEquals([], (new FileArray($this->file))->read());
+        $this->assertEquals([], (new FileArray(safe_create_tmp_file('a string')))->read());
+        $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
     }
 
     /**
@@ -180,8 +146,7 @@ class FileArrayTest extends TestCase
      */
     public function testWrite()
     {
-        $result = $this->FileArray->write();
-        $this->assertTrue($result);
-        $this->assertEquals($this->example, safe_unserialize(file_get_contents($this->file)));
+        $this->assertTrue($this->FileArray->write());
+        $this->assertEquals($this->example, $this->FileArray->read());
     }
 }

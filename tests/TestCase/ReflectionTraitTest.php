@@ -13,19 +13,14 @@
 namespace Tools\Test;
 
 use App\ExampleClass;
-use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Tools\ReflectionTrait;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * Reflection\ReflectionTrait Test Case
  */
 class ReflectionTraitTest extends TestCase
 {
-    use ReflectionTrait;
-    use TestTrait;
-
     /**
      * Tests for `getProperties()` method
      * @test
