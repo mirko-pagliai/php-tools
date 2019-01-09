@@ -29,7 +29,7 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    protected static function assertArrayKeysEqual(array $expectedKeys, array $array, $message = '')
     {
         self::assertIsArray($array);
         $keys = array_keys($array);
@@ -226,7 +226,6 @@ trait TestTrait
     protected static function assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     {
         self::assertFileExists($filename, $message);
-
         list($width, $height) = getimagesize($filename);
         self::assertEquals($width, $expectedWidth);
         self::assertEquals($height, $expectedHeight);
@@ -299,12 +298,12 @@ trait TestTrait
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
      * @param array $expectedProperties Expected properties
-     * @param array $object Ojbect to check
+     * @param object $object Object you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    protected function assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    protected function assertObjectPropertiesEqual(array $expectedProperties, $object, $message = '')
     {
         self::assertIsObject($object);
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
@@ -323,7 +322,6 @@ trait TestTrait
         list($firstClass, $secondClass) = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClass);
         sort($secondClass);
-
-        static::assertEquals($firstClass, $secondClass, $message);
+        self::assertEquals($firstClass, $secondClass, $message);
     }
 }
