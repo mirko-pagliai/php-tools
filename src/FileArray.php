@@ -52,20 +52,6 @@ class FileArray
     }
 
     /**
-     * Internal method to throw an exception if a key doesn't exist
-     * @param int $key Key number
-     * @return void
-     * @throws Exception
-     * @uses $data
-     */
-    protected function _keyExistsOrFail($key)
-    {
-        if (!key_exists($key, $this->data)) {
-            throw new Exception(sprintf('Key `%s` does not exist', $key));
-        }
-    }
-
-    /**
      * Appends data to existing data
      * @param mixed $data Data
      * @return $this
@@ -84,15 +70,13 @@ class FileArray
      * Note that the keys will be re-ordered.
      * @param int $key Key number
      * @return $this
-     * @uses _keyExistsOrFail()
+     * @throws KeyNotExistsException
      * @uses $data
      */
     public function delete($key)
     {
-        $this->_keyExistsOrFail($key);
-
+        key_exists_or_fail($key, $this->data);
         unset($this->data[$key]);
-
         $this->data = array_values($this->data);
 
         return $this;
@@ -113,12 +97,12 @@ class FileArray
      * Gets a value from its key number
      * @param int $key Key number
      * @return mixed
-     * @uses _keyExistsOrFail()
+     * @throws KeyNotExistsException
      * @uses $data
      */
     public function get($key)
     {
-        $this->_keyExistsOrFail($key);
+        key_exists_or_fail($key, $this->data);
 
         return $this->data[$key];
     }

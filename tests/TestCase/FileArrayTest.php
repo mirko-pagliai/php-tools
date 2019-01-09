@@ -12,7 +12,7 @@
  */
 namespace Tools\Test;
 
-use Exception;
+use Tools\Exception\KeyNotExistsException;
 use Tools\FileArray;
 use Tools\TestSuite\TestCase;
 
@@ -65,7 +65,7 @@ class FileArrayTest extends TestCase
         $this->assertInstanceof(FileArray::class, $result);
         $this->assertEquals(['first', 'third', 'fifth'], $this->FileArray->read());
 
-        $this->expectException(Exception::class);
+        $this->expectException(KeyNotExistsException::class);
         $this->expectExceptionMessage('Key `noExisting` does not exist');
         $this->FileArray->delete('noExisting');
     }
@@ -89,7 +89,7 @@ class FileArrayTest extends TestCase
         $this->assertEquals('first', $this->FileArray->get(0));
         $this->assertEquals('third', $this->FileArray->get(2));
 
-        $this->expectException(Exception::class);
+        $this->expectException(KeyNotExistsException::class);
         $this->expectExceptionMessage('Key `noExisting` does not exist');
         $this->FileArray->get('noExisting');
     }
