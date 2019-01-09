@@ -57,42 +57,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more directories exist.
-     *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @param string|array|Traversable $directory Directories
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.1.11
-     */
-    public static function assertDirectoryExists($directory, $message = '')
-    {
-        foreach (is_string($directory) ? [$directory] : $directory as $directory) {
-            parent::assertDirectoryExists($directory, $message);
-        }
-    }
-
-    /**
-     * Asserts that one or more directories do not exist.
-     *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @param string|array|Traversable $directory Directories
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.1.11
-     */
-    public static function assertDirectoryNotExists($directory, $message = '')
-    {
-        foreach (is_string($directory) ? [$directory] : $directory as $directory) {
-            parent::assertDirectoryNotExists($directory, $message);
-        }
-    }
-
-    /**
      * Asserts that a callable throws an exception
      * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
