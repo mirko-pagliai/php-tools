@@ -162,7 +162,7 @@ class GlobalFunctionsTest extends TestCase
         ];
         createSomeFiles();
 
-        foreach ([TMP . 'exampleDir', TMP . 'exampleDir' . DS,] as $directory) {
+        foreach ([TMP . 'exampleDir', TMP . 'exampleDir' . DS] as $directory) {
             $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree($directory));
         }
 
