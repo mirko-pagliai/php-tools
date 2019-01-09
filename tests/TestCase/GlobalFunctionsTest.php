@@ -387,14 +387,7 @@ class GlobalFunctionsTest extends TestCase
     public function testIsJson()
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
-
-        foreach ([
-            ['alfa' => 'first', 'beta' => 'second'],
-            (object)['alfa' => 'first', 'beta' => 'second'],
-            'this is a no json string',
-        ] as $string) {
-            $this->assertFalse(is_json($string));
-        }
+        $this->assertFalse(is_json('this is a no json string'));
     }
 
     /**
@@ -404,8 +397,9 @@ class GlobalFunctionsTest extends TestCase
     public function testIsPositive()
     {
         $this->assertTrue(is_positive(1));
+        $this->assertTrue(is_positive('1'));
 
-        foreach ([0, -1, 1.1] as $string) {
+        foreach ([0, -1, 1.1, '0', '1.1'] as $string) {
             $this->assertFalse(is_positive($string));
         }
     }
@@ -556,8 +550,7 @@ class GlobalFunctionsTest extends TestCase
         $files = createSomeFiles();
         rmdir_recursive(TMP . 'exampleDir');
         $this->assertFileNotExists($files);
-        $this->assertFileNotExists(array_map('dirname', $files));
-        $this->assertDirectoryNotExists(TMP . 'exampleDir');
+        $this->assertDirectoryNotExists(array_map('dirname', $files));
 
         //Does not delete a file
         $filename = safe_create_tmp_file(null, TMP . 'exampleDir');
@@ -620,7 +613,7 @@ class GlobalFunctionsTest extends TestCase
 
         //Files no longer exist, but directories still exist
         $this->assertFileNotExists($files);
-        $this->assertFileExists(array_map('dirname', $files));
+        $this->assertDirectoryExists(array_map('dirname', $files));
     }
 
     /**

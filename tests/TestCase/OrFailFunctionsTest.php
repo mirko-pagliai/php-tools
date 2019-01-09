@@ -57,7 +57,7 @@ class OrFailFunctionsTest extends TestCase
     {
         parent::tearDown();
 
-        safe_unlink($this->exampleFile);
+        safe_unlink_recursive(TMP);
     }
 
     /**
