@@ -221,6 +221,7 @@ class GlobalFunctionsTest extends TestCase
         $array = ['first', 'second', 'third'];
         $this->assertEquals(0, first_key($array));
         $this->assertEquals('a', first_key(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, first_key([]));
     }
 
     /**
@@ -232,6 +233,7 @@ class GlobalFunctionsTest extends TestCase
         $array = ['first', 'second', 'third'];
         $this->assertEquals('first', first_value($array));
         $this->assertEquals('first', first_value(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, first_value([]));
     }
 
     /**
@@ -240,6 +242,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValueRecursive()
     {
+        $this->assertEquals(null, first_value_recursive([]));
         foreach ([
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],
@@ -512,6 +515,7 @@ class GlobalFunctionsTest extends TestCase
         $array = ['first', 'second', 'third'];
         $this->assertEquals(2, last_key($array));
         $this->assertEquals('c', last_key(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, last_key([]));
     }
 
     /**
@@ -523,6 +527,7 @@ class GlobalFunctionsTest extends TestCase
         $array = ['first', 'second', 'third'];
         $this->assertEquals('third', last_value($array));
         $this->assertEquals('third', last_value(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, last_value([]));
     }
 
     /**
@@ -531,6 +536,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValueRecursive()
     {
+        $this->assertEquals(null, last_value_recursive([]));
         foreach ([
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],

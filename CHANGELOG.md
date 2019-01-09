@@ -13,6 +13,8 @@
     the values are sorted alphabetically before being compared;
 * fixed bug for `assertFilePerms()`. Now it works correctly and take permission
     values as string or octal value;
+* fixed bug for `first_key()`, `first_value()`, `last_key()` and `last_value()`
+    function: they return `null` with empty array;
 * fixed bug for `is_url()` function with no-string values;
 * `is_win()` method is now deprecated and will be
     removed in a later version; Use the `IS_WIN` constant instead;

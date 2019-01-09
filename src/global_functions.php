@@ -195,12 +195,17 @@ if (!function_exists('first_key')) {
     /**
      * Returns the first key of an array
      * @param array $array Array
-     * @return int|string
+     * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_key_first()`
      */
     function first_key(array $array)
     {
-        return first_value(array_keys($array));
+        if (function_exists('array_key_first')) {
+            return array_key_first($array);
+        }
+
+        return $array ? first_value(array_keys($array)) : null;
     }
 }
 
@@ -210,10 +215,11 @@ if (!function_exists('first_value')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
+     * @todo should change name in `array_value_first()`
      */
     function first_value(array $array)
     {
-        return array_values($array)[0];
+        return $array ? array_values($array)[0] : null;
     }
 }
 
@@ -436,12 +442,17 @@ if (!function_exists('last_key')) {
     /**
      * Returns the last key of an array
      * @param array $array Array
-     * @return int|string
+     * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_key_last()`
      */
     function last_key(array $array)
     {
-        return last_value(array_keys($array));
+        if (function_exists('array_key_last')) {
+            return array_key_last($array);
+        }
+
+        return $array ? last_value(array_keys($array)) : null;
     }
 }
 
@@ -451,10 +462,11 @@ if (!function_exists('last_value')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
+     * @todo should change name in `array_value_last()`
      */
     function last_value(array $array)
     {
-        return array_values(array_slice($array, -1))[0];
+        return $array ? array_values(array_slice($array, -1))[0] : null;
     }
 }
 
