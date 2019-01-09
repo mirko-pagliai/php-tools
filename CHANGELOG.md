@@ -9,8 +9,8 @@
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
     `TestTrait` instead. The `createSomeFiles()` method has been removed and now
     it is a global function only for tests;
-* fixed bug for `assertSameMethods()`, the methods were not sorted and therefore
-    the assert failed if the methods were the same but in a different order;
+* fixed bug for `assertArrayKeysEqual()` and `assertSameMethods()` assert methods,
+    the values are sorted alphabetically before being compared;
 * fixed bug for `assertFilePerms()`. Now it works correctly and take permission
     values as string or octal value;
 * fixed bug for `is_url()` function with no-string values;

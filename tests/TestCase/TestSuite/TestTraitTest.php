@@ -48,8 +48,17 @@ class TestTraitTest extends TestCase
      */
     public function testAssertArrayKeysEqual()
     {
-        $array = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+        foreach ([
+            ['key1' => 'value1', 'key2' => 'value2'],
+            ['key2' => 'value2', 'key1' => 'value1'],
+        ] as $array) {
+            $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+        }
+
+        try {
+            $this->assertArrayKeysEqual(['key2'], $array);
+        } catch (AssertionFailedError $e) {
+        }
     }
 
     /**

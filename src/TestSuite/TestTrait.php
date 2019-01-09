@@ -32,7 +32,10 @@ trait TestTrait
     protected static function assertArrayKeysEqual($expectedKeys, $array, $message = '')
     {
         self::assertIsArray($array);
-        self::assertEquals($expectedKeys, array_keys($array), $message);
+        $keys = array_keys($array);
+        sort($keys);
+        sort($expectedKeys);
+        self::assertEquals($expectedKeys, $keys, $message);
     }
 
     /**
