@@ -492,7 +492,8 @@ if (!function_exists('rmdir_recursive')) {
      * Removes the directory itself and all its contents, including
      *  subdirectories and files.
      *
-     * To remove only files and sub-directories, use the `unlink_recursive()`
+     * To remove only files contained in a directory and its sub-directories,
+     *  leaving the directories unaltered, use the `unlink_recursive()`
      *  function instead.
      * @param string $dirname Path to the directory
      * @return void
@@ -501,9 +502,9 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        list($directories, $files) = dir_tree($dirname, false);
+        unlink_recursive($dirname);
 
-        array_map('unlink', $files);
+        list($directories) = dir_tree($dirname, false);
         array_map('rmdir', array_reverse($directories));
     }
 }
@@ -548,7 +549,8 @@ if (!function_exists('starts_with')) {
 if (!function_exists('unlink_recursive')) {
     /**
      * Recursively removes all the files contained in a directory and its
-     *  sub-directories.
+     *  sub-directories. This function only removes the files, leaving the
+     *  directories unaltered.
      *
      * To remove the directory itself and all its contents, use the
      *  `rmdir_recursive()` function instead.
