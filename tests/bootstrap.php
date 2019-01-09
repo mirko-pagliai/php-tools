@@ -17,7 +17,6 @@ require_once 'apache_functions.php';
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
-define('EXAMPLE_FILES', ROOT . 'tests' . DS . 'examples' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
 //@codingStandardsIgnoreLine

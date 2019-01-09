@@ -91,7 +91,18 @@ class BodyParserTest extends TestCase
             'http://localhost/subtitles_en.vtt',
             'http://localhost/movie.mp4',
         ];
-        $html = file_get_contents(EXAMPLE_FILES . 'page_with_some_links.html');
+        $html = '<a href="/page.html#fragment">Link</a>
+<map name="example"><area href="area.htm"></map>
+<audio src="/file.mp3"></audio>
+<embed src="helloworld.swf">
+<frame src="frame1.html"></frame>
+<iframe src="frame2.html"></iframe>
+<img src="pic.jpg" />
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="script.js" />
+<audio><source src="file2.mp3" type="audio/mpeg"></audio>
+<video><track src="subtitles_en.vtt"></video>
+<video src="//localhost/movie.mp4"></video>';
         $this->assertEquals($expected, $getExtractedLinksMethod($html));
 
         $html = '<html><body>' . $html . '</body></html>';
