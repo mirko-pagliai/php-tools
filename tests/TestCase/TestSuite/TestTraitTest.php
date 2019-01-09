@@ -25,9 +25,9 @@ use stdClass;
 use Tools\TestSuite\TestTrait;
 
 /**
- * TestCaseTest class
+ * TestTraitTest class
  */
-class TestCaseTest extends TestCase
+class TestTraitTest extends TestCase
 {
     use TestTrait;
 
