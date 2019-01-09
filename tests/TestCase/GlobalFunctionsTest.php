@@ -79,7 +79,7 @@ class GlobalFunctionsTest extends TestCase
         $this->assertTrue(create_file($filename));
         $this->assertStringEqualsFile($filename, '');
 
-        safe_unlink($filename);
+        unlink($filename);
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
     }
@@ -538,7 +538,7 @@ class GlobalFunctionsTest extends TestCase
         array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
 
         //Does not delete a file
-        $filename = safe_create_tmp_file(null, TMP . 'exampleDir');
+        $filename = create_tmp_file(null, TMP . 'exampleDir');
         rmdir_recursive($filename);
         $this->assertFileExists($filename);
     }
@@ -588,9 +588,9 @@ class GlobalFunctionsTest extends TestCase
     {
         //Creates some files and some symlinks
         $files = createSomeFiles();
-        foreach ([safe_create_tmp_file(), safe_create_tmp_file()] as $filename) {
+        foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
             $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            safe_symlink($filename, $link);
+            symlink($filename, $link);
             $files[] = $link;
         }
         unlink_recursive(TMP . 'exampleDir');

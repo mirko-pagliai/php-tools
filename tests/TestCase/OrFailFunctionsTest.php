@@ -34,7 +34,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testFileExistsOrFail()
     {
-        file_exists_or_fail(safe_create_tmp_file());
+        file_exists_or_fail(create_tmp_file());
 
         $this->expectException(FileNotExistsException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
@@ -70,7 +70,7 @@ class OrFailFunctionsTest extends TestCase
     {
         is_dir_or_fail(TMP);
 
-        $filename = safe_create_tmp_file();
+        $filename = create_tmp_file();
         $this->expectException(NotDirectoryException::class);
         $this->expectExceptionMessage('Filename `' . $filename . '` is not a directory');
         is_dir_or_fail($filename);
@@ -82,7 +82,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
-        is_readable_or_fail(safe_create_tmp_file());
+        is_readable_or_fail(create_tmp_file());
 
         $this->expectException(NotReadableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not readable');
@@ -148,7 +148,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
-        is_writable_or_fail(safe_create_tmp_file());
+        is_writable_or_fail(create_tmp_file());
 
         $this->expectException(NotWritableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not writable');

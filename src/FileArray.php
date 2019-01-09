@@ -13,8 +13,6 @@
  */
 namespace Tools;
 
-use Exception;
-
 /**
  * This class allows you to read and write arrays using text files
  */
@@ -145,9 +143,9 @@ class FileArray
             return [];
         }
 
-        $data = safe_unserialize(file_get_contents($this->filename), true);
+        $data = file_get_contents($this->filename);
 
-        return $data ?: [];
+        return is_json($data) ? unserialize($data) : [];
     }
 
     /**

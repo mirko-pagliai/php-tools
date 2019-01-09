@@ -32,6 +32,6 @@ class TestCase extends PHPUnitTestCase
     {
         parent::tearDown();
 
-        safe_unlink_recursive(TMP);
+        unlink_recursive(TMP);
     }
 }

@@ -19,7 +19,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
-//@codingStandardsIgnoreLine
 @mkdir(TMP, 0777, true);
 
 if (!function_exists('createSomeFiles')) {
@@ -42,8 +41,8 @@ if (!function_exists('createSomeFiles')) {
         ];
 
         //Creates directories and files
-        array_walk($files, 'safe_create_file');
-        safe_mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
+        array_walk($files, 'create_file');
+        @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;
     }

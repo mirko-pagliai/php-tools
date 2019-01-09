@@ -41,7 +41,7 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->FileArray = new FileArray(safe_create_tmp_file(), $this->example);
+        $this->FileArray = new FileArray(create_tmp_file(), $this->example);
     }
 
     /**
@@ -114,7 +114,7 @@ class FileArrayTest extends TestCase
         $this->assertEquals($this->example, $this->FileArray->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        $this->assertEquals([], (new FileArray(safe_create_tmp_file('a string')))->read());
+        $this->assertEquals([], (new FileArray(create_tmp_file('a string')))->read());
         $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
     }
 
