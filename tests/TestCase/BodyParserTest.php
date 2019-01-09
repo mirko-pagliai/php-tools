@@ -30,6 +30,7 @@ class BodyParserTest extends TestCase
     public function testTurnUrlAsAbsolute()
     {
         foreach (['http', 'https', 'ftp'] as $scheme) {
+            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
             $urls = [
                 'http://localhost/mysite' => 'http://localhost/mysite',
                 'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
@@ -39,11 +40,8 @@ class BodyParserTest extends TestCase
                 'http://external' => 'http://external',
             ];
 
-            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
-
             foreach ($urls as $url => $expected) {
-                $result = $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]);
-                $this->assertEquals($expected, $result);
+                $this->assertEquals($expected, $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]));
             }
         }
     }
@@ -73,8 +71,8 @@ class BodyParserTest extends TestCase
      */
     public function testExtractLinks()
     {
-        $getExtractedLinksMethod = function ($body) {
-            return (new BodyParser($body, 'http://localhost'))->extractLinks();
+        $getExtractedLinksMethod = function ($html) {
+            return (new BodyParser($html, 'http://localhost'))->extractLinks();
         };
 
         $expected = [

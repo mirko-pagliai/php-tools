@@ -20,7 +20,6 @@ use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use stdClass;
 use Tools\TestSuite\TestTrait;
 
@@ -55,10 +54,8 @@ class TestTraitTest extends TestCase
             $this->assertArrayKeysEqual(['key1', 'key2'], $array);
         }
 
-        try {
-            $this->assertArrayKeysEqual(['key2'], $array);
-        } catch (AssertionFailedError $e) {
-        }
+        $this->expectException(AssertionFailedError::class);
+        $this->assertArrayKeysEqual(['key2'], $array);
     }
 
     /**
@@ -97,15 +94,17 @@ class TestTraitTest extends TestCase
         } catch (AssertionFailedError $e) {
         } finally {
             $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
+            unset($e);
         }
 
         try {
-            $this->assertException(RuntimeException::class, function () {
+            $this->assertException(Deprecated::class, function () {
                 throw new Exception;
             });
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith('Expected exception `RuntimeException`, unexpected type `Exception`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . Deprecated::class .'`, unexpected type `Exception`', $e->getMessage());
+            unset($e);
         }
 
         try {
@@ -115,6 +114,7 @@ class TestTraitTest extends TestCase
         } catch (AssertionFailedError $e) {
         } finally {
             $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
+            unset($e);
         }
 
         try {
@@ -217,8 +217,7 @@ class TestTraitTest extends TestCase
     public function testAssertIsArray()
     {
         $this->assertIsArray([]);
-        $this->assertIsArray([true]);
-        $this->assertIsArray((array)'string');
+        $this->assertIsArray(['value']);
     }
 
     /**
@@ -228,26 +227,9 @@ class TestTraitTest extends TestCase
     public function testAssertIsArrayNotEmpty()
     {
         $this->assertIsArrayNotEmpty(['value']);
-    }
 
-    /**
-     * Tests for `assertIsArrayNotEmpty()` method, failure with empty array
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertIsArrayNotEmptyOnFailureForEmptyArray()
-    {
+        $this->expectException(AssertionFailedError::class);
         $this->assertIsArrayNotEmpty([]);
-    }
-
-    /**
-     * Tests for `assertIsArrayNotEmpty()` method, failure with a no array
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertIsArrayNotEmptyOnFailureForNoArray()
-    {
-        $this->assertIsArrayNotEmpty('string');
     }
 
     /**
@@ -266,7 +248,6 @@ class TestTraitTest extends TestCase
     public function testAssertIsObject()
     {
         $this->assertIsObject(new stdClass);
-        $this->assertIsObject((object)[]);
     }
 
     /**
@@ -276,7 +257,6 @@ class TestTraitTest extends TestCase
     public function testAssertIsString()
     {
         $this->assertIsString('string');
-        $this->assertIsString(serialize(['serialized_array']));
     }
 
     /**
@@ -289,7 +269,10 @@ class TestTraitTest extends TestCase
         $object->first = 'first value';
         $object->second = 'second value';
         $this->assertObjectPropertiesEqual(['first', 'second'], $object);
-        $this->assertObjectPropertiesEqual(['first', 'second'], (object)(array)$object);
+        $this->assertObjectPropertiesEqual(['second', 'first'], $object);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertObjectPropertiesEqual(['first'], $object);
     }
 
     /**
@@ -306,5 +289,8 @@ class TestTraitTest extends TestCase
         $this->assertSameMethods($exampleClass, $copyExampleClass);
 
         $this->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
     }
 }

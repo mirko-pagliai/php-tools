@@ -120,20 +120,13 @@ class GlobalFunctionsTest extends TestCase
     public function testDeprecationWarning()
     {
         $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        try {
-            deprecationWarning('This method is deprecated');
-        } catch (Deprecated $dep) {
-            $this->fail('Deprecated was raised');
-        }
+        deprecationWarning('This method is deprecated');
         error_reporting($currentErrorReporting);
 
-        try {
-            deprecationWarning('This method is deprecated');
-        } catch (Deprecated $dep) {
-        } finally {
-            $this->assertEquals('This method is deprecated - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.', $dep->getMessage());
-        }
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('This method is deprecated - [internal], line: ??
+ You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.');
+        deprecationWarning('This method is deprecated');
     }
 
     /**
@@ -575,7 +568,6 @@ class GlobalFunctionsTest extends TestCase
             'my' . DS . 'folder' => 'my' . DS . 'folder',
             DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
         ];
-
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }

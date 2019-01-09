@@ -70,14 +70,9 @@ class FileArrayTest extends TestCase
         safe_create_file($this->file);
         $this->assertEquals([], (new FileArray($this->file))->read());
 
-        //Failure
-        try {
-            new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
-        } catch (Exception $e) {
-        } finally {
-            $this->assertInstanceof(Exception::class, $e);
-            $this->assertEquals('File or directory `' . TMP . 'noExistingDir` is not writable', $e->getMessage());
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExistingDir` is not writable');
+        new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
     }
 
     /**
@@ -101,14 +96,9 @@ class FileArrayTest extends TestCase
         $this->assertInstanceof(FileArray::class, $result);
         $this->assertEquals(['first', 'third', 'fifth'], $this->FileArray->read());
 
-        //Failure
-        try {
-            $this->FileArray->delete('noExisting');
-        } catch (Exception $e) {
-        } finally {
-            $this->assertInstanceof(Exception::class, $e);
-            $this->assertEquals('Key `noExisting` does not exist', $e->getMessage());
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Key `noExisting` does not exist');
+        $this->FileArray->delete('noExisting');
     }
 
     /**
@@ -130,14 +120,9 @@ class FileArrayTest extends TestCase
         $this->assertEquals('first', $this->FileArray->get(0));
         $this->assertEquals('third', $this->FileArray->get(2));
 
-        //Failure
-        try {
-            $this->FileArray->get('noExisting');
-        } catch (Exception $e) {
-        } finally {
-            $this->assertInstanceof(Exception::class, $e);
-            $this->assertEquals('Key `noExisting` does not exist', $e->getMessage());
-        }
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Key `noExisting` does not exist');
+        $this->FileArray->get('noExisting');
     }
 
     /**
