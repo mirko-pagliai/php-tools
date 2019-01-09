@@ -68,6 +68,30 @@ class TestCaseTest extends TestCase
     }
 
     /**
+     * Tests for `assertDirectoryExists()` method
+     * @test
+     */
+    public function testAssertDirectoryExists()
+    {
+        $directories = array_unique(array_map('dirname', createSomeFiles()));
+        $this->assertDirectoryExists($directories[0]);
+        $this->assertDirectoryExists($directories);
+        $this->assertDirectoryExists(new ExampleOfTraversable($directories));
+    }
+
+    /**
+     * Tests for `assertDirectoryNotExists()` method
+     * @test
+     */
+    public function testAssertDirectoryNotExists()
+    {
+        $directories = [TMP . 'noExisting1', TMP . 'noExisting2'];
+        $this->assertDirectoryNotExists($directories[0]);
+        $this->assertDirectoryNotExists($directories);
+        $this->assertDirectoryNotExists(new ExampleOfTraversable($directories));
+    }
+
+    /**
      * Tests for `assertException()` method
      * @test
      */

@@ -54,6 +54,42 @@ trait TestTrait
     }
 
     /**
+     * Asserts that one or more directories exist.
+     *
+     * Unlike the original method, this method can take an array or a
+     *  `Traversable` instance.
+     * @param string|array|Traversable $directory Directories
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.1.11
+     */
+    public static function assertDirectoryExists($directory, $message = '')
+    {
+        foreach (is_string($directory) ? [$directory] : $directory as $directory) {
+            parent::assertDirectoryExists($directory, $message);
+        }
+    }
+
+    /**
+     * Asserts that one or more directories do not exist.
+     *
+     * Unlike the original method, this method can take an array or a
+     *  `Traversable` instance.
+     * @param string|array|Traversable $directory Directories
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.1.11
+     */
+    public static function assertDirectoryNotExists($directory, $message = '')
+    {
+        foreach (is_string($directory) ? [$directory] : $directory as $directory) {
+            parent::assertDirectoryNotExists($directory, $message);
+        }
+    }
+
+    /**
      * Asserts that a callable throws an exception
      * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
@@ -80,7 +116,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filename exist.
+     * Asserts that one or more filenames exist.
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
@@ -97,9 +133,9 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a filename has the `$expectedExtension`.
+     * Asserts that one or more filenames have the `$expectedExtension`.
      *
-     * It is not necessary for the file to actually exist.
+     * It is not necessary they actually exist.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
      * @param string $expectedExtension Expected extension
@@ -116,7 +152,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a file has a MIME content type
+     * Asserts that one or more filenames have a MIME content type
      * @param string|array|Traversable $filename Filenames
      * @param string $expectedMime MIME content type
      * @param string $message The failure message that will be appended to the
@@ -133,7 +169,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filename do not exist.
+     * Asserts that one or more filenames do not exist.
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
@@ -150,7 +186,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filename has some file permissions.
+     * Asserts that one or more filenames have some file permissions.
      *
      * If only one permission value is passed, asserts that all files have that
      *  value. If more permission values are passed, asserts that all files have
