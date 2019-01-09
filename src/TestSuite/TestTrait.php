@@ -165,10 +165,9 @@ trait TestTrait
      */
     protected static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
-        $expectedPerms = is_array($expectedPerms) ? $expectedPerms : [$expectedPerms];
         $expectedPerms = array_map(function ($perm) {
             return is_string($perm) ? $perm : sprintf("%04o", $perm);
-        }, $expectedPerms);
+        }, (array)$expectedPerms);
 
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileExists($filename);

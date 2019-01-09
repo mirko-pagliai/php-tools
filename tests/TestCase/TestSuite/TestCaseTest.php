@@ -32,6 +32,17 @@ class TestCaseTest extends TestCase
     use TestTrait;
 
     /**
+     * Teardown any static object changes and restore them
+     * @return void
+     */
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        safe_unlink_recursive(TMP);
+    }
+
+    /**
      * Tests for `assertArrayKeysEqual()` method
      * @test
      */
@@ -73,9 +84,7 @@ class TestCaseTest extends TestCase
         }, 'right exception message');
 
         try {
-            $this->assertException(Exception::class, function () {
-                return true;
-            });
+            $this->assertException(Exception::class, 'time');
         } catch (AssertionFailedError $e) {
         } finally {
             $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
@@ -83,7 +92,7 @@ class TestCaseTest extends TestCase
 
         try {
             $this->assertException(RuntimeException::class, function () {
-                throw new Exception('right exception message');
+                throw new Exception;
             });
         } catch (AssertionFailedError $e) {
         } finally {
@@ -92,26 +101,20 @@ class TestCaseTest extends TestCase
 
         try {
             $this->assertException(Exception::class, function () {
-                throw new Exception('wrong exception message');
-            }, 'right exception message');
+                throw new Exception('Wrong');
+            }, 'Right');
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith(
-                'Expected message exception `right exception message`, unexpected message `wrong exception message`',
-                $e->getMessage()
-            );
+            $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
         }
 
         try {
             $this->assertException(Exception::class, function () {
                 throw new Exception;
-            }, 'right exception message');
+            }, 'Right');
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith(
-                'Expected message exception `right exception message`, but no message for the exception',
-                $e->getMessage()
-            );
+            $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
         }
     }
 
@@ -121,15 +124,10 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileExists()
     {
-        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
-
-        //As string, array and `Traversable`
+        $files = [create_tmp_file(), create_tmp_file()];
         $this->assertFileExists($files[0]);
         $this->assertFileExists($files);
         $this->assertFileExists(new ExampleOfTraversable($files));
-
-        safe_unlink($files[0]);
-        safe_unlink($files[1]);
     }
 
     /**
@@ -154,13 +152,8 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $filename = safe_create_tmp_file('this is a test file');
-        $this->assertFileMime($filename, 'text/plain');
-
-        $files = [
-            safe_create_tmp_file('first'),
-            safe_create_tmp_file('second'),
-        ];
+        $files = [create_tmp_file('string'), create_tmp_file('string')];
+        $this->assertFileMime($files[0], 'text/plain');
         $this->assertFileMime($files, 'text/plain');
     }
 
@@ -171,8 +164,6 @@ class TestCaseTest extends TestCase
     public function testAssertFileNotExists()
     {
         $files = [TMP . 'noExisting1', TMP . 'noExisting2'];
-
-        //As string, array and `Traversable`
         $this->assertFileNotExists($files[0]);
         $this->assertFileNotExists($files);
         $this->assertFileNotExists(new ExampleOfTraversable($files));
@@ -185,22 +176,18 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
-
-        //As string, array and `Traversable`
+        $files = [create_tmp_file(), create_tmp_file()];
         $this->assertFilePerms($files[0], '0600');
         $this->assertFilePerms($files[0], 0600);
         $this->assertFilePerms($files[0], ['0600', '0666']);
         $this->assertFilePerms($files[0], [0600, 0666]);
+        $this->assertFilePerms($files[0], ['0600', 0666]);
         $this->assertFilePerms($files, '0600');
         $this->assertFilePerms($files, 0600);
         $this->assertFilePerms($files, ['0600', '0666']);
         $this->assertFilePerms($files, [0600, 0666]);
         $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
         $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
-
-        safe_unlink($files[0]);
-        safe_unlink($files[1]);
     }
 
     /**
@@ -209,7 +196,9 @@ class TestCaseTest extends TestCase
      */
     public function testAssertImageSize()
     {
-        $this->assertImageSize(EXAMPLE_FILES . '400x400.jpg', 400, 400);
+        $filename = TMP . 'pic.jpg';
+        imagejpeg(imagecreatetruecolor(120, 20), $filename);
+        $this->assertImageSize($filename, 120, 20);
     }
 
     /**
@@ -287,13 +276,11 @@ class TestCaseTest extends TestCase
      */
     public function testAssertObjectPropertiesEqual()
     {
-        $array = ['first' => 'one', 'second' => 'two'];
         $object = new stdClass;
         $object->first = 'first value';
         $object->second = 'second value';
-
         $this->assertObjectPropertiesEqual(['first', 'second'], $object);
-        $this->assertObjectPropertiesEqual(['first', 'second'], (object)$array);
+        $this->assertObjectPropertiesEqual(['first', 'second'], (object)(array)$object);
     }
 
     /**
