@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Deprecated Trait Tools\TestSuite\TestCaseTrait | php-tools</title>
+	<title>Class Tools\TestSuite\TestCase | php-tools</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -49,13 +49,13 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
-				<li><a href="class-Tools.TestSuite.TestCase.html">TestCase</a></li>
+				<li class="active"><a href="class-Tools.TestSuite.TestCase.html">TestCase</a></li>
 			</ul>
 
 
 			<h3>Traits</h3>
 			<ul>
-				<li class="active"><a href="class-Tools.TestSuite.TestCaseTrait.html" class="deprecated">TestCaseTrait</a></li>
+				<li><a href="class-Tools.TestSuite.TestCaseTrait.html" class="deprecated">TestCaseTrait</a></li>
 				<li><a href="class-Tools.TestSuite.TestTrait.html">TestTrait</a></li>
 			</ul>
 
@@ -106,18 +106,26 @@
 	</div>
 
 <div id="content" class="class">
-	<h1 class="deprecated">Trait TestCaseTrait</h1>
+	<h1>Class TestCase</h1>
 
 
 	<div class="description">
-	<p>A trait that provides some assertion methods</p>
+	<p>TestCase class</p>
 	</div>
 
 	<dl class="tree">
 		<dd style="padding-left:0px">
-<b><span class="deprecated">Tools\TestSuite\TestCaseTrait</span></b>			
+PHPUnit\Framework\TestCase
+			
+			
+		</dd>
+		<dd style="padding-left:30px">
+			<img src="resources/inherit.png" alt="Extended by">
+<b><span>Tools\TestSuite\TestCase</span></b>			
 			
 			 uses 
+					<a href="class-Tools.ReflectionTrait.html"><span>Tools\ReflectionTrait</span></a>, 
+			
 					<a href="class-Tools.TestSuite.TestTrait.html"><span>Tools\TestSuite\TestTrait</span></a>
 			
 		</dd>
@@ -136,16 +144,60 @@
 		<b>Namespace:</b> <a href="namespace-Tools.html">Tools</a>\<a href="namespace-Tools.TestSuite.html">TestSuite</a><br>
 		
 
-				<b>Deprecated:</b>
-				1.1.11 Use the <code>TestTrait</code> instead<br>
-			<b>Located at</b> <a href="source-class-Tools.TestSuite.TestCaseTrait.html#18-25" title="Go to source code">TestSuite/TestCaseTrait.php</a>
+			<b>Located at</b> <a href="source-class-Tools.TestSuite.TestCase.html#20-37" title="Go to source code">TestSuite/TestCase.php</a>
 		<br>
 	</div>
 
 
 
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="tearDown" id="_tearDown">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_tearDown">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestCase.html#27-36" title="Go to source code">tearDown</a>( )</code>
+
+		<div class="description short">
+			<p>Teardown any static object changes and restore them</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Teardown any static object changes and restore them</p>
 
 
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+	<table class="summary used">
+	<caption>Methods used from <a href="class-Tools.ReflectionTrait.html#methods">Tools\ReflectionTrait</a></caption>
+	<tr>
+		<td><code>
+			<a href="class-Tools.ReflectionTrait.html#_getMethodInstance">getMethodInstance()</a>, 
+			<a href="class-Tools.ReflectionTrait.html#_getProperties">getProperties()</a>, 
+			<a href="class-Tools.ReflectionTrait.html#_getProperty">getProperty()</a>, 
+			<a href="class-Tools.ReflectionTrait.html#_getPropertyInstance">getPropertyInstance()</a>, 
+			<a href="class-Tools.ReflectionTrait.html#_invokeMethod">invokeMethod()</a>, 
+			<a href="class-Tools.ReflectionTrait.html#_setProperty">setProperty()</a>
+		</code></td>
+	</tr>
+	</table>
 	<table class="summary used">
 	<caption>Methods used from <a href="class-Tools.TestSuite.TestTrait.html#methods">Tools\TestSuite\TestTrait</a></caption>
 	<tr>

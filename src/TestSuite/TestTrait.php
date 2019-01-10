@@ -14,7 +14,6 @@
 namespace Tools\TestSuite;
 
 use Exception;
-use PHPUnit\Framework\Error\Deprecated;
 use Traversable;
 
 /**
@@ -30,15 +29,19 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertArrayKeysEqual($expectedKeys, $array, $message = '')
+    protected static function assertArrayKeysEqual(array $expectedKeys, array $array, $message = '')
     {
         self::assertIsArray($array);
-        self::assertEquals($expectedKeys, array_keys($array), $message);
+        $keys = array_keys($array);
+        sort($keys);
+        sort($expectedKeys);
+        self::assertEquals($expectedKeys, $keys, $message);
     }
 
     /**
      * Asserts that an array or an instance of `Traversable` contains objects
      *  that are instances of `$expectedInstance`
+     * @deprecated 1.1.11 Use `assertContainsOnlyInstancesOf()` instead
      * @param string $expectedInstance Expected instance
      * @param array|Traversable $value Values
      * @param string $message The failure message that will be appended to the
@@ -48,13 +51,9 @@ trait TestTrait
      */
     protected static function assertContainsInstanceOf($expectedInstance, $value, $message = '')
     {
-        if (!is_array($value) && !$value instanceof Traversable) {
-            self::fail('The value is not an array or an instance of Traversable');
-        }
+        deprecationWarning('The `assertContainsInstanceOf()` method is deprecated and will be removed in a later version. Use `assertContainsOnlyInstancesOf()` instead');
 
-        foreach ($value as $object) {
-            parent::assertInstanceOf($expectedInstance, $object, $message);
-        }
+        parent::assertContainsOnlyInstancesOf($expectedInstance, $value, $message);
     }
 
     /**
@@ -84,7 +83,7 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filename exist.
+     * Asserts that one or more filenames exist.
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
@@ -95,42 +94,49 @@ trait TestTrait
      */
     public static function assertFileExists($filename, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filename as $var) {
-            parent::assertFileExists($var, $message);
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
+            parent::assertFileExists($filename, $message);
         }
     }
 
     /**
-     * Asserts that a filename has the `$expectedExtension`
+     * Asserts that one or more filenames have the `$expectedExtension`.
+     *
+     * It is not necessary they actually exist.
+     * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
+     *  extension is `jpg`).
      * @param string $expectedExtension Expected extension
-     * @param string $filename Path to the tested file
+     * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        self::assertEquals($expectedExtension, get_extension($filename), $message);
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
+            self::assertEquals($expectedExtension, get_extension($filename), $message);
+        }
     }
 
     /**
-     * Asserts that a file has a MIME content type
-     * @param string $filename Path to the tested file
-     * @param string $expectedMime MIME content type, like `text/plain` or `application/octet-stream`
+     * Asserts that one or more filenames have a MIME content type
+     * @param string|array|Traversable $filename Filenames
+     * @param string $expectedMime MIME content type
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
+     * @todo $filename and $expectedMime arguments should be reversed
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
-        self::assertFileExists($filename, $message);
-        self::assertEquals($expectedMime, mime_content_type($filename), $message);
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
+            self::assertFileExists($filename);
+            self::assertEquals($expectedMime, mime_content_type($filename), $message);
+        }
     }
 
     /**
-     * Asserts that one or more filename do not exist.
+     * Asserts that one or more filenames do not exist.
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
@@ -141,29 +147,34 @@ trait TestTrait
      */
     public static function assertFileNotExists($filename, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
-
-        foreach ($filename as $var) {
-            parent::assertFileNotExists($var, $message);
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
+            parent::assertFileNotExists($filename, $message);
         }
     }
 
     /**
-     * Asserts that a filename has file permissions
-     * @param mixed $filename Filename or filenames
-     * @param string $expectedPerms Expected permissions as a four-chars string
+     * Asserts that one or more filenames have some file permissions.
+     *
+     * If only one permission value is passed, asserts that all files have that
+     *  value. If more permission values are passed, asserts that all files have
+     *  at least one of those values.
+     * @param string|array|Traversable $filename Filenames
+     * @param string|int|array $expectedPerms Expected permission values as a
+     *  four-chars string or octal value
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      * @since 1.0.9
      */
-    public static function assertFilePerms($filename, $expectedPerms, $message = '')
+    protected static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
-        $filename = is_array($filename) || $filename instanceof Traversable ? $filename : [$filename];
+        $expectedPerms = array_map(function ($perm) {
+            return is_string($perm) ? $perm : sprintf("%04o", $perm);
+        }, (array)$expectedPerms);
 
-        foreach ($filename as $var) {
-            parent::assertFileExists($var);
-            self::assertContains(substr(sprintf('%o', fileperms($var)), -4), (array)$expectedPerms, $message);
+        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
+            parent::assertFileExists($filename);
+            self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
         }
     }
 
@@ -179,7 +190,6 @@ trait TestTrait
     protected static function assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
     {
         self::assertFileExists($filename, $message);
-
         list($width, $height) = getimagesize($filename);
         self::assertEquals($width, $expectedWidth);
         self::assertEquals($height, $expectedHeight);
@@ -194,7 +204,7 @@ trait TestTrait
      */
     protected static function assertIsArray($var, $message = '')
     {
-        self::assertTrue(is_array($var), $message);
+        parent::assertInternalType('array', $var, $message);
     }
 
     /**
@@ -204,31 +214,12 @@ trait TestTrait
      *  generated message
      * @return void
      * @since 1.0.6
+     * @todo array_filter?
      */
     protected static function assertIsArrayNotEmpty($var, $message = '')
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty($var, $message);
-    }
-
-    /**
-     * Asserts that `$callable` function is deprecated
-     * @param callable $callable A callable you want to test and that is marked
-     *  as deprecated
-     * @param string|null $expectedMessage The expected message or `null`
-     * @return void
-     * @since 1.1.11
-     */
-    protected static function assertIsDeprecated(callable $callable, $expectedMessage = null)
-    {
-        $deprecatedText = ' - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.';
-
-        if ($expectedMessage && !ends_with($expectedMessage, $deprecatedText)) {
-            $expectedMessage .= $deprecatedText;
-        }
-
-        self::assertException(Deprecated::class, $callable, $expectedMessage);
     }
 
     /**
@@ -241,7 +232,7 @@ trait TestTrait
      */
     protected static function assertIsInt($var, $message = '')
     {
-        self::assertTrue(is_int($var), $message);
+        parent::assertInternalType('int', $var, $message);
     }
 
     /**
@@ -253,7 +244,7 @@ trait TestTrait
      */
     protected static function assertIsObject($var, $message = '')
     {
-        self::assertTrue(is_object($var), $message);
+        parent::assertInternalType('object', $var, $message);
     }
 
     /**
@@ -265,18 +256,18 @@ trait TestTrait
      */
     protected static function assertIsString($var, $message = '')
     {
-        self::assertTrue(is_string($var), $message);
+        parent::assertInternalType('string', $var, $message);
     }
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
      * @param array $expectedProperties Expected properties
-     * @param array $object Ojbect to check
+     * @param object $object Object you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    protected function assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
+    protected function assertObjectPropertiesEqual(array $expectedProperties, $object, $message = '')
     {
         self::assertIsObject($object);
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
@@ -292,6 +283,9 @@ trait TestTrait
      */
     protected static function assertSameMethods($firstClass, $secondClass, $message = '')
     {
-        static::assertEquals(get_class_methods($firstClass), get_class_methods($secondClass), $message);
+        list($firstClass, $secondClass) = [get_class_methods($firstClass), get_class_methods($secondClass)];
+        sort($firstClass);
+        sort($secondClass);
+        self::assertEquals($firstClass, $secondClass, $message);
     }
 }

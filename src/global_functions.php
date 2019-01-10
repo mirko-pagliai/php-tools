@@ -16,7 +16,7 @@ if (!defined('IS_WIN')) {
 
 if (!function_exists('clean_url')) {
     /**
-     * Cleans an url, removing all unnecessary parts, as fragment (#),
+     * Cleans an url. It removes all unnecessary parts, as fragment (#),
      *  trailing slash and `www` prefix
      * @param string $url Url
      * @param bool $removeWWW Removes the www prefix
@@ -44,13 +44,14 @@ if (!function_exists('create_file')) {
      * @param string $filename Path to the file where to write the data
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
+     * @param int $dirMode Mode for the directory, if it does not exist
      * @return bool
      * @since 1.1.7
      */
-    function create_file($filename, $data = null)
+    function create_file($filename, $data = null, $dirMode = 0777)
     {
         if (!file_exists(dirname($filename))) {
-            mkdir(dirname($filename), 0777, true);
+            mkdir(dirname($filename), $dirMode, true);
         }
 
         return file_put_contents($filename, $data) !== false;
@@ -66,16 +67,15 @@ if (!function_exists('create_tmp_file')) {
      *  temporary directory of the system.
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
-     * @param string|null $dir The directory where the temporary filename will be created
+     * @param string|null $dir The directory where the temporary filename will
+     *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        if (!$dir) {
-            $dir = defined('TMP') ? TMP : sys_get_temp_dir();
-        }
+        $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
         $filename = tempnam($dir, $prefix);
 
         return create_file($filename, $data) ? $filename : false;
@@ -182,6 +182,7 @@ if (!function_exists('ends_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
+     * @todo should change name in `string_ends_with()`
      */
     function ends_with($haystack, $needle)
     {
@@ -195,12 +196,14 @@ if (!function_exists('first_key')) {
     /**
      * Returns the first key of an array
      * @param array $array Array
-     * @return int|string
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.10
+     * @todo should change name in `array_key_first()`
      */
     function first_key(array $array)
     {
-        return first_value(array_keys($array));
+        return $array ? first_value(array_keys($array)) : null;
     }
 }
 
@@ -210,10 +213,11 @@ if (!function_exists('first_value')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
+     * @todo should change name in `array_value_first()`
      */
     function first_value(array $array)
     {
-        return array_values($array)[0];
+        return $array ? array_values($array)[0] : null;
     }
 }
 
@@ -225,6 +229,7 @@ if (!function_exists('first_value_recursive')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_value_first_recursive()`
      */
     function first_value_recursive(array $array)
     {
@@ -436,12 +441,14 @@ if (!function_exists('last_key')) {
     /**
      * Returns the last key of an array
      * @param array $array Array
-     * @return int|string
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.10
+     * @todo should change name in `array_key_last()`
      */
     function last_key(array $array)
     {
-        return last_value(array_keys($array));
+        return $array ? last_value(array_keys($array)) : null;
     }
 }
 
@@ -451,10 +458,11 @@ if (!function_exists('last_value')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
+     * @todo should change name in `array_value_last()`
      */
     function last_value(array $array)
     {
-        return array_values(array_slice($array, -1))[0];
+        return $array ? array_values(array_slice($array, -1))[0] : null;
     }
 }
 
@@ -466,6 +474,7 @@ if (!function_exists('last_value_recursive')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_value_last_recursive()`
      */
     function last_value_recursive(array $array)
     {
@@ -475,12 +484,39 @@ if (!function_exists('last_value_recursive')) {
     }
 }
 
+if (!function_exists('objects_map')) {
+    /**
+     * Executes an object method for all objects of the given arrays
+     * @param array $objects An array of objects. Each object must have the
+     *  method to be called
+     * @param string $method The method to be called for each object
+     * @param array $args Optional arguments for the method to be called
+     * @return array Returns an array containing all the returned values of the
+     *  called method applied to each object
+     * @since 1.1.11
+     * @throws BadMethodCallException
+     */
+    function objects_map(array $objects, $method, array $args = [])
+    {
+        return array_map(function ($object) use ($method, $args) {
+            is_true_or_fail(method_exists($object, $method), sprintf(
+                'Class `%s` does not have a method `%s`',
+                get_class($object),
+                $method
+            ), \BadMethodCallException::class);
+
+            return call_user_func_array([$object, $method], $args);
+        }, $objects);
+    }
+}
+
 if (!function_exists('rmdir_recursive')) {
     /**
      * Removes the directory itself and all its contents, including
      *  subdirectories and files.
      *
-     * To remove only files and sub-directories, use the `unlink_recursive()`
+     * To remove only files contained in a directory and its sub-directories,
+     *  leaving the directories unaltered, use the `unlink_recursive()`
      *  function instead.
      * @param string $dirname Path to the directory
      * @return void
@@ -489,9 +525,9 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        list($directories, $files) = dir_tree($dirname, false);
+        unlink_recursive($dirname);
 
-        array_map('unlink', $files);
+        list($directories) = dir_tree($dirname, false);
         array_map('rmdir', array_reverse($directories));
     }
 }
@@ -526,6 +562,7 @@ if (!function_exists('starts_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
+     * @todo should change name in `string_starts_with()`
      */
     function starts_with($haystack, $needle)
     {
@@ -536,7 +573,8 @@ if (!function_exists('starts_with')) {
 if (!function_exists('unlink_recursive')) {
     /**
      * Recursively removes all the files contained in a directory and its
-     *  sub-directories.
+     *  sub-directories. This function only removes the files, leaving the
+     *  directories unaltered.
      *
      * To remove the directory itself and all its contents, use the
      *  `rmdir_recursive()` function instead.

@@ -28,7 +28,7 @@
     "autoload-dev": {
         "psr-4": {
             "Tools\\Test\\": "tests/TestCase",
-            "App\\": "tests/TestApp"
+            "App\\": "tests/test_app"
         }
     }
 }

@@ -5,7 +5,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/dexhrwff7w814wt3?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/php-tools)
 [![codecov](https://codecov.io/gh/mirko-pagliai/php-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/php-tools)
 
-*php-tools* adds some useful global functions and some classes and methods.
+*php-tools* adds some useful global functions, classes and methods, trait and exceptions.  
+Refer to our [API](//mirko-pagliai.github.io/php-tools) to discover them all.
 
 Did you like this plugin? Its development requires a lot of time for me.
 Please consider the possibility of making [a donation](//paypal.me/mirkopagliai):  
@@ -17,123 +18,6 @@ even a coffee is enough! Thank you.
 You can install the package via composer:
 
     $ composer require --prefer-dist mirko-pagliai/php-tools
-
-## Global functions
-- `clean_url($url, $removeWWW = false, $removeTrailingSlash = false)` - Cleans an url, removing all unnecessary parts, as fragment (#) and trailing slash
-- `create_file($filename, $data = null)` - Creates a file. It also recursively creates the directory where the file will be created
-- `create_tmp_file($data = null, $dir = null, $prefix = 'tmp')` - Creates a tenporary file. The file will be created in `TMP`, if the constant is defined, otherwise in the temporary directory of the system
-- `deprecationWarning($message, $stackFrame = 1)` - Helper method for outputting deprecation warnings
-- `dir_tree($path, $exceptions = false)` - Returns an array of nested directories and files in each directory
-- `ends_with($haystack, $needle)` - Checks if a string ends with a string
-- `first_key(array $array)` - Returns the first key of an array
-- `first_value(array $array)` - Returns the first value of an array
-- `first_value_recursive(array $array)` - Returns the first value of an array recursively. In other words, it returns the first value found that is not an array
-- `get_child_methods($class)` - Gets the class methods' names, but unlike the `get_class_methods()` function, this function excludes the methods of the parent class
-- `is_external_url($url, $hostname)` - Checks if an url is external. The check is performed by comparing the URL with the passed hostname
-- `is_json($string)` - Checks if a string is JSON
-- `is_positive($string)` - Checks if a string is a positive number
-- `is_slash_term($path)` - Checks if a path ends in a slash (i.e. is slash-terminated)
-- `is_url($string)` - Checks if a string is a valid url
-- `is_win()` - Returns `true` if the environment is Windows
-- `is_writable_resursive($dirname, $checkOnlyDir = true)` - Tells whether a directory and its subdirectories are writable. It can also check that all the files are writable
-- `last_key(array $array)` - Returns the last key of an array
-- `last_value(array $array)` - Returns the last value of an array
-- `last_value_recursive(array $array)` - Returns the last value of an array recursively. In other words, it returns the last value found that is not an array
-- `rmdir_recursive($dirname)` - Removes a directory and all its contents, including subdirectories and files
-- `rtr($path)` Returns a path relative to the root. The root path must be set with the `ROOT` environment variable  (using the `putenv()` function) or the `ROOT` constant.
-- `starts_with($haystack, $needle)` - Checks if a string starts with a string
-- `unlink_resursive($dirname, $exceptions = false)` - Recursively removes all the files contained in a directory and its sub-directories
-- `which($command)` - Executes the `which` command and shows the full path of (shell) commands
-
-## "Or fail" functions
-- `file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)` - Checks whether a file or directory exists and throws an exception if the file does not exist
-- `is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory', $exception = NotDirectoryException::class)` - Tells whether the filename is a directory and throws an exception if the filename is not a directory
-- `is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)` - Tells whether a file exists and is readable and throws an exception if the file is not readable
-- `is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)` - Throws an exception if the value is not equal to `true`
-- `is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)` - Tells whether the filename is writable and throws an exception if the file is not writable
-- `key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)` - Checks if the given key or index exists in the array and throws an exception if the key does not exist. If you pass an array of keys, they will all be checked
-
-## Safe functions
-- `safe_copy($source, $dest)` - Safe alias for `copy()` function
-- `safe_create_file($filename, $data = null)` - Safe alias for `create_file()` function
-- `safe_create_tmp_file($data = null, $dir = null, $prefix = null)` - Safe alias for `create_tmp_file()` function
-- `safe_mkdir($pathname, $mode = 0777, $recursive = false)` - Safe alias for `mkdir()` function
-- `safe_rmdir($dirname)` - Safe alias for `rmdir()` function
-- `safe_rmdir_recursive($dirname)` - Safe alias for `rmdir_recursive()` function
-- `safe_symlink($target, $link)` - Safe alias for `symlink()` function
-- `safe_unlink($filename)` - Safe alias for `unlink()` function
-- `safe_unlink_recursive($dirname, $exceptions = false)` - Safe alias for `safe_unlink_recursive()` function
-- `safe_unserialize($str)` - Safe alias for `unserialize()` function
-
-## Classes and methods
-### Apache
-`Apache` is a class that provides some useful methods for interacting with Apache.
-
-Available methods are:
-- `is_enabled($module)` - Checks if a module is enabled
-- `version()` - Gets the version
-
-### BodyParser
-`BodyParser` is a class that can tell you if a body contains HTML code and can
-    extract links from body.
-
-Available methods are:
-- `__construct($body, $url)` - Constructor
-- `extractLinks()` - Extracs links from body
-- `isHtml()` - Returns `true` if the body contains HTML code
-
-### FileArray
-`FileArray` is a class allows you to read and write arrays using text files.
-
-Available methods are:
-- `__construct($filename, array $data = [])` - Constructor
-- `append($data)` - Appends data to existing data
-- `delete($key)` - Deletes a value from its key number. Note that the keys will be re-ordered.
-- `exists($key)` - Checks if a key number exists
-- `get($key)` - Gets a value from its key number
-- `prepend($data)` - Prepends data to existing data
-- `read()` - Reads data. The first time, the file content is read. The next time the property value will be returned.
-    If there are no data or if the file does not exist, it still returns an empty array
-- `take($size, $from = 0)` - Extract a slice of data, with maximum `$size` values. If a second parameter is passed,
-    it will determine from what position to start taking values
-- `write()` - Writes data to the file
-
-### ReflectionTrait
-`ReflectionTrait` is a trait that works as a wrapper for the `Reflection` classes provided by PHP, and allows you to easily:
-- invoke protected or private methods;
-- set/get protected or private properties.
-
-Available methods are:
-- `getProperties(&$object, $filter = null)` - Gets all properties as array with property names as keys. If the object is a
-    mock, it removes the properties added by PHPUnit
-- `getProperty(&$object, $propertyName)` - Gets a property value
-- `invokeMethod(&$object, $methodName, array $parameters = [])` - Invokes a method
-- `setProperty(&$object, $propertyName, $propertyValue)` - Sets a property value
-
-This trait comes to test protected and private methods and properties with
-PHPUnit.
-
-### TestTrait
-`TestTrait` is a trait that provides some assertion methods.
-
-Available methods are:
-    assertArrayKeysEqual($expectedKeys, $array, $message = '')
-    assertContainsInstanceOf($expectedInstance, $value, $message = '')
-    assertException($expectedException, callable $function, $expectedMessage = null)
-    assertFileExists($filename, $message = '')
-    assertFileExtension($expectedExtension, $filename, $message = '')
-    assertFileMime($filename, $expectedMime, $message = '')
-    assertFileNotExists($filename, $message = '')
-    assertFilePerms($filename, $expectedPerms, $message = '')
-    assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
-    assertIsArray($var, $message = '')
-    assertIsArrayNotEmpty($var, $message = '')
-    assertIsDeprecated(callable $function, $expectedMessage = null)
-    assertIsInt($var, $message = '')
-    assertIsObject($var, $message = '')
-    assertIsString($var, $message = '')
-    assertObjectPropertiesEqual($expectedProperties, $object, $message = '')
-    assertSameMethods($firstClass, $secondClass, $message = '')
 
 ## Tests
 Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is

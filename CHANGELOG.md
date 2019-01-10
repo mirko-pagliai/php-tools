@@ -1,15 +1,27 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.11
-* added `IS_WIN` constant. The `is_win()` method is now deprecated and will be
-    removed in a later version;
-* added `assertIsDeprecated()` assert method;
+* added `TestCase` class;
+* added `objects_map()` global function;
+* `assertFileExtension()` and `assertFileMime()` assert methods can take string
+    or an array or a `Traversable` of files;
 * all `ReflectionTrait` methods are now protected. The `setProperty()` method
     now returns the old value or `null`;
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
     `TestTrait` instead. The `createSomeFiles()` method has been removed and now
     it is a global function only for tests;
-* fixed bug for `is_url()` function with no-string values.
+* fixed bug for `assertArrayKeysEqual()` and `assertSameMethods()` assert methods,
+    the values are sorted alphabetically before being compared;
+* fixed bug for `assertFilePerms()`. Now it works correctly and take permission
+    values as string or octal value;
+* fixed bug for `first_key()`, `first_value()`, `last_key()` and `last_value()`
+    function: they return `null` with empty array;
+* fixed bug for `is_url()` function with no-string values;
+* `is_win()` method is now deprecated and will be
+    removed in a later version; Use the `IS_WIN` constant instead;
+* `assertContainsInstanceOf()` method is now deprecated and will be removed in a
+    later version. Use `assertContainsOnlyInstancesOf()` instead';
+* all "safe" methods are now deprecated and will be removed in a later version.
 
 ### 1.1.10
 * added `first_key()`, `first_value_recursive()`, `last_key()` and

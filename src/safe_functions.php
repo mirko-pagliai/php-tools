@@ -13,6 +13,7 @@
 if (!function_exists('safe_copy')) {
     /**
      * Safe alias for `copy()` function
+     * @deprecated 1.1.11
      * @param string $source Path to the source file
      * @param string $dest The destination path. If dest is a URL, the copy
      *  operation may fail if the wrapper does not support overwriting of
@@ -22,7 +23,8 @@ if (!function_exists('safe_copy')) {
      */
     function safe_copy($source, $dest)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_copy()` function is deprecated and will be removed in a later version');
+
         return @copy($source, $dest);
     }
 }
@@ -30,6 +32,7 @@ if (!function_exists('safe_copy')) {
 if (!function_exists('safe_create_file')) {
     /**
      * Safe alias for `create_file()` function
+     * @deprecated 1.1.11
      * @param string $filename Path to the file where to write the data
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
@@ -38,7 +41,8 @@ if (!function_exists('safe_create_file')) {
      */
     function safe_create_file($filename, $data = null)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_create_file()` function is deprecated and will be removed in a later version');
+
         return @create_file($filename, $data);
     }
 }
@@ -46,6 +50,7 @@ if (!function_exists('safe_create_file')) {
 if (!function_exists('safe_create_tmp_file')) {
     /**
      * Safe alias for `create_tmp_file()` function
+     * @deprecated 1.1.11
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
      * @param string|null $dir The directory where the temporary filename will be created
@@ -55,7 +60,8 @@ if (!function_exists('safe_create_tmp_file')) {
      */
     function safe_create_tmp_file($data = null, $dir = null, $prefix = null)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_create_tmp_file()` function is deprecated and will be removed in a later version');
+
         return @create_tmp_file($data, $dir, $prefix);
     }
 }
@@ -63,6 +69,7 @@ if (!function_exists('safe_create_tmp_file')) {
 if (!function_exists('safe_mkdir')) {
     /**
      * Safe alias for `mkdir()` function
+     * @deprecated 1.1.11
      * @param string $pathname Path to the directory
      * @param int $mode The mode is 0777 by default, which means the widest
      *  possible access
@@ -72,7 +79,8 @@ if (!function_exists('safe_mkdir')) {
      */
     function safe_mkdir($pathname, $mode = 0777, $recursive = false)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_mkdir()` function is deprecated and will be removed in a later version');
+
         return @mkdir($pathname, $mode, $recursive);
     }
 }
@@ -80,12 +88,14 @@ if (!function_exists('safe_mkdir')) {
 if (!function_exists('safe_rmdir')) {
     /**
      * Safe alias for `rmdir()` function
+     * @deprecated 1.1.11
      * @param string $dirname Path to the directory
      * @return bool
      */
     function safe_rmdir($dirname)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_rmdir()` function is deprecated and will be removed in a later version');
+
         return @rmdir($dirname);
     }
 }
@@ -93,13 +103,15 @@ if (!function_exists('safe_rmdir')) {
 if (!function_exists('safe_rmdir_recursive')) {
     /**
      * Safe alias for `rmdir_recursive()` function
+     * @deprecated 1.1.11
      * @param string $dirname Path to the directory
      * @return void
      * @since 1.0.6
      */
     function safe_rmdir_recursive($dirname)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_rmdir_recursive()` function is deprecated and will be removed in a later version');
+
         @rmdir_recursive($dirname);
     }
 }
@@ -107,13 +119,15 @@ if (!function_exists('safe_rmdir_recursive')) {
 if (!function_exists('safe_symlink')) {
     /**
      * Safe alias for `symlink()` function
+     * @deprecated 1.1.11
      * @param string $target Target of the link
      * @param string $link The link name
      * @return bool
      */
     function safe_symlink($target, $link)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_symlink()` function is deprecated and will be removed in a later version');
+
         return @symlink($target, $link);
     }
 }
@@ -121,12 +135,14 @@ if (!function_exists('safe_symlink')) {
 if (!function_exists('safe_unlink')) {
     /**
      * Safe alias for `unlink()` function
+     * @deprecated 1.1.11
      * @param string $filename Path to the file
      * @return bool
      */
     function safe_unlink($filename)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_unlink()` function is deprecated and will be removed in a later version');
+
         return @unlink($filename);
     }
 }
@@ -134,6 +150,7 @@ if (!function_exists('safe_unlink')) {
 if (!function_exists('safe_unlink_recursive')) {
     /**
      * Safe alias for `safe_unlink_recursive()` function
+     * @deprecated 1.1.11
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
@@ -142,7 +159,8 @@ if (!function_exists('safe_unlink_recursive')) {
      */
     function safe_unlink_recursive($dirname, $exceptions = false)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_unlink_recursive()` function is deprecated and will be removed in a later version');
+
         return @unlink_recursive($dirname, $exceptions);
     }
 }
@@ -150,6 +168,7 @@ if (!function_exists('safe_unlink_recursive')) {
 if (!function_exists('safe_unserialize')) {
     /**
      * Safe alias for `unserialize()` function
+     * @deprecated 1.1.11
      * @param string $str The serialized string. If the variable being
      *  unserialized is an object, after successfully reconstructing the object
      *  PHP will automatically attempt to call the __wakeup() member function
@@ -159,7 +178,8 @@ if (!function_exists('safe_unserialize')) {
      */
     function safe_unserialize($str)
     {
-        //@codingStandardsIgnoreLine
+        deprecationWarning('The `safe_unserialize()` function is deprecated and will be removed in a later version');
+
         return @unserialize($str);
     }
 }

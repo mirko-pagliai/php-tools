@@ -13,19 +13,14 @@
 namespace Tools\Test;
 
 use App\ExampleClass;
-use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Tools\ReflectionTrait;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * Reflection\ReflectionTrait Test Case
  */
 class ReflectionTraitTest extends TestCase
 {
-    use ReflectionTrait;
-    use TestTrait;
-
     /**
      * Tests for `getProperties()` method
      * @test
@@ -33,7 +28,6 @@ class ReflectionTraitTest extends TestCase
     public function testGetProperties()
     {
         $example = new ExampleClass;
-
         $expected = [
             'privateProperty' => 'this is a private property',
             'firstProperty' => null,
@@ -49,7 +43,6 @@ class ReflectionTraitTest extends TestCase
         $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($example, ReflectionProperty::IS_STATIC));
 
         unset($expected['privateProperty']);
-
         $example = $this->getMockBuilder(ExampleClass::class)->getMock();
         $this->assertEquals($expected, $this->getProperties($example));
     }
@@ -61,7 +54,6 @@ class ReflectionTraitTest extends TestCase
     public function testGetProperty()
     {
         $example = new ExampleClass;
-
         $this->assertNull($this->getProperty($example, 'firstProperty'));
         $this->assertEquals('a protected property', $this->getProperty($example, 'secondProperty'));
     }
@@ -73,7 +65,6 @@ class ReflectionTraitTest extends TestCase
     public function testInvokeMethod()
     {
         $example = new ExampleClass;
-
         $this->assertEquals('a protected method', $this->invokeMethod($example, 'protectedMethod'));
         $this->assertEquals('example string', $this->invokeMethod($example, 'protectedMethod', ['example string']));
     }
@@ -85,7 +76,6 @@ class ReflectionTraitTest extends TestCase
     public function testSetProperty()
     {
         $example = new ExampleClass;
-
         $result = $this->setProperty($example, 'firstProperty', 'example string');
         $this->assertNull($result);
         $this->assertEquals('example string', $example->firstProperty);

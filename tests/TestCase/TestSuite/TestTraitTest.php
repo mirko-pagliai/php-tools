@@ -12,30 +12,36 @@
  */
 namespace Tools\Test\TestSuite;
 
+use App\AnotherExampleChildClass;
+use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfTraversable;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\TestCase;
-use RuntimeException;
+use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
- * TestCaseTest class
+ * TestTraitTest class
  */
-class TestCaseTest extends TestCase
+class TestTraitTest extends TestCase
 {
-    use TestTrait;
-
     /**
      * Tests for `assertArrayKeysEqual()` method
      * @test
      */
     public function testAssertArrayKeysEqual()
     {
-        $array = ['key1' => 'value1', 'key2' => 'value2'];
-        $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+        foreach ([
+            ['key1' => 'value1', 'key2' => 'value2'],
+            ['key2' => 'value2', 'key1' => 'value1'],
+        ] as $array) {
+            $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+        }
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertArrayKeysEqual(['key2'], $array);
     }
 
     /**
@@ -44,17 +50,12 @@ class TestCaseTest extends TestCase
      */
     public function testAssertContainsInstanceOf()
     {
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
         $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
-    }
+        error_reporting($errorReporting);
 
-    /**
-     * Tests for `assertContainsInstanceOf()` method on failure
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertContainsInstanceOfOnFailure()
-    {
+        $this->expectException(Deprecated::class);
         $this->assertContainsInstanceOf('stdClass', new stdClass);
     }
 
@@ -75,45 +76,40 @@ class TestCaseTest extends TestCase
         }, 'right exception message');
 
         try {
-            $this->assertException(Exception::class, function () {
-                return true;
-            });
+            $this->assertException(Exception::class, 'time');
         } catch (AssertionFailedError $e) {
         } finally {
             $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
+            unset($e);
         }
 
         try {
-            $this->assertException(RuntimeException::class, function () {
-                throw new Exception('right exception message');
+            $this->assertException(Deprecated::class, function () {
+                throw new Exception;
             });
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith('Expected exception `RuntimeException`, unexpected type `Exception`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `Exception`', $e->getMessage());
+            unset($e);
         }
 
         try {
             $this->assertException(Exception::class, function () {
-                throw new Exception('wrong exception message');
-            }, 'right exception message');
+                throw new Exception('Wrong');
+            }, 'Right');
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith(
-                'Expected message exception `right exception message`, unexpected message `wrong exception message`',
-                $e->getMessage()
-            );
+            $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
+            unset($e);
         }
 
         try {
             $this->assertException(Exception::class, function () {
                 throw new Exception;
-            }, 'right exception message');
+            }, 'Right');
         } catch (AssertionFailedError $e) {
         } finally {
-            $this->assertStringStartsWith(
-                'Expected message exception `right exception message`, but no message for the exception',
-                $e->getMessage()
-            );
+            $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
         }
     }
 
@@ -123,15 +119,10 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileExists()
     {
-        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
-
-        //As string, array and `Traversable`
+        $files = [create_tmp_file(), create_tmp_file()];
         $this->assertFileExists($files[0]);
         $this->assertFileExists($files);
         $this->assertFileExists(new ExampleOfTraversable($files));
-
-        safe_unlink($files[0]);
-        safe_unlink($files[1]);
     }
 
     /**
@@ -140,24 +131,14 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileExtension()
     {
-        foreach ([
-            'jpg' => 'file.jpg',
-            'jpg' => 'file.JPG',
-            'jpeg' => 'file.jpeg',
-            'jpg' => 'path/to/file.jpg',
-            'jpg' => '/full/path/to/file.jpg',
-        ] as $extension => $filename) {
-            $this->assertFileExtension($extension, $filename);
-        }
-    }
-
-    /**
-     * Test for `assertImageSize()` method
-     * @ŧest
-     */
-    public function testAssertImageSize()
-    {
-        $this->assertImageSize(EXAMPLE_FILES . '400x400.jpg', 400, 400);
+        $this->assertFileExtension('jpg', 'file.jpg');
+        $this->assertFileExtension('jpeg', 'FILE.JPEG');
+        $this->assertFileExtension('jpg', [
+            'file.jpg',
+            'file.JPG',
+            'path/to/file.jpg',
+            '/full/path/to/file.jpg',
+        ]);
     }
 
     /**
@@ -166,8 +147,9 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $filename = safe_create_tmp_file('this is a test file');
-        $this->assertFileMime($filename, 'text/plain');
+        $files = [create_tmp_file('string'), create_tmp_file('string')];
+        $this->assertFileMime($files[0], 'text/plain');
+        $this->assertFileMime($files, 'text/plain');
     }
 
     /**
@@ -177,8 +159,6 @@ class TestCaseTest extends TestCase
     public function testAssertFileNotExists()
     {
         $files = [TMP . 'noExisting1', TMP . 'noExisting2'];
-
-        //As string, array and `Traversable`
         $this->assertFileNotExists($files[0]);
         $this->assertFileNotExists($files);
         $this->assertFileNotExists(new ExampleOfTraversable($files));
@@ -191,18 +171,29 @@ class TestCaseTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $files = [tempnam(TMP, 'foo'), tempnam(TMP, 'foo2')];
-
-        //As string, array and `Traversable`
+        $files = [create_tmp_file(), create_tmp_file()];
         $this->assertFilePerms($files[0], '0600');
+        $this->assertFilePerms($files[0], 0600);
         $this->assertFilePerms($files[0], ['0600', '0666']);
+        $this->assertFilePerms($files[0], [0600, 0666]);
+        $this->assertFilePerms($files[0], ['0600', 0666]);
         $this->assertFilePerms($files, '0600');
+        $this->assertFilePerms($files, 0600);
         $this->assertFilePerms($files, ['0600', '0666']);
+        $this->assertFilePerms($files, [0600, 0666]);
         $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
         $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
+    }
 
-        safe_unlink($files[0]);
-        safe_unlink($files[1]);
+    /**
+     * Test for `assertImageSize()` method
+     * @ŧest
+     */
+    public function testAssertImageSize()
+    {
+        $filename = TMP . 'pic.jpg';
+        imagejpeg(imagecreatetruecolor(120, 20), $filename);
+        $this->assertImageSize($filename, 120, 20);
     }
 
     /**
@@ -212,8 +203,7 @@ class TestCaseTest extends TestCase
     public function testAssertIsArray()
     {
         $this->assertIsArray([]);
-        $this->assertIsArray([true]);
-        $this->assertIsArray((array)'string');
+        $this->assertIsArray(['value']);
     }
 
     /**
@@ -223,40 +213,9 @@ class TestCaseTest extends TestCase
     public function testAssertIsArrayNotEmpty()
     {
         $this->assertIsArrayNotEmpty(['value']);
-    }
 
-    /**
-     * Tests for `assertIsArrayNotEmpty()` method, failure with empty array
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertIsArrayNotEmptyOnFailureForEmptyArray()
-    {
+        $this->expectException(AssertionFailedError::class);
         $this->assertIsArrayNotEmpty([]);
-    }
-
-    /**
-     * Tests for `assertIsArrayNotEmpty()` method, failure with a no array
-     * @expectedException PHPUnit\Framework\AssertionFailedError
-     * @test
-     */
-    public function testAssertIsArrayNotEmptyOnFailureForNoArray()
-    {
-        $this->assertIsArrayNotEmpty('string');
-    }
-
-    /**
-     * Tests for `assertIsDeprecated()` method
-     * @test
-     */
-    public function testAssertIsDeprecated()
-    {
-        $deprecatedMethod = function () {
-            deprecationWarning('this method is deprecated');
-        };
-
-        $this->assertIsDeprecated($deprecatedMethod);
-        $this->assertIsDeprecated($deprecatedMethod, 'this method is deprecated');
     }
 
     /**
@@ -274,8 +233,7 @@ class TestCaseTest extends TestCase
      */
     public function testAssertIsObject()
     {
-        $this->assertIsObject(new \stdClass);
-        $this->assertIsObject((object)[]);
+        $this->assertIsObject(new stdClass);
     }
 
     /**
@@ -285,7 +243,6 @@ class TestCaseTest extends TestCase
     public function testAssertIsString()
     {
         $this->assertIsString('string');
-        $this->assertIsString(serialize(['serialized_array']));
     }
 
     /**
@@ -294,13 +251,14 @@ class TestCaseTest extends TestCase
      */
     public function testAssertObjectPropertiesEqual()
     {
-        $array = ['first' => 'one', 'second' => 'two'];
         $object = new stdClass;
         $object->first = 'first value';
         $object->second = 'second value';
-
         $this->assertObjectPropertiesEqual(['first', 'second'], $object);
-        $this->assertObjectPropertiesEqual(['first', 'second'], (object)$array);
+        $this->assertObjectPropertiesEqual(['second', 'first'], $object);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertObjectPropertiesEqual(['first'], $object);
     }
 
     /**
@@ -310,12 +268,15 @@ class TestCaseTest extends TestCase
     public function testAssertSameMethods()
     {
         $exampleClass = new ExampleClass;
-
         $this->assertSameMethods($exampleClass, ExampleClass::class);
         $this->assertSameMethods($exampleClass, get_class($exampleClass));
 
         $copyExampleClass = &$exampleClass;
-
         $this->assertSameMethods($exampleClass, $copyExampleClass);
+
+        $this->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
+
+        $this->expectException(AssertionFailedError::class);
+        $this->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
     }
 }

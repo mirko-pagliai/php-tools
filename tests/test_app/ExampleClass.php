@@ -32,6 +32,13 @@ class ExampleClass
         return $var ?: 'a protected method';
     }
 
+    public function setProperty($propertyName, $propertyValue)
+    {
+        $this->$propertyName = $propertyValue;
+
+        return $propertyValue;
+    }
+
     public function __get($name)
     {
         return $this->$name;

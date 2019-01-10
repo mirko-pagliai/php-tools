@@ -13,8 +13,6 @@
  */
 namespace Tools;
 
-use Exception;
-
 /**
  * This class allows you to read and write arrays using text files
  */
@@ -38,6 +36,7 @@ class FileArray
      *  parameter.
      * @param string $filename Filename
      * @param array $data Optional initial data
+     * @throws NotWritableException
      * @uses read()
      * @uses $data
      * @uses $filename
@@ -45,24 +44,10 @@ class FileArray
     public function __construct($filename, array $data = [])
     {
         $target = is_file($filename) ? $filename : dirname($filename);
-        is_true_or_fail(is_writable($target), sprintf('File or directory `%s` is not writable', rtr($target)));
+        is_writable_or_fail($target);
 
         $this->filename = $filename;
         $this->data = $data ?: $this->read();
-    }
-
-    /**
-     * Internal method to throw an exception if a key doesn't exist
-     * @param int $key Key number
-     * @return void
-     * @throws Exception
-     * @uses $data
-     */
-    protected function _keyExistsOrFail($key)
-    {
-        if (!key_exists($key, $this->data)) {
-            throw new Exception(sprintf('Key `%s` does not exist', $key));
-        }
     }
 
     /**
@@ -84,15 +69,13 @@ class FileArray
      * Note that the keys will be re-ordered.
      * @param int $key Key number
      * @return $this
-     * @uses _keyExistsOrFail()
+     * @throws KeyNotExistsException
      * @uses $data
      */
     public function delete($key)
     {
-        $this->_keyExistsOrFail($key);
-
+        key_exists_or_fail($key, $this->data);
         unset($this->data[$key]);
-
         $this->data = array_values($this->data);
 
         return $this;
@@ -113,12 +96,12 @@ class FileArray
      * Gets a value from its key number
      * @param int $key Key number
      * @return mixed
-     * @uses _keyExistsOrFail()
+     * @throws KeyNotExistsException
      * @uses $data
      */
     public function get($key)
     {
-        $this->_keyExistsOrFail($key);
+        key_exists_or_fail($key, $this->data);
 
         return $this->data[$key];
     }
@@ -131,10 +114,7 @@ class FileArray
      */
     public function prepend($data)
     {
-        $existing = $this->data;
-        array_unshift($existing, $data);
-
-        $this->data = $existing;
+        array_unshift($this->data, $data);
 
         return $this;
     }
@@ -153,17 +133,13 @@ class FileArray
      */
     public function read()
     {
-        if ($this->data) {
+        if ($this->data || !file_exists($this->filename)) {
             return $this->data;
         }
 
-        if (!file_exists($this->filename)) {
-            return [];
-        }
+        $data = file_get_contents($this->filename);
 
-        $data = safe_unserialize(file_get_contents($this->filename), true);
-
-        return $data ?: [];
+        return is_json($data) ? unserialize($data) : [];
     }
 
     /**

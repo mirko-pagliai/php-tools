@@ -14,7 +14,6 @@ namespace Tools\Test;
 
 use ErrorException;
 use Exception;
-use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
@@ -22,55 +21,24 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * OrFailFunctionsTest class
  */
 class OrFailFunctionsTest extends TestCase
 {
-    use TestTrait;
-
-    /**
-     * @var string
-     */
-    protected $exampleFile = TMP . 'exampleFile';
-
-    /**
-     * Setup the test case, backup the static object values so they can be
-     * restored. Specifically backs up the contents of Configure and paths in
-     *  App if they have not already been backed up
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        safe_create_file($this->exampleFile, 'a string');
-    }
-
-    /**
-     * Teardown any static object changes and restore them
-     * @return void
-     */
-    public function tearDown()
-    {
-        parent::tearDown();
-
-        safe_unlink($this->exampleFile);
-    }
-
     /**
      * Test for `file_exists_or_fail()` "or fail" function
      * @test
      */
     public function testFileExistsOrFail()
     {
-        file_exists_or_fail($this->exampleFile);
+        file_exists_or_fail(create_tmp_file());
 
-        $this->assertException(FileNotExistsException::class, function () {
-            file_exists_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` does not exist');
+        $this->expectException(FileNotExistsException::class);
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
+        file_exists_or_fail(TMP . 'noExisting');
     }
 
     /**
@@ -80,7 +48,6 @@ class OrFailFunctionsTest extends TestCase
     public function testKeyExistsOrFail()
     {
         $array = ['a' => 'alfa', 'beta', 'gamma'];
-
         key_exists_or_fail('a', $array);
         key_exists_or_fail(['a', 1], $array);
 
@@ -101,11 +68,12 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsDirOrFail()
     {
-        is_dir_or_fail(dirname($this->exampleFile));
+        is_dir_or_fail(TMP);
 
-        $this->assertException(NotDirectoryException::class, function () {
-            is_dir_or_fail($this->exampleFile);
-        }, 'Filename `' . $this->exampleFile . '` is not a directory');
+        $filename = create_tmp_file();
+        $this->expectException(NotDirectoryException::class);
+        $this->expectExceptionMessage('Filename `' . $filename . '` is not a directory');
+        is_dir_or_fail($filename);
     }
 
     /**
@@ -114,11 +82,11 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
-        is_readable_or_fail($this->exampleFile);
+        is_readable_or_fail(create_tmp_file());
 
-        $this->assertException(NotReadableException::class, function () {
-            is_readable_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` is not readable');
+        $this->expectException(NotReadableException::class);
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not readable');
+        is_readable_or_fail(TMP . 'noExisting');
     }
 
     /**
@@ -180,10 +148,10 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
-        is_writable_or_fail($this->exampleFile);
+        is_writable_or_fail(create_tmp_file());
 
-        $this->assertException(NotWritableException::class, function () {
-            is_writable_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` is not writable');
+        $this->expectException(NotWritableException::class);
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not writable');
+        is_writable_or_fail(TMP . 'noExisting');
     }
 }

@@ -12,17 +12,14 @@
  */
 namespace Tools;
 
-use PHPUnit\Framework\TestCase;
 use Tools\BodyParser;
-use Tools\ReflectionTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * BodyParserTest class
  */
 class BodyParserTest extends TestCase
 {
-    use ReflectionTrait;
-
     /**
      * Test for `_turnUrlAsAbsolute()` method
      * @test
@@ -30,6 +27,7 @@ class BodyParserTest extends TestCase
     public function testTurnUrlAsAbsolute()
     {
         foreach (['http', 'https', 'ftp'] as $scheme) {
+            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
             $urls = [
                 'http://localhost/mysite' => 'http://localhost/mysite',
                 'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
@@ -39,11 +37,8 @@ class BodyParserTest extends TestCase
                 'http://external' => 'http://external',
             ];
 
-            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
-
             foreach ($urls as $url => $expected) {
-                $result = $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]);
-                $this->assertEquals($expected, $result);
+                $this->assertEquals($expected, $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]));
             }
         }
     }
@@ -73,8 +68,8 @@ class BodyParserTest extends TestCase
      */
     public function testExtractLinks()
     {
-        $getExtractedLinksMethod = function ($body) {
-            return (new BodyParser($body, 'http://localhost'))->extractLinks();
+        $getExtractedLinksMethod = function ($html) {
+            return (new BodyParser($html, 'http://localhost'))->extractLinks();
         };
 
         $expected = [
@@ -91,7 +86,18 @@ class BodyParserTest extends TestCase
             'http://localhost/subtitles_en.vtt',
             'http://localhost/movie.mp4',
         ];
-        $html = file_get_contents(EXAMPLE_FILES . 'page_with_some_links.html');
+        $html = '<a href="/page.html#fragment">Link</a>
+<map name="example"><area href="area.htm"></map>
+<audio src="/file.mp3"></audio>
+<embed src="helloworld.swf">
+<frame src="frame1.html"></frame>
+<iframe src="frame2.html"></iframe>
+<img src="pic.jpg" />
+<link rel="stylesheet" type="text/css" href="style.css">
+<script type="text/javascript" src="script.js" />
+<audio><source src="file2.mp3" type="audio/mpeg"></audio>
+<video><track src="subtitles_en.vtt"></video>
+<video src="//localhost/movie.mp4"></video>';
         $this->assertEquals($expected, $getExtractedLinksMethod($html));
 
         $html = '<html><body>' . $html . '</body></html>';

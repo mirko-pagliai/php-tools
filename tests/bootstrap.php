@@ -17,10 +17,8 @@ require_once 'apache_functions.php';
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
-define('EXAMPLE_FILES', ROOT . 'tests' . DS . 'examples' . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
-//@codingStandardsIgnoreLine
 @mkdir(TMP, 0777, true);
 
 if (!function_exists('createSomeFiles')) {
@@ -43,8 +41,8 @@ if (!function_exists('createSomeFiles')) {
         ];
 
         //Creates directories and files
-        array_walk($files, 'safe_create_file');
-        safe_mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
+        array_walk($files, 'create_file');
+        @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;
     }
@@ -54,4 +52,5 @@ if (!class_exists('PHPUnit\Runner\Version')) {
     class_alias('PHPUnit_Framework_AssertionFailedError', 'PHPUnit\Framework\AssertionFailedError');
     class_alias('PHPUnit_Framework_Error_Deprecated', 'PHPUnit\Framework\Error\Deprecated');
     class_alias('PHPUnit_Framework_Error_Notice', 'PHPUnit\Framework\Error\Notice');
+    class_alias('PHPUnit_Framework_MockObject_MockObject', 'PHPUnit\Framework\MockObject\MockObject');
 }

@@ -12,18 +12,17 @@
  */
 namespace Tools\Test;
 
-use Exception;
+use App\ExampleChildClass;
+use App\ExampleClass;
+use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\TestCase;
-use Tools\TestSuite\TestTrait;
+use Tools\TestSuite\TestCase;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
-    use TestTrait;
-
     /**
      * Test for `clean_url()` global function
      * @test
@@ -79,14 +78,11 @@ class GlobalFunctionsTest extends TestCase
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
         $this->assertTrue(create_file($filename));
-        $this->assertFileExists($filename);
-        $this->assertEmpty(file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, '');
 
-        $content = 'string';
-        safe_unlink($filename);
-        $this->assertTrue(create_file($filename, $content));
-        $this->assertFileExists($filename);
-        $this->assertEquals($content, file_get_contents($filename));
+        unlink($filename);
+        $this->assertTrue(create_file($filename, 'string'));
+        $this->assertStringEqualsFile($filename, 'string');
     }
 
     /**
@@ -97,15 +93,11 @@ class GlobalFunctionsTest extends TestCase
     {
         $filename = create_tmp_file();
         $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertFileExists($filename);
-        $this->assertEmpty(file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, '');
 
-        $content = 'string';
-        safe_unlink($filename);
-        $filename = create_tmp_file($content);
+        $filename = create_tmp_file('string');
         $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertFileExists($filename);
-        $this->assertEquals($content, file_get_contents($filename));
+        $this->assertStringEqualsFile($filename, 'string');
     }
 
     /**
@@ -115,26 +107,13 @@ class GlobalFunctionsTest extends TestCase
     public function testDeprecationWarning()
     {
         $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-
-        try {
-            deprecationWarning('This method is deprecated');
-        } catch (Deprecated $dep) {
-            $this->fail('Deprecated was raised');
-        } catch (Exception $e) {
-            $this->fail($e->getMessage());
-        }
-
+        deprecationWarning('This method is deprecated');
         error_reporting($currentErrorReporting);
 
-        try {
-            deprecationWarning('This method is deprecated');
-        } catch (Deprecated $dep) {
-        } catch (Exception $e) {
-            $this->fail($e->getMessage());
-        } finally {
-            $this->assertEquals('This method is deprecated - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.', $dep->getMessage());
-        }
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('This method is deprecated - [internal], line: ??
+ You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.');
+        deprecationWarning('This method is deprecated');
     }
 
     /**
@@ -143,8 +122,6 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testDirTree()
     {
-        $files = createSomeFiles();
-
         $expectedDirs = [
             TMP . 'exampleDir',
             TMP . 'exampleDir' . DS . '.hiddenDir',
@@ -163,22 +140,11 @@ class GlobalFunctionsTest extends TestCase
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
         ];
+        createSomeFiles();
 
-        foreach ([
-            TMP . 'exampleDir',
-            TMP . 'exampleDir' . DS,
-        ] as $directory) {
-            $result = dir_tree($directory);
-            $this->assertCount(2, $result);
-            $this->assertEquals($expectedDirs, $result[0]);
-            $this->assertEquals($expectedFiles, $result[1]);
+        foreach ([TMP . 'exampleDir', TMP . 'exampleDir' . DS] as $directory) {
+            $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree($directory));
         }
-
-        //`$exceptions` as `false`
-        $result = dir_tree($directory, false);
-        $this->assertCount(2, $result);
-        $this->assertEquals($expectedDirs, $result[0]);
-        $this->assertEquals($expectedFiles, $result[1]);
 
         //Excludes some files
         foreach ([
@@ -187,11 +153,10 @@ class GlobalFunctionsTest extends TestCase
             ['.hiddenFile'],
             ['.hiddenFile', 'file2', 'file3'],
         ] as $exceptions) {
-            $currentExpected = array_values(array_filter($expectedFiles, function ($value) use ($exceptions) {
+            $currentExpectedFiles = array_values(array_filter($expectedFiles, function ($value) use ($exceptions) {
                 return !in_array(basename($value), $exceptions);
             }));
-            $result = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertEquals($currentExpected, $result[1]);
+            $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
         }
 
         //Excludes hidden files
@@ -203,18 +168,13 @@ class GlobalFunctionsTest extends TestCase
         $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
         $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
         foreach ([true, '.', ['.']] as $exceptions) {
-            $result = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertCount(2, $result);
-            $this->assertEquals($currentExpectedDirs, $result[0]);
-            $this->assertEquals($currentExpectedFiles, $result[1]);
+            $this->assertEquals([$currentExpectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
         }
 
         //Using a file or a no existing file
-        foreach ([$files[0], TMP . 'noExisting'] as $directory) {
+        foreach ([create_tmp_file(), TMP . 'noExisting'] as $directory) {
             $this->assertEquals([[], []], dir_tree($directory));
         }
-
-        safe_rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**
@@ -224,15 +184,12 @@ class GlobalFunctionsTest extends TestCase
     public function testEndsWith()
     {
         $string = 'a test with some words';
-
-        $this->assertTrue(ends_with($string, ''));
-        $this->assertTrue(ends_with($string, 's'));
-        $this->assertTrue(ends_with($string, 'some words'));
-        $this->assertTrue(ends_with($string, $string));
-
-        $this->assertFalse(ends_with($string, ' '));
-        $this->assertFalse(ends_with($string, 'b'));
-        $this->assertFalse(ends_with($string, 'test'));
+        foreach (['', 's', 'some words', $string] as $var) {
+            $this->assertTrue(ends_with($string, $var));
+        }
+        foreach ([' ', 'b', 'a test'] as $var) {
+            $this->assertFalse(ends_with($string, $var));
+        }
     }
 
     /**
@@ -243,9 +200,8 @@ class GlobalFunctionsTest extends TestCase
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals(0, first_key($array));
-
-        $array = array_combine(['a', 'b', 'c'], $array);
-        $this->assertEquals('a', first_key($array));
+        $this->assertEquals('a', first_key(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, first_key([]));
     }
 
     /**
@@ -256,9 +212,8 @@ class GlobalFunctionsTest extends TestCase
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals('first', first_value($array));
-
-        $array = array_combine(['a', 'b', 'c'], $array);
-        $this->assertEquals('first', first_value($array));
+        $this->assertEquals('first', first_value(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, first_value([]));
     }
 
     /**
@@ -267,6 +222,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValueRecursive()
     {
+        $this->assertEquals(null, first_value_recursive([]));
         foreach ([
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],
@@ -283,11 +239,10 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetChildMethods()
     {
-        $expected = ['childMethod', 'anotherChildMethod'];
-        $this->assertEquals($expected, get_child_methods('\App\ExampleChildClass'));
+        $this->assertEquals(['childMethod', 'anotherChildMethod'], get_child_methods(ExampleChildClass::class));
 
         //This class has no parent, so the result is similar to the `get_class_methods()` method
-        $this->assertSameMethods('\App\ExampleClass', '\App\ExampleClass');
+        $this->assertEquals(get_class_methods(ExampleClass::class), get_child_methods(ExampleClass::class));
 
         //No existing class
         $this->assertNull(get_child_methods('\NoExistingClass'));
@@ -299,8 +254,8 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetClassShortName()
     {
-        foreach (['\App\ExampleClass', 'App\ExampleClass'] as $class) {
-            $this->assertEquals('ExampleClass', get_class_short_name($class));
+        foreach (['\App\ExampleClass', 'App\ExampleClass', ExampleClass::class] as $className) {
+            $this->assertEquals('ExampleClass', get_class_short_name($className));
         }
     }
 
@@ -383,8 +338,6 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsExternalUrl()
     {
-        $hostname = 'google.com';
-
         foreach ([
             '//google.com',
             '//google.com/',
@@ -397,7 +350,7 @@ class GlobalFunctionsTest extends TestCase
             'relative.html',
             '/relative.html',
         ] as $url) {
-            $this->assertFalse(is_external_url($url, $hostname));
+            $this->assertFalse(is_external_url($url, 'google.com'));
         }
 
         foreach ([
@@ -406,7 +359,7 @@ class GlobalFunctionsTest extends TestCase
             'http://www.site.com',
             'http://subdomain.google.com',
         ] as $url) {
-            $this->assertTrue(is_external_url($url, $hostname));
+            $this->assertTrue(is_external_url($url, 'google.com'));
         }
     }
 
@@ -417,14 +370,8 @@ class GlobalFunctionsTest extends TestCase
     public function testIsJson()
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
-
-        foreach ([
-            ['alfa' => 'first', 'beta' => 'second'],
-            (object)['alfa' => 'first', 'beta' => 'second'],
-            'this is a no json string',
-        ] as $string) {
-            $this->assertFalse(is_json($string));
-        }
+        $this->assertFalse(is_json(true));
+        $this->assertFalse(is_json('this is a no json string'));
     }
 
     /**
@@ -434,8 +381,9 @@ class GlobalFunctionsTest extends TestCase
     public function testIsPositive()
     {
         $this->assertTrue(is_positive(1));
+        $this->assertTrue(is_positive('1'));
 
-        foreach ([0, -1, 1.1] as $string) {
+        foreach ([0, -1, 1.1, '0', '1.1'] as $string) {
             $this->assertFalse(is_positive($string));
         }
     }
@@ -506,11 +454,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnUnix()
     {
-        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
-
         $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertFalse(is_win());
         error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        is_win();
     }
 
     /**
@@ -520,11 +469,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWinOnWin()
     {
-        $this->assertIsDeprecated('is_win', 'The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
-
         $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_win());
         error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        is_win();
     }
 
     /**
@@ -533,10 +483,8 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsWritableRecursive()
     {
-        createSomeFiles();
-        $this->assertTrue(is_writable_resursive(TMP . 'exampleDir'));
+        $this->assertTrue(is_writable_resursive(TMP));
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-        rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**
@@ -547,9 +495,8 @@ class GlobalFunctionsTest extends TestCase
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals(2, last_key($array));
-
-        $array = array_combine(['a', 'b', 'c'], $array);
-        $this->assertEquals('c', last_key($array));
+        $this->assertEquals('c', last_key(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, last_key([]));
     }
 
     /**
@@ -560,9 +507,8 @@ class GlobalFunctionsTest extends TestCase
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals('third', last_value($array));
-
-        $array = array_combine(['a', 'b', 'c'], $array);
-        $this->assertEquals('third', last_value($array));
+        $this->assertEquals('third', last_value(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, last_value([]));
     }
 
     /**
@@ -571,6 +517,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValueRecursive()
     {
+        $this->assertEquals(null, last_value_recursive([]));
         foreach ([
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],
@@ -582,32 +529,41 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `objects_map()` global function
+     * @test
+     */
+    public function testObjectsMap()
+    {
+        $arrayOfObjects = [new ExampleClass, new ExampleClass];
+
+        $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
+        $this->assertEquals(['a new value', 'a new value'], $result);
+
+        foreach ($arrayOfObjects as $object) {
+            $this->assertEquals('a new value', $object->publicProperty);
+        }
+
+        //With a no existing method
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Class `' . ExampleClass::class . '` does not have a method `noExistingMethod`');
+        objects_map([new ExampleClass], 'noExistingMethod');
+    }
+
+    /**
      * Test for `rmdir_recursive()` global function
      * @test
      */
     public function testRmdirRecursive()
     {
         $files = createSomeFiles();
-
-        foreach ($files as $file) {
-            $this->assertFileExists($file);
-        }
-
         rmdir_recursive(TMP . 'exampleDir');
-
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-            $this->assertFileNotExists(dirname($file));
-        }
+        $this->assertFileNotExists($files);
+        array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
 
         //Does not delete a file
-        $filename = TMP . 'exampleDir' . DS . 'exampleFile';
-        safe_create_file($filename);
+        $filename = create_tmp_file();
         rmdir_recursive($filename);
         $this->assertFileExists($filename);
-
-        safe_unlink($filename);
-        safe_rmdir(dirname($file));
     }
 
     /**
@@ -621,14 +577,12 @@ class GlobalFunctionsTest extends TestCase
             'my' . DS . 'folder' => 'my' . DS . 'folder',
             DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
         ];
-
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
@@ -641,15 +595,12 @@ class GlobalFunctionsTest extends TestCase
     public function testStartsWith()
     {
         $string = 'a test with some words';
-
-        $this->assertTrue(starts_with($string, ''));
-        $this->assertTrue(starts_with($string, 'a'));
-        $this->assertTrue(starts_with($string, 'a test'));
-        $this->assertTrue(starts_with($string, $string));
-
-        $this->assertFalse(starts_with($string, ' '));
-        $this->assertFalse(starts_with($string, 'b'));
-        $this->assertFalse(starts_with($string, 'test'));
+        foreach (['', 'a', 'a test', $string] as $var) {
+            $this->assertTrue(starts_with($string, $var));
+        }
+        foreach ([' ', 'some words', 'test'] as $var) {
+            $this->assertFalse(starts_with($string, $var));
+        }
     }
 
     /**
@@ -658,24 +609,18 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
+        //Creates some files and some symlinks
         $files = createSomeFiles();
-
-        //Creates some symlinks
-        foreach ([0, 1] as $key) {
-            $link = dirname($files[0]) . DS . 'link_to_' . basename($files[$key]);
-            safe_symlink($files[$key], $link);
+        foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
+            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
+            symlink($filename, $link);
             $files[] = $link;
         }
-
         unlink_recursive(TMP . 'exampleDir');
 
         //Files no longer exist, but directories still exist
-        foreach ($files as $file) {
-            $this->assertFileNotExists($file);
-            $this->assertFileExists(dirname($file));
-        }
-
-        safe_rmdir_recursive(TMP . 'exampleDir');
+        $this->assertFileNotExists($files);
+        array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 
     /**
