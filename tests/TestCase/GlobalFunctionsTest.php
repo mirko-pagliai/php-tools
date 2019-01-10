@@ -14,6 +14,7 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
+use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
 
@@ -541,6 +542,11 @@ class GlobalFunctionsTest extends TestCase
         foreach ($arrayOfObjects as $object) {
             $this->assertEquals('a new value', $object->publicProperty);
         }
+
+        //With a no existing method
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Class `' . ExampleClass::class . '` does not have a method `noExistingMethod`');
+        objects_map([new ExampleClass], 'noExistingMethod');
     }
 
     /**

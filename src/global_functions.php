@@ -494,10 +494,17 @@ if (!function_exists('objects_map')) {
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
      * @since 1.1.11
+     * @throws BadMethodCallException
      */
     function objects_map(array $objects, $method, array $args = [])
     {
         return array_map(function ($object) use ($method, $args) {
+            is_true_or_fail(method_exists($object, $method), sprintf(
+                'Class `%s` does not have a method `%s`',
+                get_class($object),
+                $method
+            ), \BadMethodCallException::class);
+
             return call_user_func_array([$object, $method], $args);
         }, $objects);
     }
