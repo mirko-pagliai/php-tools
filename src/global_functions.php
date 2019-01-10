@@ -14,6 +14,38 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('array_key_first')) {
+    /**
+     * Returns the first key of an array.
+     *
+     * This function exists in PHP >= 7.3.
+     * @param array $array Array
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-first.php
+     * @since 1.1.12
+     */
+    function array_key_first(array $array)
+    {
+        return $array ? first_value(array_keys($array)) : null;
+    }
+}
+
+if (!function_exists('array_key_last')) {
+    /**
+     * Returns the last key of an array.
+     *
+     * This function exists in PHP >= 7.3.
+     * @param array $array Array
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-last.php
+     * @since 1.1.12
+     */
+    function array_key_last(array $array)
+    {
+        return $array ? last_value(array_keys($array)) : null;
+    }
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
@@ -195,15 +227,16 @@ if (!function_exists('ends_with')) {
 if (!function_exists('first_key')) {
     /**
      * Returns the first key of an array
+     * @deprecated 1.1.12 Use `array_key_first()` instead
      * @param array $array Array
      * @return mixed
-     * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.10
-     * @todo should change name in `array_key_first()`
      */
     function first_key(array $array)
     {
-        return $array ? first_value(array_keys($array)) : null;
+        deprecationWarning('The `first_key()` function is deprecated and will be removed in a later version. Use `array_key_first()` instead');
+
+        return array_key_first($array);
     }
 }
 
@@ -440,15 +473,16 @@ if (!function_exists('is_writable_resursive')) {
 if (!function_exists('last_key')) {
     /**
      * Returns the last key of an array
+     * @deprecated 1.1.12 Use `array_key_last()` instead
      * @param array $array Array
      * @return mixed
-     * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.10
-     * @todo should change name in `array_key_last()`
      */
     function last_key(array $array)
     {
-        return $array ? last_value(array_keys($array)) : null;
+        deprecationWarning('The `last_key()` function is deprecated and will be removed in a later version. Use `array_key_last()` instead');
+
+        return array_key_last($array);
     }
 }
 
@@ -566,7 +600,7 @@ if (!function_exists('starts_with')) {
      */
     function starts_with($haystack, $needle)
     {
-        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
+        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_starts_with()` instead');
 
         return string_starts_with($haystack, $needle);
     }

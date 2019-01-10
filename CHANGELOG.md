@@ -1,8 +1,10 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.12
+* `first_key()` and `last_key()` functions are now deprecated and will be removed
+    in a later version. Use instead `array_key_first()` and `array_key_last()`;
 * `ends_with()` and `starts_with()` functions are now deprecated and will be removed
-    in a later version. Use instead `string_ends_with()` and `string_starts_with().
+    in a later version. Use instead `string_ends_with()` and `string_starts_with()`.
 
 ### 1.1.11
 * added `TestCase` class;

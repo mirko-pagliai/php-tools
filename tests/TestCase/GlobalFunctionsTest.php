@@ -24,6 +24,30 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `array_key_first()` global function
+     * @test
+     */
+    public function testArrayKeyFirst()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(0, array_key_first($array));
+        $this->assertEquals('a', array_key_first(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_key_first([]));
+    }
+
+    /**
+     * Test for `array_key_last()` global function
+     * @test
+     */
+    public function testArrayKeyLast()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(2, array_key_last($array));
+        $this->assertEquals('c', array_key_last(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_key_last([]));
+    }
+
+    /**
      * Test for `clean_url()` global function
      * @test
      */
@@ -199,10 +223,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstKey()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(0, first_key($array));
-        $this->assertEquals('a', first_key(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, first_key([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals(0, first_key(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_key(['first', 'second', 'third']);
     }
 
     /**
@@ -494,10 +520,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastKey()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(2, last_key($array));
-        $this->assertEquals('c', last_key(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, last_key([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals(2, last_key(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_key(['first', 'second', 'third']);
     }
 
     /**
