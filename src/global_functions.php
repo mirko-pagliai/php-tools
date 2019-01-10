@@ -178,17 +178,17 @@ if (!function_exists('dir_tree')) {
 if (!function_exists('ends_with')) {
     /**
      * Checks if a string ends with a string
+     * @deprecated 1.1.12 Use `string_ends_with()` instead
      * @param string $haystack The string
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
-     * @todo should change name in `string_ends_with()`
      */
     function ends_with($haystack, $needle)
     {
-        $length = strlen($needle);
+        deprecationWarning('The `ends_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
 
-        return !$length ?: substr($haystack, -$length) === $needle;
+        return string_ends_with($haystack, $needle);
     }
 }
 
@@ -317,7 +317,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return starts_with($host, 'www.') ? substr($host, 4) : $host;
+        return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -558,13 +558,45 @@ if (!function_exists('rtr')) {
 if (!function_exists('starts_with')) {
     /**
      * Checks if a string starts with a string
+     * @deprecated 1.1.12 Use `string_starts_with()` instead
      * @param string $haystack The string
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
-     * @todo should change name in `string_starts_with()`
      */
     function starts_with($haystack, $needle)
+    {
+        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
+
+        return string_starts_with($haystack, $needle);
+    }
+}
+
+if (!function_exists('string_ends_with')) {
+    /**
+     * Checks if a string ends with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.12
+     */
+    function string_ends_with($haystack, $needle)
+    {
+        $length = strlen($needle);
+
+        return !$length ?: substr($haystack, -$length) === $needle;
+    }
+}
+
+if (!function_exists('string_starts_with')) {
+    /**
+     * Checks if a string starts with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.12
+     */
+    function string_starts_with($haystack, $needle)
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
     }

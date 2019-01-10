@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.12
+* `ends_with()` and `starts_with()` functions are now deprecated and will be removed
+    in a later version. Use instead `string_ends_with()` and `string_starts_with().
+
 ### 1.1.11
 * added `TestCase` class;
 * added `objects_map()` global function;

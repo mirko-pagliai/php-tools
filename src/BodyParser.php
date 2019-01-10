@@ -106,11 +106,11 @@ class BodyParser
             return $url;
         }
 
-        if (starts_with($url, '//')) {
+        if (string_starts_with($url, '//')) {
             return $this->scheme . ':' . $url;
         }
 
-        if (!starts_with($url, '/')) {
+        if (!string_starts_with($url, '/')) {
             $pieces = explode('/', parse_url($this->url, PHP_URL_PATH));
             array_pop($pieces);
             $url = implode('/', $pieces) . '/' . ltrim($url, '/');

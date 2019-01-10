@@ -184,12 +184,13 @@ class GlobalFunctionsTest extends TestCase
     public function testEndsWith()
     {
         $string = 'a test with some words';
-        foreach (['', 's', 'some words', $string] as $var) {
-            $this->assertTrue(ends_with($string, $var));
-        }
-        foreach ([' ', 'b', 'a test'] as $var) {
-            $this->assertFalse(ends_with($string, $var));
-        }
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(ends_with($string, 'some words'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        ends_with($string, 'some words');
     }
 
     /**
@@ -595,11 +596,42 @@ class GlobalFunctionsTest extends TestCase
     public function testStartsWith()
     {
         $string = 'a test with some words';
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(starts_with($string, 'a test'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        starts_with($string, 'a test');
+    }
+
+    /**
+     * Test for `string_ends_with()` global function
+     * @test
+     */
+    public function testStringEndsWith()
+    {
+        $string = 'a test with some words';
+        foreach (['', 's', 'some words', $string] as $var) {
+            $this->assertTrue(string_ends_with($string, $var));
+        }
+        foreach ([' ', 'b', 'a test'] as $var) {
+            $this->assertFalse(string_ends_with($string, $var));
+        }
+    }
+
+    /**
+     * Test for `string_starts_with()` global function
+     * @test
+     */
+    public function testStringStartsWith()
+    {
+        $string = 'a test with some words';
         foreach (['', 'a', 'a test', $string] as $var) {
-            $this->assertTrue(starts_with($string, $var));
+            $this->assertTrue(string_starts_with($string, $var));
         }
         foreach ([' ', 'some words', 'test'] as $var) {
-            $this->assertFalse(starts_with($string, $var));
+            $this->assertFalse(string_starts_with($string, $var));
         }
     }
 
