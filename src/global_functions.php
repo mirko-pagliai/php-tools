@@ -484,6 +484,25 @@ if (!function_exists('last_value_recursive')) {
     }
 }
 
+if (!function_exists('objects_map')) {
+    /**
+     * Executes an object method for all objects of the given arrays
+     * @param array $objects An array of objects. Each object must have the
+     *  method to be called
+     * @param string $method The method to be called for each object
+     * @param array $args Optional arguments for the method to be called
+     * @return array Returns an array containing all the returned values of the
+     *  called method applied to each object
+     * @since 1.1.11
+     */
+    function objects_map(array $objects, $method, array $args = [])
+    {
+        return array_map(function ($object) use ($method, $args) {
+            return call_user_func_array([$object, $method], $args);
+        }, $objects);
+    }
+}
+
 if (!function_exists('rmdir_recursive')) {
     /**
      * Removes the directory itself and all its contents, including

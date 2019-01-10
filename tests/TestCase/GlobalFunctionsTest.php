@@ -528,6 +528,22 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `objects_map()` global function
+     * @test
+     */
+    public function testObjectsMap()
+    {
+        $arrayOfObjects = [new ExampleClass, new ExampleClass];
+
+        $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
+        $this->assertEquals(['a new value', 'a new value'], $result);
+
+        foreach ($arrayOfObjects as $object) {
+            $this->assertEquals('a new value', $object->publicProperty);
+        }
+    }
+
+    /**
      * Test for `rmdir_recursive()` global function
      * @test
      */
