@@ -52,7 +52,6 @@
 				<li><a href="class-Tools.Apache.html">Apache</a></li>
 				<li><a href="class-Tools.BodyParser.html">BodyParser</a></li>
 				<li><a href="class-Tools.FileArray.html">FileArray</a></li>
-				<li><a href="class-Tools.Safer.html">Safer</a></li>
 			</ul>
 
 
@@ -121,6 +120,10 @@
 
 
 
+	<div>
+		<h4>Direct Known Users</h4>
+			<a href="class-Tools.TestSuite.TestCase.html">Tools\TestSuite\TestCase</a>
+	</div>
 
 
 	<div class="info">
@@ -129,7 +132,7 @@
 		<b>Namespace:</b> <a href="namespace-Tools.html">Tools</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-Tools.ReflectionTrait.html#20-130" title="Go to source code">ReflectionTrait.php</a>
+			<b>Located at</b> <a href="source-class-Tools.ReflectionTrait.html#20-124" title="Go to source code">ReflectionTrait.php</a>
 		<br>
 	</div>
 
@@ -194,7 +197,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getProperties">#</a>
-		<code><a href="source-class-Tools.ReflectionTrait.html#39-73" title="Go to source code">getProperties</a>( <span>object <var>&amp; $object</var></span>, <span>integer|null <var>$filter</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-Tools.ReflectionTrait.html#39-67" title="Go to source code">getProperties</a>( <span>object <var>&amp; $object</var></span>, <span>integer <var>$filter</var> = <span class="php-num">256</span> | <span class="php-num">512</span> | <span class="php-num">1024</span></span> )</code>
 
 		<div class="description short">
 			<p>Gets all properties as array with property names as keys.</p>
@@ -212,19 +215,23 @@
 					<dd>Object from which to get properties</dd>
 					<dt><var>$filter</var></dt>
 					<dd><p>The optional filter, for filtering desired property
- types. It's configured using the ReflectionProperty constants, and
- defaults to all property types</p></dd>
+ types. It's configured using <code>ReflectionProperty</code> constants, and
+ default is public, protected and private properties</p></dd>
 				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					array
+					array<br>Property names as keys and property values as values
 				</div>
 
 
 				<h4>Since</h4>
 				<div class="list">
 						1.1.4<br>
+				</div>
+				<h4>Link</h4>
+				<div class="list">
+						<a href="http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers">http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers</a><br>
 				</div>
 
 
@@ -243,7 +250,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getPropertyInstance">#</a>
-		<code><a href="source-class-Tools.ReflectionTrait.html#75-87" title="Go to source code">getPropertyInstance</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span> )</code>
+		<code><a href="source-class-Tools.ReflectionTrait.html#69-81" title="Go to source code">getPropertyInstance</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span> )</code>
 
 		<div class="description short">
 			<p>Internal method to get the <code>ReflectionProperty</code> instance</p>
@@ -289,7 +296,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_getProperty">#</a>
-		<code><a href="source-class-Tools.ReflectionTrait.html#89-99" title="Go to source code">getProperty</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span> )</code>
+		<code><a href="source-class-Tools.ReflectionTrait.html#83-93" title="Go to source code">getProperty</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span> )</code>
 
 		<div class="description short">
 			<p>Gets a property value</p>
@@ -334,7 +341,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_invokeMethod">#</a>
-		<code><a href="source-class-Tools.ReflectionTrait.html#101-112" title="Go to source code">invokeMethod</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$methodName</var></span>, <span>array <var>$parameters</var> = []</span> )</code>
+		<code><a href="source-class-Tools.ReflectionTrait.html#95-106" title="Go to source code">invokeMethod</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$methodName</var></span>, <span>array <var>$parameters</var> = []</span> )</code>
 
 		<div class="description short">
 			<p>Invokes a method</p>
@@ -381,7 +388,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_setProperty">#</a>
-		<code><a href="source-class-Tools.ReflectionTrait.html#114-129" title="Go to source code">setProperty</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span>, <span>mixed <var>$value</var></span> )</code>
+		<code><a href="source-class-Tools.ReflectionTrait.html#108-123" title="Go to source code">setProperty</a>( <span>object <var>&amp; $object</var></span>, <span>string <var>$name</var></span>, <span>mixed <var>$value</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets a property value</p>

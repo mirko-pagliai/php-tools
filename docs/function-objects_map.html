@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Function is_writable_resursive | php-tools</title>
+	<title>Function objects_map | php-tools</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -78,12 +78,12 @@
 				<li><a href="function-is_url.html">is_url</a></li>
 				<li><a href="function-is_win.html" class="deprecated">is_win</a></li>
 				<li><a href="function-is_writable_or_fail.html">is_writable_or_fail</a></li>
-				<li class="active"><a href="function-is_writable_resursive.html">is_writable_resursive</a></li>
+				<li><a href="function-is_writable_resursive.html">is_writable_resursive</a></li>
 				<li><a href="function-key_exists_or_fail.html">key_exists_or_fail</a></li>
 				<li><a href="function-last_key.html">last_key</a></li>
 				<li><a href="function-last_value.html">last_value</a></li>
 				<li><a href="function-last_value_recursive.html">last_value_recursive</a></li>
-				<li><a href="function-objects_map.html">objects_map</a></li>
+				<li class="active"><a href="function-objects_map.html">objects_map</a></li>
 				<li><a href="function-rmdir_recursive.html">rmdir_recursive</a></li>
 				<li><a href="function-rtr.html">rtr</a></li>
 				<li><a href="function-safe_copy.html" class="deprecated">safe_copy</a></li>
@@ -145,13 +145,11 @@
 	</div>
 
 <div id="content" class="function">
-	<h1>Function is_writable_resursive</h1>
+	<h1>Function objects_map</h1>
 
 
 	<div class="description">
-	<p>Tells whether a directory and its subdirectories are writable.</p>
-
-<p>It can also check that all the files are writable.</p>
+	<p>Executes an object method for all objects of the given arrays</p>
 	</div>
 
 	<div class="info">
@@ -162,9 +160,9 @@
 				<b>License:</b>
 				<a href="https://opensource.org/licenses/mit-license.php">MIT License</a><br>
 				<b>Since:</b>
-				1.0.7<br>
+				1.1.11<br>
 		<b>Located at</b>
-		<a href="source-function-is_writable_resursive.html#412-437" title="Go to source code">
+		<a href="source-function-objects_map.html#488-510" title="Go to source code">
 			global_functions.php
 		</a><br>
 	</div>
@@ -172,15 +170,21 @@
 
 	<table class="summary" id="parameters">
 	<caption>Parameters summary</caption>
-	<tr id="$dirname">
-		<td class="name"><code>string</code></td>
-		<td class="value"><code><var>$dirname</var></code></td>
-		<td>Path to the directory</td>
+	<tr id="$objects">
+		<td class="name"><code>array</code></td>
+		<td class="value"><code><var>$objects</var></code></td>
+		<td>&lt;p&gt;An array of objects. Each object must have the
+ method to be called&lt;/p&gt;</td>
 	</tr>
-	<tr id="$checkOnlyDir">
-		<td class="name"><code>boolean</code></td>
-		<td class="value"><code><var>$checkOnlyDir</var> = <span class="php-keyword1">true</span></code></td>
-		<td>If &lt;code&gt;true&lt;/code&gt;, also checks for all files</td>
+	<tr id="$method">
+		<td class="name"><code>string</code></td>
+		<td class="value"><code><var>$method</var></code></td>
+		<td>The method to be called for each object</td>
+	</tr>
+	<tr id="$args">
+		<td class="name"><code>array</code></td>
+		<td class="value"><code><var>$args</var> = []</code></td>
+		<td>Optional arguments for the method to be called</td>
 	</tr>
 	</table>
 
@@ -188,14 +192,26 @@
 	<caption>Return value summary</caption>
 	<tr>
 		<td class="name"><code>
-			boolean
+			array
 		</code></td>
 		<td>
-			bool
+			<p>Returns an array containing all the returned values of the
+ called method applied to each object</p>
 		</td>
 	</tr>
 	</table>
 
+	<table class="summary" id="throws">
+	<caption>Thrown exceptions summary</caption>
+	<tr>
+		<td class="name"><code>
+			BadMethodCallException
+		</code></td>
+		<td>
+			BadMethodCallException
+		</td>
+	</tr>
+	</table>
 
 </div>
 
