@@ -60,6 +60,23 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `array_value_first_recursive()` global function
+     * @test
+     */
+    public function testArrayValueFirstRecursive()
+    {
+        $this->assertEquals(null, array_value_first_recursive([]));
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('first', array_value_first_recursive($array));
+        }
+    }
+
+    /**
      * Test for `array_value_last()` global function
      * @test
      */
@@ -69,6 +86,23 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals('third', array_value_last($array));
         $this->assertEquals('third', array_value_last(array_combine(['a', 'b', 'c'], $array)));
         $this->assertEquals(null, array_value_last([]));
+    }
+
+    /**
+     * Test for `array_value_last_recursive()` global function
+     * @test
+     */
+    public function testArrayValueLastRecursive()
+    {
+        $this->assertEquals(null, array_value_last_recursive([]));
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('fourth', array_value_last_recursive($array));
+        }
     }
 
     /**
@@ -275,15 +309,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValueRecursive()
     {
-        $this->assertEquals(null, first_value_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
-        ] as $array) {
-            $this->assertEquals('first', first_value_recursive($array));
-        }
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('first', first_value_recursive([['first', 'second'], ['third'], ['fourth']]));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**
@@ -574,15 +605,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValueRecursive()
     {
-        $this->assertEquals(null, last_value_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
-        ] as $array) {
-            $this->assertEquals('fourth', last_value_recursive($array));
-        }
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('fourth', last_value_recursive([['first', 'second'], ['third'], ['fourth']]));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**

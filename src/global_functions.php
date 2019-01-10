@@ -59,6 +59,23 @@ if (!function_exists('array_value_first')) {
     }
 }
 
+if (!function_exists('array_value_first_recursive')) {
+    /**
+     * Returns the first value of an array recursively.
+     *
+     * In other words, it returns the first value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_first_recursive(array $array)
+    {
+        $value = array_value_first($array);
+
+        return is_array($value) ? array_value_first_recursive($value) : $value;
+    }
+}
+
 if (!function_exists('array_value_last')) {
     /**
      * Returns the last value of an array
@@ -69,6 +86,23 @@ if (!function_exists('array_value_last')) {
     function array_value_last(array $array)
     {
         return $array ? array_values(array_slice($array, -1))[0] : null;
+    }
+}
+
+if (!function_exists('array_value_last_recursive')) {
+    /**
+     * Returns the last value of an array recursively.
+     *
+     * In other words, it returns the last value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_last_recursive(array $array)
+    {
+        $value = array_value_last($array);
+
+        return is_array($value) ? array_value_last_recursive($value) : $value;
     }
 }
 
@@ -287,16 +321,16 @@ if (!function_exists('first_value_recursive')) {
      * Returns the first value of an array recursively.
      *
      * In other words, it returns the first value found that is not an array.
+     * @deprecated 1.1.12 Use `array_value_first_recursive()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
-     * @todo should change name in `array_value_first_recursive()`
      */
     function first_value_recursive(array $array)
     {
-        $value = array_value_first($array);
+        deprecationWarning('The `first_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_first_recursive()` instead');
 
-        return is_array($value) ? first_value_recursive($value) : $value;
+        return array_value_first_recursive($array);
     }
 }
 
@@ -535,16 +569,16 @@ if (!function_exists('last_value_recursive')) {
      * Returns the last value of an array recursively.
      *
      * In other words, it returns the last value found that is not an array.
+     * @deprecated 1.1.12 Use `array_value_last_recursive()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
-     * @todo should change name in `array_value_last_recursive()`
      */
     function last_value_recursive(array $array)
     {
-        $value = array_value_last($array);
+        deprecationWarning('The `last_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_last_recursive()` instead');
 
-        return is_array($value) ? last_value_recursive($value) : $value;
+        return array_value_last_recursive($array);
     }
 }
 
