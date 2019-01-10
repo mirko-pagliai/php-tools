@@ -369,6 +369,7 @@ class GlobalFunctionsTest extends TestCase
     public function testIsJson()
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
+        $this->assertFalse(is_json(true));
         $this->assertFalse(is_json('this is a no json string'));
     }
 

@@ -13,7 +13,6 @@
  */
 namespace Tools\Test;
 
-use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -22,102 +21,24 @@ use Tools\TestSuite\TestCase;
 class SafeFunctionsTest extends TestCase
 {
     /**
-     * Test for `safe_copy()` safe function
+     * Test for all functions
      * @test
      */
-    public function testSafeCopy()
+    public function testAllFunctions()
     {
-        $this->expectException(Deprecated::class);
-        safe_copy(create_tmp_file(), TMP . 'copy');
-    }
-
-    /**
-     * Test for `safe_create_file()` safe function
-     * @test
-     */
-    public function testSafeCreateFile()
-    {
-        $this->expectException(Deprecated::class);
-        safe_create_file(TMP . 'example');
-    }
-
-    /**
-     * Test for `safe_create_tmp_file()` safe function
-     * @test
-     */
-    public function testSafeCreateTmpFile()
-    {
-        $this->expectException(Deprecated::class);
-        safe_create_tmp_file();
-    }
-
-    /**
-     * Test for `safe_mkdir()` safe function
-     * @test
-     */
-    public function testSafeMkdir()
-    {
-        $this->expectException(Deprecated::class);
-        safe_mkdir(TMP . 'dir');
-    }
-
-    /**
-     * Test for `safe_rmdir()` safe function
-     * @test
-     */
-    public function testSafeRmdir()
-    {
-        $this->expectException(Deprecated::class);
-        safe_rmdir(TMP . 'dir');
-    }
-
-    /**
-     * Test for `safe_rmdir_recursive()` safe function
-     * @test
-     */
-    public function testSafeRmdirRecursive()
-    {
-        $this->expectException(Deprecated::class);
-        safe_rmdir_recursive(TMP . 'dir');
-    }
-
-    /**
-     * Test for `safe_symlink()` safe function
-     * @test
-     */
-    public function testSafeSymlink()
-    {
-        $this->expectException(Deprecated::class);
-        safe_symlink(create_tmp_file(), TMP . 'link');
-    }
-
-    /**
-     * Test for `safe_unlink()` safe function
-     * @test
-     */
-    public function testSafeUnlink()
-    {
-        $this->expectException(Deprecated::class);
-        safe_unlink(create_tmp_file());
-    }
-
-    /**
-     * Test for `safe_unlink_resursive()` safe function
-     * @test
-     */
-    public function testSafeUnlinkRecursive()
-    {
-        $this->expectException(Deprecated::class);
-        safe_unlink_recursive(TMP . 'dir');
-    }
-
-    /**
-     * Test for `safe_unserialize()` safe function
-     * @test
-     */
-    public function testSafeUnserialize()
-    {
-        $this->expectException(Deprecated::class);
-        safe_unserialize(serialize(['test']));
+        //These functions are deprecated, so it is not necessary to perform
+        //  extensive tests
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(safe_copy(create_tmp_file(), TMP . 'copy'));
+        $this->assertNotEmpty(safe_create_file(TMP . 'example'));
+        $this->assertNotEmpty(safe_create_tmp_file());
+        $this->assertNotEmpty(safe_mkdir(TMP . 'dir'));
+        $this->assertNotEmpty(safe_rmdir(TMP . 'dir'));
+        $this->assertNull(safe_rmdir_recursive(TMP . 'dir'));
+        $this->assertNotEmpty(safe_symlink(create_tmp_file(), TMP . 'link'));
+        $this->assertNotEmpty(safe_unlink(create_tmp_file()));
+        $this->assertNull(safe_unlink_recursive(TMP . 'dir'));
+        $this->assertNotEmpty(safe_unserialize(serialize(['test'])));
+        error_reporting($errorReporting);
     }
 }

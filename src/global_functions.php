@@ -196,15 +196,12 @@ if (!function_exists('first_key')) {
      * Returns the first key of an array
      * @param array $array Array
      * @return mixed
+     * @see http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.10
      * @todo should change name in `array_key_first()`
      */
     function first_key(array $array)
     {
-        if (function_exists('array_key_first')) {
-            return array_key_first($array);
-        }
-
         return $array ? first_value(array_keys($array)) : null;
     }
 }
@@ -443,15 +440,12 @@ if (!function_exists('last_key')) {
      * Returns the last key of an array
      * @param array $array Array
      * @return mixed
+     * @see http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.10
      * @todo should change name in `array_key_last()`
      */
     function last_key(array $array)
     {
-        if (function_exists('array_key_last')) {
-            return array_key_last($array);
-        }
-
         return $array ? last_value(array_keys($array)) : null;
     }
 }
