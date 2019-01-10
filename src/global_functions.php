@@ -26,7 +26,7 @@ if (!function_exists('array_key_first')) {
      */
     function array_key_first(array $array)
     {
-        return $array ? first_value(array_keys($array)) : null;
+        return $array ? array_value_first(array_keys($array)) : null;
     }
 }
 
@@ -42,7 +42,33 @@ if (!function_exists('array_key_last')) {
      */
     function array_key_last(array $array)
     {
-        return $array ? last_value(array_keys($array)) : null;
+        return $array ? array_value_last(array_keys($array)) : null;
+    }
+}
+
+if (!function_exists('array_value_first')) {
+    /**
+     * Returns the first value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_first(array $array)
+    {
+        return $array ? array_values($array)[0] : null;
+    }
+}
+
+if (!function_exists('array_value_last')) {
+    /**
+     * Returns the last value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_last(array $array)
+    {
+        return $array ? array_values(array_slice($array, -1))[0] : null;
     }
 }
 
@@ -243,14 +269,16 @@ if (!function_exists('first_key')) {
 if (!function_exists('first_value')) {
     /**
      * Returns the first value of an array
+     * @deprecated 1.1.12 Use `array_value_first()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
-     * @todo should change name in `array_value_first()`
      */
     function first_value(array $array)
     {
-        return $array ? array_values($array)[0] : null;
+        deprecationWarning('The `first_value()` function is deprecated and will be removed in a later version. Use `array_value_first()` instead');
+
+        return array_value_first($array);
     }
 }
 
@@ -266,7 +294,7 @@ if (!function_exists('first_value_recursive')) {
      */
     function first_value_recursive(array $array)
     {
-        $value = first_value($array);
+        $value = array_value_first($array);
 
         return is_array($value) ? first_value_recursive($value) : $value;
     }
@@ -489,14 +517,16 @@ if (!function_exists('last_key')) {
 if (!function_exists('last_value')) {
     /**
      * Returns the last value of an array
+     * @deprecated 1.1.12 Use `array_value_last()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
-     * @todo should change name in `array_value_last()`
      */
     function last_value(array $array)
     {
-        return $array ? array_values(array_slice($array, -1))[0] : null;
+        deprecationWarning('The `last_value()` function is deprecated and will be removed in a later version. Use `array_value_last()` instead');
+
+        return array_value_last($array);
     }
 }
 
@@ -512,7 +542,7 @@ if (!function_exists('last_value_recursive')) {
      */
     function last_value_recursive(array $array)
     {
-        $value = last_value($array);
+        $value = array_value_last($array);
 
         return is_array($value) ? last_value_recursive($value) : $value;
     }

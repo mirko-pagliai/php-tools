@@ -48,6 +48,30 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `array_value_first()` global function
+     * @test
+     */
+    public function testArrayValueFirst()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('first', array_value_first($array));
+        $this->assertEquals('first', array_value_first(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_value_first([]));
+    }
+
+    /**
+     * Test for `array_value_last()` global function
+     * @test
+     */
+    public function testArrayValueLast()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('third', array_value_last($array));
+        $this->assertEquals('third', array_value_last(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_value_last([]));
+    }
+
+    /**
      * Test for `clean_url()` global function
      * @test
      */
@@ -237,10 +261,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValue()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('first', first_value($array));
-        $this->assertEquals('first', first_value(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, first_value([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('first', first_value(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_value(['first', 'second', 'third']);
     }
 
     /**
@@ -534,10 +560,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValue()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('third', last_value($array));
-        $this->assertEquals('third', last_value(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, last_value([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('third', last_value(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_value(['first', 'second', 'third']);
     }
 
     /**
