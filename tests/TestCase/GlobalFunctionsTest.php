@@ -561,7 +561,7 @@ class GlobalFunctionsTest extends TestCase
         array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
 
         //Does not delete a file
-        $filename = create_tmp_file(null, TMP . 'exampleDir');
+        $filename = create_tmp_file();
         rmdir_recursive($filename);
         $this->assertFileExists($filename);
     }
