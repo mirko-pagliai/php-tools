@@ -16,7 +16,7 @@ if (!defined('IS_WIN')) {
 
 if (!function_exists('clean_url')) {
     /**
-     * Cleans an url, removing all unnecessary parts, as fragment (#),
+     * Cleans an url. It removes all unnecessary parts, as fragment (#),
      *  trailing slash and `www` prefix
      * @param string $url Url
      * @param bool $removeWWW Removes the www prefix
@@ -44,13 +44,14 @@ if (!function_exists('create_file')) {
      * @param string $filename Path to the file where to write the data
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
+     * @param int $dirMode Mode for the directory, if it does not exist
      * @return bool
      * @since 1.1.7
      */
-    function create_file($filename, $data = null)
+    function create_file($filename, $data = null, $dirMode = 0777)
     {
         if (!file_exists(dirname($filename))) {
-            mkdir(dirname($filename), 0777, true);
+            mkdir(dirname($filename), $dirMode, true);
         }
 
         return file_put_contents($filename, $data) !== false;
@@ -66,16 +67,15 @@ if (!function_exists('create_tmp_file')) {
      *  temporary directory of the system.
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
-     * @param string|null $dir The directory where the temporary filename will be created
+     * @param string|null $dir The directory where the temporary filename will
+     *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        if (!$dir) {
-            $dir = defined('TMP') ? TMP : sys_get_temp_dir();
-        }
+        $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
         $filename = tempnam($dir, $prefix);
 
         return create_file($filename, $data) ? $filename : false;
@@ -182,6 +182,7 @@ if (!function_exists('ends_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
+     * @todo should change name in `string_ends_with()`
      */
     function ends_with($haystack, $needle)
     {
@@ -228,6 +229,7 @@ if (!function_exists('first_value_recursive')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_value_first_recursive()`
      */
     function first_value_recursive(array $array)
     {
@@ -472,6 +474,7 @@ if (!function_exists('last_value_recursive')) {
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
+     * @todo should change name in `array_value_last_recursive()`
      */
     function last_value_recursive(array $array)
     {
@@ -533,6 +536,7 @@ if (!function_exists('starts_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
+     * @todo should change name in `string_starts_with()`
      */
     function starts_with($haystack, $needle)
     {

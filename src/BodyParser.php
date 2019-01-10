@@ -32,9 +32,9 @@ class BodyParser
     /**
      * Extracted links. This property works as a cache of values. A `null` value
      *  indicates that the links have not yet been extracted
-     * @var array|null
+     * @var array
      */
-    protected $extractedLinks = null;
+    protected $extractedLinks = [];
 
     /**
      * Host of the reference url
@@ -106,11 +106,11 @@ class BodyParser
             return $url;
         }
 
-        if (substr($url, 0, 2) === '//') {
+        if (starts_with($url, '//')) {
             return $this->scheme . ':' . $url;
         }
 
-        if (substr($url, 0, 1) !== '/') {
+        if (!starts_with($url, '/')) {
             $pieces = explode('/', parse_url($this->url, PHP_URL_PATH));
             array_pop($pieces);
             $url = implode('/', $pieces) . '/' . ltrim($url, '/');
@@ -129,7 +129,7 @@ class BodyParser
      */
     public function extractLinks()
     {
-        if (!is_null($this->extractedLinks)) {
+        if ($this->extractedLinks) {
             return $this->extractedLinks;
         }
 

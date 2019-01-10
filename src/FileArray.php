@@ -36,6 +36,7 @@ class FileArray
      *  parameter.
      * @param string $filename Filename
      * @param array $data Optional initial data
+     * @throws NotWritableException
      * @uses read()
      * @uses $data
      * @uses $filename
@@ -43,7 +44,7 @@ class FileArray
     public function __construct($filename, array $data = [])
     {
         $target = is_file($filename) ? $filename : dirname($filename);
-        is_true_or_fail(is_writable($target), sprintf('File or directory `%s` is not writable', rtr($target)));
+        is_writable_or_fail($target);
 
         $this->filename = $filename;
         $this->data = $data ?: $this->read();
