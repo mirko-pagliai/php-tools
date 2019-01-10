@@ -197,7 +197,7 @@ if (!function_exists('first_key')) {
      * Returns the first key of an array
      * @param array $array Array
      * @return mixed
-     * @see http://php.net/manual/en/function.array-key-first.php
+     * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.10
      * @todo should change name in `array_key_first()`
      */
@@ -442,7 +442,7 @@ if (!function_exists('last_key')) {
      * Returns the last key of an array
      * @param array $array Array
      * @return mixed
-     * @see http://php.net/manual/en/function.array-key-last.php
+     * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.10
      * @todo should change name in `array_key_last()`
      */

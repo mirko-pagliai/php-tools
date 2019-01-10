@@ -155,9 +155,7 @@ class BodyParser
             }
         }
 
-        $this->extractedLinks = array_unique($links);
-
-        return $this->extractedLinks;
+        return $this->extractedLinks = array_unique($links);
     }
 
     /**

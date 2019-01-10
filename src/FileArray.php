@@ -114,10 +114,7 @@ class FileArray
      */
     public function prepend($data)
     {
-        $existing = $this->data;
-        array_unshift($existing, $data);
-
-        $this->data = $existing;
+        array_unshift($this->data, $data);
 
         return $this;
     }
@@ -136,12 +133,8 @@ class FileArray
      */
     public function read()
     {
-        if ($this->data) {
+        if ($this->data || !file_exists($this->filename)) {
             return $this->data;
-        }
-
-        if (!file_exists($this->filename)) {
-            return [];
         }
 
         $data = file_get_contents($this->filename);
