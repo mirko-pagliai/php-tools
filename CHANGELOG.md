@@ -1,13 +1,11 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.12
-* `first_value_recursive()` and `last_value_recursive()` functions are now
-    deprecated and will be removed in a later version. Use instead
+* `first_key()`, `last_key()`, `first_value()`, `first_value_recursive()`,
+    `last_value()` and `last_value_recursive()` functions are now deprecated and
+    will be removed in a later version. Use instead `array_key_first()`,
+    `array_key_last()`, `array_value_first()`, `array_value_last(),
     `array_value_first_recursive()` and `array_value_last_recursive()`;
-* `first_value()` and `last_value()` functions are now deprecated and will be removed
-    in a later version. Use instead `array_value_first()` and `array_value_last()`;
-* `first_key()` and `last_key()` functions are now deprecated and will be removed
-    in a later version. Use instead `array_key_first()` and `array_key_last()`;
 * `ends_with()` and `starts_with()` functions are now deprecated and will be removed
     in a later version. Use instead `string_ends_with()` and `string_starts_with()`.
 
