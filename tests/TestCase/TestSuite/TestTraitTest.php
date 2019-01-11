@@ -214,8 +214,17 @@ class TestTraitTest extends TestCase
     {
         $this->assertIsArrayNotEmpty(['value']);
 
-        $this->expectException(AssertionFailedError::class);
-        $this->assertIsArrayNotEmpty([]);
+        foreach ([
+            [],
+            [[]],
+            [false],
+            [null],
+            [''],
+        ] as $array) {
+            $this->assertException(AssertionFailedError::class, function () use ($array) {
+                $this->assertIsArrayNotEmpty($array);
+            });
+        }
     }
 
     /**

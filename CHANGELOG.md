@@ -1,6 +1,9 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.12
+* fixed bug for `assertIsArrayNotEmpty()` assert method, it executes
+    `array_filter()` on the array to verify that it does not contain a value
+    that is nevertheless equal to empty;
 * `first_key()`, `last_key()`, `first_value()`, `first_value_recursive()`,
     `last_value()` and `last_value_recursive()` functions are now deprecated and
     will be removed in a later version. Use instead `array_key_first()`,

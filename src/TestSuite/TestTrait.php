@@ -219,7 +219,7 @@ trait TestTrait
     protected static function assertIsArrayNotEmpty($var, $message = '')
     {
         self::assertIsArray($var, $message);
-        self::assertNotEmpty($var, $message);
+        self::assertNotEmpty(array_filter($var), $message);
     }
 
     /**
