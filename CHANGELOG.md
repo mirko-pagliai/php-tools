@@ -1,6 +1,9 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.12
+* `assertIsArray()`, `assertIsInt()`, `assertIsObject()` and `assertIsString()`
+    methods of `TestTrait` are now provided by `__call()` and `__callStatic()`
+    methods. These also provide some other "assertIs" methods (see API);
 * fixed bug for `assertIsArrayNotEmpty()` assert method, it executes
     `array_filter()` on the array to verify that it does not contain a value
     that is nevertheless equal to empty;

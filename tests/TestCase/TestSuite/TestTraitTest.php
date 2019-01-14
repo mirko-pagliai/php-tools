@@ -16,6 +16,7 @@ use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfTraversable;
+use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
@@ -27,6 +28,56 @@ use Tools\TestSuite\TestCase;
  */
 class TestTraitTest extends TestCase
 {
+    /**
+     * Test for `__call()` and `__callStatic()` magic methods
+     * @ŧest
+     */
+    public function testMagicCallAndCallStatic()
+    {
+        //Methods that use the `assertInternalType()` method
+        foreach ([
+            'assertIsArray' => ['array'],
+            'assertIsBool' => true,
+            'assertIsFloat' => 1.1,
+            'assertIsInt' => 1,
+            'assertIsObject' => new stdClass,
+            'assertIsString' => 'string',
+        ] as $assertMethod => $value) {
+            $this->{$assertMethod}($value);
+            self::{$assertMethod}($value);
+        }
+
+        //Methods that use the `assertTrue()` method, jointly to the "is" php functions
+        foreach ([
+            'assertIsCallable' => [$this, __METHOD__],
+            'assertIsIterable' => new ExampleOfTraversable,
+            'assertIsJson' => json_encode('string'),
+            'assertIsPositive' => 1,
+            'assertIsResource' => stream_context_create(),
+            'assertIsUrl' => 'http://google.com',
+        ] as $assertMethod => $value) {
+            $this->{$assertMethod}($value);
+            self::{$assertMethod}($value);
+        }
+
+        //Assertion failure
+        $this->assertException(AssertionFailedError::class, function () {
+            $this->assertIsArray('string');
+        }, 'Failed asserting that \'string\' is of type "array".');
+
+        //Missing argument
+        $this->assertException(BadMethodCallException::class, function () {
+            $this->assertIsArray();
+        }, 'Method ' . get_parent_class($this) . '::assertIsArray() expects at least 1 argument, maximum 2, 0 passed');
+
+        //Calling a no existing method or a no existing "assertIs" method
+        foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
+            $this->assertException(BadMethodCallException::class, function () use ($method) {
+                $this->$method('string');
+            }, 'Method ' . get_parent_class($this) . '::' . $method . '() does not exist');
+        }
+    }
+
     /**
      * Tests for `assertArrayKeysEqual()` method
      * @test
@@ -197,16 +248,6 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertIsArray()` method
-     * @test
-     */
-    public function testAssertIsArray()
-    {
-        $this->assertIsArray([]);
-        $this->assertIsArray(['value']);
-    }
-
-    /**
      * Tests for `assertIsArrayNotEmpty()` method
      * @test
      */
@@ -225,33 +266,6 @@ class TestTraitTest extends TestCase
                 $this->assertIsArrayNotEmpty($array);
             });
         }
-    }
-
-    /**
-     * Tests for `assertIsInt()` method
-     * @test
-     */
-    public function testAssertIsInt()
-    {
-        $this->assertIsInt(1);
-    }
-
-    /**
-     * Tests for `assertIsObject()` method
-     * @test
-     */
-    public function testAssertIsObject()
-    {
-        $this->assertIsObject(new stdClass);
-    }
-
-    /**
-     * Tests for `assertIsString()` method
-     * @test
-     */
-    public function testAssertIsString()
-    {
-        $this->assertIsString('string');
     }
 
     /**

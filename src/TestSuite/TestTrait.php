@@ -13,14 +13,83 @@
  */
 namespace Tools\TestSuite;
 
+use BadMethodCallException;
 use Exception;
+use PHPUnit\Framework\Constraint\IsType;
 use Traversable;
 
 /**
  * A trait that provides some assertion methods
+ * @method void assertIsArray($var, $message = '') Asserts that `$var` is an array
+ * @method void assertIsBool($var, $message = '') Asserts that `$var` is a boolean
+ * @method void assertIsCallable($var, $message = '') Asserts that `$var` is a callable
+ * @method void assertIsFloat($var, $message = '') Asserts that `$var` is a float
+ * @method void assertIsInt($var, $message = '') Asserts that `$var` is an int
+ * @method void assertIsIterable($var, $message = '') Asserts that `$var` is iterable (i.e. that it is an array or an object implementing `Traversable`)
+ * @method void assertIsJson($var, $message = '') Asserts that `$var` is a json string
+ * @method void assertIsObject($var, $message = '') Asserts that `$var` is an object
+ * @method void assertIsPositive($var, $message = '') Asserts that `$var` is a positive number
+ * @method void assertIsResource($var, $message = '') Asserts that `$var` is a resource
+ * @method void assertIsString($var, $message = '') Asserts that `$var` is a string
+ * @method void assertIsUrl($var, $message = '') Asserts that `$var` is an url
  */
 trait TestTrait
 {
+    /**
+     * Magic `__call()` method.
+     *
+     * Provides some "assertIs" methods (eg, `assertIsString()`).
+     * @param string $name Name of the method
+     * @param mixed $arguments Arguments
+     * @return void
+     * @see __callStatic()
+     * @since 1.1.12
+     */
+    public function __call($name, $arguments)
+    {
+        self::__callStatic($name, $arguments);
+    }
+
+    /**
+     * Magic `__callStatic()` method.
+     *
+     * Provides some "assertIs" methods (eg, `assertIsString()`).
+     * @param string $name Name of the method
+     * @param mixed $arguments Arguments
+     * @return void
+     * @since 1.1.12
+     * @throws BadMethodCallException
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (string_starts_with($name, 'assertIs')) {
+            $count = count($arguments);
+            if (!$count || $count > 2) {
+                throw new BadMethodCallException(sprintf('Method %s::%s() expects at least 1 argument, maximum 2, %d passed', __CLASS__, $name, $count));
+            }
+
+            $type = substr($name, 8);
+
+            if (defined(sprintf('%s::TYPE_%s', IsType::class, strtoupper($type)))) {
+                $arguments = array_merge([lcfirst($type)], $arguments);
+                call_user_func_array([__CLASS__, 'assertInternalType'], $arguments);
+
+                return;
+            }
+
+            $function = sprintf('is_%s', strtolower($type));
+            if (function_exists($function)) {
+                $var = array_shift($arguments);
+                $arguments = array_merge([$function($var)], $arguments);
+                call_user_func_array([__CLASS__, 'assertTrue'], $arguments);
+
+                return;
+            }
+        }
+
+        throw new BadMethodCallException(sprintf('Method %s::%s() does not exist', __CLASS__, $name));
+    }
+
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
      * @param array $expectedKeys Expected keys
@@ -196,18 +265,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that `$var` is an array
-     * @param mixed $var Variable to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    protected static function assertIsArray($var, $message = '')
-    {
-        parent::assertInternalType('array', $var, $message);
-    }
-
-    /**
      * Asserts that `$var` is an array and is not empty
      * @param mixed $var Variable to check
      * @param string $message The failure message that will be appended to the
@@ -220,43 +277,6 @@ trait TestTrait
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
-    }
-
-    /**
-     * Asserts that `$var` is an integer
-     * @param mixed $var Variable to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.0.4
-     */
-    protected static function assertIsInt($var, $message = '')
-    {
-        parent::assertInternalType('int', $var, $message);
-    }
-
-    /**
-     * Asserts that `$var` is an object
-     * @param mixed $var Variable to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    protected static function assertIsObject($var, $message = '')
-    {
-        parent::assertInternalType('object', $var, $message);
-    }
-
-    /**
-     * Asserts that `$var` is a string
-     * @param mixed $var Variable to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    protected static function assertIsString($var, $message = '')
-    {
-        parent::assertInternalType('string', $var, $message);
     }
 
     /**
