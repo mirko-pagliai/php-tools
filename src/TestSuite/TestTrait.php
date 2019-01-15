@@ -136,6 +136,10 @@ trait TestTrait
      */
     protected static function assertException($expectedException, callable $function, $expectedMessage = null)
     {
+        if ($expectedException !== Exception::class && !is_subclass_of($expectedException, 'Exception')) {
+            self::fail(sprintf('Class `%s` does not exist or is not an %s instance', $expectedException, Exception::class));
+        }
+
         $e = false;
         try {
             call_user_func($function);

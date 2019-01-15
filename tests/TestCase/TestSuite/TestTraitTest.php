@@ -126,6 +126,7 @@ class TestTraitTest extends TestCase
             throw new Exception('right exception message');
         }, 'right exception message');
 
+        //No exception throw
         try {
             $this->assertException(Exception::class, 'time');
         } catch (AssertionFailedError $e) {
@@ -134,6 +135,20 @@ class TestTraitTest extends TestCase
             unset($e);
         }
 
+        //No existing exception or invalid exception class
+        foreach (['noExistingException', stdClass::class] as $class) {
+            try {
+                $this->assertException($class, function () {
+                    throw new Exception;
+                });
+            } catch (AssertionFailedError $e) {
+            } finally {
+                $this->assertStringStartsWith('Class `'. $class .'` does not exist or is not an Exception instance', $e->getMessage());
+                unset($e);
+            }
+        }
+
+        //Unexpected exception type
         try {
             $this->assertException(Deprecated::class, function () {
                 throw new Exception;
@@ -144,6 +159,7 @@ class TestTraitTest extends TestCase
             unset($e);
         }
 
+        //Wrong exception message
         try {
             $this->assertException(Exception::class, function () {
                 throw new Exception('Wrong');
@@ -154,6 +170,7 @@ class TestTraitTest extends TestCase
             unset($e);
         }
 
+        //Expected exception message, but no message
         try {
             $this->assertException(Exception::class, function () {
                 throw new Exception;
