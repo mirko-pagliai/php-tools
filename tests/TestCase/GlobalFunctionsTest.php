@@ -14,6 +14,7 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
+use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
@@ -23,6 +24,88 @@ use Tools\TestSuite\TestCase;
  */
 class GlobalFunctionsTest extends TestCase
 {
+    /**
+     * Test for `array_key_first()` global function
+     * @test
+     */
+    public function testArrayKeyFirst()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(0, array_key_first($array));
+        $this->assertEquals('a', array_key_first(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_key_first([]));
+    }
+
+    /**
+     * Test for `array_key_last()` global function
+     * @test
+     */
+    public function testArrayKeyLast()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals(2, array_key_last($array));
+        $this->assertEquals('c', array_key_last(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_key_last([]));
+    }
+
+    /**
+     * Test for `array_value_first()` global function
+     * @test
+     */
+    public function testArrayValueFirst()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('first', array_value_first($array));
+        $this->assertEquals('first', array_value_first(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_value_first([]));
+    }
+
+    /**
+     * Test for `array_value_first_recursive()` global function
+     * @test
+     */
+    public function testArrayValueFirstRecursive()
+    {
+        $this->assertEquals(null, array_value_first_recursive([]));
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('first', array_value_first_recursive($array));
+        }
+    }
+
+    /**
+     * Test for `array_value_last()` global function
+     * @test
+     */
+    public function testArrayValueLast()
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertEquals('third', array_value_last($array));
+        $this->assertEquals('third', array_value_last(array_combine(['a', 'b', 'c'], $array)));
+        $this->assertEquals(null, array_value_last([]));
+    }
+
+    /**
+     * Test for `array_value_last_recursive()` global function
+     * @test
+     */
+    public function testArrayValueLastRecursive()
+    {
+        $this->assertEquals(null, array_value_last_recursive([]));
+        foreach ([
+            ['first', 'second', 'third', 'fourth'],
+            ['first', ['second', 'third'], ['fourth']],
+            [['first', 'second'], ['third'], ['fourth']],
+            [[['first'], 'second'], ['third'], [['fourth']]]
+        ] as $array) {
+            $this->assertEquals('fourth', array_value_last_recursive($array));
+        }
+    }
+
     /**
      * Test for `clean_url()` global function
      * @test
@@ -184,12 +267,13 @@ class GlobalFunctionsTest extends TestCase
     public function testEndsWith()
     {
         $string = 'a test with some words';
-        foreach (['', 's', 'some words', $string] as $var) {
-            $this->assertTrue(ends_with($string, $var));
-        }
-        foreach ([' ', 'b', 'a test'] as $var) {
-            $this->assertFalse(ends_with($string, $var));
-        }
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(ends_with($string, 'some words'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        ends_with($string, 'some words');
     }
 
     /**
@@ -198,10 +282,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstKey()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(0, first_key($array));
-        $this->assertEquals('a', first_key(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, first_key([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals(0, first_key(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_key(['first', 'second', 'third']);
     }
 
     /**
@@ -210,10 +296,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValue()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('first', first_value($array));
-        $this->assertEquals('first', first_value(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, first_value([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('first', first_value(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_value(['first', 'second', 'third']);
     }
 
     /**
@@ -222,15 +310,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFirstValueRecursive()
     {
-        $this->assertEquals(null, first_value_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
-        ] as $array) {
-            $this->assertEquals('first', first_value_recursive($array));
-        }
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('first', first_value_recursive([['first', 'second'], ['third'], ['fourth']]));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        first_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**
@@ -364,7 +449,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `isJson()` global function
+     * Test for `is_iterable()` global function
+     * @test
+     */
+    public function testIsIterable()
+    {
+        $this->assertTrue(is_iterable([]));
+        $this->assertTrue(is_iterable(new ExampleOfTraversable));
+        $this->assertFalse(is_iterable('string'));
+        $this->assertFalse(is_iterable(new ExampleChildClass));
+    }
+
+    /**
+     * Test for `is_json()` global function
      * @test
      */
     public function testIsJson()
@@ -493,10 +590,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastKey()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(2, last_key($array));
-        $this->assertEquals('c', last_key(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, last_key([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals(2, last_key(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_key(['first', 'second', 'third']);
     }
 
     /**
@@ -505,10 +604,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValue()
     {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('third', last_value($array));
-        $this->assertEquals('third', last_value(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, last_value([]));
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('third', last_value(['first', 'second', 'third']));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_value(['first', 'second', 'third']);
     }
 
     /**
@@ -517,15 +618,12 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testLastValueRecursive()
     {
-        $this->assertEquals(null, last_value_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
-        ] as $array) {
-            $this->assertEquals('fourth', last_value_recursive($array));
-        }
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('fourth', last_value_recursive([['first', 'second'], ['third'], ['fourth']]));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        last_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**
@@ -557,7 +655,7 @@ class GlobalFunctionsTest extends TestCase
     {
         $files = createSomeFiles();
         rmdir_recursive(TMP . 'exampleDir');
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
         array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
 
         //Does not delete a file
@@ -595,11 +693,42 @@ class GlobalFunctionsTest extends TestCase
     public function testStartsWith()
     {
         $string = 'a test with some words';
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(starts_with($string, 'a test'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        starts_with($string, 'a test');
+    }
+
+    /**
+     * Test for `string_ends_with()` global function
+     * @test
+     */
+    public function testStringEndsWith()
+    {
+        $string = 'a test with some words';
+        foreach (['', 's', 'some words', $string] as $var) {
+            $this->assertTrue(string_ends_with($string, $var));
+        }
+        foreach ([' ', 'b', 'a test'] as $var) {
+            $this->assertFalse(string_ends_with($string, $var));
+        }
+    }
+
+    /**
+     * Test for `string_starts_with()` global function
+     * @test
+     */
+    public function testStringStartsWith()
+    {
+        $string = 'a test with some words';
         foreach (['', 'a', 'a test', $string] as $var) {
-            $this->assertTrue(starts_with($string, $var));
+            $this->assertTrue(string_starts_with($string, $var));
         }
         foreach ([' ', 'some words', 'test'] as $var) {
-            $this->assertFalse(starts_with($string, $var));
+            $this->assertFalse(string_starts_with($string, $var));
         }
     }
 
@@ -619,7 +748,7 @@ class GlobalFunctionsTest extends TestCase
         unlink_recursive(TMP . 'exampleDir');
 
         //Files no longer exist, but directories still exist
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 

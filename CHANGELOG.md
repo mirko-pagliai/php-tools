@@ -1,5 +1,28 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.12
+* added `is_iterable()` global function;
+* `assertIsArray()`, `assertIsInt()`, `assertIsObject()` and `assertIsString()`
+    methods of `TestTrait` are now provided by `__call()` and `__callStatic()`
+    methods. These also provide some other "assertIs" methods (see API);
+* `assertFileExtension()`, `assertFileMime()`, `assertFilePerms()` methods are
+    deprecated when used with an array of filename and in a later version they
+    will take a string as argument. `assertFileExists()` and `assertFileNotExists()`
+    methods are deprecated and will be removed in a later version, because the
+    same methods are provided by PHPUnit and take a string as argument;
+* fixed bug for `assertException()` assert method, it checks if the
+    `$expectedException` is a subclass of `Exception`;
+* fixed bug for `assertIsArrayNotEmpty()` assert method, it executes
+    `array_filter()` on the array to verify that it does not contain a value
+    that is nevertheless equal to empty;
+* `first_key()`, `last_key()`, `first_value()`, `first_value_recursive()`,
+    `last_value()` and `last_value_recursive()` functions are now deprecated and
+    will be removed in a later version. Use instead `array_key_first()`,
+    `array_key_last()`, `array_value_first()`, `array_value_last(),
+    `array_value_first_recursive()` and `array_value_last_recursive()`;
+* `ends_with()` and `starts_with()` functions are now deprecated and will be removed
+    in a later version. Use instead `string_ends_with()` and `string_starts_with()`.
+
 ### 1.1.11
 * added `TestCase` class;
 * added `objects_map()` global function;

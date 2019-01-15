@@ -174,7 +174,7 @@
 </span><span id="54" class="l">
 </span><span id="55" class="l">        <span class="php-comment">//Removes properties added by PHPUnit, if the object is a mock</span>
 </span><span id="56" class="l">        <span class="php-var">$properties</span> = <span class="php-var">$object</span> <span class="php-keyword1">instanceof</span> MockObject ? <span class="php-keyword2">array_filter</span>(<span class="php-var">$properties</span>, <span class="php-keyword1">function</span> (<span class="php-var">$property</span>) {
-</span><span id="57" class="l">            <span class="php-keyword1">return</span> !starts_with(<span class="php-var">$property</span>-&gt;getName(), <span class="php-quote">'__phpunit'</span>);
+</span><span id="57" class="l">            <span class="php-keyword1">return</span> !string_starts_with(<span class="php-var">$property</span>-&gt;getName(), <span class="php-quote">'__phpunit'</span>);
 </span><span id="58" class="l">        }) : <span class="php-var">$properties</span>;
 </span><span id="59" class="l">
 </span><span id="60" class="l">        <span class="php-var">$values</span> = <span class="php-keyword2">array_map</span>(<span class="php-keyword1">function</span> (<span class="php-var">$property</span>) <span class="php-keyword1">use</span> (<span class="php-var">$object</span>) {
@@ -250,6 +250,6 @@
 </div>
 </div>
 <script src="resources/combined.js?dbb5e1beab6852c5c079a04e11ff61ac6b499af9"></script>
-<script src="elementlist.js?2b608c0aaf72680db56d124b188812d2ea5f36af"></script>
+<script src="elementlist.js?6de19189d91f42d2ac525ef38d1c4415a7cdcb01"></script>
 </body>
 </html>

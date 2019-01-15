@@ -132,7 +132,7 @@
 		<b>Namespace:</b> <a href="namespace-Tools.html">Tools</a>\<a href="namespace-Tools.TestSuite.html">TestSuite</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-Tools.TestSuite.TestTrait.html#19-291" title="Go to source code">TestSuite/TestTrait.php</a>
+			<b>Located at</b> <a href="source-class-Tools.TestSuite.TestTrait.html#21-337" title="Go to source code">TestSuite/TestTrait.php</a>
 		<br>
 	</div>
 
@@ -140,6 +140,100 @@
 
 	<table class="summary methods" id="methods">
 	<caption>Methods summary</caption>
+	<tr data-order="__call" id="___call">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___call">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#38-51" title="Go to source code">__call</a>( <span>string <var>$name</var></span>, <span>mixed <var>$arguments</var></span> )</code>
+
+		<div class="description short">
+			<p>Magic <code>__call()</code> method.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Magic <code>__call()</code> method.</p>
+
+<p>Provides some "assertIs" methods (eg, <code>assertIsString()</code>).</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>Name of the method</dd>
+					<dt><var>$arguments</var></dt>
+					<dd>Arguments</dd>
+				</dl></div>
+
+
+
+				<h4>Since</h4>
+				<div class="list">
+						1.1.12<br>
+				</div>
+				<h4>See</h4>
+				<div class="list">
+						<code><a href="class-Tools.TestSuite.TestTrait.html#___callStatic">Tools\TestSuite\TestTrait::__callStatic()</a></code><br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__callStatic" id="___callStatic">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#___callStatic">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#53-91" title="Go to source code">__callStatic</a>( <span>string <var>$name</var></span>, <span>mixed <var>$arguments</var></span> )</code>
+
+		<div class="description short">
+			<p>Magic <code>__callStatic()</code> method.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Magic <code>__callStatic()</code> method.</p>
+
+<p>Provides some "assertIs" methods (eg, <code>assertIsString()</code>).</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$name</var></dt>
+					<dd>Name of the method</dd>
+					<dt><var>$arguments</var></dt>
+					<dd>Arguments</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					BadMethodCallException
+				</div>
+
+				<h4>Since</h4>
+				<div class="list">
+						1.1.12<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="assertArrayKeysEqual" id="_assertArrayKeysEqual">
 
 		<td class="attributes"><code>
@@ -152,7 +246,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertArrayKeysEqual">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#24-39" title="Go to source code">assertArrayKeysEqual</a>( <span>array <var>$expectedKeys</var></span>, <span>array <var>$array</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#93-108" title="Go to source code">assertArrayKeysEqual</a>( <span>array <var>$expectedKeys</var></span>, <span>array <var>$array</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that the array keys are equal to <code>$expectedKeys</code></p>
@@ -192,7 +286,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertContainsInstanceOf">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#41-57" title="Go to source code">assertContainsInstanceOf</a>( <span>string <var>$expectedInstance</var></span>, <span>array|Traversable <var>$value</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#110-126" title="Go to source code">assertContainsInstanceOf</a>( <span>string <var>$expectedInstance</var></span>, <span>array|Traversable <var>$value</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that an array or an instance of <code>Traversable</code> contains objects
@@ -241,7 +335,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertException">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#59-83" title="Go to source code">assertException</a>( <span>string <var>$expectedException</var></span>, <span>callable <var>$function</var></span>, <span>string|null <var>$expectedMessage</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#128-156" title="Go to source code">assertException</a>( <span>string <var>$expectedException</var></span>, <span>callable <var>$function</var></span>, <span>string|null <var>$expectedMessage</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that a callable throws an exception</p>
@@ -273,7 +367,7 @@
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="assertFileExists" id="_assertFileExists">
+	<tr data-order="assertFileExists" id="_assertFileExists" class="deprecated">
 
 		<td class="attributes"><code>
 			 public static
@@ -285,7 +379,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertFileExists">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#85-100" title="Go to source code">assertFileExists</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#158-178" title="Go to source code">assertFileExists</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that one or more filenames exist.</p>
@@ -296,6 +390,10 @@
 
 <p>Unlike the original method, this method can take an array or a <code>Traversable</code> instance.</p>
 
+				<h4>Deprecated</h4>
+				<div class="list">
+						1.1.12 The same method is provided by PHPUnit and takes a string as argument<br>
+				</div>
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
@@ -325,7 +423,7 @@
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertFileExtension">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#102-119" title="Go to source code">assertFileExtension</a>( <span>string <var>$expectedExtension</var></span>, <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#180-201" title="Go to source code">assertFileExtension</a>( <span>string <var>$expectedExtension</var></span>, <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that one or more filenames have the <code>$expectedExtension</code>.</p>
@@ -368,7 +466,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertFileMime">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#121-136" title="Go to source code">assertFileMime</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$expectedMime</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#203-222" title="Go to source code">assertFileMime</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$expectedMime</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that one or more filenames have a MIME content type</p>
@@ -400,7 +498,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="assertFileNotExists" id="_assertFileNotExists">
+	<tr data-order="assertFileNotExists" id="_assertFileNotExists" class="deprecated">
 
 		<td class="attributes"><code>
 			 public static
@@ -412,7 +510,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertFileNotExists">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#138-153" title="Go to source code">assertFileNotExists</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#224-244" title="Go to source code">assertFileNotExists</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that one or more filenames do not exist.</p>
@@ -423,6 +521,10 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 <p>Unlike the original method, this method can take an array or a <code>Traversable</code> instance.</p>
 
+				<h4>Deprecated</h4>
+				<div class="list">
+						1.1.12 The same method is provided by PHPUnit and takes a string as argument<br>
+				</div>
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
@@ -452,7 +554,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertFilePerms">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#155-179" title="Go to source code">assertFilePerms</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string|integer|array <var>$expectedPerms</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#246-274" title="Go to source code">assertFilePerms</a>( <span>string|array|Traversable <var>$filename</var></span>, <span>string|integer|array <var>$expectedPerms</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that one or more filenames have some file permissions.</p>
@@ -499,7 +601,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertImageSize">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#181-196" title="Go to source code">assertImageSize</a>( <span>string <var>$filename</var></span>, <span>integer <var>$expectedWidth</var></span>, <span>integer <var>$expectedHeight</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#276-291" title="Go to source code">assertImageSize</a>( <span>string <var>$filename</var></span>, <span>integer <var>$expectedWidth</var></span>, <span>integer <var>$expectedHeight</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that an image file has <code>$expectedWidth</code> and <code>$expectedHeight</code></p>
@@ -529,44 +631,6 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="assertIsArray" id="_assertIsArray">
-
-		<td class="attributes"><code>
-			 protected static
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_assertIsArray">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#198-208" title="Go to source code">assertIsArray</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
-
-		<div class="description short">
-			<p>Asserts that <code>$var</code> is an array</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Asserts that <code>$var</code> is an array</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$var</var></dt>
-					<dd>Variable to check</dd>
-					<dt><var>$message</var></dt>
-					<dd><p>The failure message that will be appended to the
- generated message</p></dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="assertIsArrayNotEmpty" id="_assertIsArrayNotEmpty">
 
 		<td class="attributes"><code>
@@ -579,7 +643,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertIsArrayNotEmpty">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#210-223" title="Go to source code">assertIsArrayNotEmpty</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#293-306" title="Go to source code">assertIsArrayNotEmpty</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that <code>$var</code> is an array and is not empty</p>
@@ -613,124 +677,6 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="assertIsInt" id="_assertIsInt">
-
-		<td class="attributes"><code>
-			 protected static
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_assertIsInt">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#225-236" title="Go to source code">assertIsInt</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
-
-		<div class="description short">
-			<p>Asserts that <code>$var</code> is an integer</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Asserts that <code>$var</code> is an integer</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$var</var></dt>
-					<dd>Variable to check</dd>
-					<dt><var>$message</var></dt>
-					<dd><p>The failure message that will be appended to the
- generated message</p></dd>
-				</dl></div>
-
-
-
-				<h4>Since</h4>
-				<div class="list">
-						1.0.4<br>
-				</div>
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="assertIsObject" id="_assertIsObject">
-
-		<td class="attributes"><code>
-			 protected static
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_assertIsObject">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#238-248" title="Go to source code">assertIsObject</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
-
-		<div class="description short">
-			<p>Asserts that <code>$var</code> is an object</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Asserts that <code>$var</code> is an object</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$var</var></dt>
-					<dd>Variable to check</dd>
-					<dt><var>$message</var></dt>
-					<dd><p>The failure message that will be appended to the
- generated message</p></dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="assertIsString" id="_assertIsString">
-
-		<td class="attributes"><code>
-			 protected static
-
-			
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		<a class="anchor" href="#_assertIsString">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#250-260" title="Go to source code">assertIsString</a>( <span>mixed <var>$var</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
-
-		<div class="description short">
-			<p>Asserts that <code>$var</code> is a string</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Asserts that <code>$var</code> is a string</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$var</var></dt>
-					<dd>Variable to check</dd>
-					<dt><var>$message</var></dt>
-					<dd><p>The failure message that will be appended to the
- generated message</p></dd>
-				</dl></div>
-
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
 	<tr data-order="assertObjectPropertiesEqual" id="_assertObjectPropertiesEqual">
 
 		<td class="attributes"><code>
@@ -743,7 +689,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertObjectPropertiesEqual">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#262-274" title="Go to source code">assertObjectPropertiesEqual</a>( <span>array <var>$expectedProperties</var></span>, <span>object <var>$object</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#308-320" title="Go to source code">assertObjectPropertiesEqual</a>( <span>array <var>$expectedProperties</var></span>, <span>object <var>$object</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that the object properties are equal to <code>$expectedProperties</code></p>
@@ -783,7 +729,7 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 		<td class="name"><div>
 		<a class="anchor" href="#_assertSameMethods">#</a>
-		<code><a href="source-class-Tools.TestSuite.TestTrait.html#276-290" title="Go to source code">assertSameMethods</a>( <span>mixed <var>$firstClass</var></span>, <span>mixed <var>$secondClass</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#322-336" title="Go to source code">assertSameMethods</a>( <span>mixed <var>$firstClass</var></span>, <span>mixed <var>$secondClass</var></span>, <span>string <var>$message</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Asserts that <code>$firstClass</code> and <code>$secondClass</code> have the same methods</p>
@@ -815,6 +761,453 @@ The assertion is case-insensitive (eg, for <code>PIC.JPG</code>, the expected ex
 
 
 
+	<table class="summary methods" id="magicMethods">
+	<caption>Magic methods summary</caption>
+	<tr data-order="assertIsArray" id="m_assertIsArray">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsArray">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#23" title="Go to source code">assertIsArray</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is an array</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is an array</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsBool" id="m_assertIsBool">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsBool">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#24" title="Go to source code">assertIsBool</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a boolean</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a boolean</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsCallable" id="m_assertIsCallable">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsCallable">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#25" title="Go to source code">assertIsCallable</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a callable</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a callable</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsFloat" id="m_assertIsFloat">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsFloat">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#26" title="Go to source code">assertIsFloat</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a float</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a float</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsInt" id="m_assertIsInt">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsInt">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#27" title="Go to source code">assertIsInt</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is an int</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is an int</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsIterable" id="m_assertIsIterable">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsIterable">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#28" title="Go to source code">assertIsIterable</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is iterable, i.e. that it is an array or an object implementing <code>Traversable</code></p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is iterable, i.e. that it is an array or an object implementing <code>Traversable</code></p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsJson" id="m_assertIsJson">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsJson">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#29" title="Go to source code">assertIsJson</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a json string</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a json string</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsObject" id="m_assertIsObject">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsObject">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#30" title="Go to source code">assertIsObject</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is an object</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is an object</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsPositive" id="m_assertIsPositive">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsPositive">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#31" title="Go to source code">assertIsPositive</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a positive number</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a positive number</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsResource" id="m_assertIsResource">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsResource">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#32" title="Go to source code">assertIsResource</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a resource</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a resource</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsString" id="m_assertIsString">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsString">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#33" title="Go to source code">assertIsString</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is a string</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is a string</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="assertIsUrl" id="m_assertIsUrl">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#m_assertIsUrl">#</a>
+		<code><a href="source-class-Tools.TestSuite.TestTrait.html#34" title="Go to source code">assertIsUrl</a>( <span> <var>$var</var></span>, <span> <var>$message</var> = <span class="php-quote">''</span></span> )</code>
+
+		<div class="description short">
+			<p>Asserts that <code>$var</code> is an url</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Asserts that <code>$var</code> is an url</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$var</var></dt>
+					<dd></dd>
+					<dt><var>$message</var></dt>
+					<dd></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
 
 
 

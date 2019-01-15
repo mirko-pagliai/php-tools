@@ -14,6 +14,98 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('array_key_first')) {
+    /**
+     * Returns the first key of an array.
+     *
+     * This function exists in PHP >= 7.3.
+     * @param array $array Array
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-first.php
+     * @since 1.1.12
+     */
+    function array_key_first(array $array)
+    {
+        return $array ? array_value_first(array_keys($array)) : null;
+    }
+}
+
+if (!function_exists('array_key_last')) {
+    /**
+     * Returns the last key of an array.
+     *
+     * This function exists in PHP >= 7.3.
+     * @param array $array Array
+     * @return mixed
+     * @link http://php.net/manual/en/function.array-key-last.php
+     * @since 1.1.12
+     */
+    function array_key_last(array $array)
+    {
+        return $array ? array_value_last(array_keys($array)) : null;
+    }
+}
+
+if (!function_exists('array_value_first')) {
+    /**
+     * Returns the first value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_first(array $array)
+    {
+        return $array ? array_values($array)[0] : null;
+    }
+}
+
+if (!function_exists('array_value_first_recursive')) {
+    /**
+     * Returns the first value of an array recursively.
+     *
+     * In other words, it returns the first value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_first_recursive(array $array)
+    {
+        $value = array_value_first($array);
+
+        return is_array($value) ? array_value_first_recursive($value) : $value;
+    }
+}
+
+if (!function_exists('array_value_last')) {
+    /**
+     * Returns the last value of an array
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_last(array $array)
+    {
+        return $array ? array_values(array_slice($array, -1))[0] : null;
+    }
+}
+
+if (!function_exists('array_value_last_recursive')) {
+    /**
+     * Returns the last value of an array recursively.
+     *
+     * In other words, it returns the last value found that is not an array.
+     * @param array $array Array
+     * @return mixed
+     * @since 1.1.12
+     */
+    function array_value_last_recursive(array $array)
+    {
+        $value = array_value_last($array);
+
+        return is_array($value) ? array_value_last_recursive($value) : $value;
+    }
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
@@ -178,46 +270,49 @@ if (!function_exists('dir_tree')) {
 if (!function_exists('ends_with')) {
     /**
      * Checks if a string ends with a string
+     * @deprecated 1.1.12 Use `string_ends_with()` instead
      * @param string $haystack The string
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
-     * @todo should change name in `string_ends_with()`
      */
     function ends_with($haystack, $needle)
     {
-        $length = strlen($needle);
+        deprecationWarning('The `ends_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
 
-        return !$length ?: substr($haystack, -$length) === $needle;
+        return string_ends_with($haystack, $needle);
     }
 }
 
 if (!function_exists('first_key')) {
     /**
      * Returns the first key of an array
+     * @deprecated 1.1.12 Use `array_key_first()` instead
      * @param array $array Array
      * @return mixed
-     * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.10
-     * @todo should change name in `array_key_first()`
      */
     function first_key(array $array)
     {
-        return $array ? first_value(array_keys($array)) : null;
+        deprecationWarning('The `first_key()` function is deprecated and will be removed in a later version. Use `array_key_first()` instead');
+
+        return array_key_first($array);
     }
 }
 
 if (!function_exists('first_value')) {
     /**
      * Returns the first value of an array
+     * @deprecated 1.1.12 Use `array_value_first()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
-     * @todo should change name in `array_value_first()`
      */
     function first_value(array $array)
     {
-        return $array ? array_values($array)[0] : null;
+        deprecationWarning('The `first_value()` function is deprecated and will be removed in a later version. Use `array_value_first()` instead');
+
+        return array_value_first($array);
     }
 }
 
@@ -226,16 +321,16 @@ if (!function_exists('first_value_recursive')) {
      * Returns the first value of an array recursively.
      *
      * In other words, it returns the first value found that is not an array.
+     * @deprecated 1.1.12 Use `array_value_first_recursive()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
-     * @todo should change name in `array_value_first_recursive()`
      */
     function first_value_recursive(array $array)
     {
-        $value = first_value($array);
+        deprecationWarning('The `first_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_first_recursive()` instead');
 
-        return is_array($value) ? first_value_recursive($value) : $value;
+        return array_value_first_recursive($array);
     }
 }
 
@@ -317,7 +412,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return starts_with($host, 'www.') ? substr($host, 4) : $host;
+        return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -335,6 +430,22 @@ if (!function_exists('is_external_url')) {
 
         //Url with the same host and relative url are not external
         return $hostForUrl && strcasecmp($hostForUrl, $hostname) !== 0;
+    }
+}
+
+if (!function_exists('is_iterable')) {
+    /**
+     * Checks if a var is iterable (is an array or an instance of `Traversable`).
+     *
+     * This function exists in PHP >= 7.1.0.
+     * @link http://php.net/manual/en/function.is-iterable.php
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.1.12
+     */
+    function is_iterable($var)
+    {
+        return is_array($var) || $var instanceof \Traversable;
     }
 }
 
@@ -440,29 +551,32 @@ if (!function_exists('is_writable_resursive')) {
 if (!function_exists('last_key')) {
     /**
      * Returns the last key of an array
+     * @deprecated 1.1.12 Use `array_key_last()` instead
      * @param array $array Array
      * @return mixed
-     * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.10
-     * @todo should change name in `array_key_last()`
      */
     function last_key(array $array)
     {
-        return $array ? last_value(array_keys($array)) : null;
+        deprecationWarning('The `last_key()` function is deprecated and will be removed in a later version. Use `array_key_last()` instead');
+
+        return array_key_last($array);
     }
 }
 
 if (!function_exists('last_value')) {
     /**
      * Returns the last value of an array
+     * @deprecated 1.1.12 Use `array_value_last()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.1
-     * @todo should change name in `array_value_last()`
      */
     function last_value(array $array)
     {
-        return $array ? array_values(array_slice($array, -1))[0] : null;
+        deprecationWarning('The `last_value()` function is deprecated and will be removed in a later version. Use `array_value_last()` instead');
+
+        return array_value_last($array);
     }
 }
 
@@ -471,16 +585,16 @@ if (!function_exists('last_value_recursive')) {
      * Returns the last value of an array recursively.
      *
      * In other words, it returns the last value found that is not an array.
+     * @deprecated 1.1.12 Use `array_value_last_recursive()` instead
      * @param array $array Array
      * @return mixed
      * @since 1.1.10
-     * @todo should change name in `array_value_last_recursive()`
      */
     function last_value_recursive(array $array)
     {
-        $value = last_value($array);
+        deprecationWarning('The `last_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_last_recursive()` instead');
 
-        return is_array($value) ? last_value_recursive($value) : $value;
+        return array_value_last_recursive($array);
     }
 }
 
@@ -558,13 +672,45 @@ if (!function_exists('rtr')) {
 if (!function_exists('starts_with')) {
     /**
      * Checks if a string starts with a string
+     * @deprecated 1.1.12 Use `string_starts_with()` instead
      * @param string $haystack The string
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.6
-     * @todo should change name in `string_starts_with()`
      */
     function starts_with($haystack, $needle)
+    {
+        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_starts_with()` instead');
+
+        return string_starts_with($haystack, $needle);
+    }
+}
+
+if (!function_exists('string_ends_with')) {
+    /**
+     * Checks if a string ends with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.12
+     */
+    function string_ends_with($haystack, $needle)
+    {
+        $length = strlen($needle);
+
+        return !$length ?: substr($haystack, -$length) === $needle;
+    }
+}
+
+if (!function_exists('string_starts_with')) {
+    /**
+     * Checks if a string starts with a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.1.12
+     */
+    function string_starts_with($haystack, $needle)
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
     }
