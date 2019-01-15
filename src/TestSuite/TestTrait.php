@@ -160,6 +160,7 @@ trait TestTrait
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
+     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
      * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -167,6 +168,10 @@ trait TestTrait
      */
     public static function assertFileExists($filename, $message = '')
     {
+        if (!is_string($filename)) {
+            deprecationWarning('The `assertFileExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
+        }
+
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileExists($filename, $message);
         }
@@ -186,6 +191,10 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
+        if (!is_string($filename)) {
+            deprecationWarning('The `assertFileExtension()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
+        }
+
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             self::assertEquals($expectedExtension, get_extension($filename), $message);
         }
@@ -202,6 +211,10 @@ trait TestTrait
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
+        if (!is_string($filename)) {
+            deprecationWarning('The `assertFileMime()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
+        }
+
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             self::assertFileExists($filename);
             self::assertEquals($expectedMime, mime_content_type($filename), $message);
@@ -213,6 +226,7 @@ trait TestTrait
      *
      * Unlike the original method, this method can take an array or a
      *  `Traversable` instance.
+     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
      * @param string|array|Traversable $filename Filenames
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -220,6 +234,10 @@ trait TestTrait
      */
     public static function assertFileNotExists($filename, $message = '')
     {
+        if (!is_string($filename)) {
+            deprecationWarning('The `assertFileNotExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
+        }
+
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             parent::assertFileNotExists($filename, $message);
         }
@@ -241,6 +259,10 @@ trait TestTrait
      */
     protected static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
+        if (!is_string($filename)) {
+            deprecationWarning('The `assertFilePerms()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
+        }
+
         $expectedPerms = array_map(function ($perm) {
             return is_string($perm) ? $perm : sprintf("%04o", $perm);
         }, (array)$expectedPerms);

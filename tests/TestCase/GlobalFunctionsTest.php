@@ -642,7 +642,7 @@ class GlobalFunctionsTest extends TestCase
     {
         $files = createSomeFiles();
         rmdir_recursive(TMP . 'exampleDir');
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
         array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
 
         //Does not delete a file
@@ -735,7 +735,7 @@ class GlobalFunctionsTest extends TestCase
         unlink_recursive(TMP . 'exampleDir');
 
         //Files no longer exist, but directories still exist
-        $this->assertFileNotExists($files);
+        array_map([$this, 'assertFileNotExists'], $files);
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 

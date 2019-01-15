@@ -4,6 +4,11 @@
 * `assertIsArray()`, `assertIsInt()`, `assertIsObject()` and `assertIsString()`
     methods of `TestTrait` are now provided by `__call()` and `__callStatic()`
     methods. These also provide some other "assertIs" methods (see API);
+* `assertFileExtension()`, `assertFileMime()`, `assertFilePerms()` methods are
+    deprecated when used with an array of filename and in a later version they
+    will take a string as argument. `assertFileExists()` and `assertFileNotExists()`
+    methods are deprecated and will be removed in a later version, because the
+    same methods are provided by PHPUnit and take a string as argument;
 * fixed bug for `assertException()` assert method, it checks if the
     `$expectedException` is a subclass of `Exception`;
 * fixed bug for `assertIsArrayNotEmpty()` assert method, it executes
