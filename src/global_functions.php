@@ -433,6 +433,22 @@ if (!function_exists('is_external_url')) {
     }
 }
 
+if (!function_exists('is_iterable')) {
+    /**
+     * Checks if a var is iterable (is an array or an instance of `Traversable`).
+     *
+     * This function exists in PHP >= 7.1.0.
+     * @link http://php.net/manual/en/function.is-iterable.php
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.1.12
+     */
+    function is_iterable($var)
+    {
+        return is_array($var) || $var instanceof \Traversable;
+    }
+}
+
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON

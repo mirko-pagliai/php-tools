@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.1 branch
 ### 1.1.12
+* added `is_iterable()` global function;
 * `assertIsArray()`, `assertIsInt()`, `assertIsObject()` and `assertIsString()`
     methods of `TestTrait` are now provided by `__call()` and `__callStatic()`
     methods. These also provide some other "assertIs" methods (see API);

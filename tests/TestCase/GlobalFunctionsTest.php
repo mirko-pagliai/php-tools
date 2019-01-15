@@ -14,6 +14,7 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
+use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
@@ -448,7 +449,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `isJson()` global function
+     * Test for `is_iterable()` global function
+     * @test
+     */
+    public function testIsIterable()
+    {
+        $this->assertTrue(is_iterable([]));
+        $this->assertTrue(is_iterable(new ExampleOfTraversable));
+        $this->assertFalse(is_iterable('string'));
+        $this->assertFalse(is_iterable(new ExampleChildClass));
+    }
+
+    /**
+     * Test for `is_json()` global function
      * @test
      */
     public function testIsJson()
