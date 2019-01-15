@@ -61,9 +61,14 @@ class TestTraitTest extends TestCase
         }
 
         //Assertion failure
+        if (version_compare(PHP_VERSION, '7.0', '>=')) {
+            $expectedMessage = 'Failed asserting that \'string\' is of type "array".';
+        } else {
+            $expectedMessage = 'Failed asserting that false is true.';
+        }
         $this->assertException(AssertionFailedError::class, function () {
             $this->assertIsArray('string');
-        }, 'Failed asserting that \'string\' is of type "array".');
+        }, $expectedMessage);
 
         //Missing argument
         $this->assertException(BadMethodCallException::class, function () {
