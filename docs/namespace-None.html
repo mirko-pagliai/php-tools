@@ -54,22 +54,29 @@
 
 			<h3>Functions</h3>
 			<ul>
+				<li><a href="function-array_key_first.html">array_key_first</a></li>
+				<li><a href="function-array_key_last.html">array_key_last</a></li>
+				<li><a href="function-array_value_first.html">array_value_first</a></li>
+				<li><a href="function-array_value_first_recursive.html">array_value_first_recursive</a></li>
+				<li><a href="function-array_value_last.html">array_value_last</a></li>
+				<li><a href="function-array_value_last_recursive.html">array_value_last_recursive</a></li>
 				<li><a href="function-clean_url.html">clean_url</a></li>
 				<li><a href="function-create_file.html">create_file</a></li>
 				<li><a href="function-create_tmp_file.html">create_tmp_file</a></li>
 				<li><a href="function-deprecationWarning.html">deprecationWarning</a></li>
 				<li><a href="function-dir_tree.html">dir_tree</a></li>
-				<li><a href="function-ends_with.html">ends_with</a></li>
+				<li><a href="function-ends_with.html" class="deprecated">ends_with</a></li>
 				<li><a href="function-file_exists_or_fail.html">file_exists_or_fail</a></li>
-				<li><a href="function-first_key.html">first_key</a></li>
-				<li><a href="function-first_value.html">first_value</a></li>
-				<li><a href="function-first_value_recursive.html">first_value_recursive</a></li>
+				<li><a href="function-first_key.html" class="deprecated">first_key</a></li>
+				<li><a href="function-first_value.html" class="deprecated">first_value</a></li>
+				<li><a href="function-first_value_recursive.html" class="deprecated">first_value_recursive</a></li>
 				<li><a href="function-get_child_methods.html">get_child_methods</a></li>
 				<li><a href="function-get_class_short_name.html">get_class_short_name</a></li>
 				<li><a href="function-get_extension.html">get_extension</a></li>
 				<li><a href="function-get_hostname_from_url.html">get_hostname_from_url</a></li>
 				<li><a href="function-is_dir_or_fail.html">is_dir_or_fail</a></li>
 				<li><a href="function-is_external_url.html">is_external_url</a></li>
+				<li><a href="function-is_iterable.html">is_iterable</a></li>
 				<li><a href="function-is_json.html">is_json</a></li>
 				<li><a href="function-is_positive.html">is_positive</a></li>
 				<li><a href="function-is_readable_or_fail.html">is_readable_or_fail</a></li>
@@ -80,9 +87,9 @@
 				<li><a href="function-is_writable_or_fail.html">is_writable_or_fail</a></li>
 				<li><a href="function-is_writable_resursive.html">is_writable_resursive</a></li>
 				<li><a href="function-key_exists_or_fail.html">key_exists_or_fail</a></li>
-				<li><a href="function-last_key.html">last_key</a></li>
-				<li><a href="function-last_value.html">last_value</a></li>
-				<li><a href="function-last_value_recursive.html">last_value_recursive</a></li>
+				<li><a href="function-last_key.html" class="deprecated">last_key</a></li>
+				<li><a href="function-last_value.html" class="deprecated">last_value</a></li>
+				<li><a href="function-last_value_recursive.html" class="deprecated">last_value_recursive</a></li>
 				<li><a href="function-objects_map.html">objects_map</a></li>
 				<li><a href="function-rmdir_recursive.html">rmdir_recursive</a></li>
 				<li><a href="function-rtr.html">rtr</a></li>
@@ -96,7 +103,9 @@
 				<li><a href="function-safe_unlink.html" class="deprecated">safe_unlink</a></li>
 				<li><a href="function-safe_unlink_recursive.html" class="deprecated">safe_unlink_recursive</a></li>
 				<li><a href="function-safe_unserialize.html" class="deprecated">safe_unserialize</a></li>
-				<li><a href="function-starts_with.html">starts_with</a></li>
+				<li><a href="function-starts_with.html" class="deprecated">starts_with</a></li>
+				<li><a href="function-string_ends_with.html">string_ends_with</a></li>
+				<li><a href="function-string_starts_with.html">string_starts_with</a></li>
 				<li><a href="function-unlink_recursive.html">unlink_recursive</a></li>
 				<li><a href="function-which.html">which</a></li>
 			</ul>
@@ -156,6 +165,30 @@
 <table class="summary" id="functions">
 <caption>Functions summary</caption>
 <tr>
+	<td class="name"><a href="function-array_key_first.html">array_key_first</a></td>
+	<td>Returns the first key of an array.</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-array_key_last.html">array_key_last</a></td>
+	<td>Returns the last key of an array.</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-array_value_first.html">array_value_first</a></td>
+	<td>Returns the first value of an array</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-array_value_first_recursive.html">array_value_first_recursive</a></td>
+	<td>Returns the first value of an array recursively.</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-array_value_last.html">array_value_last</a></td>
+	<td>Returns the last value of an array</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-array_value_last_recursive.html">array_value_last_recursive</a></td>
+	<td>Returns the last value of an array recursively.</td>
+</tr>
+<tr>
 	<td class="name"><a href="function-clean_url.html">clean_url</a></td>
 	<td><p>Cleans an url. It removes all unnecessary parts, as fragment (#),
  trailing slash and <code>www</code> prefix</p></td>
@@ -177,7 +210,7 @@
 	<td>Returns an array of nested directories and files in each directory</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-ends_with.html">ends_with</a></td>
+	<td class="name"><a href="function-ends_with.html" class="deprecated">ends_with</a></td>
 	<td>Checks if a string ends with a string</td>
 </tr>
 <tr>
@@ -186,15 +219,15 @@
  file does not exist</p></td>
 </tr>
 <tr>
-	<td class="name"><a href="function-first_key.html">first_key</a></td>
+	<td class="name"><a href="function-first_key.html" class="deprecated">first_key</a></td>
 	<td>Returns the first key of an array</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-first_value.html">first_value</a></td>
+	<td class="name"><a href="function-first_value.html" class="deprecated">first_value</a></td>
 	<td>Returns the first value of an array</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-first_value_recursive.html">first_value_recursive</a></td>
+	<td class="name"><a href="function-first_value_recursive.html" class="deprecated">first_value_recursive</a></td>
 	<td>Returns the first value of an array recursively.</td>
 </tr>
 <tr>
@@ -222,6 +255,10 @@
 <tr>
 	<td class="name"><a href="function-is_external_url.html">is_external_url</a></td>
 	<td>Checks if an url is external, relative to the passed hostname</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-is_iterable.html">is_iterable</a></td>
+	<td>Checks if a var is iterable (is an array or an instance of <code>Traversable</code>).</td>
 </tr>
 <tr>
 	<td class="name"><a href="function-is_json.html">is_json</a></td>
@@ -267,15 +304,15 @@
  exception if the key does not exist.</p></td>
 </tr>
 <tr>
-	<td class="name"><a href="function-last_key.html">last_key</a></td>
+	<td class="name"><a href="function-last_key.html" class="deprecated">last_key</a></td>
 	<td>Returns the last key of an array</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-last_value.html">last_value</a></td>
+	<td class="name"><a href="function-last_value.html" class="deprecated">last_value</a></td>
 	<td>Returns the last value of an array</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-last_value_recursive.html">last_value_recursive</a></td>
+	<td class="name"><a href="function-last_value_recursive.html" class="deprecated">last_value_recursive</a></td>
 	<td>Returns the last value of an array recursively.</td>
 </tr>
 <tr>
@@ -332,7 +369,15 @@
 	<td>Safe alias for <code>unserialize()</code> function</td>
 </tr>
 <tr>
-	<td class="name"><a href="function-starts_with.html">starts_with</a></td>
+	<td class="name"><a href="function-starts_with.html" class="deprecated">starts_with</a></td>
+	<td>Checks if a string starts with a string</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-string_ends_with.html">string_ends_with</a></td>
+	<td>Checks if a string ends with a string</td>
+</tr>
+<tr>
+	<td class="name"><a href="function-string_starts_with.html">string_starts_with</a></td>
 	<td>Checks if a string starts with a string</td>
 </tr>
 <tr>
@@ -354,6 +399,6 @@
 </div>
 </div>
 <script src="resources/combined.js?dbb5e1beab6852c5c079a04e11ff61ac6b499af9"></script>
-<script src="elementlist.js?2b608c0aaf72680db56d124b188812d2ea5f36af"></script>
+<script src="elementlist.js?6de19189d91f42d2ac525ef38d1c4415a7cdcb01"></script>
 </body>
 </html>
