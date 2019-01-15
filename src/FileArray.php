@@ -43,8 +43,7 @@ class FileArray
      */
     public function __construct($filename, array $data = [])
     {
-        $target = is_file($filename) ? $filename : dirname($filename);
-        is_writable_or_fail($target);
+        is_writable_or_fail(is_file($filename) ? $filename : dirname($filename));
 
         $this->filename = $filename;
         $this->data = $data ?: $this->read();
@@ -137,9 +136,7 @@ class FileArray
             return $this->data;
         }
 
-        $data = file_get_contents($this->filename);
-
-        return is_json($data) ? unserialize($data) : [];
+        return @unserialize(file_get_contents($this->filename)) ?: [];
     }
 
     /**

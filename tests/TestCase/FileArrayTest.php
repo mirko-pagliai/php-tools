@@ -126,6 +126,15 @@ class FileArrayTest extends TestCase
     {
         $this->assertEquals($this->example, $this->FileArray->read());
 
+        $file = create_tmp_file();
+        $FileArray = new FileArray($file);
+        $this->assertEquals(['string'], $FileArray->append('string')->read());
+        $FileArray->write();
+
+        $FileArray = new FileArray($file);
+        $this->assertEquals(['string'], $FileArray->read());
+        $this->assertEquals(['prepended', 'string'], $FileArray->prepend('prepended')->read());
+
         //With invalid array or no existing file, in any case returns a empty array
         $this->assertEquals([], (new FileArray(create_tmp_file('a string')))->read());
         $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
