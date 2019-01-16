@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.0
+* removed deprecated `ends_with()` and `starts_with()` global functions, use
+    instead `string_ends_with()` and `string_starts_with()`;
 * removed deprecated `assertContainsInstanceOf()`, `assertFileExists()` and
     `assertFileNotExists()` assert methods;
 * `assertFileExtension()`, `assertFileMime()` and `assertFilePerms()` methods now

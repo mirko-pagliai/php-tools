@@ -261,22 +261,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `ends_with()` global function
-     * @test
-     */
-    public function testEndsWith()
-    {
-        $string = 'a test with some words';
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(ends_with($string, 'some words'));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        ends_with($string, 'some words');
-    }
-
-    /**
      * Test for `first_key()` global function
      * @test
      */
@@ -684,22 +668,6 @@ class GlobalFunctionsTest extends TestCase
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
-    }
-
-    /**
-     * Test for `starts_with()` global function
-     * @test
-     */
-    public function testStartsWith()
-    {
-        $string = 'a test with some words';
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(starts_with($string, 'a test'));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        starts_with($string, 'a test');
     }
 
     /**

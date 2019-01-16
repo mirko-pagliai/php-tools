@@ -267,23 +267,6 @@ if (!function_exists('dir_tree')) {
     }
 }
 
-if (!function_exists('ends_with')) {
-    /**
-     * Checks if a string ends with a string
-     * @deprecated 1.1.12 Use `string_ends_with()` instead
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.6
-     */
-    function ends_with($haystack, $needle)
-    {
-        deprecationWarning('The `ends_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
-
-        return string_ends_with($haystack, $needle);
-    }
-}
-
 if (!function_exists('first_key')) {
     /**
      * Returns the first key of an array
@@ -666,23 +649,6 @@ if (!function_exists('rtr')) {
         }
 
         return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
-    }
-}
-
-if (!function_exists('starts_with')) {
-    /**
-     * Checks if a string starts with a string
-     * @deprecated 1.1.12 Use `string_starts_with()` instead
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.6
-     */
-    function starts_with($haystack, $needle)
-    {
-        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_starts_with()` instead');
-
-        return string_starts_with($haystack, $needle);
     }
 }
 
