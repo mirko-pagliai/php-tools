@@ -156,14 +156,13 @@ trait TestTrait
 
     /**
      * Asserts that a filename have a MIME content type
-     * @param string $filename Filename
      * @param string $expectedMime MIME content type
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
-     * @todo $filename and $expectedMime arguments should be reversed
      */
-    protected static function assertFileMime($filename, $expectedMime, $message = '')
+    protected static function assertFileMime($expectedMime, $filename, $message = '')
     {
         self::assertFileExists($filename);
         self::assertEquals($expectedMime, mime_content_type($filename), $message);
