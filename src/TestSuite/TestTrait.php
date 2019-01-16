@@ -189,10 +189,8 @@ trait TestTrait
     {
         parent::assertFileExists($filename);
 
-        $expectedPerms = array_map(function ($perm) {
-            return is_string($perm) ? $perm : sprintf("%04o", $perm);
-        }, (array)$expectedPerms);
-        self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
+        $expectedPerms = array_map('fileperms_to_string', (array)$expectedPerms);
+        self::assertContains(fileperms_as_octal($filename), $expectedPerms, $message);
     }
 
     /**

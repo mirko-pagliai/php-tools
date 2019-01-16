@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.0
+* added `fileperms_as_octal()` and `fileperms_to_string()` global functions;
 * arguments of the `assertFileMime()` assert method have been reversed
     (`$expectedMime, $filename, $message = ''`). If `$expectedMime` is an array,
     it asserts that the filename has at least one of those values;

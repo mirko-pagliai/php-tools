@@ -267,6 +267,36 @@ if (!function_exists('dir_tree')) {
     }
 }
 
+if (!function_exists('fileperms_as_octal')) {
+    /**
+     * Gets permissions for the given file.
+     *
+     * Unlike the `fileperms()` function provided by PHP, this function returns
+     *  the permissions as four-chars string
+     * @link http://php.net/manual/en/function.fileperms.php
+     * @param string $filename Path to the file
+     * @return string Permissions as four-chars string
+     * @since 1.2.0
+     */
+    function fileperms_as_octal($filename)
+    {
+        return (string)substr(sprintf('%o', fileperms($filename)), -4);
+    }
+}
+
+if (!function_exists('fileperms_to_string')) {
+    /**
+     * Returns permissions from octal value (`0755`) to string (`'0755'`)
+     * @param int|string $perms Permissions as octal value
+     * @return string Permissions as four-chars string
+     * @since 1.2.0
+     */
+    function fileperms_to_string($perms)
+    {
+        return is_string($perms) ? $perms : sprintf("%04o", $perms);
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`

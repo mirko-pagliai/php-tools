@@ -261,6 +261,26 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `fileperms_as_octal()` global function
+     * @test
+     */
+    public function testFilepermsAsOctal()
+    {
+        $filename = create_tmp_file();
+        $this->assertSame('0600', fileperms_as_octal($filename));
+    }
+
+    /**
+     * Test for `fileperms_to_string()` global function
+     * @test
+     */
+    public function testFilepermsToString()
+    {
+        $this->assertSame('0755', fileperms_to_string(0755));
+        $this->assertSame('0755', fileperms_to_string('0755'));
+    }
+
+    /**
      * Test for `get_child_methods()` global function
      * @test
      */
