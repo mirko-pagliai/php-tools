@@ -216,7 +216,6 @@ trait TestTrait
      *  generated message
      * @return void
      * @since 1.0.6
-     * @todo array_filter?
      */
     protected static function assertIsArrayNotEmpty($var, $message = '')
     {
