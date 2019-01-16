@@ -433,6 +433,19 @@ if (!function_exists('is_external_url')) {
     }
 }
 
+if (!function_exists('is_html')) {
+    /**
+     * Checks if a string is HTML
+     * @param string $string String
+     * @return bool
+     * @since 1.1.13
+     */
+    function is_html($string)
+    {
+        return strcasecmp($string, strip_tags($string)) !== 0;
+    }
+}
+
 if (!function_exists('is_iterable')) {
     /**
      * Checks if a var is iterable (is an array or an instance of `Traversable`).

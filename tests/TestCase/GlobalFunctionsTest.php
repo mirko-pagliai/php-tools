@@ -449,6 +449,16 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_html()` global function
+     * @test
+     */
+    public function testIsHtml()
+    {
+        $this->assertTrue(is_html('<b>string</b>'));
+        $this->assertFalse(is_html('string'));
+    }
+
+    /**
      * Test for `is_iterable()` global function
      * @test
      */

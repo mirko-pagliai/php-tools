@@ -165,6 +165,6 @@ class BodyParser
      */
     public function isHtml()
     {
-        return strcasecmp($this->body, strip_tags($this->body)) !== 0;
+        return is_html($this->body);
     }
 }
