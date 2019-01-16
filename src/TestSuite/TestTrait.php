@@ -139,10 +139,13 @@ trait TestTrait
     /**
      * Asserts that a filename has the `$expectedExtension`.
      *
+     * If `$expectedExtension` is an array, asserts that the filename has at
+     *  least one of those values.
+     *
      * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
-     * @param string $expectedExtension Expected extension
+     * @param string|array $expectedExtension Expected extension
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -150,14 +153,14 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        self::assertEquals($expectedExtension, get_extension($filename), $message);
+        self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
     }
 
     /**
      * Asserts that a filename have a MIME content type.
      *
-     * If `$expectedMime` is an array, asserts that the filename has at least
-     *  one of those values.
+     * If `$expectedMime` is an array, asserts that the filename has at
+     *  least one of those values.
      * @param string|array $expectedMime MIME content type
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
@@ -173,8 +176,8 @@ trait TestTrait
     /**
      * Asserts that a filename has some file permissions.
      *
-     * If more permission values are passed, asserts that the filename has
-     *  at least one of those values.
+     * If `$expectedPerms` is an array, asserts that the filename has at
+     *  least one of those values
      * @param string|int|array $expectedPerms Expected permission values as a
      *  four-chars string or octal value
      * @param string $filename Filename

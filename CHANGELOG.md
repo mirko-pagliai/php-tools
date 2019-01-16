@@ -8,6 +8,8 @@
     (`$expectedPerms, $filename, $message = ''`);
 * arguments of the `assertImageSize()` assert method have been reverse
     (`$expectedWidth, $expectedHeight, $filename, $message = ''`);
+* for the `assertFileExtension()` assert method, if `$expectedMime` is an array,
+    it asserts that the filename has at least one of those values;
 * removed deprecated `ends_with()` and `starts_with()` global functions, use
     instead `string_ends_with()` and `string_starts_with()`;
 * removed deprecated `first_key()`, `first_value()`, `first_value_recursive()`,

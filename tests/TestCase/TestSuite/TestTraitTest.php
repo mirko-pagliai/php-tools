@@ -181,6 +181,7 @@ class TestTraitTest extends TestCase
     {
         $this->assertFileExtension('jpg', 'file.jpg');
         $this->assertFileExtension('jpeg', 'FILE.JPEG');
+        $this->assertFileExtension(['jpg', 'jpeg'], 'file.jpg');
     }
 
     /**
