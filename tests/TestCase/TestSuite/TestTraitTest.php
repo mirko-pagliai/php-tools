@@ -189,7 +189,9 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $this->assertFileMime('text/plain', create_tmp_file('string'));
+        $file = create_tmp_file('string');
+        $this->assertFileMime('text/plain', $file);
+        $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
 
     /**

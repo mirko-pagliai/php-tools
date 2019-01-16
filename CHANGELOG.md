@@ -2,7 +2,8 @@
 ## 1.2 branch
 ### 1.2.0
 * arguments of the `assertFileMime()` assert method have been reversed
-    (`$expectedMime, $filename, $message = ''`);
+    (`$expectedMime, $filename, $message = ''`). If `$expectedMime` is an array,
+    it asserts that the filename has at least one of those values;
 * removed deprecated `ends_with()` and `starts_with()` global functions, use
     instead `string_ends_with()` and `string_starts_with()`;
 * removed deprecated `first_key()`, `first_value()`, `first_value_recursive()`,
