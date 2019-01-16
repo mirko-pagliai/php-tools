@@ -4,6 +4,10 @@
 * arguments of the `assertFileMime()` assert method have been reversed
     (`$expectedMime, $filename, $message = ''`). If `$expectedMime` is an array,
     it asserts that the filename has at least one of those values;
+* arguments of the `assertFilePerms()` assert method have been reverse
+    (`$expectedPerms, $filename, $message = ''`);
+* arguments of the `assertImageSize()` assert method have been reverse
+    (`$expectedWidth, $expectedHeight, $filename, $message = ''`);
 * removed deprecated `ends_with()` and `starts_with()` global functions, use
     instead `string_ends_with()` and `string_starts_with()`;
 * removed deprecated `first_key()`, `first_value()`, `first_value_recursive()`,

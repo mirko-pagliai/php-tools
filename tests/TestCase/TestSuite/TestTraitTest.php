@@ -202,11 +202,11 @@ class TestTraitTest extends TestCase
     public function testAssertFilePerms()
     {
         $file = create_tmp_file();
-        $this->assertFilePerms($file, '0600');
-        $this->assertFilePerms($file, 0600);
-        $this->assertFilePerms($file, ['0600', '0666']);
-        $this->assertFilePerms($file, [0600, 0666]);
-        $this->assertFilePerms($file, ['0600', 0666]);
+        $this->assertFilePerms('0600', $file);
+        $this->assertFilePerms(0600, $file);
+        $this->assertFilePerms(['0600', '0666'], $file);
+        $this->assertFilePerms([0600, 0666], $file);
+        $this->assertFilePerms(['0600', 0666], $file);
     }
 
     /**
@@ -217,7 +217,7 @@ class TestTraitTest extends TestCase
     {
         $filename = TMP . 'pic.jpg';
         imagejpeg(imagecreatetruecolor(120, 20), $filename);
-        $this->assertImageSize($filename, 120, 20);
+        $this->assertImageSize(120, 20, $filename);
     }
 
     /**

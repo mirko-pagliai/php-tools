@@ -176,15 +176,15 @@ trait TestTrait
      *
      * If more permission values are passed, asserts that the filename has
      *  at least one of those values.
-     * @param string $filename Filename
      * @param string|int|array $expectedPerms Expected permission values as a
      *  four-chars string or octal value
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      * @since 1.0.9
      */
-    protected static function assertFilePerms($filename, $expectedPerms, $message = '')
+    protected static function assertFilePerms($expectedPerms, $filename, $message = '')
     {
         parent::assertFileExists($filename);
 
@@ -196,14 +196,14 @@ trait TestTrait
 
     /**
      * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
-     * @param string $filename Path to the tested file
      * @param int $expectedWidth Expected image width
      * @param int $expectedHeight Expected mage height
+     * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    protected static function assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
+    protected static function assertImageSize($expectedWidth, $expectedHeight, $filename, $message = '')
     {
         self::assertFileExists($filename, $message);
         list($width, $height) = getimagesize($filename);
