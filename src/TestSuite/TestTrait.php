@@ -16,7 +16,6 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\Constraint\IsType;
-use Traversable;
 
 /**
  * A trait that provides some assertion methods
@@ -207,10 +206,10 @@ trait TestTrait
      */
     protected static function assertImageSize($expectedWidth, $expectedHeight, $filename, $message = '')
     {
-        self::assertFileExists($filename, $message);
-        list($width, $height) = getimagesize($filename);
-        self::assertEquals($width, $expectedWidth);
-        self::assertEquals($height, $expectedHeight);
+        self::assertFileExists($filename);
+        list($actualWidth, $actualHeight) = getimagesize($filename);
+        self::assertEquals($actualWidth, $expectedWidth, $message);
+        self::assertEquals($actualHeight, $expectedHeight, $message);
     }
 
     /**
@@ -251,9 +250,9 @@ trait TestTrait
      */
     protected static function assertSameMethods($firstClass, $secondClass, $message = '')
     {
-        list($firstClass, $secondClass) = [get_class_methods($firstClass), get_class_methods($secondClass)];
-        sort($firstClass);
-        sort($secondClass);
-        self::assertEquals($firstClass, $secondClass, $message);
+        list($firstClassMethods, $secondClassMethods) = [get_class_methods($firstClass), get_class_methods($secondClass)];
+        sort($firstClassMethods);
+        sort($secondClassMethods);
+        self::assertEquals($firstClassMethods, $secondClassMethods, $message);
     }
 }
