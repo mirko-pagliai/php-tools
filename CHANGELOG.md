@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.2 branch
+### 1.2.0
+* removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
+* removed all deprecated "safe" functions.
+
 ## 1.1 branch
 ### 1.1.12
 * added `is_iterable()` global function;
