@@ -100,7 +100,6 @@ trait TestTrait
      */
     protected static function assertArrayKeysEqual(array $expectedKeys, array $array, $message = '')
     {
-        self::assertIsArray($array);
         $keys = array_keys($array);
         sort($keys);
         sort($expectedKeys);
