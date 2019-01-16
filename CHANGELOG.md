@@ -1,8 +1,11 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.0
-* removed deprecated `assertContainsInstanceOf()`, `assertFileExists()`,
+* removed deprecated `assertContainsInstanceOf()`, `assertFileExists()` and
     `assertFileNotExists()` assert methods;
+* `assertFileExtension()`, `assertFileMime()` and `assertFilePerms()` methods now
+    take a string as first `$filename` argument, so they no longer take an array.
+    If you want to check an array of filename, use the `array_map()` function;  
 * removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
 * removed all deprecated "safe" functions.
 

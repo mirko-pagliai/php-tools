@@ -179,18 +179,6 @@ class TestTraitTest extends TestCase
     {
         $this->assertFileExtension('jpg', 'file.jpg');
         $this->assertFileExtension('jpeg', 'FILE.JPEG');
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileExtension('jpg', [
-            'file.jpg',
-            'file.JPG',
-            'path/to/file.jpg',
-            '/full/path/to/file.jpg',
-        ]);
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileExtension('jpg', ['file.jpg', 'file.JPG']);
     }
 
     /**
@@ -199,15 +187,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $files = [create_tmp_file('string'), create_tmp_file('string')];
-        $this->assertFileMime($files[0], 'text/plain');
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileMime($files, 'text/plain');
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileMime($files, 'text/plain');
+        $this->assertFileMime(create_tmp_file('string'), 'text/plain');
     }
 
     /**
@@ -217,24 +197,12 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $files = [create_tmp_file(), create_tmp_file()];
-        $this->assertFilePerms($files[0], '0600');
-        $this->assertFilePerms($files[0], 0600);
-        $this->assertFilePerms($files[0], ['0600', '0666']);
-        $this->assertFilePerms($files[0], [0600, 0666]);
-        $this->assertFilePerms($files[0], ['0600', 0666]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFilePerms($files, '0600');
-        $this->assertFilePerms($files, 0600);
-        $this->assertFilePerms($files, ['0600', '0666']);
-        $this->assertFilePerms($files, [0600, 0666]);
-        $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
-        $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFilePerms($files, '0600');
+        $file = create_tmp_file();
+        $this->assertFilePerms($file, '0600');
+        $this->assertFilePerms($file, 0600);
+        $this->assertFilePerms($file, ['0600', '0666']);
+        $this->assertFilePerms($file, [0600, 0666]);
+        $this->assertFilePerms($file, ['0600', 0666]);
     }
 
     /**

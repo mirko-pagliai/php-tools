@@ -138,31 +138,25 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filenames have the `$expectedExtension`.
+     * Asserts that a filename has the `$expectedExtension`.
      *
-     * It is not necessary they actually exist.
+     * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
      * @param string $expectedExtension Expected extension
-     * @param string|array|Traversable $filename Filenames
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileExtension()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            self::assertEquals($expectedExtension, get_extension($filename), $message);
-        }
+        self::assertEquals($expectedExtension, get_extension($filename), $message);
     }
 
     /**
-     * Asserts that one or more filenames have a MIME content type
-     * @param string|array|Traversable $filename Filenames
+     * Asserts that a filename have a MIME content type
+     * @param string $filename Filename
      * @param string $expectedMime MIME content type
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -171,23 +165,16 @@ trait TestTrait
      */
     protected static function assertFileMime($filename, $expectedMime, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileMime()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            self::assertFileExists($filename);
-            self::assertEquals($expectedMime, mime_content_type($filename), $message);
-        }
+        self::assertFileExists($filename);
+        self::assertEquals($expectedMime, mime_content_type($filename), $message);
     }
 
     /**
-     * Asserts that one or more filenames have some file permissions.
+     * Asserts that a filename has some file permissions.
      *
-     * If only one permission value is passed, asserts that all files have that
-     *  value. If more permission values are passed, asserts that all files have
+     * If more permission values are passed, asserts that the filename has
      *  at least one of those values.
-     * @param string|array|Traversable $filename Filenames
+     * @param string $filename Filename
      * @param string|int|array $expectedPerms Expected permission values as a
      *  four-chars string or octal value
      * @param string $message The failure message that will be appended to the
@@ -197,18 +184,12 @@ trait TestTrait
      */
     protected static function assertFilePerms($filename, $expectedPerms, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFilePerms()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
+        parent::assertFileExists($filename);
 
         $expectedPerms = array_map(function ($perm) {
             return is_string($perm) ? $perm : sprintf("%04o", $perm);
         }, (array)$expectedPerms);
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileExists($filename);
-            self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
-        }
+        self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
     }
 
     /**
