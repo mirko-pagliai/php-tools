@@ -43,12 +43,6 @@ class BodyParser
     protected $host;
 
     /**
-     * Reference url. Used to determine the relative links
-     * @var string
-     */
-    protected $url;
-
-    /**
      * Scheme of the reference url
      * @var string
      */
@@ -74,6 +68,12 @@ class BodyParser
         'track' => 'src',
         'video' => 'src',
     ];
+
+    /**
+     * Reference url. Used to determine the relative links
+     * @var string
+     */
+    protected $url;
 
     /**
      * Constructor
