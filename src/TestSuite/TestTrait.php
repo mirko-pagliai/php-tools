@@ -198,8 +198,8 @@ trait TestTrait
 
     /**
      * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
-     * @param int $expectedWidth Expected image width
-     * @param int $expectedHeight Expected mage height
+     * @param int|string $expectedWidth Expected image width
+     * @param int|string $expectedHeight Expected mage height
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the
      *  generated message
