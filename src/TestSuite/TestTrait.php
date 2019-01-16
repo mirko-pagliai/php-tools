@@ -108,24 +108,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that an array or an instance of `Traversable` contains objects
-     *  that are instances of `$expectedInstance`
-     * @deprecated 1.1.11 Use `assertContainsOnlyInstancesOf()` instead
-     * @param string $expectedInstance Expected instance
-     * @param array|Traversable $value Values
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.1.0
-     */
-    protected static function assertContainsInstanceOf($expectedInstance, $value, $message = '')
-    {
-        deprecationWarning('The `assertContainsInstanceOf()` method is deprecated and will be removed in a later version. Use `assertContainsOnlyInstancesOf()` instead');
-
-        parent::assertContainsOnlyInstancesOf($expectedInstance, $value, $message);
-    }
-
-    /**
      * Asserts that a callable throws an exception
      * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
@@ -152,28 +134,6 @@ trait TestTrait
             }
         } finally {
             parent::assertNotFalse($e, sprintf('Expected exception `%s`, but no exception throw', $expectedException));
-        }
-    }
-
-    /**
-     * Asserts that one or more filenames exist.
-     *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
-     * @param string|array|Traversable $filename Filenames
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public static function assertFileExists($filename, $message = '')
-    {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileExists($filename, $message);
         }
     }
 
@@ -218,28 +178,6 @@ trait TestTrait
         foreach (is_string($filename) ? [$filename] : $filename as $filename) {
             self::assertFileExists($filename);
             self::assertEquals($expectedMime, mime_content_type($filename), $message);
-        }
-    }
-
-    /**
-     * Asserts that one or more filenames do not exist.
-     *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
-     * @param string|array|Traversable $filename Filenames
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public static function assertFileNotExists($filename, $message = '')
-    {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileNotExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileNotExists($filename, $message);
         }
     }
 

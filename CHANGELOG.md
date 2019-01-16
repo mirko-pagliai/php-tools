@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.0
+* removed deprecated `assertContainsInstanceOf()`, `assertFileExists()`,
+    `assertFileNotExists()` assert methods;
 * removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
 * removed all deprecated "safe" functions.
 

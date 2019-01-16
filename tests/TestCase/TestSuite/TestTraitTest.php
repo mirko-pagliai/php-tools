@@ -101,21 +101,6 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertContainsInstanceOf()` method
-     * @test
-     */
-    public function testAssertContainsInstanceOf()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
-        $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertContainsInstanceOf('stdClass', new stdClass);
-    }
-
-    /**
      * Tests for `assertException()` method
      * @test
      */
@@ -187,24 +172,6 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertFileExists()` method
-     * @test
-     */
-    public function testAssertFileExists()
-    {
-        $files = [create_tmp_file(), create_tmp_file()];
-        $this->assertFileExists($files[0]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileExists($files);
-        $this->assertFileExists(new ExampleOfTraversable($files));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileExists($files);
-    }
-
-    /**
      * Test for `assertFileExtension()` method
      * @ŧest
      */
@@ -241,24 +208,6 @@ class TestTraitTest extends TestCase
 
         $this->expectException(Deprecated::class);
         $this->assertFileMime($files, 'text/plain');
-    }
-
-    /**
-     * Tests for `assertFileNotExists()` method
-     * @test
-     */
-    public function testAssertFileNotExists()
-    {
-        $files = [TMP . 'noExisting1', TMP . 'noExisting2'];
-        $this->assertFileNotExists($files[0]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileNotExists($files);
-        $this->assertFileNotExists(new ExampleOfTraversable($files));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileNotExists($files);
     }
 
     /**
