@@ -15,6 +15,7 @@ namespace Tools;
 
 /**
  * Provides some useful methods for interacting with Apache
+ * @deprecated 1.1.13
  */
 class Apache
 {
@@ -25,6 +26,8 @@ class Apache
      */
     public static function isEnabled($module)
     {
+        deprecationWarning('The `Apache` class is deprecated and will be removed in a later version');
+
         return in_array($module, apache_get_modules());
     }
 
@@ -34,6 +37,8 @@ class Apache
      */
     public static function version()
     {
+        deprecationWarning('The `Apache` class is deprecated and will be removed in a later version');
+
         $version = apache_get_version();
 
         return preg_match('/Apache\/(\d+\.\d+\.\d+)/i', $version, $matches) ? $matches[1] : $version;

@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.13
+* `Apache` class is now deprecated and will be removed in a later version.
+
 ### 1.1.12
 * added `is_iterable()` global function;
 * `assertIsArray()`, `assertIsInt()`, `assertIsObject()` and `assertIsString()`
