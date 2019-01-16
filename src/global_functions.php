@@ -267,56 +267,6 @@ if (!function_exists('dir_tree')) {
     }
 }
 
-if (!function_exists('first_key')) {
-    /**
-     * Returns the first key of an array
-     * @deprecated 1.1.12 Use `array_key_first()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function first_key(array $array)
-    {
-        deprecationWarning('The `first_key()` function is deprecated and will be removed in a later version. Use `array_key_first()` instead');
-
-        return array_key_first($array);
-    }
-}
-
-if (!function_exists('first_value')) {
-    /**
-     * Returns the first value of an array
-     * @deprecated 1.1.12 Use `array_value_first()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.1
-     */
-    function first_value(array $array)
-    {
-        deprecationWarning('The `first_value()` function is deprecated and will be removed in a later version. Use `array_value_first()` instead');
-
-        return array_value_first($array);
-    }
-}
-
-if (!function_exists('first_value_recursive')) {
-    /**
-     * Returns the first value of an array recursively.
-     *
-     * In other words, it returns the first value found that is not an array.
-     * @deprecated 1.1.12 Use `array_value_first_recursive()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function first_value_recursive(array $array)
-    {
-        deprecationWarning('The `first_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_first_recursive()` instead');
-
-        return array_value_first_recursive($array);
-    }
-}
-
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -488,20 +438,6 @@ if (!function_exists('is_url')) {
     }
 }
 
-if (!function_exists('is_win')) {
-    /**
-     * Returns `true` if the environment is Windows
-     * @deprecated 1.1.11 Use the `IS_WIN` constant instead
-     * @return bool
-     */
-    function is_win()
-    {
-        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
-
-        return IS_WIN;
-    }
-}
-
 if (!function_exists('is_writable_resursive')) {
     /**
      * Tells whether a directory and its subdirectories are writable.
@@ -528,56 +464,6 @@ if (!function_exists('is_writable_resursive')) {
         }
 
         return true;
-    }
-}
-
-if (!function_exists('last_key')) {
-    /**
-     * Returns the last key of an array
-     * @deprecated 1.1.12 Use `array_key_last()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function last_key(array $array)
-    {
-        deprecationWarning('The `last_key()` function is deprecated and will be removed in a later version. Use `array_key_last()` instead');
-
-        return array_key_last($array);
-    }
-}
-
-if (!function_exists('last_value')) {
-    /**
-     * Returns the last value of an array
-     * @deprecated 1.1.12 Use `array_value_last()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.1
-     */
-    function last_value(array $array)
-    {
-        deprecationWarning('The `last_value()` function is deprecated and will be removed in a later version. Use `array_value_last()` instead');
-
-        return array_value_last($array);
-    }
-}
-
-if (!function_exists('last_value_recursive')) {
-    /**
-     * Returns the last value of an array recursively.
-     *
-     * In other words, it returns the last value found that is not an array.
-     * @deprecated 1.1.12 Use `array_value_last_recursive()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function last_value_recursive(array $array)
-    {
-        deprecationWarning('The `last_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_last_recursive()` instead');
-
-        return array_value_last_recursive($array);
     }
 }
 

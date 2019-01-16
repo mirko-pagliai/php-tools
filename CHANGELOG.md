@@ -3,6 +3,12 @@
 ### 1.2.0
 * removed deprecated `ends_with()` and `starts_with()` global functions, use
     instead `string_ends_with()` and `string_starts_with()`;
+* removed deprecated `first_key()`, `first_value()`, `first_value_recursive()`,
+    `last_key()`, `last_value()` and `last_value_recursive()` global functions,
+    use instead `array_key_first()`, `array_value_first()`,
+    `array_value_first_recursive()`, `array_key_last()`, `array_value_last()` and
+    `array_value_last_recursive()`;
+* removed deprecated `is_win()` global function, use instead `IS_WIN` constant;
 * removed deprecated `assertContainsInstanceOf()`, `assertFileExists()` and
     `assertFileNotExists()` assert methods;
 * `assertFileExtension()`, `assertFileMime()` and `assertFilePerms()` methods now

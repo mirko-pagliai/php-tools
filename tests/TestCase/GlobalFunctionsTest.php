@@ -261,48 +261,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `first_key()` global function
-     * @test
-     */
-    public function testFirstKey()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals(0, first_key(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_key(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `first_value()` global function
-     * @test
-     */
-    public function testFirstValue()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('first', first_value(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_value(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `first_value_recursive()` global function
-     * @test
-     */
-    public function testFirstValueRecursive()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('first', first_value_recursive([['first', 'second'], ['third'], ['fourth']]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_value_recursive([['first', 'second'], ['third'], ['fourth']]);
-    }
-
-    /**
      * Test for `get_child_methods()` global function
      * @test
      */
@@ -529,36 +487,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_win()` global function on Unix
-     * @group onlyUnix
-     * @test
-     */
-    public function testIsWinOnUnix()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFalse(is_win());
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        is_win();
-    }
-
-    /**
-     * Test for `is_win()` global function on Windows
-     * @group onlyWindows
-     * @test
-     */
-    public function testIsWinOnWin()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(is_win());
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        is_win();
-    }
-
-    /**
      * Test for `is_writable_resursive()` global function
      * @test
      */
@@ -566,48 +494,6 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertTrue(is_writable_resursive(TMP));
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-    }
-
-    /**
-     * Test for `last_key()` global function
-     * @test
-     */
-    public function testLastKey()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals(2, last_key(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_key(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `last_value()` global function
-     * @test
-     */
-    public function testLastValue()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('third', last_value(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_value(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `last_value_recursive()` global function
-     * @test
-     */
-    public function testLastValueRecursive()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('fourth', last_value_recursive([['first', 'second'], ['third'], ['fourth']]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**
