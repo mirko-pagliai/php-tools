@@ -36,7 +36,7 @@ if (!function_exists('array_clean')) {
     function array_clean(array $array, $callback = null, $flag = 0)
     {
         $keys = array_keys($array);
-        $hasOnlyNumericKeys = $keys  === array_filter($keys, 'is_numeric');
+        $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
         $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
         $array = array_unique($array);
 

@@ -40,7 +40,7 @@ class GlobalFunctionsTest extends TestCase
 
         $array = ['a' => 'first', 0 => 'second', false, 'c' => 'third', 'd' => 'second'];
         $this->assertSame(['a' => 'first', 0 => 'second', 'c' => 'third'], array_clean($array));
-        $this->assertSame(['a' => 'first', 0 => 'second',], array_clean($array, $filterMethod));
+        $this->assertSame(['a' => 'first', 0 => 'second'], array_clean($array, $filterMethod));
 
         $expected = ['a' => 'first', 1 => false, 'c' => 'third', 'd' => 'second'];
         $this->assertSame($expected, array_clean($array, $filterMethod, ARRAY_FILTER_USE_KEY));
