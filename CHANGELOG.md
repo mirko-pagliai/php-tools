@@ -30,6 +30,7 @@
 
 ## 1.1 branch
 ### 1.1.13
+* added `array_clean()` global function;
 * added `is_html()` global function. This also provides the `assertIsHtml()`
     assertion method for the `TestTrait`;
 * `Apache` class is now deprecated and will be removed in a later version.

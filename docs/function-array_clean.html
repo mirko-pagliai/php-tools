@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Deprecated Function safe_symlink | php-tools</title>
+	<title>Function array_clean | php-tools</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -54,7 +54,7 @@
 
 			<h3>Functions</h3>
 			<ul>
-				<li><a href="function-array_clean.html">array_clean</a></li>
+				<li class="active"><a href="function-array_clean.html">array_clean</a></li>
 				<li><a href="function-array_key_first.html">array_key_first</a></li>
 				<li><a href="function-array_key_last.html">array_key_last</a></li>
 				<li><a href="function-array_value_first.html">array_value_first</a></li>
@@ -101,7 +101,7 @@
 				<li><a href="function-safe_mkdir.html" class="deprecated">safe_mkdir</a></li>
 				<li><a href="function-safe_rmdir.html" class="deprecated">safe_rmdir</a></li>
 				<li><a href="function-safe_rmdir_recursive.html" class="deprecated">safe_rmdir_recursive</a></li>
-				<li class="active"><a href="function-safe_symlink.html" class="deprecated">safe_symlink</a></li>
+				<li><a href="function-safe_symlink.html" class="deprecated">safe_symlink</a></li>
 				<li><a href="function-safe_unlink.html" class="deprecated">safe_unlink</a></li>
 				<li><a href="function-safe_unlink_recursive.html" class="deprecated">safe_unlink_recursive</a></li>
 				<li><a href="function-safe_unserialize.html" class="deprecated">safe_unserialize</a></li>
@@ -156,40 +156,53 @@
 	</div>
 
 <div id="content" class="function">
-	<h1 class="deprecated">Function safe_symlink</h1>
+	<h1>Function array_clean</h1>
 
 
 	<div class="description">
-	<p>Safe alias for <code>symlink()</code> function</p>
+	<p>Cleans an array. It filters elements, removes duplicate values and reorders the keys.</p>
+
+<p>Elements will be filtered with the <code>array_filter()</code> function. If<code>$callback</code> is <code>null</code>, all entries of array equal to <code>FALSE</code>  will be removed.</p>
+
+<p>The keys will be re-ordered with the `array_values() function only if all the keys in the original array are numeric.</p>
 	</div>
 
 	<div class="info">
 		
 		
-				<b>Deprecated:</b>
-				1.1.11<br>
 				<b>Copyright:</b>
 				Copyright (c) Mirko Pagliai<br>
 				<b>License:</b>
 				<a href="https://opensource.org/licenses/mit-license.php">MIT License</a><br>
+				<b>Since:</b>
+				1.1.13<br>
+				<b>Link:</b>
+				<a href="http://php.net/manual/en/function.array-filter.php">http://php.net/manual/en/function.array-filter.php</a><br>
 		<b>Located at</b>
-		<a href="source-function-safe_symlink.html#120-132" title="Go to source code">
-			safe_functions.php
+		<a href="source-function-array_clean.html#18-45" title="Go to source code">
+			global_functions.php
 		</a><br>
 	</div>
 
 
 	<table class="summary" id="parameters">
 	<caption>Parameters summary</caption>
-	<tr id="$target">
-		<td class="name"><code>string</code></td>
-		<td class="value"><code><var>$target</var></code></td>
-		<td>Target of the link</td>
+	<tr id="$array">
+		<td class="name"><code>array</code></td>
+		<td class="value"><code><var>$array</var></code></td>
+		<td>Array you want to clean</td>
 	</tr>
-	<tr id="$link">
-		<td class="name"><code>string</code></td>
-		<td class="value"><code><var>$link</var></code></td>
-		<td>The link name</td>
+	<tr id="$callback">
+		<td class="name"><code>callable|null</code></td>
+		<td class="value"><code><var>$callback</var> = <span class="php-keyword1">null</span></code></td>
+		<td>&lt;p&gt;The callback function to filter. If no
+ callback is supplied, all entries of array equal to &lt;code&gt;FALSE&lt;/code&gt;  will be
+ removed&lt;/p&gt;</td>
+	</tr>
+	<tr id="$flag">
+		<td class="name"><code>integer</code></td>
+		<td class="value"><code><var>$flag</var> = <span class="php-num">0</span></code></td>
+		<td>Flag determining what arguments are sent to callback</td>
 	</tr>
 	</table>
 
@@ -197,10 +210,10 @@
 	<caption>Return value summary</caption>
 	<tr>
 		<td class="name"><code>
-			boolean
+			array
 		</code></td>
 		<td>
-			bool
+			array
 		</td>
 	</tr>
 	</table>

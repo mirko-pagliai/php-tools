@@ -14,6 +14,37 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('array_clean')) {
+    /**
+     * Cleans an array. It filters elements, removes duplicate values and
+     *  reorders the keys.
+     *
+     * Elements will be filtered with the `array_filter()` function. If`$callback`
+     *  is `null`, all entries of array equal to `FALSE`  will be removed.
+     *
+     * The keys will be re-ordered with the `array_values() function only if all
+     *  the keys in the original array are numeric.
+     * @param array $array Array you want to clean
+     * @param callback|null $callback The callback function to filter. If no
+     *  callback is supplied, all entries of array equal to `FALSE`  will be
+     *  removed
+     * @param int $flag Flag determining what arguments are sent to callback
+     * @return array
+     * @link http://php.net/manual/en/function.array-filter.php
+     * @since 1.1.13
+     */
+    function array_clean(array $array, $callback = null, $flag = 0)
+    {
+        $keys = array_keys($array);
+        $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
+        $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
+        $array = array_unique($array);
+
+        //Performs `array_values()` only if all array keys are numeric
+        return $hasOnlyNumericKeys ? array_values($array) : $array;
+    }
+}
+
 if (!function_exists('array_key_first')) {
     /**
      * Returns the first key of an array.
