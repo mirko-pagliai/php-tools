@@ -25,6 +25,7 @@
     take a string as first `$filename` argument, so they no longer take an array.
     If you want to check an array of filename, use the `array_map()` function;  
 * removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
+* removed deprecated `Apache` class;
 * removed all deprecated "safe" functions.
 
 ## 1.1 branch
