@@ -25,6 +25,28 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `array_clean()` global function
+     * @test
+     */
+    public function testArrayClean()
+    {
+        $filterMethod = function ($value) {
+            return $value && $value != 'third';
+        };
+
+        $array = ['first', 'second', false, 0, 'second', 'third', null, '', 'fourth'];
+        $this->assertSame(['first', 'second', 'third', 'fourth'], array_clean($array));
+        $this->assertSame(['first', 'second', 'fourth'], array_clean($array, $filterMethod));
+
+        $array = ['a' => 'first', 0 => 'second', false, 'c' => 'third', 'd' => 'second'];
+        $this->assertSame(['a' => 'first', 0 => 'second', 'c' => 'third'], array_clean($array));
+        $this->assertSame(['a' => 'first', 0 => 'second'], array_clean($array, $filterMethod));
+
+        $expected = ['a' => 'first', 1 => false, 'c' => 'third', 'd' => 'second'];
+        $this->assertSame($expected, array_clean($array, $filterMethod, ARRAY_FILTER_USE_KEY));
+    }
+
+    /**
      * Test for `array_key_first()` global function
      * @test
      */
@@ -236,17 +258,17 @@ class GlobalFunctionsTest extends TestCase
             ['.hiddenFile'],
             ['.hiddenFile', 'file2', 'file3'],
         ] as $exceptions) {
-            $currentExpectedFiles = array_values(array_filter($expectedFiles, function ($value) use ($exceptions) {
+            $currentExpectedFiles = array_clean($expectedFiles, function ($value) use ($exceptions) {
                 return !in_array(basename($value), $exceptions);
-            }));
+            });
             $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
         }
 
         //Excludes hidden files
         $removeHiddenDirsAndFiles = function ($values) {
-            return array_values(array_filter($values, function ($value) {
+            return array_clean($values, function ($value) {
                 return strpos($value, DS . '.') === false;
-            }));
+            });
         };
         $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
         $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
