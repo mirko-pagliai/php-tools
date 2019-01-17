@@ -43,12 +43,6 @@ class BodyParser
     protected $host;
 
     /**
-     * Reference url. Used to determine the relative links
-     * @var string
-     */
-    protected $url;
-
-    /**
      * Scheme of the reference url
      * @var string
      */
@@ -76,6 +70,12 @@ class BodyParser
     ];
 
     /**
+     * Reference url. Used to determine the relative links
+     * @var string
+     */
+    protected $url;
+
+    /**
      * Constructor
      * @param string|StreamInterface $body Body as string or `StreamInterface`
      * @param string $url Reference url. Used to determine the relative links
@@ -87,9 +87,9 @@ class BodyParser
     public function __construct($body, $url)
     {
         $this->body = $body instanceof StreamInterface ? (string)$body : $body;
-        $this->url = $url;
-        $this->scheme = parse_url($url, PHP_URL_SCHEME);
         $this->host = parse_url($url, PHP_URL_HOST);
+        $this->scheme = parse_url($url, PHP_URL_SCHEME);
+        $this->url = $url;
     }
 
     /**
@@ -165,6 +165,6 @@ class BodyParser
      */
     public function isHtml()
     {
-        return strcasecmp($this->body, strip_tags($this->body)) !== 0;
+        return is_html($this->body);
     }
 }

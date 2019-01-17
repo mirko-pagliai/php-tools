@@ -24,6 +24,7 @@ use Traversable;
  * @method void assertIsBool($var, $message = '') Asserts that `$var` is a boolean
  * @method void assertIsCallable($var, $message = '') Asserts that `$var` is a callable
  * @method void assertIsFloat($var, $message = '') Asserts that `$var` is a float
+ * @method void assertIsHtml($var, $message = '') Asserts that `$var` is an html string
  * @method void assertIsInt($var, $message = '') Asserts that `$var` is an int
  * @method void assertIsIterable($var, $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
  * @method void assertIsJson($var, $message = '') Asserts that `$var` is a json string

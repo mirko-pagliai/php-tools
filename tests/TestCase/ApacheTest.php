@@ -12,6 +12,7 @@
  */
 namespace Tools\Test;
 
+use PHPUnit\Framework\Error\Deprecated;
 use Tools\Apache;
 use Tools\TestSuite\TestCase;
 
@@ -21,21 +22,24 @@ use Tools\TestSuite\TestCase;
 class ApacheTest extends TestCase
 {
     /**
-     * Tests for `isEnabled()` method
+     * Test for all functions
      * @test
      */
-    public function testIsEnabled()
+    public function testAllMethods()
     {
+        //The class is deprecated, so it is not necessary to perform
+        //  extensive tests
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(Apache::isEnabled('mod_rewrite'));
         $this->assertFalse(Apache::isEnabled('mod_noExisting'));
-    }
-
-    /**
-     * Tests for `version()` method
-     * @test
-     */
-    public function testVersion()
-    {
         $this->assertEquals('1.3.29', Apache::version());
+        error_reporting($errorReporting);
+
+        $this->assertException(Deprecated::class, function () {
+            Apache::isEnabled('mod_rewrite');
+        });
+        $this->assertException(Deprecated::class, function () {
+            Apache::version();
+        });
     }
 }

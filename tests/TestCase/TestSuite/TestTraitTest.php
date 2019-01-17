@@ -50,6 +50,7 @@ class TestTraitTest extends TestCase
         //Methods that use the `assertTrue()` method, jointly to the "is" php functions
         foreach ([
             'assertIsCallable' => [$this, __METHOD__],
+            'assertIsHtml' => '<b>string</b>',
             'assertIsIterable' => new ExampleOfTraversable,
             'assertIsJson' => json_encode('string'),
             'assertIsPositive' => 1,

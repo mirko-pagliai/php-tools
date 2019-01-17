@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Deprecated Function last_key | php-tools</title>
+	<title>Function is_html | php-tools</title>
 
 	<link rel="stylesheet" href="resources/style.css?c2f33731c1948fbed7c333554678bfa68d4817da">
 
@@ -76,7 +76,7 @@
 				<li><a href="function-get_hostname_from_url.html">get_hostname_from_url</a></li>
 				<li><a href="function-is_dir_or_fail.html">is_dir_or_fail</a></li>
 				<li><a href="function-is_external_url.html">is_external_url</a></li>
-				<li><a href="function-is_html.html">is_html</a></li>
+				<li class="active"><a href="function-is_html.html">is_html</a></li>
 				<li><a href="function-is_iterable.html">is_iterable</a></li>
 				<li><a href="function-is_json.html">is_json</a></li>
 				<li><a href="function-is_positive.html">is_positive</a></li>
@@ -88,7 +88,7 @@
 				<li><a href="function-is_writable_or_fail.html">is_writable_or_fail</a></li>
 				<li><a href="function-is_writable_resursive.html">is_writable_resursive</a></li>
 				<li><a href="function-key_exists_or_fail.html">key_exists_or_fail</a></li>
-				<li class="active"><a href="function-last_key.html" class="deprecated">last_key</a></li>
+				<li><a href="function-last_key.html" class="deprecated">last_key</a></li>
 				<li><a href="function-last_value.html" class="deprecated">last_value</a></li>
 				<li><a href="function-last_value_recursive.html" class="deprecated">last_value_recursive</a></li>
 				<li><a href="function-objects_map.html">objects_map</a></li>
@@ -155,26 +155,24 @@
 	</div>
 
 <div id="content" class="function">
-	<h1 class="deprecated">Function last_key</h1>
+	<h1>Function is_html</h1>
 
 
 	<div class="description">
-	<p>Returns the last key of an array</p>
+	<p>Checks if a string is HTML</p>
 	</div>
 
 	<div class="info">
 		
 		
-				<b>Deprecated:</b>
-				1.1.12 Use <code>array_key_last()</code> instead<br>
 				<b>Copyright:</b>
 				Copyright (c) Mirko Pagliai<br>
 				<b>License:</b>
 				<a href="https://opensource.org/licenses/mit-license.php">MIT License</a><br>
 				<b>Since:</b>
-				1.1.10<br>
+				1.1.13<br>
 		<b>Located at</b>
-		<a href="source-function-last_key.html#565-577" title="Go to source code">
+		<a href="source-function-is_html.html#437-446" title="Go to source code">
 			global_functions.php
 		</a><br>
 	</div>
@@ -182,10 +180,10 @@
 
 	<table class="summary" id="parameters">
 	<caption>Parameters summary</caption>
-	<tr id="$array">
-		<td class="name"><code>array</code></td>
-		<td class="value"><code><var>$array</var></code></td>
-		<td>Array</td>
+	<tr id="$string">
+		<td class="name"><code>string</code></td>
+		<td class="value"><code><var>$string</var></code></td>
+		<td>String</td>
 	</tr>
 	</table>
 
@@ -193,10 +191,10 @@
 	<caption>Return value summary</caption>
 	<tr>
 		<td class="name"><code>
-			mixed
+			boolean
 		</code></td>
 		<td>
-			mixed
+			bool
 		</td>
 	</tr>
 	</table>
