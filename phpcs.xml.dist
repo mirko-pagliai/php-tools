@@ -16,6 +16,5 @@
     </rule>
 
     <exclude-pattern>/coverage</exclude-pattern>
-    <exclude-pattern>/docs</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>
 </ruleset>
