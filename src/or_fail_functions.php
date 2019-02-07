@@ -77,7 +77,7 @@ if (!function_exists('property_exists_or_fail')) {
      */
     function property_exists_or_fail($object, $property, $message = 'Object does not have `%s` property', $exception = PropertyNotExistsException::class)
     {
-        foreach((array)$property as $name) {
+        foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
             is_true_or_fail($result, sprintf($message, $name), $exception);
         }
