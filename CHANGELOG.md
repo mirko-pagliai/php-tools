@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.14
+* added `property_exists_or_fail()` global function and the
+    `PropertyNotExistsException` exception class.
+
 ### 1.1.13
 * added `array_clean()` global function;
 * added `is_html()` global function. This also provides the `assertIsHtml()`

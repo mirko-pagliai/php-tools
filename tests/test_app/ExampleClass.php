@@ -43,4 +43,9 @@ class ExampleClass
     {
         return $this->$name;
     }
+
+    public function has($property)
+    {
+        return property_exists($this, $property);
+    }
 }
