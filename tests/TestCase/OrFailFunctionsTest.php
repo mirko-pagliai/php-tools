@@ -12,6 +12,7 @@
  */
 namespace Tools\Test;
 
+use App\ExampleClass;
 use ErrorException;
 use Exception;
 use RuntimeException;
@@ -21,6 +22,7 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
+use Tools\Exception\PropertyNotExistsException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -39,27 +41,6 @@ class OrFailFunctionsTest extends TestCase
         $this->expectException(FileNotExistsException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
         file_exists_or_fail(TMP . 'noExisting');
-    }
-
-    /**
-     * Test for `key_exists_or_fail()` "or fail" function
-     * @test
-     */
-    public function testKeyExistsOrFail()
-    {
-        $array = ['a' => 'alfa', 'beta', 'gamma'];
-        key_exists_or_fail('a', $array);
-        key_exists_or_fail(['a', 1], $array);
-
-        foreach ([
-            'b',
-            ['a', 'b'],
-            ['b', 'c'],
-        ] as $key) {
-            $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
-                key_exists_or_fail($key, $array);
-            }, 'Key `b` does not exist');
-        }
     }
 
     /**
@@ -153,5 +134,58 @@ class OrFailFunctionsTest extends TestCase
         $this->expectException(NotWritableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not writable');
         is_writable_or_fail(TMP . 'noExisting');
+    }
+
+    /**
+     * Test for `key_exists_or_fail()` "or fail" function
+     * @test
+     */
+    public function testKeyExistsOrFail()
+    {
+        $array = ['a' => 'alfa', 'beta', 'gamma'];
+        key_exists_or_fail('a', $array);
+        key_exists_or_fail(['a', 1], $array);
+
+        foreach ([
+            'b',
+            ['a', 'b'],
+            ['b', 'c'],
+        ] as $key) {
+            $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
+                key_exists_or_fail($key, $array);
+            }, 'Key `b` does not exist');
+        }
+    }
+
+    /**
+     * Test for `property_exists_or_fail()` "or fail" function
+     * @test
+     */
+    public function testPropertyExistsOrFail()
+    {
+        $object = new stdClass;
+        $object->name = 'My name';
+        property_exists_or_fail($object, 'name');
+
+        property_exists_or_fail(new ExampleClass, 'publicProperty');
+
+        $object = $this->getMockBuilder(ExampleClass::class)
+            ->setMethods(['has'])
+            ->getMock();
+
+        $object->expects($this->once())
+            ->method('has')
+            ->with('publicProperty')
+            ->willReturn(true);
+
+        property_exists_or_fail($object, 'publicProperty');
+
+        $this->assertException(PropertyNotExistsException::class, function () {
+            property_exists_or_fail(new stdClass, 'noExisting');
+        }, 'Object does not have `noExisting` property');
+
+        $this->assertException(PropertyNotExistsException::class, function () {
+            property_exists_or_fail(new ExampleClass, 'noExisting');
+        }, 'Object does not have `noExisting` property');
     }
 }
