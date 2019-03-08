@@ -103,6 +103,22 @@ class EntityTest extends TestCase
     }
 
     /**
+     * Test for `toArray()` method
+     * @test
+     */
+    public function testToArray()
+    {
+        $expected = ['code' => 200, 'newKey' => 'newValue'];
+        $result = $this->Entity->set('newKey', 'newValue')->toArray();
+        $this->assertSame($expected, $result);
+
+        $expected += ['subEntity' => ['subKey' => 'subValue']];
+        $subEntity = new Entity(['subKey' => 'subValue']);
+        $result = $this->Entity->set(compact('subEntity'))->toArray();
+        $this->assertSame($expected, $result);
+    }
+
+    /**
      * Test for `ArrayAccess` interface, so for `offsetExists()`, `offsetGet()`,
      *  `offsetSet()` and `offsetUnset()` methods
      * @test

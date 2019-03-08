@@ -149,4 +149,22 @@ abstract class Entity implements ArrayAccess
 
         return $this;
     }
+
+    /**
+     * Returns an array with all the properties that have been set to this entity
+     * @return array
+     * @uses $properties
+     */
+    public function toArray()
+    {
+        $properties = $this->properties;
+
+        foreach ($properties as $name => $value) {
+            if ($value instanceof Entity) {
+                $properties[$name] = $value->toArray();
+            }
+        }
+
+        return $properties;
+    }
 }
