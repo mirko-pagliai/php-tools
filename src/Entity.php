@@ -42,11 +42,11 @@ abstract class Entity implements ArrayAccess
      * Called by `var_dump()` when dumping the object to get the properties that
      *  should be shown
      * @return array
-     * @uses $properties
+     * @uses toArray()
      */
     public function __debugInfo()
     {
-        return $this->properties;
+        return $this->toArray();
     }
 
     /**
