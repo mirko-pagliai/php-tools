@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.15
+* added `Entity` class.
+
 ### 1.1.14
 * added `property_exists_or_fail()` global function and the
     `PropertyNotExistsException` exception class.
