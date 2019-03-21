@@ -22,8 +22,7 @@
         },
         "files": [
             "src/global_functions.php",
-            "src/or_fail_functions.php",
-            "src/safe_functions.php"
+            "src/or_fail_functions.php"
         ]
     },
     "autoload-dev": {

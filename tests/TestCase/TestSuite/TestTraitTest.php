@@ -15,7 +15,6 @@ namespace Tools\Test\TestSuite;
 use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfTraversable;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
@@ -47,34 +46,10 @@ class TestTraitTest extends TestCase
             self::{$assertMethod}($value);
         }
 
-        //Methods that use the `assertTrue()` method, jointly to the "is" php functions
-        foreach ([
-            'assertIsCallable' => [$this, __METHOD__],
-            'assertIsHtml' => '<b>string</b>',
-            'assertIsIterable' => new ExampleOfTraversable,
-            'assertIsJson' => json_encode('string'),
-            'assertIsPositive' => 1,
-            'assertIsResource' => stream_context_create(),
-            'assertIsUrl' => 'http://google.com',
-        ] as $assertMethod => $value) {
-            $this->{$assertMethod}($value);
-            self::{$assertMethod}($value);
-        }
-
-        //Assertion failure
-        if (version_compare(PHP_VERSION, '7.0', '>=')) {
-            $expectedMessage = 'Failed asserting that \'string\' is of type "array".';
-        } else {
-            $expectedMessage = 'Failed asserting that false is true.';
-        }
-        $this->assertException(AssertionFailedError::class, function () {
-            $this->assertIsArray('string');
-        }, $expectedMessage);
-
         //Missing argument
         $this->assertException(BadMethodCallException::class, function () {
-            $this->assertIsArray();
-        }, 'Method ' . get_parent_class($this) . '::assertIsArray() expects at least 1 argument, maximum 2, 0 passed');
+            $this->assertIsJson();
+        }, 'Method ' . get_parent_class($this) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed');
 
         //Calling a no existing method or a no existing "assertIs" method
         foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
@@ -90,6 +65,8 @@ class TestTraitTest extends TestCase
      */
     public function testAssertArrayKeysEqual()
     {
+        $this->assertArrayKeysEqual([], []);
+
         foreach ([
             ['key1' => 'value1', 'key2' => 'value2'],
             ['key2' => 'value2', 'key1' => 'value1'],
@@ -99,21 +76,6 @@ class TestTraitTest extends TestCase
 
         $this->expectException(AssertionFailedError::class);
         $this->assertArrayKeysEqual(['key2'], $array);
-    }
-
-    /**
-     * Tests for `assertContainsInstanceOf()` method
-     * @test
-     */
-    public function testAssertContainsInstanceOf()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertContainsInstanceOf('stdClass', [new stdClass, new stdClass]);
-        $this->assertContainsInstanceOf('stdClass', new ExampleOfTraversable([new stdClass, new stdClass]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertContainsInstanceOf('stdClass', new stdClass);
     }
 
     /**
@@ -188,24 +150,6 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertFileExists()` method
-     * @test
-     */
-    public function testAssertFileExists()
-    {
-        $files = [create_tmp_file(), create_tmp_file()];
-        $this->assertFileExists($files[0]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileExists($files);
-        $this->assertFileExists(new ExampleOfTraversable($files));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileExists($files);
-    }
-
-    /**
      * Test for `assertFileExtension()` method
      * @ŧest
      */
@@ -213,18 +157,7 @@ class TestTraitTest extends TestCase
     {
         $this->assertFileExtension('jpg', 'file.jpg');
         $this->assertFileExtension('jpeg', 'FILE.JPEG');
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileExtension('jpg', [
-            'file.jpg',
-            'file.JPG',
-            'path/to/file.jpg',
-            '/full/path/to/file.jpg',
-        ]);
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileExtension('jpg', ['file.jpg', 'file.JPG']);
+        $this->assertFileExtension(['jpg', 'jpeg'], 'file.jpg');
     }
 
     /**
@@ -233,33 +166,9 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $files = [create_tmp_file('string'), create_tmp_file('string')];
-        $this->assertFileMime($files[0], 'text/plain');
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileMime($files, 'text/plain');
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileMime($files, 'text/plain');
-    }
-
-    /**
-     * Tests for `assertFileNotExists()` method
-     * @test
-     */
-    public function testAssertFileNotExists()
-    {
-        $files = [TMP . 'noExisting1', TMP . 'noExisting2'];
-        $this->assertFileNotExists($files[0]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFileNotExists($files);
-        $this->assertFileNotExists(new ExampleOfTraversable($files));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFileNotExists($files);
+        $file = create_tmp_file('string');
+        $this->assertFileMime('text/plain', $file);
+        $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
 
     /**
@@ -269,24 +178,12 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $files = [create_tmp_file(), create_tmp_file()];
-        $this->assertFilePerms($files[0], '0600');
-        $this->assertFilePerms($files[0], 0600);
-        $this->assertFilePerms($files[0], ['0600', '0666']);
-        $this->assertFilePerms($files[0], [0600, 0666]);
-        $this->assertFilePerms($files[0], ['0600', 0666]);
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFilePerms($files, '0600');
-        $this->assertFilePerms($files, 0600);
-        $this->assertFilePerms($files, ['0600', '0666']);
-        $this->assertFilePerms($files, [0600, 0666]);
-        $this->assertFilePerms(new ExampleOfTraversable($files), '0600');
-        $this->assertFilePerms(new ExampleOfTraversable($files), ['0600', '0666']);
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->assertFilePerms($files, '0600');
+        $file = create_tmp_file();
+        $this->assertFilePerms('0600', $file);
+        $this->assertFilePerms(0600, $file);
+        $this->assertFilePerms(['0600', '0666'], $file);
+        $this->assertFilePerms([0600, 0666], $file);
+        $this->assertFilePerms(['0600', 0666], $file);
     }
 
     /**
@@ -297,7 +194,8 @@ class TestTraitTest extends TestCase
     {
         $filename = TMP . 'pic.jpg';
         imagejpeg(imagecreatetruecolor(120, 20), $filename);
-        $this->assertImageSize($filename, 120, 20);
+        $this->assertImageSize(120, 20, $filename);
+        $this->assertImageSize('120', '20', $filename);
     }
 
     /**

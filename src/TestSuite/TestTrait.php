@@ -16,7 +16,6 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\Constraint\IsType;
-use Traversable;
 
 /**
  * A trait that provides some assertion methods
@@ -101,29 +100,10 @@ trait TestTrait
      */
     protected static function assertArrayKeysEqual(array $expectedKeys, array $array, $message = '')
     {
-        self::assertIsArray($array);
         $keys = array_keys($array);
         sort($keys);
         sort($expectedKeys);
         self::assertEquals($expectedKeys, $keys, $message);
-    }
-
-    /**
-     * Asserts that an array or an instance of `Traversable` contains objects
-     *  that are instances of `$expectedInstance`
-     * @deprecated 1.1.11 Use `assertContainsOnlyInstancesOf()` instead
-     * @param string $expectedInstance Expected instance
-     * @param array|Traversable $value Values
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.1.0
-     */
-    protected static function assertContainsInstanceOf($expectedInstance, $value, $message = '')
-    {
-        deprecationWarning('The `assertContainsInstanceOf()` method is deprecated and will be removed in a later version. Use `assertContainsOnlyInstancesOf()` instead');
-
-        parent::assertContainsOnlyInstancesOf($expectedInstance, $value, $message);
     }
 
     /**
@@ -157,138 +137,78 @@ trait TestTrait
     }
 
     /**
-     * Asserts that one or more filenames exist.
+     * Asserts that a filename has the `$expectedExtension`.
      *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
-     * @param string|array|Traversable $filename Filenames
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     */
-    public static function assertFileExists($filename, $message = '')
-    {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileExists($filename, $message);
-        }
-    }
-
-    /**
-     * Asserts that one or more filenames have the `$expectedExtension`.
+     * If `$expectedExtension` is an array, asserts that the filename has at
+     *  least one of those values.
      *
-     * It is not necessary they actually exist.
+     * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
-     * @param string $expectedExtension Expected extension
-     * @param string|array|Traversable $filename Filenames
+     * @param string|array $expectedExtension Expected extension
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileExtension()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            self::assertEquals($expectedExtension, get_extension($filename), $message);
-        }
+        self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
     }
 
     /**
-     * Asserts that one or more filenames have a MIME content type
-     * @param string|array|Traversable $filename Filenames
-     * @param string $expectedMime MIME content type
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @todo $filename and $expectedMime arguments should be reversed
-     */
-    protected static function assertFileMime($filename, $expectedMime, $message = '')
-    {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileMime()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            self::assertFileExists($filename);
-            self::assertEquals($expectedMime, mime_content_type($filename), $message);
-        }
-    }
-
-    /**
-     * Asserts that one or more filenames do not exist.
+     * Asserts that a filename have a MIME content type.
      *
-     * Unlike the original method, this method can take an array or a
-     *  `Traversable` instance.
-     * @deprecated 1.1.12 The same method is provided by PHPUnit and takes a string as argument
-     * @param string|array|Traversable $filename Filenames
+     * If `$expectedMime` is an array, asserts that the filename has at
+     *  least one of those values.
+     * @param string|array $expectedMime MIME content type
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    public static function assertFileNotExists($filename, $message = '')
+    protected static function assertFileMime($expectedMime, $filename, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFileNotExists()` method is deprecated and will be removed in a later version. The same method is provided by PHPUnit and takes a string as argument. To check an array of filename, use the `array_map()` function');
-        }
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileNotExists($filename, $message);
-        }
+        self::assertFileExists($filename);
+        self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
     }
 
     /**
-     * Asserts that one or more filenames have some file permissions.
+     * Asserts that a filename has some file permissions.
      *
-     * If only one permission value is passed, asserts that all files have that
-     *  value. If more permission values are passed, asserts that all files have
-     *  at least one of those values.
-     * @param string|array|Traversable $filename Filenames
+     * If `$expectedPerms` is an array, asserts that the filename has at
+     *  least one of those values
      * @param string|int|array $expectedPerms Expected permission values as a
      *  four-chars string or octal value
+     * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      * @since 1.0.9
      */
-    protected static function assertFilePerms($filename, $expectedPerms, $message = '')
+    protected static function assertFilePerms($expectedPerms, $filename, $message = '')
     {
-        if (!is_string($filename)) {
-            deprecationWarning('The `assertFilePerms()` method is deprecated when used with an array of filename. To check an array of filename, use the `array_map()` function');
-        }
+        parent::assertFileExists($filename);
 
-        $expectedPerms = array_map(function ($perm) {
-            return is_string($perm) ? $perm : sprintf("%04o", $perm);
-        }, (array)$expectedPerms);
-
-        foreach (is_string($filename) ? [$filename] : $filename as $filename) {
-            parent::assertFileExists($filename);
-            self::assertContains(substr(sprintf('%o', fileperms($filename)), -4), $expectedPerms, $message);
-        }
+        $expectedPerms = array_map('fileperms_to_string', (array)$expectedPerms);
+        self::assertContains(fileperms_as_octal($filename), $expectedPerms, $message);
     }
 
     /**
      * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
+     * @param int|string $expectedWidth Expected image width
+     * @param int|string $expectedHeight Expected mage height
      * @param string $filename Path to the tested file
-     * @param int $expectedWidth Expected image width
-     * @param int $expectedHeight Expected mage height
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    protected static function assertImageSize($filename, $expectedWidth, $expectedHeight, $message = '')
+    protected static function assertImageSize($expectedWidth, $expectedHeight, $filename, $message = '')
     {
-        self::assertFileExists($filename, $message);
-        list($width, $height) = getimagesize($filename);
-        self::assertEquals($width, $expectedWidth);
-        self::assertEquals($height, $expectedHeight);
+        self::assertFileExists($filename);
+        list($actualWidth, $actualHeight) = getimagesize($filename);
+        self::assertEquals($actualWidth, $expectedWidth, $message);
+        self::assertEquals($actualHeight, $expectedHeight, $message);
     }
 
     /**
@@ -298,7 +218,6 @@ trait TestTrait
      *  generated message
      * @return void
      * @since 1.0.6
-     * @todo array_filter?
      */
     protected static function assertIsArrayNotEmpty($var, $message = '')
     {
@@ -330,9 +249,9 @@ trait TestTrait
      */
     protected static function assertSameMethods($firstClass, $secondClass, $message = '')
     {
-        list($firstClass, $secondClass) = [get_class_methods($firstClass), get_class_methods($secondClass)];
-        sort($firstClass);
-        sort($secondClass);
-        self::assertEquals($firstClass, $secondClass, $message);
+        list($firstClassMethods, $secondClassMethods) = [get_class_methods($firstClass), get_class_methods($secondClass)];
+        sort($firstClassMethods);
+        sort($secondClassMethods);
+        self::assertEquals($firstClassMethods, $secondClassMethods, $message);
     }
 }

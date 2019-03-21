@@ -298,70 +298,33 @@ if (!function_exists('dir_tree')) {
     }
 }
 
-if (!function_exists('ends_with')) {
+if (!function_exists('fileperms_as_octal')) {
     /**
-     * Checks if a string ends with a string
-     * @deprecated 1.1.12 Use `string_ends_with()` instead
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.6
-     */
-    function ends_with($haystack, $needle)
-    {
-        deprecationWarning('The `ends_with()` function is deprecated and will be removed in a later version. Use `string_ends_with()` instead');
-
-        return string_ends_with($haystack, $needle);
-    }
-}
-
-if (!function_exists('first_key')) {
-    /**
-     * Returns the first key of an array
-     * @deprecated 1.1.12 Use `array_key_first()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function first_key(array $array)
-    {
-        deprecationWarning('The `first_key()` function is deprecated and will be removed in a later version. Use `array_key_first()` instead');
-
-        return array_key_first($array);
-    }
-}
-
-if (!function_exists('first_value')) {
-    /**
-     * Returns the first value of an array
-     * @deprecated 1.1.12 Use `array_value_first()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.1
-     */
-    function first_value(array $array)
-    {
-        deprecationWarning('The `first_value()` function is deprecated and will be removed in a later version. Use `array_value_first()` instead');
-
-        return array_value_first($array);
-    }
-}
-
-if (!function_exists('first_value_recursive')) {
-    /**
-     * Returns the first value of an array recursively.
+     * Gets permissions for the given file.
      *
-     * In other words, it returns the first value found that is not an array.
-     * @deprecated 1.1.12 Use `array_value_first_recursive()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
+     * Unlike the `fileperms()` function provided by PHP, this function returns
+     *  the permissions as four-chars string
+     * @link http://php.net/manual/en/function.fileperms.php
+     * @param string $filename Path to the file
+     * @return string Permissions as four-chars string
+     * @since 1.2.0
      */
-    function first_value_recursive(array $array)
+    function fileperms_as_octal($filename)
     {
-        deprecationWarning('The `first_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_first_recursive()` instead');
+        return (string)substr(sprintf('%o', fileperms($filename)), -4);
+    }
+}
 
-        return array_value_first_recursive($array);
+if (!function_exists('fileperms_to_string')) {
+    /**
+     * Returns permissions from octal value (`0755`) to string (`'0755'`)
+     * @param int|string $perms Permissions as octal value
+     * @return string Permissions as four-chars string
+     * @since 1.2.0
+     */
+    function fileperms_to_string($perms)
+    {
+        return is_string($perms) ? $perms : sprintf("%04o", $perms);
     }
 }
 
@@ -549,20 +512,6 @@ if (!function_exists('is_url')) {
     }
 }
 
-if (!function_exists('is_win')) {
-    /**
-     * Returns `true` if the environment is Windows
-     * @deprecated 1.1.11 Use the `IS_WIN` constant instead
-     * @return bool
-     */
-    function is_win()
-    {
-        deprecationWarning('The `is_win()` function is deprecated and will be removed in a later version. Use the `IS_WIN` constant instead');
-
-        return IS_WIN;
-    }
-}
-
 if (!function_exists('is_writable_resursive')) {
     /**
      * Tells whether a directory and its subdirectories are writable.
@@ -589,56 +538,6 @@ if (!function_exists('is_writable_resursive')) {
         }
 
         return true;
-    }
-}
-
-if (!function_exists('last_key')) {
-    /**
-     * Returns the last key of an array
-     * @deprecated 1.1.12 Use `array_key_last()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function last_key(array $array)
-    {
-        deprecationWarning('The `last_key()` function is deprecated and will be removed in a later version. Use `array_key_last()` instead');
-
-        return array_key_last($array);
-    }
-}
-
-if (!function_exists('last_value')) {
-    /**
-     * Returns the last value of an array
-     * @deprecated 1.1.12 Use `array_value_last()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.1
-     */
-    function last_value(array $array)
-    {
-        deprecationWarning('The `last_value()` function is deprecated and will be removed in a later version. Use `array_value_last()` instead');
-
-        return array_value_last($array);
-    }
-}
-
-if (!function_exists('last_value_recursive')) {
-    /**
-     * Returns the last value of an array recursively.
-     *
-     * In other words, it returns the last value found that is not an array.
-     * @deprecated 1.1.12 Use `array_value_last_recursive()` instead
-     * @param array $array Array
-     * @return mixed
-     * @since 1.1.10
-     */
-    function last_value_recursive(array $array)
-    {
-        deprecationWarning('The `last_value_recursive()` function is deprecated and will be removed in a later version. Use `array_value_last_recursive()` instead');
-
-        return array_value_last_recursive($array);
     }
 }
 
@@ -710,23 +609,6 @@ if (!function_exists('rtr')) {
         }
 
         return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
-    }
-}
-
-if (!function_exists('starts_with')) {
-    /**
-     * Checks if a string starts with a string
-     * @deprecated 1.1.12 Use `string_starts_with()` instead
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.6
-     */
-    function starts_with($haystack, $needle)
-    {
-        deprecationWarning('The `starts_with()` function is deprecated and will be removed in a later version. Use `string_starts_with()` instead');
-
-        return string_starts_with($haystack, $needle);
     }
 }
 

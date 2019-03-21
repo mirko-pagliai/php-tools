@@ -1,4 +1,33 @@
 # 1.x branch
+## 1.2 branch
+### 1.2.0
+* added `fileperms_as_octal()` and `fileperms_to_string()` global functions;
+* arguments of the `assertFileMime()` assert method have been reversed
+    (`$expectedMime, $filename, $message = ''`). If `$expectedMime` is an array,
+    it asserts that the filename has at least one of those values;
+* arguments of the `assertFilePerms()` assert method have been reverse
+    (`$expectedPerms, $filename, $message = ''`);
+* arguments of the `assertImageSize()` assert method have been reverse
+    (`$expectedWidth, $expectedHeight, $filename, $message = ''`);
+* for the `assertFileExtension()` assert method, if `$expectedMime` is an array,
+    it asserts that the filename has at least one of those values;
+* removed deprecated `ends_with()` and `starts_with()` global functions, use
+    instead `string_ends_with()` and `string_starts_with()`;
+* removed deprecated `first_key()`, `first_value()`, `first_value_recursive()`,
+    `last_key()`, `last_value()` and `last_value_recursive()` global functions,
+    use instead `array_key_first()`, `array_value_first()`,
+    `array_value_first_recursive()`, `array_key_last()`, `array_value_last()` and
+    `array_value_last_recursive()`;
+* removed deprecated `is_win()` global function, use instead `IS_WIN` constant;
+* removed deprecated `assertContainsInstanceOf()`, `assertFileExists()` and
+    `assertFileNotExists()` assert methods;
+* `assertFileExtension()`, `assertFileMime()` and `assertFilePerms()` methods now
+    take a string as first `$filename` argument, so they no longer take an array.
+    If you want to check an array of filename, use the `array_map()` function;  
+* removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
+* removed deprecated `Apache` class;
+* removed all deprecated "safe" functions.
+
 ## 1.1 branch
 ### 1.1.16
 * added `url_to_absolute()` global function;
