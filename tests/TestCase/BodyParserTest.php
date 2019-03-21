@@ -21,25 +21,6 @@ use Tools\TestSuite\TestCase;
 class BodyParserTest extends TestCase
 {
     /**
-     * Test for `isHtml()` method
-     * @test
-     */
-    public function testIsHtml()
-    {
-        foreach ([
-            '<b>String</b>' => true,
-            '</b>' => true,
-            '<b>String' => true,
-            '<tag>String</tag>' => true,
-            'String' => false,
-            '' => false,
-            null => false,
-        ] as $string => $expected) {
-            $this->assertEquals($expected, (new BodyParser($string, null))->isHtml());
-        }
-    }
-
-    /**
      * Test for `extractLinks()` method
      * @test
      */

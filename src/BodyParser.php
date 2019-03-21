@@ -79,7 +79,6 @@ class BodyParser
     /**
      * Extracs links from body
      * @return array
-     * @uses isHtml()
      * @uses $body
      * @uses $extractedLinks
      * @uses $tags
@@ -91,7 +90,7 @@ class BodyParser
             return $this->extractedLinks;
         }
 
-        if (!$this->isHtml()) {
+        if (!is_html($this->body)) {
             return [];
         }
 
@@ -118,15 +117,5 @@ class BodyParser
         }
 
         return $this->extractedLinks = array_unique($links);
-    }
-
-    /**
-     * Checks if the body contains HTML code
-     * @return bool
-     * @uses $body
-     */
-    public function isHtml()
-    {
-        return is_html($this->body);
     }
 }
