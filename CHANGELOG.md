@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.1 branch
+### 1.1.16
+* added `url_to_absolute()` global function;
+* removed `BodyParser::_turnUrlAsAbsolute()` and `BodyParser::isHtml()` methods.
+
 ### 1.1.15
 * added `Entity` class.
 

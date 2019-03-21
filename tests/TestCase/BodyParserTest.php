@@ -21,48 +21,6 @@ use Tools\TestSuite\TestCase;
 class BodyParserTest extends TestCase
 {
     /**
-     * Test for `_turnUrlAsAbsolute()` method
-     * @test
-     */
-    public function testTurnUrlAsAbsolute()
-    {
-        foreach (['http', 'https', 'ftp'] as $scheme) {
-            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
-            $urls = [
-                'http://localhost/mysite' => 'http://localhost/mysite',
-                'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
-                '//localhost/mysite' => $scheme . '://localhost/mysite',
-                'page2.html' => $scheme . '://localhost/mysite/page2.html',
-                '/page3.html' => $scheme . '://localhost/page3.html',
-                'http://external' => 'http://external',
-            ];
-
-            foreach ($urls as $url => $expected) {
-                $this->assertEquals($expected, $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]));
-            }
-        }
-    }
-
-    /**
-     * Test for `isHtml()` method
-     * @test
-     */
-    public function testIsHtml()
-    {
-        foreach ([
-            '<b>String</b>' => true,
-            '</b>' => true,
-            '<b>String' => true,
-            '<tag>String</tag>' => true,
-            'String' => false,
-            '' => false,
-            null => false,
-        ] as $string => $expected) {
-            $this->assertEquals($expected, (new BodyParser($string, null))->isHtml());
-        }
-    }
-
-    /**
      * Test for `extractLinks()` method
      * @test
      */
@@ -116,5 +74,8 @@ class BodyParserTest extends TestCase
         $BodyParser = new BodyParser($html, 'http://localhost');
         $this->setProperty($BodyParser, 'extractedLinks', $expected);
         $this->assertEquals($expected, $BodyParser->extractLinks());
+
+        //No HTML
+        $this->assertEquals([], $getExtractedLinksMethod('no html'));
     }
 }

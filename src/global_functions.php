@@ -788,6 +788,20 @@ if (!function_exists('unlink_recursive')) {
     }
 }
 
+if (!function_exists('url_to_absolute')) {
+    /**
+     * Builds an absolute url
+     * @param string $path Basic path, on which to construct the absolute url
+     * @param string $relative Relative url to join
+     * @return string
+     * @since 1.1.16
+     */
+    function url_to_absolute($path, $relative)
+    {
+        return \phpUri::parse(clean_url($path, false, true) . '/')->join($relative);
+    }
+}
+
 if (!function_exists('which')) {
     /**
      * Executes the `which` command and shows the full path of (shell) commands
