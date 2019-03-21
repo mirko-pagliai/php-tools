@@ -37,18 +37,6 @@ class BodyParser
     protected $extractedLinks = [];
 
     /**
-     * Host of the reference url
-     * @var string
-     */
-    protected $host;
-
-    /**
-     * Scheme of the reference url
-     * @var string
-     */
-    protected $scheme;
-
-    /**
      * HTML tags that may contain links and therefore need to be scanned.
      *
      * Array with tag names as keys and attribute names as values.
@@ -80,57 +68,31 @@ class BodyParser
      * @param string|StreamInterface $body Body as string or `StreamInterface`
      * @param string $url Reference url. Used to determine the relative links
      * @uses $body
-     * @uses $host
-     * @uses $scheme
      * @uses $url
      */
     public function __construct($body, $url)
     {
         $this->body = $body instanceof StreamInterface ? (string)$body : $body;
-        $this->host = parse_url($url, PHP_URL_HOST);
-        $this->scheme = parse_url($url, PHP_URL_SCHEME);
         $this->url = $url;
-    }
-
-    /**
-     * Internal method to turn an url as absolute
-     * @param string $url Relative url
-     * @return string Absolute url
-     * @uses $host
-     * @uses $scheme
-     * @uses $url
-     */
-    protected function _turnUrlAsAbsolute($url)
-    {
-        if (is_url($url)) {
-            return $url;
-        }
-
-        if (string_starts_with($url, '//')) {
-            return $this->scheme . ':' . $url;
-        }
-
-        if (!string_starts_with($url, '/')) {
-            $pieces = explode('/', parse_url($this->url, PHP_URL_PATH));
-            array_pop($pieces);
-            $url = implode('/', $pieces) . '/' . ltrim($url, '/');
-        }
-
-        return $this->scheme . '://' . $this->host . '/' . ltrim($url, '/');
     }
 
     /**
      * Extracs links from body
      * @return array
-     * @uses _turnUrlAsAbsolute()
+     * @uses isHtml()
      * @uses $body
      * @uses $extractedLinks
      * @uses $tags
+     * @uses $url
      */
     public function extractLinks()
     {
         if ($this->extractedLinks) {
             return $this->extractedLinks;
+        }
+
+        if (!$this->isHtml()) {
+            return [];
         }
 
         $libxmlPreviousState = libxml_use_internal_errors(true);
@@ -151,7 +113,7 @@ class BodyParser
                     continue;
                 }
 
-                $links[] = clean_url($this->_turnUrlAsAbsolute($link), true);
+                $links[] = clean_url(url_to_absolute($this->url, $link), true);
             }
         }
 

@@ -21,29 +21,6 @@ use Tools\TestSuite\TestCase;
 class BodyParserTest extends TestCase
 {
     /**
-     * Test for `_turnUrlAsAbsolute()` method
-     * @test
-     */
-    public function testTurnUrlAsAbsolute()
-    {
-        foreach (['http', 'https', 'ftp'] as $scheme) {
-            $BodyParser = new BodyParser(null, $scheme . '://localhost/mysite/page.html');
-            $urls = [
-                'http://localhost/mysite' => 'http://localhost/mysite',
-                'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
-                '//localhost/mysite' => $scheme . '://localhost/mysite',
-                'page2.html' => $scheme . '://localhost/mysite/page2.html',
-                '/page3.html' => $scheme . '://localhost/page3.html',
-                'http://external' => 'http://external',
-            ];
-
-            foreach ($urls as $url => $expected) {
-                $this->assertEquals($expected, $this->invokeMethod($BodyParser, '_turnUrlAsAbsolute', [$url]));
-            }
-        }
-    }
-
-    /**
      * Test for `isHtml()` method
      * @test
      */
