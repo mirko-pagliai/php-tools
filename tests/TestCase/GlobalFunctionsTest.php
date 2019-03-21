@@ -288,8 +288,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testFilepermsAsOctal()
     {
-        $filename = create_tmp_file();
-        $this->assertSame('0600', fileperms_as_octal($filename));
+        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal(create_tmp_file()));
     }
 
     /**

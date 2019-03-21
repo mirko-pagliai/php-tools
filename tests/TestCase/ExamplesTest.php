@@ -38,7 +38,7 @@ class ExamplesTest extends TestCase
         $this->assertFileMime(['inode/x-empty', 'text/plain'], $file);
 
         $file = create_tmp_file();
-        $this->assertFilePerms('0600', $file);
+        $this->assertFilePerms(IS_WIN ? '0666' : '0600', $file);
         $this->assertFilePerms(0600, $file);
         $this->assertFilePerms([0644, 0600], $file);
 
