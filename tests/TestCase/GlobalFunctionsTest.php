@@ -216,8 +216,8 @@ class GlobalFunctionsTest extends TestCase
         error_reporting($currentErrorReporting);
 
         $this->expectException(Deprecated::class);
-        $this->expectExceptionMessage('This method is deprecated - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.');
+        $this->expectExceptionMessageRegExp('/^This method is deprecated/');
+        $this->expectExceptionMessageRegExp('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');
     }
 
@@ -283,61 +283,22 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `ends_with()` global function
+     * Test for `fileperms_as_octal()` global function
      * @test
      */
-    public function testEndsWith()
+    public function testFilepermsAsOctal()
     {
-        $string = 'a test with some words';
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(ends_with($string, 'some words'));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        ends_with($string, 'some words');
+        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal(create_tmp_file()));
     }
 
     /**
-     * Test for `first_key()` global function
+     * Test for `fileperms_to_string()` global function
      * @test
      */
-    public function testFirstKey()
+    public function testFilepermsToString()
     {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals(0, first_key(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_key(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `first_value()` global function
-     * @test
-     */
-    public function testFirstValue()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('first', first_value(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_value(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `first_value_recursive()` global function
-     * @test
-     */
-    public function testFirstValueRecursive()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('first', first_value_recursive([['first', 'second'], ['third'], ['fourth']]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        first_value_recursive([['first', 'second'], ['third'], ['fourth']]);
+        $this->assertSame('0755', fileperms_to_string(0755));
+        $this->assertSame('0755', fileperms_to_string('0755'));
     }
 
     /**
@@ -577,36 +538,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_win()` global function on Unix
-     * @group onlyUnix
-     * @test
-     */
-    public function testIsWinOnUnix()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertFalse(is_win());
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        is_win();
-    }
-
-    /**
-     * Test for `is_win()` global function on Windows
-     * @group onlyWindows
-     * @test
-     */
-    public function testIsWinOnWin()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(is_win());
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        is_win();
-    }
-
-    /**
      * Test for `is_writable_resursive()` global function
      * @test
      */
@@ -614,48 +545,6 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertTrue(is_writable_resursive(TMP));
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-    }
-
-    /**
-     * Test for `last_key()` global function
-     * @test
-     */
-    public function testLastKey()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals(2, last_key(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_key(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `last_value()` global function
-     * @test
-     */
-    public function testLastValue()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('third', last_value(['first', 'second', 'third']));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_value(['first', 'second', 'third']);
-    }
-
-    /**
-     * Test for `last_value_recursive()` global function
-     * @test
-     */
-    public function testLastValueRecursive()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertEquals('fourth', last_value_recursive([['first', 'second'], ['third'], ['fourth']]));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        last_value_recursive([['first', 'second'], ['third'], ['fourth']]);
     }
 
     /**
@@ -716,22 +605,6 @@ class GlobalFunctionsTest extends TestCase
         foreach ($values as $result => $expected) {
             $this->assertEquals($expected, rtr($result));
         }
-    }
-
-    /**
-     * Test for `starts_with()` global function
-     * @test
-     */
-    public function testStartsWith()
-    {
-        $string = 'a test with some words';
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(starts_with($string, 'a test'));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        starts_with($string, 'a test');
     }
 
     /**
