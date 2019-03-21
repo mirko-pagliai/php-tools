@@ -26,7 +26,8 @@
     If you want to check an array of filename, use the `array_map()` function;  
 * removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
 * removed deprecated `Apache` class;
-* removed all deprecated "safe" functions.
+* removed all deprecated "safe" functions;
+* updated for phpunit 7.
 
 ## 1.1 branch
 ### 1.1.16
