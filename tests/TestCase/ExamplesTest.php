@@ -39,8 +39,8 @@ class ExamplesTest extends TestCase
 
         $file = create_tmp_file();
         $this->assertFilePerms(IS_WIN ? '0666' : '0600', $file);
-        $this->assertFilePerms(0600, $file);
-        $this->assertFilePerms([0644, 0600], $file);
+        $this->assertFilePerms(IS_WIN ? 0666 : 0600, $file);
+        $this->assertFilePerms([0666, 0600], $file);
 
         $filename = TMP . 'pic.jpg';
         imagejpeg(imagecreatetruecolor(120, 20), $filename);
