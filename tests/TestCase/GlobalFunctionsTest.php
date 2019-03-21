@@ -659,6 +659,30 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `url_to_absolute()` global function
+     * @test
+     */
+    public function testUrlToAbsolute()
+    {
+        foreach (['http', 'https', 'ftp'] as $scheme) {
+            $path = $scheme . '://localhost/mysite/subdir/anothersubdir';
+
+            foreach ([
+                'http://localhost/mysite' => 'http://localhost/mysite',
+                'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
+                '//localhost/mysite' => $scheme . '://localhost/mysite',
+                'page2.html' => $scheme . '://localhost/mysite/subdir/anothersubdir/page2.html',
+                '/page3.html' => $scheme . '://localhost/page3.html',
+                '../page4.html' => $scheme . '://localhost/mysite/subdir/page4.html',
+                '../../page5.html' => $scheme . '://localhost/mysite/page5.html',
+                'http://external.com' => 'http://external.com',
+            ] as $url => $expected) {
+                $this->assertSame($expected, url_to_absolute($path, $url));
+            }
+        }
+    }
+
+    /**
      * Test for `which()` global function on Unix
      * @group onlyUnix
      * @test

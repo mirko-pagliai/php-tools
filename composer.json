@@ -9,7 +9,8 @@
         "email": "mirko.pagliai@gmail.com"
     }],
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.4",
+        "pguardiario/phpuri": "^1"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^3.0",

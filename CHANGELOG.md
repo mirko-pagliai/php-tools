@@ -29,6 +29,17 @@
 * removed all deprecated "safe" functions.
 
 ## 1.1 branch
+### 1.1.16
+* added `url_to_absolute()` global function;
+* removed `BodyParser::_turnUrlAsAbsolute()` and `BodyParser::isHtml()` methods.
+
+### 1.1.15
+* added `Entity` class.
+
+### 1.1.14
+* added `property_exists_or_fail()` global function and the
+    `PropertyNotExistsException` exception class.
+
 ### 1.1.13
 * added `array_clean()` global function;
 * added `is_html()` global function. This also provides the `assertIsHtml()`
