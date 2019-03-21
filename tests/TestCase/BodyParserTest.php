@@ -74,5 +74,8 @@ class BodyParserTest extends TestCase
         $BodyParser = new BodyParser($html, 'http://localhost');
         $this->setProperty($BodyParser, 'extractedLinks', $expected);
         $this->assertEquals($expected, $BodyParser->extractLinks());
+
+        //No HTML
+        $this->assertEquals([], $getExtractedLinksMethod('no html'));
     }
 }
