@@ -15,7 +15,6 @@ namespace Tools\Test\TestSuite;
 use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfTraversable;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
@@ -47,34 +46,10 @@ class TestTraitTest extends TestCase
             self::{$assertMethod}($value);
         }
 
-        //Methods that use the `assertTrue()` method, jointly to the "is" php functions
-        foreach ([
-            'assertIsCallable' => [$this, __METHOD__],
-            'assertIsHtml' => '<b>string</b>',
-            'assertIsIterable' => new ExampleOfTraversable,
-            'assertIsJson' => json_encode('string'),
-            'assertIsPositive' => 1,
-            'assertIsResource' => stream_context_create(),
-            'assertIsUrl' => 'http://google.com',
-        ] as $assertMethod => $value) {
-            $this->{$assertMethod}($value);
-            self::{$assertMethod}($value);
-        }
-
-        //Assertion failure
-        if (version_compare(PHP_VERSION, '7.0', '>=')) {
-            $expectedMessage = 'Failed asserting that \'string\' is of type "array".';
-        } else {
-            $expectedMessage = 'Failed asserting that false is true.';
-        }
-        $this->assertException(AssertionFailedError::class, function () {
-            $this->assertIsArray('string');
-        }, $expectedMessage);
-
         //Missing argument
         $this->assertException(BadMethodCallException::class, function () {
-            $this->assertIsArray();
-        }, 'Method ' . get_parent_class($this) . '::assertIsArray() expects at least 1 argument, maximum 2, 0 passed');
+            $this->assertIsJson();
+        }, 'Method ' . get_parent_class($this) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed');
 
         //Calling a no existing method or a no existing "assertIs" method
         foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {

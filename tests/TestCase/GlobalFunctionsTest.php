@@ -216,8 +216,8 @@ class GlobalFunctionsTest extends TestCase
         error_reporting($currentErrorReporting);
 
         $this->expectException(Deprecated::class);
-        $this->expectExceptionMessage('This method is deprecated - [internal], line: ??
- You can disable deprecation warnings by setting `error_reporting()` to `E_ALL & ~E_USER_DEPRECATED`.');
+        $this->expectExceptionMessageRegExp('/^This method is deprecated/');
+        $this->expectExceptionMessageRegExp('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');
     }
 
