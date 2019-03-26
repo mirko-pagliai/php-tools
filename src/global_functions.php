@@ -680,7 +680,10 @@ if (!function_exists('url_to_absolute')) {
      */
     function url_to_absolute($path, $relative)
     {
-        return \phpUri::parse(clean_url($path, false, true) . '/')->join($relative);
+        $path = clean_url($path, false, true);
+        $path = pathinfo($path, PATHINFO_EXTENSION) ? dirname($path) : $path;
+
+        return \phpUri::parse($path . '/')->join($relative);
     }
 }
 
