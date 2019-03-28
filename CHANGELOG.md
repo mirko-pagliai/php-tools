@@ -1,9 +1,7 @@
 # 1.x branch
 ## 1.2 branch
-### 1.2.2
-* fixed bug for `is_url()` global function.
-
 ### 1.2.1
+* fixed bug for `is_url()` global function;
 * fixed bug for `url_to_absolute()` global function.
 
 ### 1.2.0
