@@ -523,7 +523,7 @@ class GlobalFunctionsTest extends TestCase
             'ftp://example.com',
             'ftp://example.com/file.html',
         ] as $url) {
-            $this->assertTrue(is_url($url));
+            $this->assertTrue(is_url($url), 'Failed asserting that `' . $url . '` is a valid url');
         }
 
         foreach ([
@@ -664,19 +664,24 @@ class GlobalFunctionsTest extends TestCase
     public function testUrlToAbsolute()
     {
         foreach (['http', 'https', 'ftp'] as $scheme) {
-            $path = $scheme . '://localhost/mysite/subdir/anothersubdir';
+            $paths = [
+                $scheme . '://localhost/mysite/subdir/anothersubdir',
+                $scheme . '://localhost/mysite/subdir/anothersubdir/a_file.html',
+            ];
 
-            foreach ([
-                'http://localhost/mysite' => 'http://localhost/mysite',
-                'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
-                '//localhost/mysite' => $scheme . '://localhost/mysite',
-                'page2.html' => $scheme . '://localhost/mysite/subdir/anothersubdir/page2.html',
-                '/page3.html' => $scheme . '://localhost/page3.html',
-                '../page4.html' => $scheme . '://localhost/mysite/subdir/page4.html',
-                '../../page5.html' => $scheme . '://localhost/mysite/page5.html',
-                'http://external.com' => 'http://external.com',
-            ] as $url => $expected) {
-                $this->assertSame($expected, url_to_absolute($path, $url));
+            foreach ($paths as $path) {
+                foreach ([
+                    'http://localhost/mysite' => 'http://localhost/mysite',
+                    'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
+                    '//localhost/mysite' => $scheme . '://localhost/mysite',
+                    'page2.html' => $scheme . '://localhost/mysite/subdir/anothersubdir/page2.html',
+                    '/page3.html' => $scheme . '://localhost/page3.html',
+                    '../page4.html' => $scheme . '://localhost/mysite/subdir/page4.html',
+                    '../../page5.html' => $scheme . '://localhost/mysite/page5.html',
+                    'http://external.com' => 'http://external.com',
+                ] as $url => $expected) {
+                    $this->assertSame($expected, url_to_absolute($path, $url));
+                }
             }
         }
     }

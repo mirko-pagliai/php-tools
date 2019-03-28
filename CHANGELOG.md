@@ -1,5 +1,11 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.2
+* fixed bug for `is_url()` global function.
+
+### 1.2.1
+* fixed bug for `url_to_absolute()` global function.
+
 ### 1.2.0
 * added `fileperms_as_octal()` and `fileperms_to_string()` global functions;
 * arguments of the `assertFileMime()` assert method have been reversed
