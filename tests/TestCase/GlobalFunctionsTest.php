@@ -684,6 +684,8 @@ class GlobalFunctionsTest extends TestCase
                 }
             }
         }
+
+        $this->assertSame('http://example.com/page6.html', url_to_absolute('http://example.com', 'page6.html'));
     }
 
     /**
