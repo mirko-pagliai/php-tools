@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.3
+* fixed bug for `BodyParser::extractLinks()`, urls are returned without the
+    trailing slash.
+
 ### 1.2.2
 * fixed bug for `url_to_absolute()` global function.
 

@@ -112,7 +112,7 @@ class BodyParser
                     continue;
                 }
 
-                $links[] = clean_url(url_to_absolute($this->url, $link), true);
+                $links[] = clean_url(url_to_absolute($this->url, $link), true, true);
             }
         }
 
