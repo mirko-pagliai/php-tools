@@ -522,6 +522,7 @@ class GlobalFunctionsTest extends TestCase
             'ftp://www.example.com',
             'ftp://example.com',
             'ftp://example.com/file.html',
+            'http://example.com/name-with-brackets(3).jpg',
         ] as $url) {
             $this->assertTrue(is_url($url), 'Failed asserting that `' . $url . '` is a valid url');
         }
