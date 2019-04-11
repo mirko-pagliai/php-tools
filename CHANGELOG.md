@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.4
+* fixed bug for `is_url()` global function, it correctly recognizes the url with
+    brackets.
+
 ### 1.2.3
 * fixed bug for `BodyParser::extractLinks()`, urls are returned without the
     trailing slash.
