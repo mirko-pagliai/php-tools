@@ -57,7 +57,7 @@ if (!function_exists('array_key_first')) {
      */
     function array_key_first(array $array)
     {
-        return $array ? array_value_first(array_keys($array)) : null;
+        return array_value_first(array_keys($array));
     }
 }
 
@@ -73,7 +73,7 @@ if (!function_exists('array_key_last')) {
      */
     function array_key_last(array $array)
     {
-        return $array ? array_value_last(array_keys($array)) : null;
+        return array_value_last(array_keys($array));
     }
 }
 
