@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -71,7 +72,7 @@ class BodyParser
      * @uses $body
      * @uses $url
      */
-    public function __construct($body, $url)
+    public function __construct($body, string $url)
     {
         $this->body = $body instanceof StreamInterface ? (string)$body : $body;
         $this->url = $url;
@@ -85,7 +86,7 @@ class BodyParser
      * @uses $tags
      * @uses $url
      */
-    public function extractLinks()
+    public function extractLinks(): array
     {
         if ($this->extractedLinks) {
             return $this->extractedLinks;

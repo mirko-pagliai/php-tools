@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -45,7 +46,7 @@ trait TestTrait
      * @see __callStatic()
      * @since 1.1.12
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, $arguments): void
     {
         self::__callStatic($name, $arguments);
     }
@@ -60,7 +61,7 @@ trait TestTrait
      * @since 1.1.12
      * @throws \Tools\Exception\BadMethodCallException
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic(string $name, $arguments): void
     {
         if (string_starts_with($name, 'assertIs')) {
             $count = count($arguments);
@@ -103,7 +104,7 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertArrayKeysEqual(array $expectedKeys, array $array, $message = '')
+    protected static function assertArrayKeysEqual(array $expectedKeys, array $array, string $message = ''): void
     {
         $keys = array_keys($array);
         sort($keys);
@@ -120,7 +121,7 @@ trait TestTrait
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException($expectedException, callable $function, $expectedMessage = null)
+    protected static function assertException(string $expectedException, callable $function, ?string $expectedMessage = null): void
     {
         if ($expectedException !== Exception::class && !is_subclass_of($expectedException, 'Exception')) {
             self::fail(sprintf(
@@ -171,7 +172,7 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertFileExtension($expectedExtension, $filename, $message = '')
+    protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
         self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
     }
@@ -187,7 +188,7 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertFileMime($expectedMime, $filename, $message = '')
+    protected static function assertFileMime($expectedMime, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
@@ -206,7 +207,7 @@ trait TestTrait
      * @return void
      * @since 1.0.9
      */
-    protected static function assertFilePerms($expectedPerms, $filename, $message = '')
+    protected static function assertFilePerms($expectedPerms, string $filename, string $message = ''): void
     {
         parent::assertFileExists($filename);
 
@@ -223,10 +224,10 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertImageSize($expectedWidth, $expectedHeight, $filename, $message = '')
+    protected static function assertImageSize($expectedWidth, $expectedHeight, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
-        list($actualWidth, $actualHeight) = getimagesize($filename);
+        [$actualWidth, $actualHeight] = getimagesize($filename);
         self::assertEquals($actualWidth, $expectedWidth, $message);
         self::assertEquals($actualHeight, $expectedHeight, $message);
     }
@@ -239,7 +240,7 @@ trait TestTrait
      * @return void
      * @since 1.0.6
      */
-    protected static function assertIsArrayNotEmpty($var, $message = '')
+    protected static function assertIsArrayNotEmpty($var, string $message = ''): void
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
@@ -253,9 +254,8 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected function assertObjectPropertiesEqual(array $expectedProperties, $object, $message = '')
+    protected function assertObjectPropertiesEqual(array $expectedProperties, object $object, string $message = ''): void
     {
-        self::assertIsObject($object);
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
@@ -267,9 +267,9 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected static function assertSameMethods($firstClass, $secondClass, $message = '')
+    protected static function assertSameMethods($firstClass, $secondClass, string $message = ''): void
     {
-        list($firstClassMethods, $secondClassMethods) = [get_class_methods($firstClass), get_class_methods($secondClass)];
+        [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
         sort($secondClassMethods);
         self::assertEquals($firstClassMethods, $secondClassMethods, $message);

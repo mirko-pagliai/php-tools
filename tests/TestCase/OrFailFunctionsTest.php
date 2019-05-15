@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -86,9 +87,9 @@ class OrFailFunctionsTest extends TestCase
             }, 'The value is not equal to `true`');
         }
 
-        //Failure with a `null` message
+        //Failure with an empty string message
         try {
-            is_true_or_fail(false, null);
+            is_true_or_fail(false, '');
         } catch (Exception $e) {
         } finally {
             $this->assertEmpty($e->getMessage());
@@ -113,13 +114,10 @@ class OrFailFunctionsTest extends TestCase
 
         //Failures with bad exception classes
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, new stdClass());
-        }, '`$exception` parameter must be a string');
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, stdClass::class);
+            is_true_or_fail(false, '', stdClass::class);
         }, '`stdClass` is not and instance of `Exception`');
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, 'noExisting\Class');
+            is_true_or_fail(false, '', 'noExisting\Class');
         }, 'Class `noExisting\Class` does not exist');
     }
 

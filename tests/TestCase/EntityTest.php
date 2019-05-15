@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -30,7 +31,7 @@ class EntityTest extends TestCase
      * Called before every test method
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,13 +49,13 @@ class EntityTest extends TestCase
         var_dump($this->Entity);
         $dump = ob_get_contents();
         ob_end_clean();
-        $this->assertContains(get_class($this->Entity), $dump);
+        $this->assertStringContainsString(get_class($this->Entity), $dump);
 
         if (IS_WIN) {
             $this->markTestSkipped();
         }
-        $this->assertContains((string)$line, $dump);
-        $this->assertContains(__FILE__, $dump);
+        $this->assertStringContainsString((string)$line, $dump);
+        $this->assertStringContainsString(__FILE__, $dump);
     }
 
     /**

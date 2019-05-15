@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -44,7 +45,7 @@ abstract class Entity implements ArrayAccess
      * @return array
      * @uses toArray()
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return $this->toArray();
     }
@@ -55,7 +56,7 @@ abstract class Entity implements ArrayAccess
      * @return mixed Property value
      * @uses get()
      */
-    public function __get($property)
+    public function __get(string $property)
     {
         return $this->get($property);
     }
@@ -66,7 +67,7 @@ abstract class Entity implements ArrayAccess
      * @return bool
      * @uses $properties
      */
-    public function has($property)
+    public function has(string $property): bool
     {
         return array_key_exists($property, $this->properties);
     }
@@ -79,7 +80,7 @@ abstract class Entity implements ArrayAccess
      * @uses has()
      * @uses $properties
      */
-    public function get($property, $default = null)
+    public function get(string $property, $default = null)
     {
         return $this->has($property) ? $this->properties[$property] : $default;
     }
@@ -90,7 +91,7 @@ abstract class Entity implements ArrayAccess
      * @return bool
      * @uses $properties
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->properties[$offset]);
     }
@@ -113,7 +114,7 @@ abstract class Entity implements ArrayAccess
      * @return void
      * @uses $properties
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->properties[$offset] = $value;
     }
@@ -124,7 +125,7 @@ abstract class Entity implements ArrayAccess
      * @return void
      * @uses $properties
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->properties[$offset]);
     }
@@ -155,7 +156,7 @@ abstract class Entity implements ArrayAccess
      * @return array
      * @uses $properties
      */
-    public function toArray()
+    public function toArray(): array
     {
         $properties = $this->properties;
 

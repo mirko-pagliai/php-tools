@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -41,7 +42,7 @@ class FileArray
      * @uses $data
      * @uses $filename
      */
-    public function __construct($filename, array $data = [])
+    public function __construct(string $filename, array $data = [])
     {
         is_writable_or_fail(is_file($filename) ? $filename : dirname($filename));
 
@@ -71,7 +72,7 @@ class FileArray
      * @throws \Tools\Exception\KeyNotExistsException
      * @uses $data
      */
-    public function delete($key)
+    public function delete(int $key)
     {
         key_exists_or_fail($key, $this->data);
         unset($this->data[$key]);
@@ -86,7 +87,7 @@ class FileArray
      * @return bool
      * @uses $data
      */
-    public function exists($key)
+    public function exists(int $key): bool
     {
         return isset($this->data[$key]);
     }
@@ -98,7 +99,7 @@ class FileArray
      * @throws \Tools\Exception\KeyNotExistsException
      * @uses $data
      */
-    public function get($key)
+    public function get(int $key)
     {
         key_exists_or_fail($key, $this->data);
 
@@ -130,7 +131,7 @@ class FileArray
      * @uses $data
      * @uses $filename
      */
-    public function read()
+    public function read(): array
     {
         if ($this->data || !file_exists($this->filename)) {
             return $this->data;
@@ -149,7 +150,7 @@ class FileArray
      * @return $this
      * @uses $data
      */
-    public function take($size, $from = 0)
+    public function take(int $size, int $from = 0)
     {
         $this->data = array_slice($this->data, $from, $size);
 
@@ -162,7 +163,7 @@ class FileArray
      * @uses $data
      * @uses $filename
      */
-    public function write()
+    public function write(): bool
     {
         return create_file($this->filename, serialize($this->data));
     }

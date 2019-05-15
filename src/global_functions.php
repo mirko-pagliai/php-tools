@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -33,7 +34,7 @@ if (!function_exists('array_clean')) {
      * @link http://php.net/manual/en/function.array-filter.php
      * @since 1.1.13
      */
-    function array_clean(array $array, $callback = null, $flag = 0)
+    function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
         $keys = array_keys($array);
         $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
@@ -147,7 +148,7 @@ if (!function_exists('clean_url')) {
      * @return string
      * @since 1.0.3
      */
-    function clean_url($url, $removeWWW = false, $removeTrailingSlash = false)
+    function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
         $url = preg_replace('/(\#.*)$/', '', $url);
 
@@ -171,7 +172,7 @@ if (!function_exists('create_file')) {
      * @return bool
      * @since 1.1.7
      */
-    function create_file($filename, $data = null, $dirMode = 0777)
+    function create_file(string $filename, $data = null, int $dirMode = 0777): bool
     {
         if (!file_exists(dirname($filename))) {
             mkdir(dirname($filename), $dirMode, true);
@@ -196,7 +197,7 @@ if (!function_exists('create_tmp_file')) {
      * @return string|bool Path of temporary filename or `false` on failure
      * @since 1.1.7
      */
-    function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
+    function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp')
     {
         $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
         $filename = tempnam($dir, $prefix);
@@ -214,7 +215,7 @@ if (!function_exists('deprecationWarning')) {
      * @return void
      * @since 1.1.7
      */
-    function deprecationWarning($message, $stackFrame = 1)
+    function deprecationWarning(string $message, int $stackFrame = 1): void
     {
         if (!(error_reporting() & E_USER_DEPRECATED)) {
             return;
@@ -248,7 +249,7 @@ if (!function_exists('dir_tree')) {
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
      */
-    function dir_tree($path, $exceptions = false)
+    function dir_tree(string $path, $exceptions = false): array
     {
         try {
             $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
@@ -309,7 +310,7 @@ if (!function_exists('fileperms_as_octal')) {
      * @return string Permissions as four-chars string
      * @since 1.2.0
      */
-    function fileperms_as_octal($filename)
+    function fileperms_as_octal(string $filename): string
     {
         return (string)substr(sprintf('%o', fileperms($filename)), -4);
     }
@@ -322,7 +323,7 @@ if (!function_exists('fileperms_to_string')) {
      * @return string Permissions as four-chars string
      * @since 1.2.0
      */
-    function fileperms_to_string($perms)
+    function fileperms_to_string($perms): string
     {
         return is_string($perms) ? $perms : sprintf("%04o", $perms);
     }
@@ -336,7 +337,7 @@ if (!function_exists('get_child_methods')) {
      * @return array|null
      * @since 1.0.1
      */
-    function get_child_methods($class)
+    function get_child_methods(string $class): ?array
     {
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
@@ -356,7 +357,7 @@ if (!function_exists('get_class_short_name')) {
      * @return string
      * @since 1.0.2
      */
-    function get_class_short_name($class)
+    function get_class_short_name(string $class): string
     {
         return (new ReflectionClass($class))->getShortName();
     }
@@ -373,7 +374,7 @@ if (!function_exists('get_extension')) {
      * @return string|null
      * @since 1.0.2
      */
-    function get_extension($filename)
+    function get_extension(string $filename): ?string
     {
         //Gets the basename and, if the filename is an url, removes query string
         //  and fragments (#)
@@ -402,11 +403,11 @@ if (!function_exists('get_hostname_from_url')) {
      * @return string|null
      * @since 1.0.2
      */
-    function get_hostname_from_url($url)
+    function get_hostname_from_url(string $url): ?string
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
+        return string_starts_with($host ?? '', 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -418,7 +419,7 @@ if (!function_exists('is_external_url')) {
      * @return bool
      * @since 1.0.4
      */
-    function is_external_url($url, $hostname)
+    function is_external_url(string $url, string $hostname): bool
     {
         $hostForUrl = get_hostname_from_url($url);
 
@@ -434,7 +435,7 @@ if (!function_exists('is_html')) {
      * @return bool
      * @since 1.1.13
      */
-    function is_html($string)
+    function is_html(string $string): bool
     {
         return strcasecmp($string, strip_tags($string)) !== 0;
     }
@@ -450,7 +451,7 @@ if (!function_exists('is_iterable')) {
      * @return bool
      * @since 1.1.12
      */
-    function is_iterable($var)
+    function is_iterable($var): bool
     {
         return is_array($var) || $var instanceof \Traversable;
     }
@@ -462,7 +463,7 @@ if (!function_exists('is_json')) {
      * @param string $string String
      * @return bool
      */
-    function is_json($string)
+    function is_json(string $string): bool
     {
         if (!is_string($string)) {
             return false;
@@ -477,10 +478,10 @@ if (!function_exists('is_json')) {
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
-     * @param string $string String
+     * @param string|int $string String
      * @return bool
      */
-    function is_positive($string)
+    function is_positive($string): bool
     {
         return is_numeric($string) && $string > 0 && $string == round($string);
     }
@@ -493,7 +494,7 @@ if (!function_exists('is_slash_term')) {
      * @return bool
      * @since 1.0.3
      */
-    function is_slash_term($path)
+    function is_slash_term(string $path): bool
     {
         return in_array($path[strlen($path) - 1], ['/', '\\']);
     }
@@ -505,10 +506,12 @@ if (!function_exists('is_url')) {
      * @param string $string String
      * @return bool
      */
-    function is_url($string)
+    function is_url(string $string): bool
     {
-        return is_string($string)
-            && (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i", $string);
+        return (bool)preg_match(
+            "/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i",
+            $string
+        );
     }
 }
 
@@ -522,9 +525,9 @@ if (!function_exists('is_writable_resursive')) {
      * @return bool
      * @since 1.0.7
      */
-    function is_writable_resursive($dirname, $checkOnlyDir = true)
+    function is_writable_resursive(string $dirname, bool $checkOnlyDir = true): bool
     {
-        list($directories, $files) = dir_tree($dirname);
+        [$directories, $files] = dir_tree($dirname);
         $itemsToCheck = $checkOnlyDir ? $directories : array_merge($directories, $files);
 
         if (!in_array($dirname, $itemsToCheck)) {
@@ -553,7 +556,7 @@ if (!function_exists('objects_map')) {
      * @since 1.1.11
      * @throws \BadMethodCallException
      */
-    function objects_map(array $objects, $method, array $args = [])
+    function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function ($object) use ($method, $args) {
             is_true_or_fail(method_exists($object, $method), sprintf(
@@ -580,11 +583,11 @@ if (!function_exists('rmdir_recursive')) {
      * @see unlink_recursive()
      * @since 1.0.6
      */
-    function rmdir_recursive($dirname)
+    function rmdir_recursive(string $dirname): void
     {
         unlink_recursive($dirname);
 
-        list($directories) = dir_tree($dirname, false);
+        [$directories] = dir_tree($dirname, false);
         array_map('rmdir', array_reverse($directories));
     }
 }
@@ -598,7 +601,7 @@ if (!function_exists('rtr')) {
      * @param string $path Absolute path
      * @return string Relative path
      */
-    function rtr($path)
+    function rtr(string $path): string
     {
         $root = getenv('ROOT') ?: ROOT;
         $rootLength = strlen($root);
@@ -620,7 +623,7 @@ if (!function_exists('string_ends_with')) {
      * @return bool
      * @since 1.1.12
      */
-    function string_ends_with($haystack, $needle)
+    function string_ends_with(string $haystack, string $needle): bool
     {
         $length = strlen($needle);
 
@@ -636,7 +639,7 @@ if (!function_exists('string_starts_with')) {
      * @return bool
      * @since 1.1.12
      */
-    function string_starts_with($haystack, $needle)
+    function string_starts_with(string $haystack, string $needle): bool
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
     }
@@ -657,9 +660,9 @@ if (!function_exists('unlink_recursive')) {
      * @see rmdir_recursive()
      * @since 1.0.7
      */
-    function unlink_recursive($dirname, $exceptions = false)
+    function unlink_recursive(string $dirname, $exceptions = false): void
     {
-        list($directories, $files) = dir_tree($dirname, $exceptions);
+        [$directories, $files] = dir_tree($dirname, $exceptions);
 
         //Adds symlinks. `dir_tree()` returns symlinks as directories
         $files += array_filter($directories, 'is_link');
@@ -678,7 +681,7 @@ if (!function_exists('url_to_absolute')) {
      * @return string
      * @since 1.1.16
      */
-    function url_to_absolute($path, $relative)
+    function url_to_absolute(string $path, string $relative): string
     {
         $path = clean_url($path, false, true);
         $path = preg_match('/^(\w+:\/\/.+)\/[^\.\/]+\.[^\.\/]+$/', $path, $matches) ? $matches[1] : $path;
@@ -693,7 +696,7 @@ if (!function_exists('which')) {
      * @param string $command Command
      * @return string|null
      */
-    function which($command)
+    function which(string $command): ?string
     {
         exec(sprintf('%s %s 2>&1', IS_WIN ? 'where' : 'which', $command), $path, $exitCode);
         $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;

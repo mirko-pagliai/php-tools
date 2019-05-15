@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -27,7 +28,7 @@ class TestCase extends PHPUnitTestCase
      * Teardown any static object changes and restore them
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

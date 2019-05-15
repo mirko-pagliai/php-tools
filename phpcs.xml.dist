@@ -8,10 +8,25 @@
     <rule ref="Generic.Commenting.Todo">
         <severity>0</severity>
     </rule>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <severity>0</severity>
+    </rule>
     <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
         <severity>0</severity>
     </rule>
     <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
+        <exclude-pattern>/tests/test_app</exclude-pattern>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing.IncorrectLinesCountBeforeFirstUse">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
         <severity>0</severity>
     </rule>
 
