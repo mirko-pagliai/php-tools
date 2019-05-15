@@ -251,7 +251,7 @@ trait TestTrait
      *  generated message
      * @return void
      */
-    protected function assertObjectPropertiesEqual(array $expectedProperties, object $object, string $message = ''): void
+    protected function assertObjectPropertiesEqual(array $expectedProperties, $object, string $message = ''): void
     {
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
