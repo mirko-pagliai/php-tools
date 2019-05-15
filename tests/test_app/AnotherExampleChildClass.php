@@ -12,6 +12,8 @@
  */
 namespace App;
 
+use Exception;
+
 /**
  * Another example class that extends the `ExampleClass` class
  */
@@ -20,6 +22,11 @@ class AnotherExampleChildClass extends ExampleClass
     public function __get($name)
     {
         return $this->$name;
+    }
+
+    public function throwMethod()
+    {
+        throw new Exception('Exception message...');
     }
 
     public function childMethod()

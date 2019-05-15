@@ -12,11 +12,18 @@
  */
 namespace App;
 
+use Exception;
+
 /**
  * An example class that extends the `ExampleClass` class
  */
 class ExampleChildClass extends ExampleClass
 {
+    public function throwMethod()
+    {
+        throw new Exception('Exception message...');
+    }
+
     public function childMethod()
     {
     }

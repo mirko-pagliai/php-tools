@@ -307,7 +307,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetChildMethods()
     {
-        $this->assertEquals(['childMethod', 'anotherChildMethod'], get_child_methods(ExampleChildClass::class));
+        $this->assertEquals(['throwMethod', 'childMethod', 'anotherChildMethod'], get_child_methods(ExampleChildClass::class));
 
         //This class has no parent, so the result is similar to the `get_class_methods()` method
         $this->assertEquals(get_class_methods(ExampleClass::class), get_child_methods(ExampleClass::class));
