@@ -16,7 +16,6 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\Constraint\IsType;
-use Throwable;
 
 /**
  * A trait that provides some assertion methods
@@ -123,8 +122,8 @@ trait TestTrait
      */
     protected static function assertException($expectedException, callable $function, $expectedMessage = null)
     {
-        if (!is_subclass_of($expectedException, Throwable::class)) {
-            self::fail(sprintf('Class `%s` does not exist or not implement `Throwable`', $expectedException));
+        if ($expectedException !== Exception::class && !is_subclass_of($expectedException, Exception::class)) {
+            self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
         }
 
         $e = false;
