@@ -41,12 +41,12 @@ trait TestTrait
      *
      * Provides some "assertIs" methods (eg, `assertIsString()`).
      * @param string $name Name of the method
-     * @param mixed $arguments Arguments
+     * @param array $arguments Arguments
      * @return void
      * @see __callStatic()
      * @since 1.1.12
      */
-    public function __call(string $name, $arguments): void
+    public function __call(string $name, array $arguments): void
     {
         self::__callStatic($name, $arguments);
     }
@@ -56,12 +56,12 @@ trait TestTrait
      *
      * Provides some "assertIs" methods (eg, `assertIsString()`).
      * @param string $name Name of the method
-     * @param mixed $arguments Arguments
+     * @param array $arguments Arguments
      * @return void
      * @since 1.1.12
      * @throws \Tools\Exception\BadMethodCallException
      */
-    public static function __callStatic(string $name, $arguments): void
+    public static function __callStatic(string $name, array $arguments): void
     {
         if (string_starts_with($name, 'assertIs')) {
             $count = count($arguments);
