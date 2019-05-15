@@ -25,9 +25,9 @@ class PropertyNotExistsException extends Exception
      * Constructor
      * @param string $message The string of the error message
      * @param int $code The code of the error
-     * @param \Throwable $previous the previous exception
+     * @param \Throwable|null $previous the previous exception
      */
-    public function __construct($message = 'Property does not exist', $code = 0, $previous = null)
+    public function __construct(string $message = 'Property does not exist', int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

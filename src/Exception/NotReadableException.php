@@ -25,9 +25,9 @@ class NotReadableException extends Exception
      * Constructor
      * @param string $message The string of the error message
      * @param int $code The code of the error
-     * @param \Throwable $previous the previous exception
+     * @param \Throwable|null $previous the previous exception
      */
-    public function __construct($message = 'File or directory is not readable', $code = 0, $previous = null)
+    public function __construct(string $message = 'File or directory is not readable', int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
