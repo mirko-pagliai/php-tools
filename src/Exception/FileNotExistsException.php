@@ -25,7 +25,7 @@ class FileNotExistsException extends Exception
      * Constructor
      * @param string $message The string of the error message
      * @param int $code The code of the error
-     * @param \Exception|null $previous the previous exception
+     * @param \Throwable $previous the previous exception
      */
     public function __construct($message = 'File or directory does not exist', $code = 0, $previous = null)
     {
