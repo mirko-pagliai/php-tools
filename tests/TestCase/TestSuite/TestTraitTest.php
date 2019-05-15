@@ -112,7 +112,7 @@ class TestTraitTest extends TestCase
                 });
             } catch (AssertionFailedError $e) {
             } finally {
-                $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an Exception instance', $e->getMessage());
+                $this->assertStringStartsWith('Class `' . $class . '` does not exist or not implement `Throwable`', $e->getMessage());
                 unset($e);
             }
         }
