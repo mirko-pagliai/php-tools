@@ -214,14 +214,14 @@ trait TestTrait
 
     /**
      * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
-     * @param int|string $expectedWidth Expected image width
-     * @param int|string $expectedHeight Expected mage height
+     * @param int $expectedWidth Expected image width
+     * @param int $expectedHeight Expected mage height
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
      */
-    protected static function assertImageSize($expectedWidth, $expectedHeight, string $filename, string $message = ''): void
+    protected static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         [$actualWidth, $actualHeight] = getimagesize($filename);

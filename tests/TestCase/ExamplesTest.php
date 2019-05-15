@@ -48,7 +48,6 @@ class ExamplesTest extends TestCase
         $filename = TMP . 'pic.jpg';
         imagejpeg(imagecreatetruecolor(120, 20), $filename);
         $this->assertImageSize(120, 20, $filename);
-        $this->assertImageSize('120', '20', $filename);
 
         $this->assertIsArray([]);
         $this->assertIsArray(['a', 'b']);
