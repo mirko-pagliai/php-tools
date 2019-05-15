@@ -15,7 +15,6 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
