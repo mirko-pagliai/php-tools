@@ -25,7 +25,7 @@ class ExamplesTest extends TestCase
     {
         $this->assertArrayKeysEqual(['a', 'b'], ['a' => 'alfa', 'b' => 'beta']);
 
-        $MyChildInstance = new MyChild;
+        $MyChildInstance = new MyChild();
         $this->assertException(Exception::class, [$MyChildInstance, 'second']);
         $this->assertException(Exception::class, [$MyChildInstance, 'second'], 'Exception message...');
 
@@ -54,11 +54,11 @@ class ExamplesTest extends TestCase
 
         $this->assertIsInt(1);
 
-        $this->assertIsObject(new stdClass);
+        $this->assertIsObject(new stdClass());
 
         $this->assertIsString('string');
 
-        $object = new stdClass;
+        $object = new stdClass();
         $object->a = 'alfa';
         $object->b = 'beta';
         $this->assertObjectPropertiesEqual(['a', 'b'], $object);

@@ -25,7 +25,7 @@ if (!function_exists('array_clean')) {
      * The keys will be re-ordered with the `array_values() function only if all
      *  the keys in the original array are numeric.
      * @param array $array Array you want to clean
-     * @param callback|null $callback The callback function to filter. If no
+     * @param callable|null $callback The callback function to filter. If no
      *  callback is supplied, all entries of array equal to `FALSE`  will be
      *  removed
      * @param int $flag Flag determining what arguments are sent to callback
@@ -551,7 +551,7 @@ if (!function_exists('objects_map')) {
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
      * @since 1.1.11
-     * @throws BadMethodCallException
+     * @throws \BadMethodCallException
      */
     function objects_map(array $objects, $method, array $args = [])
     {

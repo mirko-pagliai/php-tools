@@ -36,7 +36,7 @@ class FileArray
      *  parameter.
      * @param string $filename Filename
      * @param array $data Optional initial data
-     * @throws NotWritableException
+     * @throws \Tools\Exception\NotWritableException
      * @uses read()
      * @uses $data
      * @uses $filename
@@ -68,7 +68,7 @@ class FileArray
      * Note that the keys will be re-ordered.
      * @param int $key Key number
      * @return $this
-     * @throws KeyNotExistsException
+     * @throws \Tools\Exception\KeyNotExistsException
      * @uses $data
      */
     public function delete($key)
@@ -95,7 +95,7 @@ class FileArray
      * Gets a value from its key number
      * @param int $key Key number
      * @return mixed
-     * @throws KeyNotExistsException
+     * @throws \Tools\Exception\KeyNotExistsException
      * @uses $data
      */
     public function get($key)

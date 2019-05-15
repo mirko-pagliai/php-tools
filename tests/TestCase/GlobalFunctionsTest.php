@@ -93,7 +93,7 @@ class GlobalFunctionsTest extends TestCase
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],
             [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
+            [[['first'], 'second'], ['third'], [['fourth']]],
         ] as $array) {
             $this->assertEquals('first', array_value_first_recursive($array));
         }
@@ -122,7 +122,7 @@ class GlobalFunctionsTest extends TestCase
             ['first', 'second', 'third', 'fourth'],
             ['first', ['second', 'third'], ['fourth']],
             [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]]
+            [[['first'], 'second'], ['third'], [['fourth']]],
         ] as $array) {
             $this->assertEquals('fourth', array_value_last_recursive($array));
         }
@@ -448,9 +448,9 @@ class GlobalFunctionsTest extends TestCase
     public function testIsIterable()
     {
         $this->assertTrue(is_iterable([]));
-        $this->assertTrue(is_iterable(new ExampleOfTraversable));
+        $this->assertTrue(is_iterable(new ExampleOfTraversable()));
         $this->assertFalse(is_iterable('string'));
-        $this->assertFalse(is_iterable(new ExampleChildClass));
+        $this->assertFalse(is_iterable(new ExampleChildClass()));
     }
 
     /**
@@ -460,7 +460,6 @@ class GlobalFunctionsTest extends TestCase
     public function testIsJson()
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
-        $this->assertFalse(is_json(true));
         $this->assertFalse(is_json('this is a no json string'));
     }
 
@@ -554,7 +553,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testObjectsMap()
     {
-        $arrayOfObjects = [new ExampleClass, new ExampleClass];
+        $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
 
         $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
         $this->assertEquals(['a new value', 'a new value'], $result);
@@ -566,7 +565,7 @@ class GlobalFunctionsTest extends TestCase
         //With a no existing method
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Class `' . ExampleClass::class . '` does not have a method `noExistingMethod`');
-        objects_map([new ExampleClass], 'noExistingMethod');
+        objects_map([new ExampleClass()], 'noExistingMethod');
     }
 
     /**

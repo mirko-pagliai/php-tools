@@ -65,7 +65,8 @@ class BodyParser
 
     /**
      * Constructor
-     * @param string|StreamInterface $body Body as string or `StreamInterface`
+     * @param string|\Psr\Http\Message\StreamInterface $body Body as string or
+     *  a `StreamInterface` instance
      * @param string $url Reference url. Used to determine the relative links
      * @uses $body
      * @uses $url
@@ -96,7 +97,7 @@ class BodyParser
 
         $libxmlPreviousState = libxml_use_internal_errors(true);
 
-        $dom = new DOMDocument;
+        $dom = new DOMDocument();
         $dom->loadHTML($this->body);
 
         libxml_clear_errors();

@@ -12,8 +12,6 @@
  */
 namespace App;
 
-use App\ExampleClass;
-
 /**
  * An example class that extends the `ExampleClass` class
  */

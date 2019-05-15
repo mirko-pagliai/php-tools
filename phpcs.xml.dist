@@ -14,6 +14,9 @@
     <rule ref="Internal.NoCodeFound">
         <severity>0</severity>
     </rule>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
+        <exclude-pattern>/tests/test_app</exclude-pattern>
+    </rule>
 
     <exclude-pattern>/coverage</exclude-pattern>
     <exclude-pattern>/vendor</exclude-pattern>
