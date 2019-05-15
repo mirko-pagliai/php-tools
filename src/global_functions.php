@@ -174,9 +174,7 @@ if (!function_exists('create_file')) {
      */
     function create_file(string $filename, $data = null, int $dirMode = 0777): bool
     {
-        if (!file_exists(dirname($filename))) {
-            mkdir(dirname($filename), $dirMode, true);
-        }
+        @mkdir(dirname($filename), $dirMode, true);
 
         return file_put_contents($filename, $data) !== false;
     }
@@ -260,11 +258,7 @@ if (!function_exists('dir_tree')) {
 
         $directories = $files = [];
         $directories[] = rtrim($path, DS);
-
-        if (is_bool($exceptions)) {
-            $exceptions = $exceptions ? ['.'] : [];
-        }
-        $exceptions = (array)$exceptions;
+        $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
         $skipHidden = false;
         if (in_array('.', $exceptions)) {
