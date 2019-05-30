@@ -14,9 +14,11 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
+use App\ExampleOfStringable;
 use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
+use stdClass;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -126,6 +128,24 @@ class GlobalFunctionsTest extends TestCase
         ] as $array) {
             $this->assertEquals('fourth', array_value_last_recursive($array));
         }
+    }
+
+    /**
+     * Test for `can_be_string()` global function
+     * @test
+     */
+    public function testCanBeString()
+    {
+        foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
+            $this->assertTrue(can_be_string($value));
+        }
+
+        foreach ([null, [], new stdClass()] as $value) {
+            $this->assertFalse(can_be_string($value));
+        }
+
+        //This class implements the `__toString()` method
+        $this->assertTrue(can_be_string(new ExampleOfStringable()));
     }
 
     /**
