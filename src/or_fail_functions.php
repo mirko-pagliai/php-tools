@@ -111,11 +111,11 @@ if (!function_exists('is_positive_or_fail')) {
      * @param string $exception The exception class you want to set
      * @return void
      * @since 1.2.5
-     * @throws NotPositiveException
+     * @throws \Tools\Exception\NotPositiveException
      */
     function is_positive_or_fail($value, $message = 'The value is not a positive', $exception = NotPositiveException::class)
     {
-        if ((can_be_string($value)) && $message == 'The value is not a positive') {
+        if (can_be_string($value) && $message == 'The value is not a positive') {
             $message = sprintf('The value `%s` is not a positive', (string)$value);
         }
         is_true_or_fail(is_positive($value), $message, $exception);
