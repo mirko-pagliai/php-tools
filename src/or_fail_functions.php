@@ -114,7 +114,7 @@ if (!function_exists('is_positive_or_fail')) {
      * @since 1.2.5
      * @throws NotPositiveException
      */
-    function is_positive_or_fail($value, $message = 'The value is not a positive', $exception = NotPositiveException::class)
+    function is_positive_or_fail($value, string $message = 'The value is not a positive', string $exception = NotPositiveException::class): void
     {
         if ((can_be_string($value)) && $message == 'The value is not a positive') {
             $message = sprintf('The value `%s` is not a positive', (string)$value);
