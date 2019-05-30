@@ -138,6 +138,19 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
+if (!function_exists('can_be_string')) {
+    /**
+     * Checks is a value can be converted to string
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.2.5
+     */
+    function can_be_string($var)
+    {
+        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
+    }
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
