@@ -16,6 +16,7 @@ use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\PropertyNotExistsException;
@@ -98,6 +99,26 @@ if (!function_exists('is_dir_or_fail')) {
     function is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory', $exception = NotDirectoryException::class)
     {
         is_true_or_fail(is_dir($filename), sprintf($message, rtr($filename)), $exception);
+    }
+}
+
+if (!function_exists('is_positive_or_fail')) {
+    /**
+     * Throws an exception if the value is not a positive
+     * @param mixed $value The value you want to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @since 1.2.5
+     * @throws NotPositiveException
+     */
+    function is_positive_or_fail($value, $message = 'The value is not a positive', $exception = NotPositiveException::class)
+    {
+        if ((can_be_string($value)) && $message == 'The value is not a positive') {
+            $message = sprintf('The value `%s` is not a positive', (string)$value);
+        }
+        is_true_or_fail(is_positive($value), $message, $exception);
     }
 }
 

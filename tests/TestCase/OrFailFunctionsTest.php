@@ -20,6 +20,7 @@ use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\PropertyNotExistsException;
@@ -55,6 +56,20 @@ class OrFailFunctionsTest extends TestCase
         $this->expectException(NotDirectoryException::class);
         $this->expectExceptionMessage('Filename `' . $filename . '` is not a directory');
         is_dir_or_fail($filename);
+    }
+
+    /**
+     * Test for `is_positive_or_fail()` "or fail" function
+     * @test
+     */
+    public function testIsPositiveOrFail()
+    {
+        is_positive_or_fail(1);
+        is_positive_or_fail('1');
+
+        $this->expectException(NotPositiveException::class);
+        $this->expectExceptionMessage('The value `-1` is not a positive');
+        is_positive_or_fail(-1);
     }
 
     /**
