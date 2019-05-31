@@ -40,6 +40,7 @@ class TestTraitTest extends TestCase
             'assertIsBool' => true,
             'assertIsFloat' => 1.1,
             'assertIsInt' => 1,
+            'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
             'assertIsObject' => new stdClass(),
             'assertIsString' => 'string',
         ] as $assertMethod => $value) {
