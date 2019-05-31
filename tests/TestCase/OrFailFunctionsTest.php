@@ -20,6 +20,7 @@ use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\PropertyNotExistsException;
@@ -58,6 +59,20 @@ class OrFailFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_positive_or_fail()` "or fail" function
+     * @test
+     */
+    public function testIsPositiveOrFail()
+    {
+        is_positive_or_fail(1);
+        is_positive_or_fail('1');
+
+        $this->expectException(NotPositiveException::class);
+        $this->expectExceptionMessage('The value `-1` is not a positive');
+        is_positive_or_fail(-1);
+    }
+
+    /**
      * Test for `is_readable_or_fail()` "or fail" function
      * @test
      */
@@ -76,7 +91,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsTrueOrFail()
     {
-        foreach (['string', ['array'], new stdClass, true, 1, 0.1] as $value) {
+        foreach (['string', ['array'], new stdClass(), true, 1, 0.1] as $value) {
             is_true_or_fail($value);
         }
 
@@ -113,7 +128,7 @@ class OrFailFunctionsTest extends TestCase
 
         //Failures with bad exception classes
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, new stdClass);
+            is_true_or_fail(false, null, new stdClass());
         }, '`$exception` parameter must be a string');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, stdClass::class);
@@ -163,11 +178,11 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testPropertyExistsOrFail()
     {
-        $object = new stdClass;
+        $object = new stdClass();
         $object->name = 'My name';
         property_exists_or_fail($object, 'name');
 
-        property_exists_or_fail(new ExampleClass, 'publicProperty');
+        property_exists_or_fail(new ExampleClass(), 'publicProperty');
 
         $object = $this->getMockBuilder(ExampleClass::class)
             ->setMethods(['has'])
@@ -181,11 +196,11 @@ class OrFailFunctionsTest extends TestCase
         property_exists_or_fail($object, 'publicProperty');
 
         $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new stdClass, 'noExisting');
+            property_exists_or_fail(new stdClass(), 'noExisting');
         }, 'Object does not have `noExisting` property');
 
         $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new ExampleClass, 'noExisting');
+            property_exists_or_fail(new ExampleClass(), 'noExisting');
         }, 'Object does not have `noExisting` property');
     }
 }

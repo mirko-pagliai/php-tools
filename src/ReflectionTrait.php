@@ -26,7 +26,7 @@ trait ReflectionTrait
      * Internal method to get the `ReflectionMethod` instance
      * @param object $object Instantiated object that we will run method on
      * @param string $methodName Method name
-     * @return ReflectionMethod
+     * @return \ReflectionMethod
      */
     protected function getMethodInstance(&$object, $methodName)
     {
@@ -70,7 +70,7 @@ trait ReflectionTrait
      * Internal method to get the `ReflectionProperty` instance
      * @param object $object Instantiated object that has the property
      * @param string $name Property name
-     * @return ReflectionProperty
+     * @return \ReflectionProperty
      */
     protected function getPropertyInstance(&$object, $name)
     {

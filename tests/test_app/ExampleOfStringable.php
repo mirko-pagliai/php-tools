@@ -12,23 +12,13 @@
  */
 namespace App;
 
-use Exception;
-
 /**
- * An example class that extends the `ExampleClass` class
+ * An example class that implements the `__toString()` method
  */
-class ExampleChildClass extends ExampleClass
+class ExampleOfStringable
 {
-    public function throwMethod()
+    public function __toString()
     {
-        throw new Exception('Exception message...');
-    }
-
-    public function childMethod()
-    {
-    }
-
-    public function anotherChildMethod()
-    {
+        return __CLASS__;
     }
 }

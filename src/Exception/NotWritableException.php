@@ -24,10 +24,10 @@ class NotWritableException extends Exception
     /**
      * Constructor
      * @param string $message The string of the error message
-     * @param int|null $code The code of the error
-     * @param Exception|null $previous the previous exception
+     * @param int $code The code of the error
+     * @param \Throwable $previous the previous exception
      */
-    public function __construct($message = 'File or directory is not writable', $code = null, $previous = null)
+    public function __construct($message = 'File or directory is not writable', $code = 0, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

@@ -25,7 +25,7 @@ if (!function_exists('array_clean')) {
      * The keys will be re-ordered with the `array_values() function only if all
      *  the keys in the original array are numeric.
      * @param array $array Array you want to clean
-     * @param callback|null $callback The callback function to filter. If no
+     * @param callable|null $callback The callback function to filter. If no
      *  callback is supplied, all entries of array equal to `FALSE`  will be
      *  removed
      * @param int $flag Flag determining what arguments are sent to callback
@@ -57,7 +57,7 @@ if (!function_exists('array_key_first')) {
      */
     function array_key_first(array $array)
     {
-        return $array ? array_value_first(array_keys($array)) : null;
+        return array_value_first(array_keys($array));
     }
 }
 
@@ -73,7 +73,7 @@ if (!function_exists('array_key_last')) {
      */
     function array_key_last(array $array)
     {
-        return $array ? array_value_last(array_keys($array)) : null;
+        return array_value_last(array_keys($array));
     }
 }
 
@@ -137,6 +137,19 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
+if (!function_exists('can_be_string')) {
+    /**
+     * Checks is a value can be converted to string
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.2.5
+     */
+    function can_be_string($var)
+    {
+        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
+    }
+}
+
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
@@ -173,9 +186,7 @@ if (!function_exists('create_file')) {
      */
     function create_file($filename, $data = null, $dirMode = 0777)
     {
-        if (!file_exists(dirname($filename))) {
-            mkdir(dirname($filename), $dirMode, true);
-        }
+        @mkdir(dirname($filename), $dirMode, true);
 
         return file_put_contents($filename, $data) !== false;
     }
@@ -259,11 +270,7 @@ if (!function_exists('dir_tree')) {
 
         $directories = $files = [];
         $directories[] = rtrim($path, DS);
-
-        if (is_bool($exceptions)) {
-            $exceptions = $exceptions ? ['.'] : [];
-        }
-        $exceptions = (array)$exceptions;
+        $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
         $skipHidden = false;
         if (in_array('.', $exceptions)) {
@@ -551,7 +558,7 @@ if (!function_exists('objects_map')) {
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
      * @since 1.1.11
-     * @throws BadMethodCallException
+     * @throws \BadMethodCallException
      */
     function objects_map(array $objects, $method, array $args = [])
     {

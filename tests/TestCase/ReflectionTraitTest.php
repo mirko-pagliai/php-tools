@@ -27,7 +27,7 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperties()
     {
-        $example = new ExampleClass;
+        $example = new ExampleClass();
         $expected = [
             'privateProperty' => 'this is a private property',
             'firstProperty' => null,
@@ -53,7 +53,7 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperty()
     {
-        $example = new ExampleClass;
+        $example = new ExampleClass();
         $this->assertNull($this->getProperty($example, 'firstProperty'));
         $this->assertEquals('a protected property', $this->getProperty($example, 'secondProperty'));
     }
@@ -64,7 +64,7 @@ class ReflectionTraitTest extends TestCase
      */
     public function testInvokeMethod()
     {
-        $example = new ExampleClass;
+        $example = new ExampleClass();
         $this->assertEquals('a protected method', $this->invokeMethod($example, 'protectedMethod'));
         $this->assertEquals('example string', $this->invokeMethod($example, 'protectedMethod', ['example string']));
     }
@@ -75,7 +75,7 @@ class ReflectionTraitTest extends TestCase
      */
     public function testSetProperty()
     {
-        $example = new ExampleClass;
+        $example = new ExampleClass();
         $result = $this->setProperty($example, 'firstProperty', 'example string');
         $this->assertNull($result);
         $this->assertEquals('example string', $example->firstProperty);

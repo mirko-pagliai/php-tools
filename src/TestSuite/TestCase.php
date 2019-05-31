@@ -15,7 +15,6 @@ namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\ReflectionTrait;
-use Tools\TestSuite\TestTrait;
 
 /**
  * TestCase class

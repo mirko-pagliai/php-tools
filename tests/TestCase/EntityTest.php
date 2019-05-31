@@ -12,15 +12,9 @@
  */
 namespace Tools\Test;
 
-use Tools\Entity as BaseEntity;
+use App\EntityExample;
+use Tools\Entity;
 use Tools\TestSuite\TestCase;
-
-/**
- * An Entity class
- */
-class Entity extends BaseEntity
-{
-}
 
 /**
  * EntityTest class
@@ -40,7 +34,7 @@ class EntityTest extends TestCase
     {
         parent::setUp();
 
-        $this->Entity = new Entity(['code' => 200]);
+        $this->Entity = new EntityExample(['code' => 200]);
     }
 
     /**
@@ -93,11 +87,11 @@ class EntityTest extends TestCase
     public function testSet()
     {
         $result = $this->Entity->set('newKey', 'newValue');
-        $this->assertInstanceOf(BaseEntity::class, $result);
+        $this->assertInstanceOf(Entity::class, $result);
         $this->assertSame('newValue', $this->Entity->get('newKey'));
 
         $result = $this->Entity->set(['alfa' => 'first', 'beta' => 'second']);
-        $this->assertInstanceOf(BaseEntity::class, $result);
+        $this->assertInstanceOf(Entity::class, $result);
         $this->assertSame('first', $this->Entity->get('alfa'));
         $this->assertSame('second', $this->Entity->get('beta'));
     }
@@ -113,7 +107,7 @@ class EntityTest extends TestCase
         $this->assertSame($expected, $result);
 
         $expected += ['subEntity' => ['subKey' => 'subValue']];
-        $subEntity = new Entity(['subKey' => 'subValue']);
+        $subEntity = new EntityExample(['subKey' => 'subValue']);
         $result = $this->Entity->set(compact('subEntity'))->toArray();
         $this->assertSame($expected, $result);
     }

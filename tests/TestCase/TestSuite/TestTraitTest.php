@@ -39,7 +39,8 @@ class TestTraitTest extends TestCase
             'assertIsBool' => true,
             'assertIsFloat' => 1.1,
             'assertIsInt' => 1,
-            'assertIsObject' => new stdClass,
+            'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
+            'assertIsObject' => new stdClass(),
             'assertIsString' => 'string',
         ] as $assertMethod => $value) {
             $this->{$assertMethod}($value);
@@ -85,7 +86,7 @@ class TestTraitTest extends TestCase
     public function testAssertException()
     {
         $this->assertException(Exception::class, function () {
-            throw new Exception;
+            throw new Exception();
         });
         $this->assertException(Exception::class, function () {
             throw new Exception('right exception message');
@@ -107,11 +108,11 @@ class TestTraitTest extends TestCase
         foreach (['noExistingException', stdClass::class] as $class) {
             try {
                 $this->assertException($class, function () {
-                    throw new Exception;
+                    throw new Exception();
                 });
             } catch (AssertionFailedError $e) {
             } finally {
-                $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an Exception instance', $e->getMessage());
+                $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an exception', $e->getMessage());
                 unset($e);
             }
         }
@@ -119,7 +120,7 @@ class TestTraitTest extends TestCase
         //Unexpected exception type
         try {
             $this->assertException(Deprecated::class, function () {
-                throw new Exception;
+                throw new Exception();
             });
         } catch (AssertionFailedError $e) {
         } finally {
@@ -141,7 +142,7 @@ class TestTraitTest extends TestCase
         //Expected exception message, but no message
         try {
             $this->assertException(Exception::class, function () {
-                throw new Exception;
+                throw new Exception();
             }, 'Right');
         } catch (AssertionFailedError $e) {
         } finally {
@@ -225,7 +226,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertObjectPropertiesEqual()
     {
-        $object = new stdClass;
+        $object = new stdClass();
         $object->first = 'first value';
         $object->second = 'second value';
         $this->assertObjectPropertiesEqual(['first', 'second'], $object);
@@ -241,7 +242,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertSameMethods()
     {
-        $exampleClass = new ExampleClass;
+        $exampleClass = new ExampleClass();
         $this->assertSameMethods($exampleClass, ExampleClass::class);
         $this->assertSameMethods($exampleClass, get_class($exampleClass));
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -9,16 +10,16 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.1.10
+ * @since       1.2.5
  */
 namespace Tools\Exception;
 
 use Exception;
 
 /**
- * "Array key does not exist" exception
+ * "Not positive value" exception
  */
-class KeyNotExistsException extends Exception
+class NotPositiveException extends Exception
 {
     /**
      * Constructor
@@ -26,7 +27,7 @@ class KeyNotExistsException extends Exception
      * @param int $code The code of the error
      * @param \Throwable $previous the previous exception
      */
-    public function __construct($message = 'Array key does not exist', $code = 0, $previous = null)
+    public function __construct($message = 'The value is not a positive', $code = 0, $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

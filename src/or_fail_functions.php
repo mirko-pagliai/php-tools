@@ -16,6 +16,7 @@ use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\PropertyNotExistsException;
@@ -29,7 +30,7 @@ if (!function_exists('file_exists_or_fail')) {
      *  generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws FileNotExistsException
+     * @throws \Tools\Exception\FileNotExistsException
      */
     function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)
     {
@@ -45,11 +46,11 @@ if (!function_exists('key_exists_or_fail')) {
      * If you pass an array of keys, they will all be checked.
      * @param string|int|array $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param string|null $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws KeyNotExistsException
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
     {
@@ -68,12 +69,12 @@ if (!function_exists('property_exists_or_fail')) {
      *  use the `property_exists()` function.
      * @param object|string $object The class name or an object of the class to test for
      * @param string $property The name of the property
-     * @param string|null $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @since 1.1.14
-     * @throws PropertyNotExistsException
+     * @throws \Tools\Exception\PropertyNotExistsException
      */
     function property_exists_or_fail($object, $property, $message = 'Object does not have `%s` property', $exception = PropertyNotExistsException::class)
     {
@@ -89,15 +90,35 @@ if (!function_exists('is_dir_or_fail')) {
      * Tells whether the filename is a directory and throws an exception if the
      *  filename is not a directory
      * @param string $filename Path to the directory
-     * @param string|null $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws NotDirectoryException
+     * @throws \Tools\Exception\NotDirectoryException
      */
     function is_dir_or_fail($filename, $message = 'Filename `%s` is not a directory', $exception = NotDirectoryException::class)
     {
         is_true_or_fail(is_dir($filename), sprintf($message, rtr($filename)), $exception);
+    }
+}
+
+if (!function_exists('is_positive_or_fail')) {
+    /**
+     * Throws an exception if the value is not a positive
+     * @param mixed $value The value you want to check
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @since 1.2.5
+     * @throws \Tools\Exception\NotPositiveException
+     */
+    function is_positive_or_fail($value, $message = 'The value is not a positive', $exception = NotPositiveException::class)
+    {
+        if (can_be_string($value) && $message == 'The value is not a positive') {
+            $message = sprintf('The value `%s` is not a positive', (string)$value);
+        }
+        is_true_or_fail(is_positive($value), $message, $exception);
     }
 }
 
@@ -106,11 +127,11 @@ if (!function_exists('is_readable_or_fail')) {
      * Tells whether a file exists and is readable and throws an exception if
      *  the file is not readable
      * @param string $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws NotReadableException
+     * @throws \Tools\Exception\NotReadableException
      */
     function is_readable_or_fail($filename, $message = 'File or directory `%s` is not readable', $exception = NotReadableException::class)
     {
@@ -125,12 +146,12 @@ if (!function_exists('is_true_or_fail')) {
      * You can also pass the exception as a second parameter, instead of the
      *  message.
      * @param mixed $value The value you want to check
-     * @param string|null $message The failure message that will be appended to the
+     * @param string $message The failure message that will be appended to the
      *  generated message
      * @param string $exception The exception class you want to set
      * @return void
      * @since 1.1.7
-     * @throws Exception
+     * @throws \Exception
      */
     function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)
     {
@@ -139,7 +160,7 @@ if (!function_exists('is_true_or_fail')) {
         }
 
         if (func_num_args() === 2 && is_string($message) && class_exists($message)) {
-            $exception = new $message;
+            $exception = new $message();
         } else {
             if (!is_string($exception)) {
                 trigger_error('`$exception` parameter must be a string');
@@ -163,11 +184,11 @@ if (!function_exists('is_writable_or_fail')) {
      * Tells whether the filename is writable and throws an exception if the
      *  file is not writable
      * @param string $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws NotWritableException
+     * @throws \Tools\Exception\NotWritableException
      */
     function is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)
     {

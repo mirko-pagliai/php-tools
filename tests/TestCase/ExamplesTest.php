@@ -12,6 +12,8 @@
  */
 namespace Tools\Test;
 
+use App\AnotherExampleChildClass;
+use App\ExampleChildClass;
 use Exception;
 use stdClass;
 use Tools\TestSuite\TestCase;
@@ -25,9 +27,9 @@ class ExamplesTest extends TestCase
     {
         $this->assertArrayKeysEqual(['a', 'b'], ['a' => 'alfa', 'b' => 'beta']);
 
-        $MyChildInstance = new MyChild;
-        $this->assertException(Exception::class, [$MyChildInstance, 'second']);
-        $this->assertException(Exception::class, [$MyChildInstance, 'second'], 'Exception message...');
+        $MyChildInstance = new ExampleChildClass();
+        $this->assertException(Exception::class, [$MyChildInstance, 'throwMethod']);
+        $this->assertException(Exception::class, [$MyChildInstance, 'throwMethod'], 'Exception message...');
 
         $this->assertFileExtension('jpg', 'file.jpg');
         $this->assertFileExtension('jpeg', 'FILE.JPEG');
@@ -54,41 +56,15 @@ class ExamplesTest extends TestCase
 
         $this->assertIsInt(1);
 
-        $this->assertIsObject(new stdClass);
+        $this->assertIsObject(new stdClass());
 
         $this->assertIsString('string');
 
-        $object = new stdClass;
+        $object = new stdClass();
         $object->a = 'alfa';
         $object->b = 'beta';
         $this->assertObjectPropertiesEqual(['a', 'b'], $object);
 
-        $this->assertSameMethods(MyChild::class, AnotherChild::class);
-    }
-}
-
-class MyParent
-{
-    public function first()
-    {
-    }
-}
-
-class MyChild extends MyParent
-{
-    public function first()
-    {
-    }
-
-    public function second()
-    {
-        throw new Exception('Exception message...');
-    }
-}
-
-class AnotherChild extends MyParent
-{
-    public function second()
-    {
+        $this->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
     }
 }

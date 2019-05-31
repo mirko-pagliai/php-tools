@@ -77,8 +77,8 @@ class FileArrayTest extends TestCase
         $this->assertEquals(['first', 'third', 'fifth'], $this->FileArray->read());
 
         $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('Key `noExisting` does not exist');
-        $this->FileArray->delete('noExisting');
+        $this->expectExceptionMessage('Key `100` does not exist');
+        $this->FileArray->delete(100);
     }
 
     /**
@@ -101,8 +101,8 @@ class FileArrayTest extends TestCase
         $this->assertEquals('third', $this->FileArray->get(2));
 
         $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('Key `noExisting` does not exist');
-        $this->FileArray->get('noExisting');
+        $this->expectExceptionMessage('Key `100` does not exist');
+        $this->FileArray->get(100);
     }
 
     /**

@@ -12,23 +12,11 @@
  */
 namespace App;
 
-use Exception;
+use Tools\Entity;
 
 /**
- * An example class that extends the `ExampleClass` class
+ * An example of entity
  */
-class ExampleChildClass extends ExampleClass
+class EntityExample extends Entity
 {
-    public function throwMethod()
-    {
-        throw new Exception('Exception message...');
-    }
-
-    public function childMethod()
-    {
-    }
-
-    public function anotherChildMethod()
-    {
-    }
 }
