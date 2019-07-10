@@ -5,8 +5,7 @@
 
 ### 1.2.5
 * added `can_be_string()` global function;
-* added `is_positive_or_fail()` global function and the
-    `NotPositiveException` exception class.
+* added `is_positive_or_fail()` global function and the `NotPositiveException`.
 
 ### 1.2.4
 * fixed bug for `is_url()` global function, it correctly recognizes the url with
