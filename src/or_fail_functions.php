@@ -16,6 +16,7 @@ use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -38,50 +39,24 @@ if (!function_exists('file_exists_or_fail')) {
     }
 }
 
-if (!function_exists('key_exists_or_fail')) {
+if (!function_exists('in_array_or_fail')) {
     /**
-     * Checks if the given key or index exists in the array and throws an
-     *  exception if the key does not exist.
-     *
-     * If you pass an array of keys, they will all be checked.
-     * @param string|int|array $key Key to check or an array of keys
-     * @param array $array An array with keys to check
+     * Checks if a value exists in an array and throws an exception if the
+     *  value is not in array
+     * @param mixed $value The searched value
+     * @param array $array The array
      * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return void
-     * @throws \Tools\Exception\KeyNotExistsException
+     * @since 1.2.6
      */
-    function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
+    function in_array_or_fail($value, $array, $message = 'The value is not in array', $exception = NotInArrayException::class)
     {
-        foreach ((array)$key as $name) {
-            is_true_or_fail(array_key_exists($name, $array), sprintf($message, $name), $exception);
+        if (can_be_string($value) && $message == 'The value is not in array') {
+            $message = sprintf('The value `%s` is not in array', (string)$value);
         }
-    }
-}
-
-if (!function_exists('property_exists_or_fail')) {
-    /**
-     * Checks if a property exists and throws an exception if the property does
-     *  not exist.
-     *
-     * If the object has the `has()` method, it uses that method. Otherwise it
-     *  use the `property_exists()` function.
-     * @param object|string $object The class name or an object of the class to test for
-     * @param string $property The name of the property
-     * @param string $message The failure message that will be appended to
-     *  the generated message
-     * @param string $exception The exception class you want to set
-     * @return void
-     * @since 1.1.14
-     * @throws \Tools\Exception\PropertyNotExistsException
-     */
-    function property_exists_or_fail($object, $property, $message = 'Object does not have `%s` property', $exception = PropertyNotExistsException::class)
-    {
-        foreach ((array)$property as $name) {
-            $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
-            is_true_or_fail($result, sprintf($message, $name), $exception);
-        }
+        is_true_or_fail(in_array($value, $array), $message, $exception);
     }
 }
 
@@ -193,5 +168,52 @@ if (!function_exists('is_writable_or_fail')) {
     function is_writable_or_fail($filename, $message = 'File or directory `%s` is not writable', $exception = NotWritableException::class)
     {
         is_true_or_fail(is_writable($filename), sprintf($message, rtr($filename)), $exception);
+    }
+}
+
+if (!function_exists('key_exists_or_fail')) {
+    /**
+     * Checks if the given key or index exists in the array and throws an
+     *  exception if the key does not exist.
+     *
+     * If you pass an array of keys, they will all be checked.
+     * @param string|int|array $key Key to check or an array of keys
+     * @param array $array An array with keys to check
+     * @param string $message The failure message that will be appended to
+     *  the generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @throws \Tools\Exception\KeyNotExistsException
+     */
+    function key_exists_or_fail($key, array $array, $message = 'Key `%s` does not exist', $exception = KeyNotExistsException::class)
+    {
+        foreach ((array)$key as $name) {
+            is_true_or_fail(array_key_exists($name, $array), sprintf($message, $name), $exception);
+        }
+    }
+}
+
+if (!function_exists('property_exists_or_fail')) {
+    /**
+     * Checks if a property exists and throws an exception if the property does
+     *  not exist.
+     *
+     * If the object has the `has()` method, it uses that method. Otherwise it
+     *  use the `property_exists()` function.
+     * @param object|string $object The class name or an object of the class to test for
+     * @param string $property The name of the property
+     * @param string $message The failure message that will be appended to
+     *  the generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @since 1.1.14
+     * @throws \Tools\Exception\PropertyNotExistsException
+     */
+    function property_exists_or_fail($object, $property, $message = 'Object does not have `%s` property', $exception = PropertyNotExistsException::class)
+    {
+        foreach ((array)$property as $name) {
+            $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
+            is_true_or_fail($result, sprintf($message, $name), $exception);
+        }
     }
 }

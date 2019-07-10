@@ -1,9 +1,14 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.6
+* fixed bug, the `TestCase::tearDown()` method removes temporary files only if
+    these are not temporary system files;
+* added `add_slash_term()` global function;
+* added `in_array_or_fail()` global function and the `NotInArrayException`.
+
 ### 1.2.5
 * added `can_be_string()` global function;
-* added `is_positive_or_fail()` global function and the
-    `NotPositiveException` exception class.
+* added `is_positive_or_fail()` global function and the `NotPositiveException`.
 
 ### 1.2.4
 * fixed bug for `is_url()` global function, it correctly recognizes the url with
