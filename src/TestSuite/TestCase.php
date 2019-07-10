@@ -31,6 +31,8 @@ class TestCase extends PHPUnitTestCase
     {
         parent::tearDown();
 
-        unlink_recursive(TMP);
+        if (add_slash_term(TMP) !== add_slash_term(sys_get_temp_dir())) {
+            unlink_recursive(TMP);
+        }
     }
 }
