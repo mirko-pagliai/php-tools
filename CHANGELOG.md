@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.6
+* added `add_slash_term()` global function;
 * added `in_array_or_fail()` global function and the `NotInArrayException`.
 
 ### 1.2.5
