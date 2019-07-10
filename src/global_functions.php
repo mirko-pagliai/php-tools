@@ -22,7 +22,7 @@ if (!function_exists('add_slash_term')) {
      * @return string Path with the slash term
      * @since 1.2.6
      */
-    function add_slash_term($path)
+    function add_slash_term(string $path): string
     {
         return is_slash_term($path) ? $path : $path . DS;
     }
