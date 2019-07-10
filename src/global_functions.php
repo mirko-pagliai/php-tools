@@ -15,6 +15,19 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('add_slash_term')) {
+    /**
+     * Adds the slash term to a path, if it doesn't have one
+     * @param string $path Path
+     * @return string Path with the slash term
+     * @since 1.2.6
+     */
+    function add_slash_term($path)
+    {
+        return is_slash_term($path) ? $path : $path . DS;
+    }
+}
+
 if (!function_exists('array_clean')) {
     /**
      * Cleans an array. It filters elements, removes duplicate values and

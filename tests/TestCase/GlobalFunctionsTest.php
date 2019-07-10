@@ -27,6 +27,17 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
+     * Test for `add_slash_term()` global function
+     * @test
+     */
+    public function testAddSlashTerm()
+    {
+        $expected = DS . 'tmp' . DS;
+        $this->assertSame($expected, add_slash_term(DS . 'tmp'));
+        $this->assertSame($expected, add_slash_term(DS . 'tmp' . DS));
+    }
+
+    /**
      * Test for `array_clean()` global function
      * @test
      */
