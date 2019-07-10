@@ -16,6 +16,7 @@ use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -35,6 +36,27 @@ if (!function_exists('file_exists_or_fail')) {
     function file_exists_or_fail($filename, $message = 'File or directory `%s` does not exist', $exception = FileNotExistsException::class)
     {
         is_true_or_fail(file_exists($filename), sprintf($message, rtr($filename)), $exception);
+    }
+}
+
+if (!function_exists('in_array_or_fail')) {
+    /**
+     * Checks if a value exists in an array and throws an exception if the
+     *  value is not in array
+     * @param mixed $value The searched value
+     * @param array $array The array
+     * @param string $message The failure message that will be appended to
+     *  the generated message
+     * @param string $exception The exception class you want to set
+     * @return void
+     * @since 1.2.6
+     */
+    function in_array_or_fail($value, $array, $message = 'The value is not in array', $exception = NotInArrayException::class)
+    {
+        if (can_be_string($value) && $message == 'The value is not in array') {
+            $message = sprintf('The value `%s` is not in array', (string)$value);
+        }
+        is_true_or_fail(in_array($value, $array), $message, $exception);
     }
 }
 

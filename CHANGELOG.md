@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.6
+* added `in_array_or_fail()` global function and the `NotInArrayException`.
+
 ### 1.2.5
 * added `can_be_string()` global function;
 * added `is_positive_or_fail()` global function and the
