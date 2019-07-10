@@ -21,6 +21,7 @@ use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
+use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotPositiveException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -43,6 +44,19 @@ class OrFailFunctionsTest extends TestCase
         $this->expectException(FileNotExistsException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
         file_exists_or_fail(TMP . 'noExisting');
+    }
+
+    /**
+     * Test for `in_array_or_fail()` "or fail" function
+     * @test
+     */
+    public function testInArrayOrFail()
+    {
+        in_array_or_fail('a', ['a', 'b']);
+
+        $this->expectException(NotInArrayException::class);
+        $this->expectExceptionMessage('The value `a` is not in array');
+        in_array_or_fail('a', []);
     }
 
     /**
