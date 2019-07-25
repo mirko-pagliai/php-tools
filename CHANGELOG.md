@@ -1,5 +1,12 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.7
+* `getProperty()`, `getProperties()` and `invokeMethod()` methods from the
+    `ReflectionTrait` can now take a class name as string, rather than just an
+    instantiated object;
+* `getMethodInstance()` and `getPropertyInstance()` methods from the
+    `ReflectionTrait` renamed as `_getMethodInstance()` and `_getPropertyInstance()`.
+
 ### 1.2.6
 * fixed bug, the `TestCase::tearDown()` method removes temporary files only if
     these are not temporary system files;

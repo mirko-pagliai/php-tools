@@ -27,7 +27,6 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperties()
     {
-        $example = new ExampleClass();
         $expected = [
             'privateProperty' => 'this is a private property',
             'firstProperty' => null,
@@ -35,7 +34,11 @@ class ReflectionTraitTest extends TestCase
             'publicProperty' => 'this is public',
             'staticProperty' => 'a static property',
         ];
+
+        $example = new ExampleClass();
         $this->assertEquals($expected, $this->getProperties($example));
+        $this->assertEquals($expected, $this->getProperties(ExampleClass::class));
+        $this->assertEquals($expected, $this->getProperties(new ExampleClass()));
 
         $this->assertArrayKeysEqual(['publicProperty', 'staticProperty'], $this->getProperties($example, ReflectionProperty::IS_PUBLIC));
         $this->assertArrayKeysEqual(['firstProperty', 'secondProperty'], $this->getProperties($example, ReflectionProperty::IS_PROTECTED));
@@ -56,6 +59,8 @@ class ReflectionTraitTest extends TestCase
         $example = new ExampleClass();
         $this->assertNull($this->getProperty($example, 'firstProperty'));
         $this->assertEquals('a protected property', $this->getProperty($example, 'secondProperty'));
+        $this->assertEquals('a protected property', $this->getProperty(ExampleClass::class, 'secondProperty'));
+        $this->assertEquals('a protected property', $this->getProperty(new ExampleClass(), 'secondProperty'));
     }
 
     /**
@@ -67,6 +72,8 @@ class ReflectionTraitTest extends TestCase
         $example = new ExampleClass();
         $this->assertEquals('a protected method', $this->invokeMethod($example, 'protectedMethod'));
         $this->assertEquals('example string', $this->invokeMethod($example, 'protectedMethod', ['example string']));
+        $this->assertEquals('a protected method', $this->invokeMethod(ExampleClass::class, 'protectedMethod'));
+        $this->assertEquals('a protected method', $this->invokeMethod(new ExampleClass(), 'protectedMethod'));
     }
 
     /**
