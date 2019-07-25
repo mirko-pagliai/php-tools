@@ -28,12 +28,26 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @return \ReflectionMethod
      */
-    protected function getMethodInstance(&$object, $methodName)
+    protected function _getMethodInstance(&$object, $methodName)
     {
         $method = new ReflectionMethod(get_class($object), $methodName);
         $method->setAccessible(true);
 
         return $method;
+    }
+
+    /**
+     * Internal method to get the `ReflectionProperty` instance
+     * @param object $object Instantiated object that has the property
+     * @param string $name Property name
+     * @return \ReflectionProperty
+     */
+    protected function _getPropertyInstance(&$object, $name)
+    {
+        $property = new ReflectionProperty(get_class($object), $name);
+        $property->setAccessible(true);
+
+        return $property;
     }
 
     /**
@@ -69,32 +83,18 @@ trait ReflectionTrait
     }
 
     /**
-     * Internal method to get the `ReflectionProperty` instance
-     * @param object $object Instantiated object that has the property
-     * @param string $name Property name
-     * @return \ReflectionProperty
-     */
-    protected function getPropertyInstance(&$object, $name)
-    {
-        $property = new ReflectionProperty(get_class($object), $name);
-        $property->setAccessible(true);
-
-        return $property;
-    }
-
-    /**
      * Gets a property value
      * @param string|object $object Instantiated object that has the property
      *  or class name
      * @param string $name Property name
      * @return mixed Property value
-     * @uses getPropertyInstance()
+     * @uses _getPropertyInstance()
      */
     protected function getProperty($object, $name)
     {
         $object = is_object($object) ? $object : new $object();
 
-        return $this->getPropertyInstance($object, $name)->getValue($object);
+        return $this->_getPropertyInstance($object, $name)->getValue($object);
     }
 
     /**
@@ -104,13 +104,13 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @param array $parameters Array of parameters to pass into method
      * @return mixed Method return
-     * @uses getMethodInstance()
+     * @uses _getMethodInstance()
      */
     protected function invokeMethod($object, $methodName, array $parameters = [])
     {
         $object = is_object($object) ? $object : new $object();
 
-        return $this->getMethodInstance($object, $methodName)->invokeArgs($object, $parameters);
+        return $this->_getMethodInstance($object, $methodName)->invokeArgs($object, $parameters);
     }
 
     /**
@@ -119,11 +119,11 @@ trait ReflectionTrait
      * @param string $name Property name
      * @param mixed $value Value you want to set
      * @return mixed Old property value
-     * @uses getPropertyInstance()
+     * @uses _getPropertyInstance()
      */
     protected function setProperty(&$object, $name, $value)
     {
-        $property = $this->getPropertyInstance($object, $name);
+        $property = $this->_getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);
         $property->setValue($object, $value);
 
