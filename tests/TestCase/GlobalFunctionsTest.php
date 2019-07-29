@@ -219,6 +219,8 @@ class GlobalFunctionsTest extends TestCase
         unlink($filename);
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
+
+        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
     }
 
     /**
@@ -624,7 +626,7 @@ class GlobalFunctionsTest extends TestCase
     public function testRtr()
     {
         $values = [
-            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder',
+            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder' . DS,
             'my' . DS . 'folder' => 'my' . DS . 'folder',
             DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
         ];

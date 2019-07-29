@@ -10,6 +10,10 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
@@ -199,9 +203,16 @@ if (!function_exists('create_file')) {
      */
     function create_file($filename, $data = null, $dirMode = 0777)
     {
-        @mkdir(dirname($filename), $dirMode, true);
+        $filesystem = new Filesystem();
 
-        return file_put_contents($filename, $data) !== false;
+        try {
+            $filesystem->mkdir(dirname($filename), $dirMode);
+            $filesystem->dumpFile($filename, $data);
+
+            return true;
+        } catch (IOExceptionInterface $exception) {
+            return false;
+        }
     }
 }
 
@@ -620,15 +631,14 @@ if (!function_exists('rtr')) {
      */
     function rtr($path)
     {
+        $filesystem = new Filesystem();
         $root = getenv('ROOT') ?: ROOT;
-        $rootLength = strlen($root);
 
-        if (!is_slash_term($root)) {
-            $root .= preg_match('/^[A-Z]:\\\\/i', $root) || substr($root, 0, 2) === '\\\\' ? '\\' : '/';
-            $rootLength = strlen($root);
+        if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
+            return $filesystem->makePathRelative($path, $root);
         }
 
-        return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+        return $path;
     }
 }
 
