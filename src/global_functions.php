@@ -614,6 +614,7 @@ if (!function_exists('rmdir_recursive')) {
      * @return void
      * @see unlink_recursive()
      * @since 1.0.6
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function rmdir_recursive($dirname)
     {
@@ -633,13 +634,14 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
+     * @throws \RuntimeException
      */
     function rtr($path)
     {
         $filesystem = new Filesystem();
         $root = getenv('ROOT') ?: ROOT;
         is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the
-     *  `putenv()` function) or the `ROOT` constant', Exception::class);
+     *  `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
 
         if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
             return $filesystem->makePathRelative($path, $root);
@@ -693,6 +695,7 @@ if (!function_exists('unlink_recursive')) {
      * @return void
      * @see rmdir_recursive()
      * @since 1.0.7
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function unlink_recursive($dirname, $exceptions = false)
     {
