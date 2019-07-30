@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.8
+* added `is_absolute()` global function.
+
 ### 1.2.7
 * `getProperty()`, `getProperties()` and `invokeMethod()` methods from the
     `ReflectionTrait` can now take a class name as string, rather than just an

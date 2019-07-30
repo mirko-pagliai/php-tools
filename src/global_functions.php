@@ -205,9 +205,8 @@ if (!function_exists('create_file')) {
      */
     function create_file($filename, $data = null, $dirMode = 0777)
     {
-        $filesystem = new Filesystem();
-
         try {
+            $filesystem = new Filesystem();
             $filesystem->mkdir(dirname($filename), $dirMode);
             $filesystem->dumpFile($filename, $data);
 
@@ -428,6 +427,21 @@ if (!function_exists('get_hostname_from_url')) {
         $host = parse_url($url, PHP_URL_HOST);
 
         return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
+    }
+}
+
+if (!function_exists('is_absolute')) {
+    /**
+     * Checks if the given path is absolute
+     * @param string $path Path
+     * @return bool
+     * @since 1.2.8
+     */
+    function is_absolute($path)
+    {
+        $filesystem = new Filesystem();
+
+        return $filesystem->isAbsolutePath($path);
     }
 }
 

@@ -426,6 +426,16 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_absolute()` global function
+     * @test
+     */
+    public function testIsAbsolute()
+    {
+        $this->assertTrue(is_absolute(DS . 'path' . DS));
+        $this->assertFalse(is_absolute('path' . DS));
+    }
+
+    /**
      * Test for `is_external_url()` global function
      * @test
      */
