@@ -19,7 +19,6 @@ use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
-use Symfony\Component\Filesystem\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -684,8 +683,7 @@ class GlobalFunctionsTest extends TestCase
         $files = createSomeFiles();
         foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
             $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            $filesystem = new Filesystem();
-            $filesystem->symlink($filename, $link, true);
+            @symlink($filename, $link);
             $files[] = $link;
         }
         unlink_recursive(TMP . 'exampleDir');
