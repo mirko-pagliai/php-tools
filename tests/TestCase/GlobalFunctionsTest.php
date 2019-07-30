@@ -627,6 +627,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
+        $this->assertEquals('my' . DS . 'folder' . DS, ROOT . 'my' . DS . 'folder');
+        $this->assertEquals('my' . DS . 'folder', 'my' . DS . 'folder');
+        $this->assertEquals(DS . 'my' . DS . 'folder', DS . 'my' . DS . 'folder');
         $values = [
             ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder' . DS,
             'my' . DS . 'folder' => 'my' . DS . 'folder',
