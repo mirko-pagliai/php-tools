@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.8
-* added `is_absolute()` global function.
+* added `is_absolute()` global function;
+* uses `symfony/filesystem` and `symfony/finder` packages.
 
 ### 1.2.7
 * `getProperty()`, `getProperties()` and `invokeMethod()` methods from the
