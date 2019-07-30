@@ -268,21 +268,10 @@ class GlobalFunctionsTest extends TestCase
             TMP . 'exampleDir' . DS . 'subDir2',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
         ];
-        $expectedFiles = [
-            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
-            TMP . 'exampleDir' . DS . '.hiddenFile',
-            TMP . 'exampleDir' . DS . 'file1',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-        ];
-        createSomeFiles();
+        $expectedFiles = createSomeFiles();
 
-        foreach ([TMP . 'exampleDir', TMP . 'exampleDir' . DS] as $directory) {
-            $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree($directory));
-        }
+        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir'));
+        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir' . DS));
 
         //Excludes some files
         foreach ([
@@ -297,16 +286,19 @@ class GlobalFunctionsTest extends TestCase
             $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
         }
 
+        //Excludes a directory
+        list($result) = dir_tree(TMP . 'exampleDir', 'subDir2');
+        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2', $result);
+        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3', $result);
+
         //Excludes hidden files
-        $removeHiddenDirsAndFiles = function ($values) {
-            return array_clean($values, function ($value) {
-                return strpos($value, DS . '.') === false;
-            });
-        };
-        $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
-        $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
         foreach ([true, '.', ['.']] as $exceptions) {
-            $this->assertEquals([$currentExpectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
+            list($result) = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir', $result);
+
+            list(, $result) = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7', $result);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
         }
 
         //Using a file or a no existing file

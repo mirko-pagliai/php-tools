@@ -11,8 +11,10 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use Symfony\Component\Finder\Finder;
 
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
@@ -210,7 +212,7 @@ if (!function_exists('create_file')) {
             $filesystem->dumpFile($filename, $data);
 
             return true;
-        } catch (IOExceptionInterface $exception) {
+        } catch (IOExceptionInterface $e) {
             return false;
         }
     }
@@ -285,47 +287,35 @@ if (!function_exists('dir_tree')) {
      */
     function dir_tree($path, $exceptions = false)
     {
-        try {
-            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
-            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-        } catch (Exception $e) {
-            return [[], []];
-        }
-
-        $directories = $files = [];
-        $directories[] = rtrim($path, DS);
+        $finder = new Finder();
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
         $skipHidden = false;
         if (in_array('.', $exceptions)) {
             $skipHidden = true;
             unset($exceptions[array_search('.', $exceptions)]);
+        } else {
+            $finder->ignoreDotFiles(false);
         }
 
-        foreach ($iterator as $itemPath => $fsIterator) {
-            $subPathName = $fsIterator->getSubPathname();
-
-            //Excludes hidden files
-            if ($skipHidden && ($subPathName{0} === '.' || strpos($subPathName, DS . '.') !== false)) {
-                continue;
+        try {
+            $finder->directories()->ignoreUnreadableDirs()->in($path);
+            if ($exceptions) {
+                $finder->exclude($exceptions);
             }
+            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
+            array_unshift($dirs, rtrim($path, DS));
 
-            //Excludes the listed files
-            if (in_array($fsIterator->getFilename(), $exceptions)) {
-                continue;
-            }
+            $finder->files()->in($path);
+            if ($exceptions) {
+                $finder->notName($exceptions);
+            };
+            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
-            if ($fsIterator->isDir()) {
-                $directories[] = $itemPath;
-            } else {
-                $files[] = $itemPath;
-            }
+            return [$dirs, $files];
+        } catch (DirectoryNotFoundException $e) {
+            return [[], []];
         }
-
-        sort($directories);
-        sort($files);
-
-        return [$directories, $files];
     }
 }
 
@@ -613,10 +603,11 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive($dirname)
     {
-        unlink_recursive($dirname);
-
-        list($directories) = dir_tree($dirname, false);
-        array_map('rmdir', array_reverse($directories));
+        if (!is_dir($dirname)) {
+            return;
+        }
+        $filesystem = new Filesystem();
+        $filesystem->remove($dirname);
     }
 }
 
@@ -674,7 +665,7 @@ if (!function_exists('string_starts_with')) {
 
 if (!function_exists('unlink_recursive')) {
     /**
-     * Recursively removes all the files contained in a directory and its
+     * Recursively removes all the files contained in a directory and within its
      *  sub-directories. This function only removes the files, leaving the
      *  directories unaltered.
      *
@@ -689,14 +680,9 @@ if (!function_exists('unlink_recursive')) {
      */
     function unlink_recursive($dirname, $exceptions = false)
     {
-        list($directories, $files) = dir_tree($dirname, $exceptions);
-
-        //Adds symlinks. `dir_tree()` returns symlinks as directories
-        $files += array_filter($directories, 'is_link');
-
-        foreach ($files as $file) {
-            is_link($file) && is_dir($file) && IS_WIN ? rmdir($file) : unlink($file);
-        }
+        list(, $files) = dir_tree($dirname, $exceptions);
+        $filesystem = new Filesystem();
+        $filesystem->remove($files);
     }
 }
 
