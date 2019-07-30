@@ -279,8 +279,8 @@ if (!function_exists('dir_tree')) {
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param array|bool $exceptions Either an array of files/folder to exclude
-     *  or boolean true to not grab dot files/folders
+     * @param array|bool $exceptions Either an array of filename or folder names
+     *  to exclude or boolean true to not grab dot files/folders
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
      */
@@ -307,12 +307,17 @@ if (!function_exists('dir_tree')) {
 
             $finder->files()->in($path);
             if ($exceptions) {
-                $finder->notName($exceptions);
+                $exceptions = array_map(function ($exception) {
+                    return preg_quote($exception, '/');
+                }, $exceptions);
+                $finder->notName('/(' . implode('|', $exceptions) . ')/');
             };
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
         } catch (DirectoryNotFoundException $e) {
+            return [[], []];
+        } catch (\InvalidArgumentException $e) {
             return [[], []];
         }
     }
