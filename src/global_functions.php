@@ -638,11 +638,11 @@ if (!function_exists('rtr')) {
      */
     function rtr($path)
     {
-        $filesystem = new Filesystem();
         $root = getenv('ROOT') ?: ROOT;
         is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the
      *  `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
 
+        $filesystem = new Filesystem();
         if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
             return $filesystem->makePathRelative($path, $root);
         }
