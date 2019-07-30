@@ -13,7 +13,6 @@
 
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 if (!defined('IS_WIN')) {
@@ -315,8 +314,6 @@ if (!function_exists('dir_tree')) {
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
-        } catch (DirectoryNotFoundException $e) {
-            return [[], []];
         } catch (\InvalidArgumentException $e) {
             return [[], []];
         }
