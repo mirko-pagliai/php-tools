@@ -5,7 +5,7 @@
     deprecated and it will be removed in a later release;
 * added `is_absolute()` global function;
 * uses `symfony/dom-crawler` for `BodyParser` class;
-* uses `symfony/filesystem` and `symfony/finder` packages.
+* uses `symfony/filesystem` and `symfony/finder` for some global functions.
 
 ### 1.2.7
 * `getProperty()`, `getProperties()` and `invokeMethod()` methods from the
