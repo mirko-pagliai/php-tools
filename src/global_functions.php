@@ -664,7 +664,7 @@ if (!function_exists('rtr')) {
             $path = $filesystem->makePathRelative($path, $root);
         }
 
-        return rtrim($path, DS);
+        return rtrim($path, '/');
     }
 }
 
