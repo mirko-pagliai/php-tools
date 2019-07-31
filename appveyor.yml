@@ -22,6 +22,7 @@ install:
   - echo extension=php_gd2.dll >> php.ini
   - echo extension=php_intl.dll >> php.ini
   - echo extension=php_openssl.dll >> php.ini
+  - echo extension=php_xdebug.dll >> php.ini
   - cd C:\projects\php-tools
   - appveyor DownloadFile https://getcomposer.org/composer.phar
   - php composer.phar install --prefer-dist --no-interaction --ansi --no-progress
