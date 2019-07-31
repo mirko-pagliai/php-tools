@@ -617,11 +617,11 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
-        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
