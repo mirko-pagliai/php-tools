@@ -220,6 +220,9 @@ class GlobalFunctionsTest extends TestCase
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
         $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
     }
 
