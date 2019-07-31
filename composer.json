@@ -16,7 +16,6 @@
         "symfony/finder": "^3.4|^4.3"
     },
     "require-dev": {
-        "ext-xdebug": "*",
         "cakephp/cakephp-codesniffer": "^3.0",
         "phpunit/phpunit": "^5.7|^6.0|^7.0",
         "symfony/var-dumper": "^3.4|^4.3"
