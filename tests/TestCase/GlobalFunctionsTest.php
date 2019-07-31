@@ -142,28 +142,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_stringable()` global function
-     * @test
-     */
-    public function testIsStringable()
-    {
-        foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
-            $this->assertTrue(is_stringable($value));
-        }
-
-        foreach ([null, [], new stdClass()] as $value) {
-            $this->assertFalse(is_stringable($value));
-        }
-
-        //This class implements the `__toString()` method
-        $this->assertTrue(is_stringable(new ExampleOfStringable()));
-
-        $this->expectException(Deprecated::class);
-        $this->expectExceptionMessage('`can_be_string()` function is deprecated. Use `is_stringable()');
-        can_be_string('string');
-    }
-
-    /**
      * Test for `clean_url()` global function
      * @test
      */
@@ -544,6 +522,32 @@ class GlobalFunctionsTest extends TestCase
         ] as $path) {
             $this->assertFalse(is_slash_term($path));
         }
+    }
+
+    /**
+     * Test for `is_stringable()` global function
+     * @test
+     */
+    public function testIsStringable()
+    {
+        foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
+            $this->assertTrue(is_stringable($value));
+        }
+
+        foreach ([null, [], new stdClass()] as $value) {
+            $this->assertFalse(is_stringable($value));
+        }
+
+        //This class implements the `__toString()` method
+        $this->assertTrue(is_stringable(new ExampleOfStringable()));
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(can_be_string('string'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('`can_be_string()` function is deprecated. Use `is_stringable()');
+        can_be_string('string');
     }
 
     /**
