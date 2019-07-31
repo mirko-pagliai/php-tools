@@ -673,16 +673,19 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        //Creates some files and some symlinks
         $files = createSomeFiles();
-        foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
-            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            @symlink($filename, $link);
-            $files[] = $link;
+
+        //Creates some links
+        if (!IS_WIN) {
+            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
+                $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
+                @symlink($filename, $link);
+                $files[] = $link;
+            }
         }
-        unlink_recursive(TMP . 'exampleDir');
 
         //Files no longer exist, but directories still exist
+        unlink_recursive(TMP . 'exampleDir');
         array_map([$this, 'assertFileNotExists'], $files);
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
