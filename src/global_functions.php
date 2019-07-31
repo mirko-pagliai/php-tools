@@ -313,7 +313,7 @@ if (!function_exists('dir_tree')) {
                     return preg_quote($exception, '/');
                 }, $exceptions);
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
-            };
+            }
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
