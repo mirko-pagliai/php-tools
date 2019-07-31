@@ -11,6 +11,11 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
+
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
@@ -151,19 +156,6 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
-if (!function_exists('can_be_string')) {
-    /**
-     * Checks is a value can be converted to string
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.2.5
-     */
-    function can_be_string($var)
-    {
-        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
-    }
-}
-
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
@@ -200,9 +192,15 @@ if (!function_exists('create_file')) {
      */
     function create_file(string $filename, $data = null, int $dirMode = 0777): bool
     {
-        @mkdir(dirname($filename), $dirMode, true);
+        try {
+            $filesystem = new Filesystem();
+            $filesystem->mkdir(dirname($filename), $dirMode);
+            $filesystem->dumpFile($filename, $data);
 
-        return file_put_contents($filename, $data) !== false;
+            return true;
+        } catch (IOExceptionInterface $e) {
+            return false;
+        }
     }
 }
 
@@ -268,54 +266,45 @@ if (!function_exists('dir_tree')) {
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param array|bool $exceptions Either an array of files/folder to exclude
-     *  or boolean true to not grab dot files/folders
+     * @param array|bool $exceptions Either an array of filename or folder names
+     *  to exclude or boolean true to not grab dot files/folders
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
      */
     function dir_tree(string $path, $exceptions = false): array
     {
-        try {
-            $directory = new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::KEY_AS_PATHNAME | RecursiveDirectoryIterator::CURRENT_AS_SELF | RecursiveDirectoryIterator::SKIP_DOTS);
-            $iterator = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::SELF_FIRST);
-        } catch (Exception $e) {
-            return [[], []];
-        }
-
-        $directories = $files = [];
-        $directories[] = rtrim($path, DS);
+        $finder = new Finder();
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
         $skipHidden = false;
         if (in_array('.', $exceptions)) {
             $skipHidden = true;
             unset($exceptions[array_search('.', $exceptions)]);
+        } else {
+            $finder->ignoreDotFiles(false);
         }
 
-        foreach ($iterator as $itemPath => $fsIterator) {
-            $subPathName = $fsIterator->getSubPathname();
-
-            //Excludes hidden files
-            if ($skipHidden && ($subPathName{0} === '.' || strpos($subPathName, DS . '.') !== false)) {
-                continue;
+        try {
+            $finder->directories()->ignoreUnreadableDirs()->in($path);
+            if ($exceptions) {
+                $finder->exclude($exceptions);
             }
+            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
+            array_unshift($dirs, rtrim($path, DS));
 
-            //Excludes the listed files
-            if (in_array($fsIterator->getFilename(), $exceptions)) {
-                continue;
-            }
+            $finder->files()->in($path);
+            if ($exceptions) {
+                $exceptions = array_map(function ($exception) {
+                    return preg_quote($exception, '/');
+                }, $exceptions);
+                $finder->notName('/(' . implode('|', $exceptions) . ')/');
+            };
+            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
-            if ($fsIterator->isDir()) {
-                $directories[] = $itemPath;
-            } else {
-                $files[] = $itemPath;
-            }
+            return [$dirs, $files];
+        } catch (\InvalidArgumentException $e) {
+            return [[], []];
         }
-
-        sort($directories);
-        sort($files);
-
-        return [$directories, $files];
     }
 }
 
@@ -431,6 +420,21 @@ if (!function_exists('get_hostname_from_url')) {
     }
 }
 
+if (!function_exists('is_absolute')) {
+    /**
+     * Checks if the given path is absolute
+     * @param string $path Path
+     * @return bool
+     * @since 1.2.8
+     */
+    function is_absolute($path): bool
+    {
+        $filesystem = new Filesystem();
+
+        return $filesystem->isAbsolutePath($path);
+    }
+}
+
 if (!function_exists('is_external_url')) {
     /**
      * Checks if an url is external, relative to the passed hostname
@@ -497,6 +501,19 @@ if (!function_exists('is_slash_term')) {
     function is_slash_term(string $path): bool
     {
         return in_array($path[strlen($path) - 1], ['/', '\\']);
+    }
+}
+
+if (!function_exists('is_stringable')) {
+    /**
+     * Checks is a value can be converted to string
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.2.5
+     */
+    function is_stringable($var): bool
+    {
+        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
     }
 }
 
@@ -582,13 +599,15 @@ if (!function_exists('rmdir_recursive')) {
      * @return void
      * @see unlink_recursive()
      * @since 1.0.6
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function rmdir_recursive(string $dirname): void
     {
-        unlink_recursive($dirname);
-
-        [$directories] = dir_tree($dirname, false);
-        array_map('rmdir', array_reverse($directories));
+        if (!is_dir($dirname)) {
+            return;
+        }
+        $filesystem = new Filesystem();
+        $filesystem->remove($dirname);
     }
 }
 
@@ -600,18 +619,19 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
+     * @throws \RuntimeException
      */
     function rtr(string $path): string
     {
         $root = getenv('ROOT') ?: ROOT;
-        $rootLength = strlen($root);
+        is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
 
-        if (!is_slash_term($root)) {
-            $root .= preg_match('/^[A-Z]:\\\\/i', $root) || substr($root, 0, 2) === '\\\\' ? '\\' : '/';
-            $rootLength = strlen($root);
+        $filesystem = new Filesystem();
+        if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
+            return $filesystem->makePathRelative($path, $root);
         }
 
-        return substr($path, 0, $rootLength) !== $root ? $path : substr($path, $rootLength);
+        return $path;
     }
 }
 
@@ -647,7 +667,7 @@ if (!function_exists('string_starts_with')) {
 
 if (!function_exists('unlink_recursive')) {
     /**
-     * Recursively removes all the files contained in a directory and its
+     * Recursively removes all the files contained in a directory and within its
      *  sub-directories. This function only removes the files, leaving the
      *  directories unaltered.
      *
@@ -659,17 +679,13 @@ if (!function_exists('unlink_recursive')) {
      * @return void
      * @see rmdir_recursive()
      * @since 1.0.7
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function unlink_recursive(string $dirname, $exceptions = false): void
     {
-        [$directories, $files] = dir_tree($dirname, $exceptions);
-
-        //Adds symlinks. `dir_tree()` returns symlinks as directories
-        $files += array_filter($directories, 'is_link');
-
-        foreach ($files as $file) {
-            is_link($file) && is_dir($file) && IS_WIN ? rmdir($file) : unlink($file);
-        }
+        [, $files] = dir_tree($dirname, $exceptions);
+        $filesystem = new Filesystem();
+        $filesystem->remove($files);
     }
 }
 
