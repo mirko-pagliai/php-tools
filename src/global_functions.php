@@ -661,10 +661,10 @@ if (!function_exists('rtr')) {
 
         $filesystem = new Filesystem();
         if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            return $filesystem->makePathRelative($path, $root);
+            $path = $filesystem->makePathRelative($path, $root);
         }
 
-        return $path;
+        return rtrim($path, '/');
     }
 }
 
