@@ -142,24 +142,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `can_be_string()` global function
-     * @test
-     */
-    public function testCanBeString()
-    {
-        foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
-            $this->assertTrue(can_be_string($value));
-        }
-
-        foreach ([null, [], new stdClass()] as $value) {
-            $this->assertFalse(can_be_string($value));
-        }
-
-        //This class implements the `__toString()` method
-        $this->assertTrue(can_be_string(new ExampleOfStringable()));
-    }
-
-    /**
      * Test for `clean_url()` global function
      * @test
      */
@@ -219,6 +201,11 @@ class GlobalFunctionsTest extends TestCase
         unlink($filename);
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
+
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
+        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
     }
 
     /**
@@ -266,21 +253,10 @@ class GlobalFunctionsTest extends TestCase
             TMP . 'exampleDir' . DS . 'subDir2',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
         ];
-        $expectedFiles = [
-            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
-            TMP . 'exampleDir' . DS . '.hiddenFile',
-            TMP . 'exampleDir' . DS . 'file1',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-        ];
-        createSomeFiles();
+        $expectedFiles = createSomeFiles();
 
-        foreach ([TMP . 'exampleDir', TMP . 'exampleDir' . DS] as $directory) {
-            $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree($directory));
-        }
+        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir'));
+        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir' . DS));
 
         //Excludes some files
         foreach ([
@@ -295,16 +271,19 @@ class GlobalFunctionsTest extends TestCase
             $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
         }
 
+        //Excludes a directory
+        list($result) = dir_tree(TMP . 'exampleDir', 'subDir2');
+        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2', $result);
+        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3', $result);
+
         //Excludes hidden files
-        $removeHiddenDirsAndFiles = function ($values) {
-            return array_clean($values, function ($value) {
-                return strpos($value, DS . '.') === false;
-            });
-        };
-        $currentExpectedDirs = $removeHiddenDirsAndFiles($expectedDirs);
-        $currentExpectedFiles = $removeHiddenDirsAndFiles($expectedFiles);
         foreach ([true, '.', ['.']] as $exceptions) {
-            $this->assertEquals([$currentExpectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
+            list($result) = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir', $result);
+
+            list(, $result) = dir_tree(TMP . 'exampleDir', $exceptions);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7', $result);
+            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
         }
 
         //Using a file or a no existing file
@@ -432,6 +411,16 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_absolute()` global function
+     * @test
+     */
+    public function testIsAbsolute()
+    {
+        $this->assertTrue(is_absolute(DS . 'path' . DS));
+        $this->assertFalse(is_absolute('path' . DS));
+    }
+
+    /**
      * Test for `is_external_url()` global function
      * @test
      */
@@ -536,6 +525,32 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_stringable()` global function
+     * @test
+     */
+    public function testIsStringable()
+    {
+        foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
+            $this->assertTrue(is_stringable($value));
+        }
+
+        foreach ([null, [], new stdClass()] as $value) {
+            $this->assertFalse(is_stringable($value));
+        }
+
+        //This class implements the `__toString()` method
+        $this->assertTrue(is_stringable(new ExampleOfStringable()));
+
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(can_be_string('string'));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('`can_be_string()` function is deprecated. Use `is_stringable()');
+        can_be_string('string');
+    }
+
+    /**
      * Test for `is_url()` global function
      * @test
      */
@@ -623,20 +638,11 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
-        $values = [
-            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder',
-            'my' . DS . 'folder' => 'my' . DS . 'folder',
-            DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
-        ];
-        foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
-        }
+        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-        foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
-        }
+        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
@@ -675,17 +681,24 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        //Creates some files and some symlinks
         $files = createSomeFiles();
-        foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
-            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            symlink($filename, $link);
-            $files[] = $link;
-        }
-        unlink_recursive(TMP . 'exampleDir');
 
-        //Files no longer exist, but directories still exist
+        //Creates some links
+        if (!IS_WIN) {
+            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
+                $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
+                @symlink($filename, $link);
+                $files[] = $link;
+            }
+        }
+
+        unlink_recursive(TMP . 'exampleDir');
         array_map([$this, 'assertFileNotExists'], $files);
+
+        //Directories still exist
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 

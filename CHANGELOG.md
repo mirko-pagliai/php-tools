@@ -1,5 +1,12 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.8
+* `can_be_string()` renamed as `is_stringable()`. `can_be_string()` is
+    deprecated and it will be removed in a later release;
+* added `is_absolute()` global function;
+* uses `symfony/dom-crawler` for `BodyParser` class;
+* uses `symfony/filesystem` and `symfony/finder` for some global functions.
+
 ### 1.2.7
 * `getProperty()`, `getProperties()` and `invokeMethod()` methods from the
     `ReflectionTrait` can now take a class name as string, rather than just an

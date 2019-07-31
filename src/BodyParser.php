@@ -13,8 +13,8 @@
  */
 namespace Tools;
 
-use DOMDocument;
 use Psr\Http\Message\StreamInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * A body parser.
@@ -95,28 +95,16 @@ class BodyParser
             return [];
         }
 
-        $libxmlPreviousState = libxml_use_internal_errors(true);
-
-        $dom = new DOMDocument();
-        $dom->loadHTML($this->body);
-
-        libxml_clear_errors();
-        libxml_use_internal_errors($libxmlPreviousState);
-
-        $links = [];
+        $crawler = new Crawler($this->body);
 
         foreach ($this->tags as $tag => $attribute) {
-            foreach ($dom->getElementsByTagName($tag) as $element) {
-                $link = $element->getAttribute($attribute);
-
-                if (!$link) {
-                    continue;
+            foreach ($crawler->filterXPath('//' . $tag)->extract($attribute) as $link) {
+                if ($link) {
+                    $links[] = clean_url(url_to_absolute($this->url, $link), true, true);
                 }
-
-                $links[] = clean_url(url_to_absolute($this->url, $link), true, true);
             }
         }
 
-        return $this->extractedLinks = array_unique($links);
+        return $this->extractedLinks = array_unique(isset($links) ? $links : []);
     }
 }

@@ -53,7 +53,7 @@ if (!function_exists('in_array_or_fail')) {
      */
     function in_array_or_fail($value, $array, $message = 'The value is not in array', $exception = NotInArrayException::class)
     {
-        if (can_be_string($value) && $message == 'The value is not in array') {
+        if (is_stringable($value) && $message == 'The value is not in array') {
             $message = sprintf('The value `%s` is not in array', (string)$value);
         }
         is_true_or_fail(in_array($value, $array), $message, $exception);
@@ -90,7 +90,7 @@ if (!function_exists('is_positive_or_fail')) {
      */
     function is_positive_or_fail($value, $message = 'The value is not a positive', $exception = NotPositiveException::class)
     {
-        if (can_be_string($value) && $message == 'The value is not a positive') {
+        if (is_stringable($value) && $message == 'The value is not a positive') {
             $message = sprintf('The value `%s` is not a positive', (string)$value);
         }
         is_true_or_fail(is_positive($value), $message, $exception);
