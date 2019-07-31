@@ -29,7 +29,7 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @return \ReflectionMethod
      */
-    protected function _getMethodInstance(object &$object, string $methodName): ReflectionMethod
+    protected function _getMethodInstance(&$object, string $methodName): ReflectionMethod
     {
         $method = new ReflectionMethod(get_class($object), $methodName);
         $method->setAccessible(true);
@@ -43,7 +43,7 @@ trait ReflectionTrait
      * @param string $name Property name
      * @return \ReflectionProperty
      */
-    protected function _getPropertyInstance(object &$object, string $name): ReflectionProperty
+    protected function _getPropertyInstance(&$object, string $name): ReflectionProperty
     {
         $property = new ReflectionProperty(get_class($object), $name);
         $property->setAccessible(true);
@@ -122,7 +122,7 @@ trait ReflectionTrait
      * @return mixed Old property value
      * @uses _getPropertyInstance()
      */
-    protected function setProperty(object &$object, string $name, $value)
+    protected function setProperty(&$object, string $name, $value)
     {
         $property = $this->_getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);
