@@ -158,13 +158,16 @@ if (!function_exists('array_value_last_recursive')) {
 if (!function_exists('can_be_string')) {
     /**
      * Checks is a value can be converted to string
+     * @deprecated 1.2.8 Use `is_stringable()` instead
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
      */
     function can_be_string($var)
     {
-        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
+        deprecationWarning('`can_be_string()` function is deprecated. Use `is_stringable()` instead');
+
+        return is_stringable($var);
     }
 }
 
@@ -533,6 +536,19 @@ if (!function_exists('is_slash_term')) {
     function is_slash_term($path)
     {
         return in_array($path[strlen($path) - 1], ['/', '\\']);
+    }
+}
+
+if (!function_exists('is_stringable')) {
+    /**
+     * Checks is a value can be converted to string
+     * @param mixed $var A var you want to check
+     * @return bool
+     * @since 1.2.5
+     */
+    function is_stringable($var)
+    {
+        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
     }
 }
 

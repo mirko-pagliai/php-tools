@@ -142,21 +142,25 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `can_be_string()` global function
+     * Test for `is_stringable()` global function
      * @test
      */
-    public function testCanBeString()
+    public function testIsStringable()
     {
         foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
-            $this->assertTrue(can_be_string($value));
+            $this->assertTrue(is_stringable($value));
         }
 
         foreach ([null, [], new stdClass()] as $value) {
-            $this->assertFalse(can_be_string($value));
+            $this->assertFalse(is_stringable($value));
         }
 
         //This class implements the `__toString()` method
-        $this->assertTrue(can_be_string(new ExampleOfStringable()));
+        $this->assertTrue(is_stringable(new ExampleOfStringable()));
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('`can_be_string()` function is deprecated. Use `is_stringable()');
+        can_be_string('string');
     }
 
     /**
