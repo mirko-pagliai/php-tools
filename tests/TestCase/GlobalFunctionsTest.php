@@ -224,6 +224,9 @@ class GlobalFunctionsTest extends TestCase
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
         $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
     }
 
@@ -631,20 +634,11 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
-        $values = [
-            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder' . DS,
-            'my' . DS . 'folder' => 'my' . DS . 'folder',
-            DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
-        ];
-        foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
-        }
+        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-        foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
-        }
+        $this->assertSame('my/folder/', rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
@@ -683,17 +677,24 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        //Creates some files and some symlinks
         $files = createSomeFiles();
-        foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
-            $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-            @symlink($filename, $link);
-            $files[] = $link;
-        }
-        unlink_recursive(TMP . 'exampleDir');
 
-        //Files no longer exist, but directories still exist
+        //Creates some links
+        if (!IS_WIN) {
+            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
+                $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
+                @symlink($filename, $link);
+                $files[] = $link;
+            }
+        }
+
+        unlink_recursive(TMP . 'exampleDir');
         array_map([$this, 'assertFileNotExists'], $files);
+
+        //Directories still exist
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 
