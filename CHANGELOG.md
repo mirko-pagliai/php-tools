@@ -4,6 +4,7 @@
 * `can_be_string()` renamed as `is_stringable()`. `can_be_string()` is
     deprecated and it will be removed in a later release;
 * added `is_absolute()` global function;
+* uses `symfony/dom-crawler` for `BodyParser` class;
 * uses `symfony/filesystem` and `symfony/finder` packages.
 
 ### 1.2.7
