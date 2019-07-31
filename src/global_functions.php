@@ -298,7 +298,7 @@ if (!function_exists('dir_tree')) {
                     return preg_quote($exception, '/');
                 }, $exceptions);
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
-            };
+            }
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
@@ -428,6 +428,21 @@ if (!function_exists('is_absolute')) {
      * @since 1.2.8
      */
     function is_absolute($path): bool
+    {
+        $filesystem = new Filesystem();
+
+        return $filesystem->isAbsolutePath($path);
+    }
+}
+
+if (!function_exists('is_absolute')) {
+    /**
+     * Checks if the given path is absolute
+     * @param string $path Path
+     * @return bool
+     * @since 1.2.8
+     */
+    function is_absolute($path)
     {
         $filesystem = new Filesystem();
 
