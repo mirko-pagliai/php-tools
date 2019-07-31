@@ -684,9 +684,13 @@ class GlobalFunctionsTest extends TestCase
             }
         }
 
-        //Files no longer exist, but directories still exist
         unlink_recursive(TMP . 'exampleDir');
         array_map([$this, 'assertFileNotExists'], $files);
+
+        //Directories still exist
+        if (IS_WIN) {
+            $this->markTestSkipped();
+        }
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 
