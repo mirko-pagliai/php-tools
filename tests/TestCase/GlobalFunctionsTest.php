@@ -627,22 +627,19 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testRtr()
     {
-        $this->assertEquals('my' . DS . 'folder' . DS, rtr(ROOT . 'my' . DS . 'folder'));
-        $this->assertEquals('my' . DS . 'folder', rtr('my' . DS . 'folder'));
-        $this->assertEquals(DS . 'my' . DS . 'folder', rtr(DS . 'my' . DS . 'folder'));
         $values = [
-            ROOT . 'my' . DS . 'folder' => 'my' . DS . 'folder' . DS,
-            'my' . DS . 'folder' => 'my' . DS . 'folder',
-            DS . 'my' . DS . 'folder' => DS . 'my' . DS . 'folder',
+            ROOT . 'my' . DS . 'folder' => 'my/folder/',
+            'my' . DS . 'folder' => 'my/folder',
+            DS . 'my' . DS . 'folder' => '/my/folder',
         ];
         foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
+            $this->assertSame($expected, rtr($result));
         }
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
         foreach ($values as $result => $expected) {
-            $this->assertEquals($expected, rtr($result));
+            $this->assertSame($expected, rtr($result));
         }
     }
 
