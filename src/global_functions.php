@@ -362,11 +362,11 @@ if (!function_exists('get_child_methods')) {
 if (!function_exists('get_class_short_name')) {
     /**
      * Gets the short name of the class, the part without the namespace
-     * @param string $class Name of the class
+     * @param mixed $class Class as name or object
      * @return string
      * @since 1.0.2
      */
-    function get_class_short_name(string $class): string
+    function get_class_short_name($class): string
     {
         return (new ReflectionClass($class))->getShortName();
     }

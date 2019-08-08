@@ -332,7 +332,7 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testGetClassShortName()
     {
-        foreach (['\App\ExampleClass', 'App\ExampleClass', ExampleClass::class] as $className) {
+        foreach (['\App\ExampleClass', 'App\ExampleClass', ExampleClass::class, new ExampleClass()] as $className) {
             $this->assertEquals('ExampleClass', get_class_short_name($className));
         }
     }
