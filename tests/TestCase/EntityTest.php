@@ -48,7 +48,7 @@ class EntityTest extends TestCase
         var_dump($this->Entity);
         $dump = ob_get_contents();
         ob_end_clean();
-        $this->assertContains(get_class($this->Entity), $dump);
+        $this->assertContains(EntityExample::class, $dump);
 
         if (IS_WIN) {
             $this->markTestSkipped();
