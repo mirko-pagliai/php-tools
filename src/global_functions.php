@@ -273,6 +273,7 @@ if (!function_exists('dir_tree')) {
      */
     function dir_tree(string $path, $exceptions = false): array
     {
+        $path = rtrim($path, DS);
         $finder = new Finder();
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 

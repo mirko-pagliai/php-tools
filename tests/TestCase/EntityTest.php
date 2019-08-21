@@ -49,13 +49,23 @@ class EntityTest extends TestCase
         var_dump($this->Entity);
         $dump = ob_get_contents();
         ob_end_clean();
-        $this->assertStringContainsString(get_class($this->Entity), $dump);
+
+        $assertStringContainsString = function () {
+            $method = 'assertContains';
+            if (method_exists($this, 'assertStringContainsString')) {
+                $method = 'assertStringContainsString';
+            }
+
+            call_user_func_array([$this, $method], func_get_args());
+        };
+
+        $assertStringContainsString(EntityExample::class, $dump);
 
         if (IS_WIN) {
             $this->markTestSkipped();
         }
-        $this->assertStringContainsString((string)$line, $dump);
-        $this->assertStringContainsString(__FILE__, $dump);
+        $assertStringContainsString((string)$line, $dump);
+        $assertStringContainsString(__FILE__, $dump);
     }
 
     /**
