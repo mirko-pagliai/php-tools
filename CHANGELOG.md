@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.9
+* fixed little bug for `dir_tree()` global function.
+
 ### 1.2.8
 * `can_be_string()` renamed as `is_stringable()`. `can_be_string()` is
     deprecated and it will be removed in a later release;
