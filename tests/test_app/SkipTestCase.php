@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -16,7 +17,6 @@ use Tools\TestSuite\TestCase;
 
 class SkipTestCase extends TestCase
 {
-
     /**
      * test that a test is marked as skipped using skipIf and its first parameter evaluates to true
      *
