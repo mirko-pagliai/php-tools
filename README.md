@@ -19,19 +19,6 @@ You can install the package via composer:
 
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
-## Tests
-Tests are divided into two groups, `onlyUnix` and `onlyWindows`. This is
-necessary because some commands to be executed in the terminal are only valid
-for an environment.
-
-By default, phpunit is executed like this:
-
-    vendor/bin/phpunit --exclude-group=onlyWindows
-
-On Windows, it must be done this way:
-
-    vendor/bin/phpunit --exclude-group=onlyUnix
-
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward
 compatibility, *php-tools* will be maintained under the

@@ -4,6 +4,9 @@
 * updated for `php` 7.1 and `phpunit` 8.
 
 ## 1.2 branch
+### 1.2.10
+* added `TestTrait::skipIf()` method.
+
 ### 1.2.9
 * fixed little bug for `dir_tree()` global function;
 * added tests for lower dependencies.

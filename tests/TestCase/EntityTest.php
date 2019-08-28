@@ -61,9 +61,7 @@ class EntityTest extends TestCase
 
         $assertStringContainsString(EntityExample::class, $dump);
 
-        if (IS_WIN) {
-            $this->markTestSkipped();
-        }
+        $this->skipIf(IS_WIN);
         $assertStringContainsString((string)$line, $dump);
         $assertStringContainsString(__FILE__, $dump);
     }
