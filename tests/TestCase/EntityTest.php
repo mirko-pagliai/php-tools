@@ -50,9 +50,7 @@ class EntityTest extends TestCase
         ob_end_clean();
         $this->assertContains(EntityExample::class, $dump);
 
-        if (IS_WIN) {
-            $this->markTestSkipped();
-        }
+        $this->skipIf(IS_WIN);
         $this->assertContains((string)$line, $dump);
         $this->assertContains(__FILE__, $dump);
     }

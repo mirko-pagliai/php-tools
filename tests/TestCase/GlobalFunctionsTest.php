@@ -202,9 +202,7 @@ class GlobalFunctionsTest extends TestCase
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
-        if (IS_WIN) {
-            $this->markTestSkipped();
-        }
+        $this->skipIf(IS_WIN);
         $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
     }
 
@@ -696,9 +694,7 @@ class GlobalFunctionsTest extends TestCase
         array_map([$this, 'assertFileNotExists'], $files);
 
         //Directories still exist
-        if (IS_WIN) {
-            $this->markTestSkipped();
-        }
+        $this->skipIf(IS_WIN);
         array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 

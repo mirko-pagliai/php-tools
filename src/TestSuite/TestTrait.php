@@ -270,4 +270,19 @@ trait TestTrait
         sort($secondClassMethods);
         self::assertEquals($firstClassMethods, $secondClassMethods, $message);
     }
+
+    /**
+     * Skips the test if the condition is `true`
+     * @param bool $shouldSkip Whether or not the test should be skipped
+     * @param string $message The message to display
+     * @return bool
+     */
+    public function skipIf($shouldSkip, $message = '')
+    {
+        if ($shouldSkip) {
+            $this->markTestSkipped($message);
+        }
+
+        return $shouldSkip;
+    }
 }
