@@ -731,23 +731,12 @@ class GlobalFunctionsTest extends TestCase
 
     /**
      * Test for `which()` global function on Unix
-     * @group onlyUnix
      * @test
      */
     public function testWhichOnUnix()
     {
-        $this->assertEquals('/bin/cat', which('cat'));
-        $this->assertNull(which('noExistingBin'));
-    }
-
-    /**
-     * Test for `which()` global function on Windows
-     * @group onlyWindows
-     * @test
-     */
-    public function testWhichOnWindws()
-    {
-        $this->assertEquals('"C:\Program Files\Git\usr\bin\cat.exe"', which('cat'));
+        $expected = IS_WIN ? '"C:\Program Files\Git\usr\bin\cat.exe"' : '/bin/cat';
+        $this->assertEquals($expected, which('cat'));
         $this->assertNull(which('noExistingBin'));
     }
 }
