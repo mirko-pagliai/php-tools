@@ -15,6 +15,7 @@ namespace Tools\Test\TestSuite;
 use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
+use App\SkipTestCase;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
@@ -174,7 +175,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Tests for `assertFilePerms()` method
-     * @group onlyUnix
+     * @requires OS Linux
      * @test
      */
     public function testAssertFilePerms()
@@ -253,5 +254,18 @@ class TestTraitTest extends TestCase
 
         $this->expectException(AssertionFailedError::class);
         $this->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
+    }
+
+    /**
+     * Test for `skipIf()` method
+     * @ŧest
+     */
+    public function testSkipIf()
+    {
+        $result = (new SkipTestCase('testSkipIfTrue'))->run();
+        $this->assertSame(1, $result->skippedCount());
+
+        $result = (new SkipTestCase('testSkipIfFalse'))->run();
+        $this->assertSame(0, $result->skippedCount());
     }
 }
