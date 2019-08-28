@@ -37,4 +37,3 @@ class SkipTestCase extends TestCase
         $this->skipIf(false);
     }
 }
-
