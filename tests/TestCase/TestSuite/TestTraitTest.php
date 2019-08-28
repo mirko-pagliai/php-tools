@@ -175,7 +175,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Tests for `assertFilePerms()` method
-     * @group onlyUnix
+     * @requires OS Linux
      * @test
      */
     public function testAssertFilePerms()
