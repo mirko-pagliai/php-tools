@@ -11,8 +11,6 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.0.6
  */
-use ErrorException as ErrorException;
-use Exception as Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
@@ -123,12 +121,12 @@ if (!function_exists('is_true_or_fail')) {
      * @param mixed $value The value you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
-     * @param string $exception The exception class you want to set
+     * @param \Throwable|string $exception The exception class you want to set
      * @return void
      * @since 1.1.7
      * @throws \Exception
      */
-    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = ErrorException::class)
+    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
     {
         if ($value) {
             return;
@@ -136,7 +134,7 @@ if (!function_exists('is_true_or_fail')) {
 
         if (func_num_args() === 2 && is_string($message) && class_exists($message)) {
             $exception = new $message();
-        } else {
+        } elseif (!$exception instanceof \Throwable) {
             if (!is_string($exception)) {
                 trigger_error('`$exception` parameter must be a string');
             }
@@ -146,8 +144,8 @@ if (!function_exists('is_true_or_fail')) {
             $exception = new $exception($message);
         }
 
-        if (!$exception instanceof Exception) {
-            trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
+        if (!$exception instanceof \Throwable) {
+            trigger_error(sprintf('`%s` is not and instance of `Throwable`', get_class($exception)));
         }
 
         throw $exception;

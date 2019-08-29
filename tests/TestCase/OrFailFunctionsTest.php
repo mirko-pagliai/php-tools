@@ -128,17 +128,23 @@ class OrFailFunctionsTest extends TestCase
             is_true_or_fail(false, '`false` is not `true`');
         }, '`false` is not `true`');
 
-        //Failure with custom message and exception class
+        //Failure with custom message and exception class string
         foreach ([RuntimeException::class, 'RuntimeException'] as $exceptionClass) {
             $this->assertException(RuntimeException::class, function () use ($exceptionClass) {
                 is_true_or_fail(false, '`false` is not `true`', $exceptionClass);
             }, '`false` is not `true`');
         }
 
-        //Failure with a custom exception class as second argument
+        //Failure with a custom exception class string as second argument
         $this->assertException(RuntimeException::class, function () {
             is_true_or_fail(false, RuntimeException::class);
         });
+
+        //Failure with custom message and an instantiated exception
+        $this->assertException(RuntimeException::class, function () {
+            $exception = new RuntimeException('an exception');
+            is_true_or_fail(false, null, $exception);
+        }, 'an exception');
 
         //Failures with bad exception classes
         $this->assertException(Exception::class, function () {
@@ -146,7 +152,7 @@ class OrFailFunctionsTest extends TestCase
         }, '`$exception` parameter must be a string');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, stdClass::class);
-        }, '`stdClass` is not and instance of `Exception`');
+        }, '`stdClass` is not and instance of `Throwable`');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, 'noExisting\Class');
         }, 'Class `noExisting\Class` does not exist');

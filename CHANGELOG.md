@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.11
+* `is_true_or_fail()` function can take a string or a `Throwable` instance as
+    `$exception` parameter.
+
 ### 1.2.10
 * added `TestTrait::skipIf()` method.
 
