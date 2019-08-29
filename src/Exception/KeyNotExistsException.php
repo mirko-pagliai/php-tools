@@ -22,13 +22,38 @@ use Exception;
 class KeyNotExistsException extends Exception
 {
     /**
+     * @var string|null
+     */
+    protected $key;
+
+    /**
      * Constructor
-     * @param string $message The string of the error message
+     * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
+     * @param string|null $key Name of the key that do not exist
+     * @uses $key
      */
-    public function __construct(string $message = 'Array key does not exist', int $code = 0, ?\Throwable $previous = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $key = null)
     {
+        if (!$message) {
+            $message = 'Array key does not exist';
+            if ($key) {
+                $message = sprintf('Array key `%s` does not exist', $key);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->key = $key;
+    }
+
+    /**
+     * Gets the name of the key that do not exist
+     * @return string|null
+     * @since 1.2.11
+     * @uses $key
+     */
+    public function getKeyName(): ?string
+    {
+        return $this->key;
     }
 }

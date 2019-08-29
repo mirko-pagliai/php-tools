@@ -49,7 +49,7 @@ class NotWritableException extends Exception
     /**
      * Gets the path of file that is not writable
      * @return string|null
-     * @since 1.2.10
+     * @since 1.2.11
      * @uses $path
      */
     public function getFilePath(): ?string
