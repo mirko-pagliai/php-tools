@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -20,7 +20,7 @@ if (!function_exists('debug')) {
      * @return void
      * @since 1.2.11
      */
-    function debug()
+    function debug(): void
     {
         call_user_func_array('dump', func_get_args());
     }
@@ -32,7 +32,7 @@ if (!function_exists('dd')) {
      * @return void
      * @since 1.2.11
      */
-    function dd()
+    function dd(): void
     {
         call_user_func_array('dump', func_get_args());
         die(1);
