@@ -21,13 +21,38 @@ use Exception;
 class PropertyNotExistsException extends Exception
 {
     /**
-     * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable $previous the previous exception
+     * @var string|null
      */
-    public function __construct($message = 'Property does not exist', $code = 0, $previous = null)
+    protected $property;
+
+    /**
+     * Constructor
+     * @param string|null $message The string of the error message
+     * @param int $code The code of the error
+     * @param \Throwable|null $previous the previous exception
+     * @param string|null $property Name of the property that do not exist
+     * @uses $property
+     */
+    public function __construct($message = null, $code = 0, \Throwable $previous = null, $property = null)
     {
+        if (!$message) {
+            $message = 'Property does not exist';
+            if ($property) {
+                $message = sprintf('Property `%s` does not exist', $property);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->property = $property;
+    }
+
+    /**
+     * Gets the name of the property that do not exist
+     * @return string|null
+     * @since 1.2.11
+     * @uses $property
+     */
+    public function getPropertyName()
+    {
+        return $this->property;
     }
 }

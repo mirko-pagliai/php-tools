@@ -10,7 +10,9 @@
 * `KeyNotExistsException` can take a `$key` parameter and implements a
     `getKeyName()` method;
 * `NotInArrayException` and `NotPositiveException` can take a `$value` parameter
-    and implement a `getValue()` method.
+    and implement a `getValue()` method;
+* `PropertyNotExistsException` can take a `$$property` parameter and implements
+    a `getPropertyName()` method.
 
 ### 1.2.10
 * added `TestTrait::skipIf()` method.
