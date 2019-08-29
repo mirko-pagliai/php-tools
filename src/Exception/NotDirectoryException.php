@@ -49,7 +49,7 @@ class NotDirectoryException extends Exception
     /**
      * Gets the path of filename that is not a directory
      * @return string|null
-     * @since 1.2.10
+     * @since 1.2.11
      * @uses $path
      */
     public function getFilePath()
