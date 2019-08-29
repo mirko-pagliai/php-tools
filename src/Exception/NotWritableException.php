@@ -22,13 +22,38 @@ use Exception;
 class NotWritableException extends Exception
 {
     /**
+     * @var string|null
+     */
+    protected $path;
+
+    /**
      * Constructor
-     * @param string $message The string of the error message
+     * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
+     * @param string|null $path Path of file that is not writable
+     * @uses $path
      */
-    public function __construct(string $message = 'File or directory is not writable', int $code = 0, ?\Throwable $previous = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
+        if (!$message) {
+            $message = 'File or directory is not writable';
+            if ($path) {
+                $message = sprintf('File or directory `%s` is not writable', $path);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->path = $path;
+    }
+
+    /**
+     * Gets the path of file that is not writable
+     * @return string|null
+     * @since 1.2.10
+     * @uses $path
+     */
+    public function getFilePath(): ?string
+    {
+        return $this->path;
     }
 }

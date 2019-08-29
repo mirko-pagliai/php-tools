@@ -22,13 +22,38 @@ use Exception;
 class NotDirectoryException extends Exception
 {
     /**
+     * @var string|null
+     */
+    protected $path;
+
+    /**
      * Constructor
-     * @param string $message The string of the error message
+     * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
+     * @param string|null $path Path of filename that is not a directory
+     * @uses $path
      */
-    public function __construct(string $message = 'Filename is not a directory', int $code = 0, ?\Throwable $previous = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
+        if (!$message) {
+            $message = 'Filename is not a directory';
+            if ($path) {
+                $message = sprintf('Filename `%s` is not a directory', $path);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->path = $path;
+    }
+
+    /**
+     * Gets the path of filename that is not a directory
+     * @return string|null
+     * @since 1.2.10
+     * @uses $path
+     */
+    public function getFilePath(): ?string
+    {
+        return $this->path;
     }
 }

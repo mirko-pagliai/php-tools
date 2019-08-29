@@ -4,6 +4,13 @@
 * updated for `php` 7.1 and `phpunit` 8.
 
 ## 1.2 branch
+### 1.2.11
+* all `_or_fail()` functions can take a string or a `Throwable` instance as
+    `$exception` parameter;
+* `FileNotExistsException`, `NotDirectoryException`, `NotReadableException` and
+    `NotWritableException` exceptions can take a `$path` parameter and implement
+    a `getFilePath()` method.
+
 ### 1.2.10
 * added `TestTrait::skipIf()` method.
 
