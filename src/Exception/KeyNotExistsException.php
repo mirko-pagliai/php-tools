@@ -46,7 +46,7 @@ class KeyNotExistsException extends Exception
     }
 
     /**
-     * Gets the path of file that do not exist
+     * Gets the name of the key that do not exist
      * @return string|null
      * @since 1.2.11
      * @uses $key
