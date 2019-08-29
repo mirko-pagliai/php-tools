@@ -39,7 +39,7 @@ class NotWritableException extends Exception
         if (!$message) {
             $message = 'File or directory is not writable';
             if ($path) {
-                $message = sprintf('File or directory `%s` is not writable', $path);
+                $message = sprintf('File or directory `%s` is not writable', rtr($path));
             }
         }
         parent::__construct($message, $code, $previous);
