@@ -8,7 +8,9 @@
     `NotWritableException` exceptions can take a `$path` parameter and implement
     a `getFilePath()` method;
 * `KeyNotExistsException` can take a `$key` parameter and implements a
-    `getKeyName()` method.
+    `getKeyName()` method;
+* `NotInArrayException` can take a `$value` parameter and implements a
+    `getValue()` method.
 
 ### 1.2.10
 * added `TestTrait::skipIf()` method.
