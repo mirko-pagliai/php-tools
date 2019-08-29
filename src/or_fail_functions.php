@@ -142,7 +142,7 @@ if (!function_exists('is_true_or_fail')) {
         }
 
         if ($message instanceof \Throwable || (is_string($message) && class_exists($message))) {
-            list($exception, $message) = [$message, null];
+            list($exception, $message) = [$message, 'The value is not equal to `true`'];
         }
 
         if (!$exception instanceof \Throwable) {
