@@ -1,8 +1,11 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.11
-* `is_true_or_fail()` function can take a string or a `Throwable` instance as
-    `$exception` parameter.
+* all `_or_fail()` functions can take a string or a `Throwable` instance as
+    `$exception` parameter;
+* `FileNotExistsException`, `NotDirectoryException`, `NotReadableException` and
+    `NotWritableException` exceptions can take a `$path` parameter and implement
+    a `getFilePath()` method.
 
 ### 1.2.10
 * added `TestTrait::skipIf()` method.

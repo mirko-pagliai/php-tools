@@ -22,13 +22,38 @@ use Exception;
 class NotReadableException extends Exception
 {
     /**
+     * @var string|null
+     */
+    protected $path;
+
+    /**
      * Constructor
      * @param string $message The string of the error message
      * @param int $code The code of the error
-     * @param \Throwable $previous the previous exception
+     * @param \Throwable|null $previous the previous exception
+     * @param string|null $path Path of the file that is not readable
+     * @uses $path
      */
-    public function __construct($message = 'File or directory is not readable', $code = 0, $previous = null)
+    public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
+        if (!$message) {
+            $message = 'File or directory is not readable';
+            if ($path) {
+                $message = sprintf('File or directory `%s` is not readable', $path);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->path = $path;
+    }
+
+    /**
+     * Gets the path of file that is not readable
+     * @return string|null
+     * @since 1.2.10
+     * @uses $path
+     */
+    public function getFilePath()
+    {
+        return $this->path;
     }
 }
