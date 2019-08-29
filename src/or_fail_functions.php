@@ -34,7 +34,7 @@ if (!function_exists('file_exists_or_fail')) {
     function file_exists_or_fail($filename, $message = null, $exception = FileNotExistsException::class)
     {
         if (!$message) {
-            $message = sprintf('File or directory `%s` does not exist', $filename);
+            $message = sprintf('File or directory `%s` does not exist', rtr($filename));
         }
         is_true_or_fail(is_readable($filename), $message, $exception);
     }
@@ -75,7 +75,7 @@ if (!function_exists('is_dir_or_fail')) {
     function is_dir_or_fail($filename, $message = null, $exception = NotDirectoryException::class)
     {
         if (!$message) {
-            $message = sprintf('Filename `%s` is not a directory', $filename);
+            $message = sprintf('Filename `%s` is not a directory', rtr($filename));
         }
         is_true_or_fail(is_dir($filename), $message, $exception);
     }
@@ -115,7 +115,7 @@ if (!function_exists('is_readable_or_fail')) {
     function is_readable_or_fail($filename, $message = null, $exception = NotReadableException::class)
     {
         if (!$message) {
-            $message = sprintf('File or directory `%s` is not readable', $filename);
+            $message = sprintf('File or directory `%s` is not readable', rtr($filename));
         }
         is_true_or_fail(is_readable($filename), $message, $exception);
     }
@@ -177,7 +177,7 @@ if (!function_exists('is_writable_or_fail')) {
     function is_writable_or_fail($filename, $message = null, $exception = NotWritableException::class)
     {
         if (!$message) {
-            $message = sprintf('File or directory `%s` is not writable', $filename);
+            $message = sprintf('File or directory `%s` is not writable', rtr($filename));
         }
         is_true_or_fail(is_writable($filename), $message, $exception);
     }

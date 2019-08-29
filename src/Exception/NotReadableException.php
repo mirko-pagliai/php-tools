@@ -39,7 +39,7 @@ class NotReadableException extends Exception
         if (!$message) {
             $message = 'File or directory is not readable';
             if ($path) {
-                $message = sprintf('File or directory `%s` is not readable', $path);
+                $message = sprintf('File or directory `%s` is not readable', rtr($path));
             }
         }
         parent::__construct($message, $code, $previous);

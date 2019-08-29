@@ -39,7 +39,7 @@ class NotDirectoryException extends Exception
         if (!$message) {
             $message = 'Filename is not a directory';
             if ($path) {
-                $message = sprintf('Filename `%s` is not a directory', $path);
+                $message = sprintf('Filename `%s` is not a directory', rtr($path));
             }
         }
         parent::__construct($message, $code, $previous);

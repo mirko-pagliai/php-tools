@@ -39,7 +39,7 @@ class FileNotExistsException extends Exception
         if (!$message) {
             $message = 'File or directory does not exist';
             if ($path) {
-                $message = sprintf('File or directory `%s` does not exist', $path);
+                $message = sprintf('File or directory `%s` does not exist', rtr($path));
             }
         }
         parent::__construct($message, $code, $previous);
