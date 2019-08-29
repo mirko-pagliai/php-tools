@@ -182,7 +182,7 @@ class OrFailFunctionsTest extends TestCase
         }, '`$exception` parameter must be a string');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, stdClass::class);
-        }, '`stdClass` is not and instance of `Throwable`');
+        }, '`stdClass` is not and instance of `Exception`');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, 'noExisting\Class');
         }, 'Class `noExisting\Class` does not exist');

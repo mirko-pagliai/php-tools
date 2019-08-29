@@ -141,11 +141,11 @@ if (!function_exists('is_true_or_fail')) {
             return;
         }
 
-        if ($message instanceof \Throwable || (is_string($message) && class_exists($message))) {
+        if ($message instanceof \Exception || (is_string($message) && class_exists($message))) {
             list($exception, $message) = [$message, 'The value is not equal to `true`'];
         }
 
-        if (!$exception instanceof \Throwable) {
+        if (!$exception instanceof \Exception) {
             if (!is_string($exception)) {
                 trigger_error('`$exception` parameter must be a string');
             }
@@ -155,8 +155,8 @@ if (!function_exists('is_true_or_fail')) {
             $exception = new $exception($message);
         }
 
-        if (!$exception instanceof \Throwable) {
-            trigger_error(sprintf('`%s` is not and instance of `Throwable`', get_class($exception)));
+        if (!$exception instanceof \Exception) {
+            trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
         }
 
         throw $exception;
