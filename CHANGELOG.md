@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.12
+* added `FileException` and `InvalidValueException` abstract exceptions.
+
 ### 1.2.11
 * added `debug()` and `dd()` global functions;
 * all `_or_fail()` functions can take a string or a `Throwable` instance as
