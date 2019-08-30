@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.12
+* all `or_fail()` functions return the value that has been checked;
 * added `FileException` and `InvalidValueException` abstract exceptions.
 
 ### 1.2.11

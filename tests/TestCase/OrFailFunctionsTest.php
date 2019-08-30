@@ -38,7 +38,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testFileExistsOrFail()
     {
-        file_exists_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, file_exists_or_fail($file));
 
         $this->assertException(FileNotExistsException::class, function () {
             file_exists_or_fail(TMP . 'noExisting');
@@ -57,7 +58,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testInArrayOrFail()
     {
-        in_array_or_fail('a', ['a', 'b']);
+        $this->assertSame('a', in_array_or_fail('a', ['a', 'b']));
 
         $this->assertException(NotInArrayException::class, function () {
             in_array_or_fail('a', []);
@@ -76,7 +77,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsDirOrFail()
     {
-        is_dir_or_fail(TMP);
+        $this->assertSame(TMP, is_dir_or_fail(TMP));
 
         $filename = create_tmp_file();
 
@@ -97,8 +98,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsPositiveOrFail()
     {
-        is_positive_or_fail(1);
-        is_positive_or_fail('1');
+        $this->assertSame(1, is_positive_or_fail(1));
+        $this->assertSame('1', is_positive_or_fail('1'));
 
         $this->assertException(NotPositiveException::class, function () {
             is_positive_or_fail(-1);
@@ -117,7 +118,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
-        is_readable_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, is_readable_or_fail($file));
 
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting');
@@ -137,7 +139,7 @@ class OrFailFunctionsTest extends TestCase
     public function testIsTrueOrFail()
     {
         foreach (['string', ['array'], new stdClass(), true, 1, 0.1] as $value) {
-            is_true_or_fail($value);
+            $this->assertSame($value, is_true_or_fail($value));
         }
 
         foreach ([null, false, 0, '0', []] as $value) {
@@ -194,7 +196,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
-        is_writable_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, is_writable_or_fail($file));
 
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting');
@@ -214,8 +217,8 @@ class OrFailFunctionsTest extends TestCase
     public function testKeyExistsOrFail()
     {
         $array = ['a' => 'alfa', 'beta', 'gamma'];
-        key_exists_or_fail('a', $array);
-        key_exists_or_fail(['a', 1], $array);
+        $this->assertSame('a', key_exists_or_fail('a', $array));
+        $this->assertSame(['a', 1], key_exists_or_fail(['a', 1], $array));
 
         foreach ([
             'b',
@@ -240,11 +243,11 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testPropertyExistsOrFail()
     {
-        property_exists_or_fail(new ExampleClass(), 'publicProperty');
+        $this->assertSame('publicProperty', property_exists_or_fail(new ExampleClass(), 'publicProperty'));
 
         $object = new stdClass();
         $object->name = 'My name';
-        property_exists_or_fail($object, 'name');
+        $this->assertSame('name', property_exists_or_fail($object, 'name'));
 
         $object = $this->getMockBuilder(ExampleClass::class)
             ->setMethods(['has'])
@@ -255,7 +258,7 @@ class OrFailFunctionsTest extends TestCase
             ->with('publicProperty')
             ->willReturn(true);
 
-        property_exists_or_fail($object, 'publicProperty');
+        $this->assertSame('publicProperty', property_exists_or_fail($object, 'publicProperty'));
 
         $this->assertException(PropertyNotExistsException::class, function () {
             property_exists_or_fail(new stdClass(), 'noExisting');
