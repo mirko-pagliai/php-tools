@@ -22,13 +22,38 @@ use Exception;
 class NotPositiveException extends Exception
 {
     /**
-     * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable $previous the previous exception
+     * @var mixed
      */
-    public function __construct($message = 'The value is not a positive', $code = 0, $previous = null)
+    protected $value;
+
+    /**
+     * Constructor
+     * @param string|null $message The string of the error message
+     * @param int $code The code of the error
+     * @param \Throwable|null $previous the previous exception
+     * @param mixed $value Value that is not a positive
+     * @uses $value
+     */
+    public function __construct($message = null, $code = 0, \Throwable $previous = null, $value = null)
     {
+        if (!$message) {
+            $message = 'Value is not a positive';
+            if ($value && is_stringable($value)) {
+                $message = sprintf('Value `%s` is not a positive', (string)$value);
+            }
+        }
         parent::__construct($message, $code, $previous);
+        $this->value = $value;
+    }
+
+    /**
+     * Gets the value that is not a positive
+     * @return mixed
+     * @since 1.2.11
+     * @uses $value
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

@@ -1,5 +1,19 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.11
+* added `debug()` and `dd()` global functions;
+* all `_or_fail()` functions can take a string or a `Throwable` instance as
+    `$exception` parameter;
+* `FileNotExistsException`, `NotDirectoryException`, `NotReadableException` and
+    `NotWritableException` exceptions can take a `$path` parameter and implement
+    a `getFilePath()` method;
+* `KeyNotExistsException` can take a `$key` parameter and implements a
+    `getKeyName()` method;
+* `NotInArrayException` and `NotPositiveException` can take a `$value` parameter
+    and implement a `getValue()` method;
+* `PropertyNotExistsException` can take a `$$property` parameter and implements
+    a `getPropertyName()` method.
+
 ### 1.2.10
 * added `TestTrait::skipIf()` method.
 
