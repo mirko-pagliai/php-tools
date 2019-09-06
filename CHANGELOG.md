@@ -5,6 +5,7 @@
 * added `FileException` and `InvalidValueException` abstract exceptions;
 * fixed little bug for `debug()` and `dd()` functions: it checks if the `dump()`
     function exists;
+* `is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead;
 * some functions have been moved to `filesystem_functions.php` file.
 
 ### 1.2.11

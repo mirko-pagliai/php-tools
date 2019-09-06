@@ -12,6 +12,7 @@
  */
 namespace Tools\Test;
 
+use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -185,8 +186,14 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testIsAbsolute()
     {
+        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_absolute(DS . 'path' . DS));
         $this->assertFalse(is_absolute('path' . DS));
+        error_reporting($errorReporting);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
+        is_absolute('path' . DS);
     }
 
     /**

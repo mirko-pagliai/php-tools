@@ -189,15 +189,16 @@ if (!function_exists('get_extension')) {
 if (!function_exists('is_absolute')) {
     /**
      * Checks if the given path is absolute
+     * @deprecated 1.2.12 Use `Filesystem::isAbsolutePath()` instead
      * @param string $path Path
      * @return bool
      * @since 1.2.8
      */
     function is_absolute($path)
     {
-        $filesystem = new Filesystem();
+        deprecationWarning('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
 
-        return $filesystem->isAbsolutePath($path);
+        return (new Filesystem())->isAbsolutePath($path);
     }
 }
 
