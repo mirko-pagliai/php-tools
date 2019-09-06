@@ -293,11 +293,11 @@ if (!function_exists('dir_tree')) {
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
         $skipHidden = false;
+        $finder->ignoreDotFiles(false);
         if (in_array('.', $exceptions)) {
             $skipHidden = true;
             unset($exceptions[array_search('.', $exceptions)]);
-        } else {
-            $finder->ignoreDotFiles(false);
+            $finder->ignoreDotFiles(true);
         }
 
         try {
