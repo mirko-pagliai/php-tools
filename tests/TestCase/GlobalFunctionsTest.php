@@ -194,60 +194,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-<<<<<<< HEAD
-     * Test for `dir_tree()` global function
-     * @test
-     */
-    public function testDirTree()
-    {
-        $expectedDirs = [
-            TMP . 'exampleDir',
-            TMP . 'exampleDir' . DS . '.hiddenDir',
-            TMP . 'exampleDir' . DS . 'emptyDir',
-            TMP . 'exampleDir' . DS . 'subDir1',
-            TMP . 'exampleDir' . DS . 'subDir2',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
-        ];
-        $expectedFiles = createSomeFiles();
-
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir'));
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir' . DS));
-
-        //Excludes some files
-        foreach ([
-            ['file2'],
-            ['file2', 'file3'],
-            ['.hiddenFile'],
-            ['.hiddenFile', 'file2', 'file3'],
-        ] as $exceptions) {
-            $currentExpectedFiles = array_clean($expectedFiles, function ($value) use ($exceptions) {
-                return !in_array(basename($value), $exceptions);
-            });
-            $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
-        }
-
-        //Excludes a directory
-        [$result] = dir_tree(TMP . 'exampleDir', 'subDir2');
-        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2', $result);
-        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3', $result);
-
-        //Excludes hidden files
-        foreach ([true, '.', ['.']] as $exceptions) {
-            [$result] = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir', $result);
-
-            [, $result] = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7', $result);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
-        }
-
-        //Using a file or a no existing file
-        foreach ([create_tmp_file(), TMP . 'noExisting'] as $directory) {
-            $this->assertEquals([[], []], dir_tree($directory));
-        }
-    }
-
-    /**
      * Test for `get_child_methods()` global function
      * @test
      */
