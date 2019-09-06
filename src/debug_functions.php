@@ -12,7 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-if (!function_exists('debug')) {
+if (!function_exists('debug') && function_exists('dump')) {
     /**
      * Prints out debug information about given variable.
      *
@@ -26,7 +26,7 @@ if (!function_exists('debug')) {
     }
 }
 
-if (!function_exists('dd')) {
+if (!function_exists('dd') && function_exists('dump')) {
     /**
      * Prints out debug information about given variable and dies
      * @return void
