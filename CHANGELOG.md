@@ -4,7 +4,8 @@
 * all `or_fail()` functions return the value that has been checked;
 * added `FileException` and `InvalidValueException` abstract exceptions;
 * fixed little bug for `debug()` and `dd()` functions: it checks if the `dump()`
-    function exists.
+    function exists;
+* some functions have been moved to `filesystem_functions.php` file.
 
 ### 1.2.11
 * added `debug()` and `dd()` global functions;

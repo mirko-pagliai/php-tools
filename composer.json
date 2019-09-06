@@ -26,6 +26,7 @@
         },
         "files": [
             "src/debug_functions.php",
+            "src/filesystem_functions.php",
             "src/global_functions.php",
             "src/or_fail_functions.php"
         ]
