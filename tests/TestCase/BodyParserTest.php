@@ -27,7 +27,7 @@ class BodyParserTest extends TestCase
      */
     public function testExtractLinks()
     {
-        $getExtractedLinksMethod = function ($html) {
+        $extractLinksMethod = function ($html) {
             return (new BodyParser($html, 'http://localhost'))->extractLinks();
         };
 
@@ -57,17 +57,17 @@ class BodyParserTest extends TestCase
 <audio><source src="file2.mp3" type="audio/mpeg"></audio>
 <video><track src="subtitles_en.vtt"></video>
 <video src="//localhost/movie.mp4"></video>';
-        $this->assertEquals($expected, $getExtractedLinksMethod($html));
+        $this->assertEquals($expected, $extractLinksMethod($html));
 
         $html = '<html><body>' . $html . '</body></html>';
-        $this->assertEquals($expected, $getExtractedLinksMethod($html));
+        $this->assertEquals($expected, $extractLinksMethod($html));
 
         $html = '<b>No links here!</b>';
-        $this->assertEquals([], $getExtractedLinksMethod($html));
+        $this->assertEquals([], $extractLinksMethod($html));
 
         $html = '<a href="page.html">Link</a>' . PHP_EOL . '<a href="http://localhost/page.html">Link</a>';
         $expected = ['http://localhost/page.html'];
-        $this->assertEquals($expected, $getExtractedLinksMethod($html));
+        $this->assertEquals($expected, $extractLinksMethod($html));
 
         //Checks that the result is the same as that saved in the
         //  `extractedLinks` property as a cache
@@ -77,6 +77,6 @@ class BodyParserTest extends TestCase
         $this->assertEquals($expected, $BodyParser->extractLinks());
 
         //No HTML
-        $this->assertEquals([], $getExtractedLinksMethod('no html'));
+        $this->assertEquals([], $extractLinksMethod('no html'));
     }
 }

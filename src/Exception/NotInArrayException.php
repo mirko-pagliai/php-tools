@@ -14,25 +14,19 @@ declare(strict_types=1);
  */
 namespace Tools\Exception;
 
-use Exception;
+use Tools\Exception\InvalidValueException;
 
 /**
  * "Not in array" exception
  */
-class NotInArrayException extends Exception
+class NotInArrayException extends InvalidValueException
 {
-    /**
-     * @var mixed
-     */
-    protected $value;
-
     /**
      * Constructor
      * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
-     * @param mixed $value Value that is not in array
-     * @uses $value
+     * @param mixed $value The value that throwed the exception
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, $value = null)
     {
@@ -42,18 +36,6 @@ class NotInArrayException extends Exception
                 $message = sprintf('Value `%s` is not in the array', (string)$value);
             }
         }
-        parent::__construct($message, $code, $previous);
-        $this->value = $value;
-    }
-
-    /**
-     * Gets the value that is not in array
-     * @return mixed
-     * @since 1.2.11
-     * @uses $value
-     */
-    public function getValue()
-    {
-        return $this->value;
+        parent::__construct($message, $code, $previous, $value);
     }
 }

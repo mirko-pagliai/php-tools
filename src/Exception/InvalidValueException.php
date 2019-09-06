@@ -10,32 +10,43 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.2.5
+ * @since       1.2.12
  */
 namespace Tools\Exception;
 
-use Tools\Exception\InvalidValueException;
+use Exception;
 
 /**
- * "Not positive value" exception
+ * Abstract exception for exceptions that are throwed by an invalid value
  */
-class NotPositiveException extends InvalidValueException
+abstract class InvalidValueException extends Exception
 {
+    /**
+     * @var mixed
+     */
+    protected $value = null;
+
     /**
      * Constructor
      * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param mixed $value The value that throwed the exception
+     * @uses $value
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, $value = null)
     {
-        if (!$message) {
-            $message = 'Value is not a positive';
-            if ($value && is_stringable($value)) {
-                $message = sprintf('Value `%s` is not a positive', (string)$value);
-            }
-        }
-        parent::__construct($message, $code, $previous, $value);
+        parent::__construct($message, $code, $previous);
+        $this->value = $value;
+    }
+
+    /**
+     * Gets the value that throwed the exception
+     * @return mixed
+     * @uses $value
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

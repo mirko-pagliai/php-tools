@@ -4,8 +4,16 @@
 * updated for `php` 7.1 and `phpunit` 8.
 
 ## 1.2 branch
+### 1.2.12
+* all `or_fail()` functions return the value that has been checked;
+* added `FileException` and `InvalidValueException` abstract exceptions;
+* fixed little bug for `debug()` and `dd()` functions: it checks if the `dump()`
+    function exists;
+* `is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead;
+* some functions have been moved to `filesystem_functions.php` file.
+
 ### 1.2.11
-* added `debug()` and `dd()` global function;
+* added `debug()` and `dd()` global functions;
 * all `_or_fail()` functions can take a string or a `Throwable` instance as
     `$exception` parameter;
 * `FileNotExistsException`, `NotDirectoryException`, `NotReadableException` and

@@ -29,15 +29,17 @@ if (!function_exists('file_exists_or_fail')) {
      * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return string
      * @throws \Tools\Exception\FileNotExistsException
      */
-    function file_exists_or_fail(string $filename, $message = null, $exception = FileNotExistsException::class): void
+    function file_exists_or_fail(string $filename, $message = null, $exception = FileNotExistsException::class): string
     {
         if (!$message) {
             $message = sprintf('File or directory `%s` does not exist', rtr($filename));
         }
         is_true_or_fail(is_readable($filename), $message, $exception);
+
+        return $filename;
     }
 }
 
@@ -50,15 +52,17 @@ if (!function_exists('in_array_or_fail')) {
      * @param string $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return mixed
      * @since 1.2.6
      */
-    function in_array_or_fail($value, array $array, $message = null, $exception = NotInArrayException::class): void
+    function in_array_or_fail($value, array $array, $message = null, $exception = NotInArrayException::class)
     {
         if (!$message && is_stringable($value) == 'The value is not in array') {
             $message = sprintf('The value `%s` is not in array', (string)$value);
         }
         is_true_or_fail(in_array($value, $array), $message, $exception);
+
+        return $value;
     }
 }
 
@@ -70,15 +74,17 @@ if (!function_exists('is_dir_or_fail')) {
      * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return string
      * @throws \Tools\Exception\NotDirectoryException
      */
-    function is_dir_or_fail(string $filename, $message = null, $exception = NotDirectoryException::class): void
+    function is_dir_or_fail(string $filename, $message = null, $exception = NotDirectoryException::class): string
     {
         if (!$message) {
             $message = sprintf('Filename `%s` is not a directory', rtr($filename));
         }
         is_true_or_fail(is_dir($filename), $message, $exception);
+
+        return $filename;
     }
 }
 
@@ -89,16 +95,18 @@ if (!function_exists('is_positive_or_fail')) {
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return mixed
      * @since 1.2.5
      * @throws \Tools\Exception\NotPositiveException
      */
-    function is_positive_or_fail($value, $message = null, $exception = NotPositiveException::class): void
+    function is_positive_or_fail($value, $message = null, $exception = NotPositiveException::class)
     {
         if (!$message && is_stringable($value)) {
             $message = sprintf('The value `%s` is not a positive', (string)$value);
         }
         is_true_or_fail(is_positive($value), $message, $exception);
+
+        return $value;
     }
 }
 
@@ -110,15 +118,17 @@ if (!function_exists('is_readable_or_fail')) {
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return string
      * @throws \Tools\Exception\NotReadableException
      */
-    function is_readable_or_fail(string $filename, $message = null, $exception = NotReadableException::class): void
+    function is_readable_or_fail(string $filename, $message = null, $exception = NotReadableException::class): string
     {
         if (!$message) {
             $message = sprintf('File or directory `%s` is not readable', rtr($filename));
         }
         is_true_or_fail(is_readable($filename), $message, $exception);
+
+        return $filename;
     }
 }
 
@@ -132,14 +142,14 @@ if (!function_exists('is_true_or_fail')) {
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return mixed
      * @since 1.1.7
      * @throws \Exception
      */
-    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class): void
+    function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
     {
         if ($value) {
-            return;
+            return $value;
         }
 
         if ($message instanceof \Throwable || (is_string($message) && class_exists($message))) {
@@ -172,15 +182,17 @@ if (!function_exists('is_writable_or_fail')) {
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return string
      * @throws \Tools\Exception\NotWritableException
      */
-    function is_writable_or_fail(string $filename, $message = null, $exception = NotWritableException::class): void
+    function is_writable_or_fail(string $filename, $message = null, $exception = NotWritableException::class): string
     {
         if (!$message) {
             $message = sprintf('File or directory `%s` is not writable', rtr($filename));
         }
         is_true_or_fail(is_writable($filename), $message, $exception);
+
+        return $filename;
     }
 }
 
@@ -190,15 +202,15 @@ if (!function_exists('key_exists_or_fail')) {
      *  exception if the key does not exist.
      *
      * If you pass an array of keys, they will all be checked.
-     * @param string|int|array $key Key to check or an array of keys
+     * @param mixed $key Key to check or an array of keys
      * @param array $array An array with keys to check
      * @param \Throwable|string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
-     * @return void
+     * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    function key_exists_or_fail($key, array $array, $message = null, $exception = KeyNotExistsException::class): void
+    function key_exists_or_fail($key, array $array, $message = null, $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
             $result = array_key_exists($name, $array);
@@ -207,6 +219,8 @@ if (!function_exists('key_exists_or_fail')) {
             }
             is_true_or_fail($result, $message, $exception);
         }
+
+        return $key;
     }
 }
 
@@ -222,11 +236,11 @@ if (!function_exists('property_exists_or_fail')) {
      * @param string $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return void
+     * @return string
      * @since 1.1.14
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    function property_exists_or_fail($object, $property, $message = null, $exception = PropertyNotExistsException::class): void
+    function property_exists_or_fail($object, $property, $message = null, $exception = PropertyNotExistsException::class): string
     {
         foreach ((array)$property as $name) {
             if (!$message) {
@@ -235,5 +249,7 @@ if (!function_exists('property_exists_or_fail')) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
             is_true_or_fail($result, $message, $exception);
         }
+
+        return $property;
     }
 }

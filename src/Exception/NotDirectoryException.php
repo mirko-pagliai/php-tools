@@ -14,25 +14,19 @@ declare(strict_types=1);
  */
 namespace Tools\Exception;
 
-use Exception;
+use Tools\Exception\FileException;
 
 /**
  * "Filename is not a directory" exception
  */
-class NotDirectoryException extends Exception
+class NotDirectoryException extends FileException
 {
-    /**
-     * @var string|null
-     */
-    protected $path;
-
     /**
      * Constructor
      * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
-     * @param string|null $path Path of filename that is not a directory
-     * @uses $path
+     * @param string|null $path Path of the file that throwed the exception
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
@@ -42,18 +36,6 @@ class NotDirectoryException extends Exception
                 $message = sprintf('Filename `%s` is not a directory', rtr($path));
             }
         }
-        parent::__construct($message, $code, $previous);
-        $this->path = $path;
-    }
-
-    /**
-     * Gets the path of filename that is not a directory
-     * @return string|null
-     * @since 1.2.11
-     * @uses $path
-     */
-    public function getFilePath(): ?string
-    {
-        return $this->path;
+        parent::__construct($message, $code, $previous, $path);
     }
 }

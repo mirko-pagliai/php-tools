@@ -27,17 +27,6 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `add_slash_term()` global function
-     * @test
-     */
-    public function testAddSlashTerm()
-    {
-        $expected = DS . 'tmp' . DS;
-        $this->assertSame($expected, add_slash_term(DS . 'tmp'));
-        $this->assertSame($expected, add_slash_term(DS . 'tmp' . DS));
-    }
-
-    /**
      * Test for `array_clean()` global function
      * @test
      */
@@ -189,47 +178,14 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `create_file()` global function
-     * @test
-     */
-    public function testCreateFile()
-    {
-        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
-        $this->assertTrue(create_file($filename));
-        $this->assertStringEqualsFile($filename, '');
-
-        unlink($filename);
-        $this->assertTrue(create_file($filename, 'string'));
-        $this->assertStringEqualsFile($filename, 'string');
-
-        $this->skipIf(IS_WIN);
-        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
-    }
-
-    /**
-     * Test for `create_tmp_file()` global function
-     * @test
-     */
-    public function testCreateTmpFile()
-    {
-        $filename = create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, '');
-
-        $filename = create_tmp_file('string');
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, 'string');
-    }
-
-    /**
      * Test for `deprecationWarning()` global function
      * @test
      */
     public function testDeprecationWarning()
     {
-        $currentErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         deprecationWarning('This method is deprecated');
-        error_reporting($currentErrorReporting);
+        error_reporting($current);
 
         $this->expectException(Deprecated::class);
         $this->expectExceptionMessageRegExp('/^This method is deprecated/');
@@ -238,6 +194,7 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+<<<<<<< HEAD
      * Test for `dir_tree()` global function
      * @test
      */
@@ -291,25 +248,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `fileperms_as_octal()` global function
-     * @test
-     */
-    public function testFilepermsAsOctal()
-    {
-        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal(create_tmp_file()));
-    }
-
-    /**
-     * Test for `fileperms_to_string()` global function
-     * @test
-     */
-    public function testFilepermsToString()
-    {
-        $this->assertSame('0755', fileperms_to_string(0755));
-        $this->assertSame('0755', fileperms_to_string('0755'));
-    }
-
-    /**
      * Test for `get_child_methods()` global function
      * @test
      */
@@ -332,50 +270,6 @@ class GlobalFunctionsTest extends TestCase
     {
         foreach (['\App\ExampleClass', 'App\ExampleClass', ExampleClass::class, new ExampleClass()] as $className) {
             $this->assertEquals('ExampleClass', get_class_short_name($className));
-        }
-    }
-
-    /**
-     * Test for `get_extension()` global function
-     * @test
-     */
-    public function testGetExtension()
-    {
-        foreach ([
-            'backup.sql' => 'sql',
-            'backup.sql.bz2' => 'sql.bz2',
-            'backup.sql.gz' => 'sql.gz',
-            'text.txt' => 'txt',
-            'TEXT.TXT' => 'txt',
-            'noExtension' => null,
-            'txt' => null,
-            '.txt' => null,
-            '.hiddenFile' => null,
-        ] as $filename => $expectedExtension) {
-            $this->assertEquals($expectedExtension, get_extension($filename));
-        }
-
-        foreach ([
-            'backup.sql.gz',
-            '/backup.sql.gz',
-            '/full/path/to/backup.sql.gz',
-            'relative/path/to/backup.sql.gz',
-            ROOT . 'backup.sql.gz',
-            '/withDot./backup.sql.gz',
-            'C:\backup.sql.gz',
-            'C:\subdir\backup.sql.gz',
-            'C:\withDot.\backup.sql.gz',
-        ] as $filename) {
-            $this->assertEquals('sql.gz', get_extension($filename));
-        }
-
-        foreach ([
-            'http://example.com/backup.sql.gz',
-            'http://example.com/backup.sql.gz#fragment',
-            'http://example.com/backup.sql.gz?',
-            'http://example.com/backup.sql.gz?name=value',
-        ] as $url) {
-            $this->assertEquals('sql.gz', get_extension($url));
         }
     }
 
@@ -406,16 +300,6 @@ class GlobalFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('google.com', get_hostname_from_url($url));
         }
-    }
-
-    /**
-     * Test for `is_absolute()` global function
-     * @test
-     */
-    public function testIsAbsolute()
-    {
-        $this->assertTrue(is_absolute(DS . 'path' . DS));
-        $this->assertFalse(is_absolute('path' . DS));
     }
 
     /**
@@ -484,32 +368,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_slash_term()` global function
-     * @test
-     */
-    public function testIsSlashTerm()
-    {
-        foreach ([
-            'path/',
-            '/path/',
-            'path\\',
-            '\\path\\',
-        ] as $path) {
-            $this->assertTrue(is_slash_term($path));
-        }
-
-        foreach ([
-            'path',
-            '/path',
-            '\\path',
-            'path.ext',
-            '/path.ext',
-        ] as $path) {
-            $this->assertFalse(is_slash_term($path));
-        }
-    }
-
-    /**
      * Test for `is_stringable()` global function
      * @test
      */
@@ -562,16 +420,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_writable_resursive()` global function
-     * @test
-     */
-    public function testIsWritableRecursive()
-    {
-        $this->assertTrue(is_writable_resursive(TMP));
-        $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
-    }
-
-    /**
      * Test for `objects_map()` global function
      * @test
      */
@@ -590,36 +438,6 @@ class GlobalFunctionsTest extends TestCase
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Class `' . ExampleClass::class . '` does not have a method `noExistingMethod`');
         objects_map([new ExampleClass()], 'noExistingMethod');
-    }
-
-    /**
-     * Test for `rmdir_recursive()` global function
-     * @test
-     */
-    public function testRmdirRecursive()
-    {
-        $files = createSomeFiles();
-        rmdir_recursive(TMP . 'exampleDir');
-        array_map([$this, 'assertFileNotExists'], $files);
-        array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
-
-        //Does not delete a file
-        $filename = create_tmp_file();
-        rmdir_recursive($filename);
-        $this->assertFileExists($filename);
-    }
-
-    /**
-     * Test for `rtr()` global function
-     * @test
-     */
-    public function testRtr()
-    {
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
-
-        //Resets the ROOT value, removing the final slash
-        putenv('ROOT=' . rtrim(ROOT, DS));
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
@@ -650,31 +468,6 @@ class GlobalFunctionsTest extends TestCase
         foreach ([' ', 'some words', 'test'] as $var) {
             $this->assertFalse(string_starts_with($string, $var));
         }
-    }
-
-    /**
-     * Test for `unlink_resursive()` global function
-     * @test
-     */
-    public function testUnlinkRecursive()
-    {
-        $files = createSomeFiles();
-
-        //Creates some links
-        if (!IS_WIN) {
-            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
-                $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-                @symlink($filename, $link);
-                $files[] = $link;
-            }
-        }
-
-        unlink_recursive(TMP . 'exampleDir');
-        array_map([$this, 'assertFileNotExists'], $files);
-
-        //Directories still exist
-        $this->skipIf(IS_WIN);
-        array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
     }
 
     /**
@@ -709,10 +502,10 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `which()` global function on Unix
+     * Test for `which()` global function
      * @test
      */
-    public function testWhichOnUnix()
+    public function testWhich()
     {
         $expected = IS_WIN ? '"C:\Program Files\Git\usr\bin\cat.exe"' : '/bin/cat';
         $this->assertEquals($expected, which('cat'));
