@@ -730,10 +730,10 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `which()` global function on Unix
+     * Test for `which()` global function
      * @test
      */
-    public function testWhichOnUnix()
+    public function testWhich()
     {
         $expected = IS_WIN ? '"C:\Program Files\Git\usr\bin\cat.exe"' : '/bin/cat';
         $this->assertEquals($expected, which('cat'));
