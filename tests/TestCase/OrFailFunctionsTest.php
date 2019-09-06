@@ -149,8 +149,11 @@ class OrFailFunctionsTest extends TestCase
         try {
             is_true_or_fail(false, null);
         } catch (Exception $e) {
-        } finally {
             $this->assertEmpty($e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
         }
 
         //Failure with a custom message
