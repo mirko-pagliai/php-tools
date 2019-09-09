@@ -146,10 +146,10 @@ trait TestTrait
                     $e->getMessage()
                 ));
             }
-        } finally {
-            if (!isset($e)) {
-                self::fail(sprintf('Expected exception `%s`, but no exception throw', $expectedException));
-            }
+        }
+
+        if (!isset($e)) {
+            self::fail(sprintf('Expected exception `%s`, but no exception throw', $expectedException));
         }
     }
 
