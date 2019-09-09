@@ -10,32 +10,43 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.1.7
+ * @since       1.2.12
  */
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Exception;
 
 /**
- * "File or directory does not exist" exception
+ * Abstract exception for exceptions that are throwed by a file
  */
-class FileNotExistsException extends FileException
+abstract class FileException extends Exception
 {
+    /**
+     * @var string|null
+     */
+    protected $path;
+
     /**
      * Constructor
      * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
+     * @uses $path
      */
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
-        if (!$message) {
-            $message = 'File or directory does not exist';
-            if ($path) {
-                $message = sprintf('File or directory `%s` does not exist', rtr($path));
-            }
-        }
-        parent::__construct($message, $code, $previous, $path);
+        parent::__construct($message, $code, $previous);
+        $this->path = $path;
+    }
+
+    /**
+     * Gets the path of the file that throwed the exception
+     * @return string|null
+     * @uses $path
+     */
+    public function getFilePath()
+    {
+        return $this->path;
     }
 }

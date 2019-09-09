@@ -1,13 +1,13 @@
 <?php
 /**
- * This file is part of cakephp-thumber.
+ * This file is part of php-tools.
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
  * @copyright   Copyright (c) Mirko Pagliai
- * @link        https://github.com/mirko-pagliai/cakephp-thumber
+ * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 namespace Tools\Test\TestSuite;
@@ -100,8 +100,11 @@ class TestTraitTest extends TestCase
         try {
             $this->assertException(Exception::class, 'time');
         } catch (AssertionFailedError $e) {
-        } finally {
             $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
             unset($e);
         }
 
@@ -112,8 +115,11 @@ class TestTraitTest extends TestCase
                     throw new Exception();
                 });
             } catch (AssertionFailedError $e) {
-            } finally {
                 $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an exception', $e->getMessage());
+            } finally {
+                if (!isset($e)) {
+                    self::fail('No exception throw');
+                }
                 unset($e);
             }
         }
@@ -124,8 +130,11 @@ class TestTraitTest extends TestCase
                 throw new Exception();
             });
         } catch (AssertionFailedError $e) {
-        } finally {
             $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `Exception`', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
             unset($e);
         }
 
@@ -135,8 +144,11 @@ class TestTraitTest extends TestCase
                 throw new Exception('Wrong');
             }, 'Right');
         } catch (AssertionFailedError $e) {
-        } finally {
             $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
             unset($e);
         }
 
@@ -146,8 +158,12 @@ class TestTraitTest extends TestCase
                 throw new Exception();
             }, 'Right');
         } catch (AssertionFailedError $e) {
-        } finally {
             $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
+            unset($e);
         }
     }
 

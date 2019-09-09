@@ -13,10 +13,7 @@
 namespace Tools\Test;
 
 use App\ExampleClass;
-use ErrorException;
 use Exception;
-use RuntimeException;
-use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
@@ -38,7 +35,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testFileExistsOrFail()
     {
-        file_exists_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, file_exists_or_fail($file));
 
         $this->assertException(FileNotExistsException::class, function () {
             file_exists_or_fail(TMP . 'noExisting');
@@ -46,8 +44,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(FileNotExistsException::class, function () {
             file_exists_or_fail(TMP . 'noExisting', 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            file_exists_or_fail(TMP . 'noExisting', new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            file_exists_or_fail(TMP . 'noExisting', new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -57,7 +55,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testInArrayOrFail()
     {
-        in_array_or_fail('a', ['a', 'b']);
+        $this->assertSame('a', in_array_or_fail('a', ['a', 'b']));
 
         $this->assertException(NotInArrayException::class, function () {
             in_array_or_fail('a', []);
@@ -65,8 +63,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(NotInArrayException::class, function () {
             in_array_or_fail('a', [], 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            in_array_or_fail('a', [], new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            in_array_or_fail('a', [], new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -76,7 +74,7 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsDirOrFail()
     {
-        is_dir_or_fail(TMP);
+        $this->assertSame(TMP, is_dir_or_fail(TMP));
 
         $filename = create_tmp_file();
 
@@ -86,8 +84,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(NotDirectoryException::class, function () use ($filename) {
             is_dir_or_fail($filename, 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () use ($filename) {
-            is_dir_or_fail($filename, new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () use ($filename) {
+            is_dir_or_fail($filename, new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -97,8 +95,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsPositiveOrFail()
     {
-        is_positive_or_fail(1);
-        is_positive_or_fail('1');
+        $this->assertSame(1, is_positive_or_fail(1));
+        $this->assertSame('1', is_positive_or_fail('1'));
 
         $this->assertException(NotPositiveException::class, function () {
             is_positive_or_fail(-1);
@@ -106,8 +104,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(NotPositiveException::class, function () {
             is_positive_or_fail(-1, 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            is_positive_or_fail(-1, new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            is_positive_or_fail(-1, new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -117,7 +115,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
-        is_readable_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, is_readable_or_fail($file));
 
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting');
@@ -125,8 +124,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting', 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            is_readable_or_fail(TMP . 'noExisting', new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            is_readable_or_fail(TMP . 'noExisting', new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -136,12 +135,12 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsTrueOrFail()
     {
-        foreach (['string', ['array'], new stdClass(), true, 1, 0.1] as $value) {
-            is_true_or_fail($value);
+        foreach (['string', ['array'], new ExampleClass(), true, 1, 0.1] as $value) {
+            $this->assertSame($value, is_true_or_fail($value));
         }
 
         foreach ([null, false, 0, '0', []] as $value) {
-            $this->assertException(ErrorException::class, function () use ($value) {
+            $this->assertException(Exception::class, function () use ($value) {
                 is_true_or_fail($value);
             }, 'The value is not equal to `true`');
         }
@@ -150,39 +149,42 @@ class OrFailFunctionsTest extends TestCase
         try {
             is_true_or_fail(false, null);
         } catch (Exception $e) {
-        } finally {
             $this->assertEmpty($e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail('No exception throw');
+            }
         }
 
         //Failure with a custom message
-        $this->assertException(ErrorException::class, function () {
+        $this->assertException(Exception::class, function () {
             is_true_or_fail(false, '`false` is not `true`');
         }, '`false` is not `true`');
 
         //Failure with custom message and exception class string
-        foreach ([RuntimeException::class, 'RuntimeException'] as $exceptionClass) {
-            $this->assertException(RuntimeException::class, function () use ($exceptionClass) {
+        foreach ([Exception::class, 'Exception'] as $exceptionClass) {
+            $this->assertException(Exception::class, function () use ($exceptionClass) {
                 is_true_or_fail(false, '`false` is not `true`', $exceptionClass);
             }, '`false` is not `true`');
         }
 
         //Failure with a custom exception class string as second argument
-        $this->assertException(RuntimeException::class, function () {
-            is_true_or_fail(false, RuntimeException::class);
+        $this->assertException(Exception::class, function () {
+            is_true_or_fail(false, Exception::class);
         });
 
         //Failure with custom message and an instantiated exception
-        $this->assertException(ErrorException::class, function () {
-            is_true_or_fail(false, null, new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            is_true_or_fail(false, null, new Exception('an exception'));
         }, 'an exception');
 
         //Failures with bad exception classes
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, new stdClass());
+            is_true_or_fail(false, null, new ExampleClass());
         }, '`$exception` parameter must be a string');
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, stdClass::class);
-        }, '`stdClass` is not and instance of `Exception`');
+            is_true_or_fail(false, null, ExampleClass::class);
+        }, '`App\ExampleClass` is not and instance of `Exception`');
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, 'noExisting\Class');
         }, 'Class `noExisting\Class` does not exist');
@@ -194,7 +196,8 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
-        is_writable_or_fail(create_tmp_file());
+        $file = create_tmp_file();
+        $this->assertSame($file, is_writable_or_fail($file));
 
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting');
@@ -202,8 +205,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting', 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            is_writable_or_fail(TMP . 'noExisting', new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            is_writable_or_fail(TMP . 'noExisting', new Exception('an exception'));
         }, 'an exception');
     }
 
@@ -214,8 +217,8 @@ class OrFailFunctionsTest extends TestCase
     public function testKeyExistsOrFail()
     {
         $array = ['a' => 'alfa', 'beta', 'gamma'];
-        key_exists_or_fail('a', $array);
-        key_exists_or_fail(['a', 1], $array);
+        $this->assertSame('a', key_exists_or_fail('a', $array));
+        $this->assertSame(['a', 1], key_exists_or_fail(['a', 1], $array));
 
         foreach ([
             'b',
@@ -228,8 +231,8 @@ class OrFailFunctionsTest extends TestCase
             $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
                 key_exists_or_fail($key, $array, 'an exception');
             }, 'an exception');
-            $this->assertException(ErrorException::class, function () use ($array, $key) {
-                key_exists_or_fail($key, $array, new ErrorException('an exception'));
+            $this->assertException(Exception::class, function () use ($array, $key) {
+                key_exists_or_fail($key, $array, new Exception('an exception'));
             }, 'an exception');
         }
     }
@@ -240,11 +243,11 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testPropertyExistsOrFail()
     {
-        property_exists_or_fail(new ExampleClass(), 'publicProperty');
+        $this->assertSame('publicProperty', property_exists_or_fail(new ExampleClass(), 'publicProperty'));
 
-        $object = new stdClass();
+        $object = new ExampleClass();
         $object->name = 'My name';
-        property_exists_or_fail($object, 'name');
+        $this->assertSame('name', property_exists_or_fail($object, 'name'));
 
         $object = $this->getMockBuilder(ExampleClass::class)
             ->setMethods(['has'])
@@ -255,10 +258,10 @@ class OrFailFunctionsTest extends TestCase
             ->with('publicProperty')
             ->willReturn(true);
 
-        property_exists_or_fail($object, 'publicProperty');
+        $this->assertSame('publicProperty', property_exists_or_fail($object, 'publicProperty'));
 
         $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new stdClass(), 'noExisting');
+            property_exists_or_fail(new ExampleClass(), 'noExisting');
         }, 'Object does not have `noExisting` property');
 
         $this->assertException(PropertyNotExistsException::class, function () {
@@ -267,8 +270,8 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(PropertyNotExistsException::class, function () {
             property_exists_or_fail(new ExampleClass(), 'noExisting', 'an exception');
         }, 'an exception');
-        $this->assertException(ErrorException::class, function () {
-            property_exists_or_fail(new ExampleClass(), 'noExisting', new ErrorException('an exception'));
+        $this->assertException(Exception::class, function () {
+            property_exists_or_fail(new ExampleClass(), 'noExisting', new Exception('an exception'));
         }, 'an exception');
     }
 }

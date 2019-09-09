@@ -14,25 +14,19 @@
  */
 namespace Tools\Exception;
 
-use Exception;
+use Tools\Exception\FileException;
 
 /**
  * "File or directory is not readable" exception
  */
-class NotReadableException extends Exception
+class NotReadableException extends FileException
 {
-    /**
-     * @var string|null
-     */
-    protected $path;
-
     /**
      * Constructor
      * @param string $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
-     * @param string|null $path Path of the file that is not readable
-     * @uses $path
+     * @param string|null $path Path of the file that throwed the exception
      */
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
@@ -42,18 +36,6 @@ class NotReadableException extends Exception
                 $message = sprintf('File or directory `%s` is not readable', rtr($path));
             }
         }
-        parent::__construct($message, $code, $previous);
-        $this->path = $path;
-    }
-
-    /**
-     * Gets the path of file that is not readable
-     * @return string|null
-     * @since 1.2.11
-     * @uses $path
-     */
-    public function getFilePath()
-    {
-        return $this->path;
+        parent::__construct($message, $code, $previous, $path);
     }
 }

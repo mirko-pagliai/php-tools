@@ -126,7 +126,6 @@ trait TestTrait
             self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
         }
 
-        $e = false;
         try {
             call_user_func($function);
         } catch (Exception $e) {
@@ -147,8 +146,10 @@ trait TestTrait
                     $e->getMessage()
                 ));
             }
-        } finally {
-            parent::assertNotFalse($e, sprintf('Expected exception `%s`, but no exception throw', $expectedException));
+        }
+
+        if (!isset($e)) {
+            self::fail(sprintf('Expected exception `%s`, but no exception throw', $expectedException));
         }
     }
 
