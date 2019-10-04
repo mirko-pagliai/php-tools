@@ -22,7 +22,8 @@ use Tools\ReflectionTrait;
  */
 class TestCase extends PHPUnitTestCase
 {
-    use ReflectionTrait, TestTrait;
+    use ReflectionTrait;
+    use TestTrait;
 
     /**
      * Teardown any static object changes and restore them
