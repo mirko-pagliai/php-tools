@@ -166,7 +166,16 @@ class TestTraitTest extends TestCase
             }
             unset($e);
         }
+    }
 
+    /**
+     * Tests for `assertException()` method on `Notice` exception
+     * @requires PHPUnit 6.0
+     * @requires PHP 7.0
+     * @test
+     */
+    public function testAssertExceptionOnNotice()
+    {
         //This will throw a `Notice` exception
         $this->expectException(Notice::class);
         $this->assertException(Exception::class, function () {
