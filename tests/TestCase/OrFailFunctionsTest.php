@@ -14,6 +14,7 @@ namespace Tools\Test;
 
 use App\ExampleClass;
 use Exception;
+use PHPUnit\Framework\Error\Notice;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
@@ -177,17 +178,39 @@ class OrFailFunctionsTest extends TestCase
         $this->assertException(Exception::class, function () {
             is_true_or_fail(false, null, new Exception('an exception'));
         }, 'an exception');
+    }
 
-        //Failures with bad exception classes
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, new ExampleClass());
-        }, '`$exception` parameter must be a string');
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, ExampleClass::class);
-        }, '`App\ExampleClass` is not and instance of `Exception`');
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, 'noExisting\Class');
-        }, 'Class `noExisting\Class` does not exist');
+    /**
+     * Test for `is_true_or_fail()` function, with a no string exception
+     * @test
+     */
+    public function testIsTrueOrFailExceptionNotString()
+    {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('`$exception` parameter must be a string');
+        is_true_or_fail(false, null, new ExampleClass());
+    }
+
+    /**
+     * Test for `is_true_or_fail()` function, with a nn instance of `Exception`
+     * @test
+     */
+    public function testIsTrueOrFailNotInstanceOfException()
+    {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('`App\ExampleClass` is not and instance of `Exception`');
+        is_true_or_fail(false, null, ExampleClass::class);
+    }
+
+    /**
+     * Test for `is_true_or_fail()` function, with a no existing exception
+     * @test
+     */
+    public function testIsTrueOrFailNoExistingClass()
+    {
+        $this->expectException(Notice::class);
+        $this->expectExceptionMessage('Class `noExisting\Class` does not exist');
+        is_true_or_fail(false, null, 'noExisting\Class');
     }
 
     /**
@@ -216,18 +239,22 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testKeyExistsOrFail()
     {
-        $array = ['a' => 'alfa', 'beta', 'gamma'];
+        $array = ['a' => 'alfa', 'b' => 'beta', 'gamma'];
         $this->assertSame('a', key_exists_or_fail('a', $array));
-        $this->assertSame(['a', 1], key_exists_or_fail(['a', 1], $array));
+        $this->assertSame(['a', 0], key_exists_or_fail(['a', 0], $array));
+
+        $this->assertException(KeyNotExistsException::class, function () use ($array) {
+            key_exists_or_fail(['a', 'c'], $array);
+        }, 'Key `c` does not exist');
 
         foreach ([
-            'b',
-            ['a', 'b'],
-            ['b', 'c'],
+            'd',
+            ['a', 'd'],
+            ['d', 'c'],
         ] as $key) {
             $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
                 key_exists_or_fail($key, $array);
-            }, 'Key `b` does not exist');
+            }, 'Key `d` does not exist');
             $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
                 key_exists_or_fail($key, $array, 'an exception');
             }, 'an exception');
