@@ -12,7 +12,6 @@
  */
 namespace Tools;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionProperty;
@@ -69,9 +68,9 @@ trait ReflectionTrait
         $properties = (new ReflectionClass($object))->getProperties($filter);
 
         //Removes properties added by PHPUnit, if the object is a mock
-        $properties = $object instanceof MockObject ? array_filter($properties, function ($property) {
+        $properties = array_filter($properties, function ($property) {
             return !string_starts_with($property->getName(), '__phpunit');
-        }) : $properties;
+        });
 
         $values = array_map(function ($property) use ($object) {
             $property->setAccessible(true);
