@@ -17,6 +17,7 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\Constraint\IsType;
+use PHPUnit\Framework\Error\Error;
 use Throwable;
 
 /**
@@ -130,6 +131,8 @@ trait TestTrait
 
         try {
             call_user_func($function);
+        } catch (Error $e) {
+            throw $e;
         } catch (Exception $e) {
             parent::assertInstanceof(
                 $expectedException,

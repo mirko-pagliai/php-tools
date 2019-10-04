@@ -4,6 +4,10 @@
 * updated for `php` 7.1 and `phpunit` 8.
 
 ## 1.2 branch
+### 1.2.13
+* `assertException()` does not catch exceptions thrown from phpunit errors;
+* fixed bug for `key_exists_or_fail()` and `property_exists_or_fail()` functions. 
+
 ### 1.2.12
 * all `or_fail()` functions return the value that has been checked;
 * added `FileException` and `InvalidValueException` abstract exceptions;
