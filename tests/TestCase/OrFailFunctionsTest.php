@@ -247,7 +247,13 @@ class OrFailFunctionsTest extends TestCase
 
         $object = new ExampleClass();
         $object->name = 'My name';
+        $object->surname = 'My surname';
         $this->assertSame('name', property_exists_or_fail($object, 'name'));
+        $this->assertSame(['name', 'surname'], property_exists_or_fail($object, ['name', 'surname']));
+
+        $this->assertException(PropertyNotExistsException::class, function () use ($object) {
+            property_exists_or_fail($object, ['name', 'anotherName']);
+        }, 'Object does not have `anotherName` property');
 
         $object = $this->getMockBuilder(ExampleClass::class)
             ->setMethods(['has'])
