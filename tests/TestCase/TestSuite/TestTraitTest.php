@@ -170,7 +170,7 @@ class TestTraitTest extends TestCase
         //This will throw a `Notice` exception
         $this->expectException(Notice::class);
         $this->assertException(Exception::class, function () {
-            throw new Notice();
+            throw new Notice('a notice', 0, __FILE__, __LINE__);
         });
     }
 
