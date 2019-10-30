@@ -46,10 +46,8 @@ class EntityTest extends TestCase
     {
         ob_start();
         $line = __LINE__ + 1;
-        var_dump($this->Entity);
-        $dump = ob_get_contents();
-        ob_end_clean();
-
+        debug($this->Entity);
+        $dump = ob_get_clean();
         $assertStringContainsString = function () {
             $method = 'assertContains';
             if (method_exists($this, 'assertStringContainsString')) {
@@ -58,12 +56,20 @@ class EntityTest extends TestCase
 
             call_user_func_array([$this, $method], func_get_args());
         };
-
         $assertStringContainsString(EntityExample::class, $dump);
 
         $this->skipIf(IS_WIN);
-        $assertStringContainsString((string)$line, $dump);
-        $assertStringContainsString(__FILE__, $dump);
+        $expected = PHP_EOL .
+            __FILE__ . ' (line ' . $line . ')' . PHP_EOL .
+            '########## DEBUG ##########' . PHP_EOL .
+            'App\EntityExample {#683' . PHP_EOL .
+            '  #properties: array:1 [' . PHP_EOL .
+            '    "code" => 200' . PHP_EOL .
+            '  ]' . PHP_EOL .
+            '  code: 200' . PHP_EOL .
+            '}' . PHP_EOL .
+            '###########################' . PHP_EOL;
+        $this->assertEquals($expected, $dump);
     }
 
     /**

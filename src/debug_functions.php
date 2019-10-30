@@ -11,6 +11,34 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+use Symfony\Component\VarDumper\Cloner\VarCloner;
+use Symfony\Component\VarDumper\Dumper\CliDumper;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
+use Symfony\Component\VarDumper\VarDumper;
+
+VarDumper::setHandler(function ($var) {
+    $template = <<<TEXT
+
+%s
+########## DEBUG ##########
+%s###########################
+
+TEXT;
+    $cloner = new VarCloner();
+    if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
+        $backtrace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $backtrace = array_values(array_filter($backtrace, function ($current) {
+            return key_exists('file', $current);
+        }));
+        $current = $backtrace[array_search(__FILE__, array_column($backtrace, 'file')) - 1];
+        $lineInfo = sprintf('%s (line %s)', $current['file'], $current['line']);
+        $dumper = new CliDumper();
+        printf($template, $lineInfo, $dumper->dump($cloner->cloneVar($var), true));
+    } else {
+        $dumper = new HtmlDumper();
+        $dumper->dump($cloner->cloneVar($var));
+    }
+});
 
 if (!function_exists('debug') && function_exists('dump')) {
     /**

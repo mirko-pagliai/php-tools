@@ -5,9 +5,9 @@
     "type": "library",
     "license": "MIT",
     "authors": [{
-        "name": "Mirko Pagliai",
-        "email": "mirko.pagliai@gmail.com"
-    }],
+            "name": "Mirko Pagliai",
+            "email": "mirko.pagliai@gmail.com"
+        }],
     "require": {
         "php": ">=7.1",
         "pguardiario/phpuri": "^1",
