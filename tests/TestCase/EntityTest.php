@@ -50,14 +50,10 @@ class EntityTest extends TestCase
         $this->assertContains(EntityExample::class, $dump);
 
         $this->skipIf(IS_WIN);
-        $expected = PHP_EOL .
-            __FILE__ . ' (line ' . $line . ')' . PHP_EOL .
-            '########## DEBUG ##########' . PHP_EOL .
-            'App\EntityExample {#471' . PHP_EOL .
-            '  +"code": 200' . PHP_EOL .
-            '}' . PHP_EOL .
-            '###########################' . PHP_EOL;
-        $this->assertEquals($expected, $dump);
+        $this->assertContains(__FILE__ . ' (line ' . $line . ')', $dump);
+        $this->assertContains('########## DEBUG ##########', $dump);
+        $this->assertContains('App\EntityExample {', $dump);
+        $this->assertContains('code: 200', $dump);
     }
 
     /**
