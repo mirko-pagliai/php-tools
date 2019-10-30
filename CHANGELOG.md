@@ -1,8 +1,11 @@
 # 1.x branch
 ## 1.2 branch
+### 1.2.14
+* `debug()`/`dd()`/`dump()` functions now use a template.
+
 ### 1.2.13
 * `assertException()` does not catch exceptions thrown from phpunit errors;
-* fixed bug for `key_exists_or_fail()` and `property_exists_or_fail()` functions. 
+* fixed bug for `key_exists_or_fail()` and `property_exists_or_fail()` functions.
 
 ### 1.2.12
 * all `or_fail()` functions return the value that has been checked;
@@ -95,7 +98,7 @@
     `assertFileNotExists()` assert methods;
 * `assertFileExtension()`, `assertFileMime()` and `assertFilePerms()` methods now
     take a string as first `$filename` argument, so they no longer take an array.
-    If you want to check an array of filename, use the `array_map()` function;  
+    If you want to check an array of filename, use the `array_map()` function;
 * removed deprecated `TestCaseTrait`. Use `TestTrait` instead;
 * removed deprecated `Apache` class;
 * removed all deprecated "safe" functions;
@@ -176,7 +179,7 @@
     `$exception` as third argument.
 
 ### 1.1.8
-* `create_tmp_file()` and `safe_create_tmp_file()` methods now accept a 
+* `create_tmp_file()` and `safe_create_tmp_file()` methods now accept a
     directory as a second argument and a prefix as the third argument.
 
 ### 1.1.7
