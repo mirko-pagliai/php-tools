@@ -17,7 +17,7 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
 VarDumper::setHandler(function ($var) {
-$template = '
+    $template = '
 %s
 ########## DEBUG ##########
 %s###########################';
