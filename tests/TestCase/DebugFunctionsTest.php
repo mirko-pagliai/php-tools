@@ -29,7 +29,7 @@ class DebugFunctionsTest extends TestCase
             __FILE__ . ' (line ' . (__LINE__ + 5) . ')' . PHP_EOL .
             '########## DEBUG ##########' . PHP_EOL .
             '"my var"' . PHP_EOL .
-            '###########################' . PHP_EOL;
+            '###########################';
         ob_start();
         debug('my var');
         $output = ob_get_clean();
