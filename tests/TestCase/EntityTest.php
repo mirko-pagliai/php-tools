@@ -53,7 +53,6 @@ class EntityTest extends TestCase
         $this->assertContains(__FILE__ . ' (line ' . $line . ')', $dump);
         $this->assertContains('########## DEBUG ##########', $dump);
         $this->assertContains('App\EntityExample {', $dump);
-        $this->assertContains('code: 200', $dump);
     }
 
     /**
