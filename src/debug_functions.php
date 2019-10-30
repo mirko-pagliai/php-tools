@@ -17,13 +17,10 @@ use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
 VarDumper::setHandler(function ($var) {
-    $template = <<<TEXT
-
+    $template = '
 %s
 ########## DEBUG ##########
-%s###########################
-
-TEXT;
+%s###########################';
     $cloner = new VarCloner();
     if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
         $backtrace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));

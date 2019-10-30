@@ -22,6 +22,7 @@ use Exception;
 abstract class InvalidValueException extends Exception
 {
     /**
+     * Value
      * @var mixed
      */
     protected $value = null;

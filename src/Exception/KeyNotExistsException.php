@@ -22,6 +22,7 @@ use Exception;
 class KeyNotExistsException extends Exception
 {
     /**
+     * Key name
      * @var string|null
      */
     protected $key;

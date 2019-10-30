@@ -22,6 +22,7 @@ use Exception;
 abstract class FileException extends Exception
 {
     /**
+     * Path
      * @var string|null
      */
     protected $path;

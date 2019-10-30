@@ -20,11 +20,13 @@ namespace Tools;
 class FileArray
 {
     /**
+     * Data
      * @var array
      */
     protected $data = [];
 
     /**
+     * Filename
      * @var string
      */
     protected $filename;

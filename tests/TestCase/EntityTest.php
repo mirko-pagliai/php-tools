@@ -61,7 +61,6 @@ class EntityTest extends TestCase
         $assertStringContainsString(__FILE__ . ' (line ' . $line . ')', $dump);
         $assertStringContainsString('########## DEBUG ##########', $dump);
         $assertStringContainsString('App\EntityExample {', $dump);
-        $assertStringContainsString('code: 200', $dump);
     }
 
     /**

@@ -22,15 +22,16 @@ class DebugFunctionsTest extends TestCase
 {
     /**
      * Test for `debug()` global function
+     * @requires OS Linux
      * @test
      */
     public function testDebug()
     {
-        $expected = PHP_EOL .
-            __FILE__ . ' (line ' . (__LINE__ + 5) . ')' . PHP_EOL .
-            '########## DEBUG ##########' . PHP_EOL .
-            '"my var"' . PHP_EOL .
-            '###########################' . PHP_EOL;
+        $expected = '
+' . __FILE__ . ' (line ' . (__LINE__ + 5) . ')
+########## DEBUG ##########
+"my var"
+###########################';
         ob_start();
         debug('my var');
         $output = ob_get_clean();
