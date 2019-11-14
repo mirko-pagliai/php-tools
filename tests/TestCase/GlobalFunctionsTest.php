@@ -475,7 +475,7 @@ class GlobalFunctionsTest extends TestCase
     public function testWhich()
     {
         $expected = IS_WIN ? '"C:\Program Files\Git\usr\bin\cat.exe"' : '/bin/cat';
-        $this->assertEquals($expected, which('cat'));
+        $this->assertStringEndsWith($expected, which('cat'));
         $this->assertNull(which('noExistingBin'));
     }
 }

@@ -45,14 +45,14 @@ class EntityTest extends TestCase
     {
         ob_start();
         $line = __LINE__ + 1;
-        var_dump($this->Entity);
-        $dump = ob_get_contents();
-        ob_end_clean();
+        debug($this->Entity);
+        $dump = ob_get_clean();
         $this->assertContains(EntityExample::class, $dump);
 
         $this->skipIf(IS_WIN);
-        $this->assertContains((string)$line, $dump);
-        $this->assertContains(__FILE__, $dump);
+        $this->assertContains(__FILE__ . ' (line ' . $line . ')', $dump);
+        $this->assertContains('########## DEBUG ##########', $dump);
+        $this->assertContains('App\EntityExample {', $dump);
     }
 
     /**

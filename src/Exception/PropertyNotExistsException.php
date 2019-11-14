@@ -21,6 +21,7 @@ use Exception;
 class PropertyNotExistsException extends Exception
 {
     /**
+     * Property name
      * @var string|null
      */
     protected $property;
