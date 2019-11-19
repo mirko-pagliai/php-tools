@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -11,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.1.14
  */
+
 namespace Tools\Exception;
 
 use Exception;

@@ -5,16 +5,19 @@
 
     <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
 
-    <rule ref="Generic.Commenting.Todo">
-        <severity>0</severity>
-    </rule>
     <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
         <severity>0</severity>
     </rule>
-    <rule ref="Internal.NoCodeFound">
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
         <severity>0</severity>
     </rule>
-    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.LineIndent">
         <severity>0</severity>
     </rule>
 
