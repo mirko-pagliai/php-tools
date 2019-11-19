@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.2 branch
 ### 1.2.15
-* fixed little bug for `debug()` global function.
+* fixed little bug for `debug()` global function;
+* added `sniffer-ruleset.xml` and fixed `phpcs.xml.dist` file.
 
 ### 1.2.14
 * `debug()`/`dd()`/`dump()` functions now use a template;
