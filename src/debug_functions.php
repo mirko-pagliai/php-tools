@@ -27,8 +27,9 @@ VarDumper::setHandler(function ($var) {
         $backtrace = array_values(array_filter($backtrace, function ($current) {
             return key_exists('file', $current);
         }));
-        $current = $backtrace[array_search(__FILE__, array_column($backtrace, 'file')) - 1];
-        $lineInfo = sprintf('%s (line %s)', $current['file'], $current['line']);
+        $key = array_search(__FILE__, array_column($backtrace, 'file'));
+        $key = $key ? $key - 1 : count($backtrace) - 3;
+        $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'], $backtrace[$key]['line']);
         $dumper = new CliDumper();
         printf($template, $lineInfo, $dumper->dump($cloner->cloneVar($var), true));
     } else {
@@ -59,7 +60,7 @@ if (!function_exists('dd') && function_exists('dump')) {
      */
     function dd()
     {
-        call_user_func_array('dump', func_get_args());
+        call_user_func_array('debug', func_get_args());
         die(1);
     }
 }
