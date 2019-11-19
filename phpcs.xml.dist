@@ -5,16 +5,10 @@
 
     <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
 
-    <rule ref="Generic.Commenting.Todo">
-        <severity>0</severity>
-    </rule>
     <rule ref="Generic.Files.LineLength.TooLong">
         <severity>0</severity>
     </rule>
     <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
-        <severity>0</severity>
-    </rule>
-    <rule ref="Internal.NoCodeFound">
         <severity>0</severity>
     </rule>
     <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
@@ -36,9 +30,6 @@
         <exclude-pattern>/tests/test_app</exclude-pattern>
     </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing.IncorrectLinesCountBeforeFirstUse">
         <severity>0</severity>
     </rule>
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">

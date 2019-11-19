@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.2.12
  */
+
 namespace Tools\Exception;
 
 use Exception;

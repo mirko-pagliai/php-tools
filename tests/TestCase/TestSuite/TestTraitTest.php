@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of php-tools.
  *
@@ -11,6 +12,7 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace Tools\Test\TestSuite;
 
 use App\AnotherExampleChildClass;
