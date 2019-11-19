@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -10,6 +11,7 @@
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
+
 require_once 'vendor/autoload.php';
 
 //This adds `apache_get_modules()` and `apache_get_version()` functions

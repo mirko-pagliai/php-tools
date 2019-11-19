@@ -12,6 +12,7 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  * @since       1.2.5
  */
+
 namespace Tools\Exception;
 
 use Tools\Exception\InvalidValueException;
