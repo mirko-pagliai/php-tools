@@ -219,8 +219,8 @@ if (!function_exists('get_child_methods')) {
 
 if (!function_exists('get_class_short_name')) {
     /**
-     * Gets the short name of the class, the part without the namespace
-     * @param mixed $class Class as name or object
+     * Gets class short name (the part without the namespace)
+     * @param mixed $class Classname or object
      * @return string
      * @since 1.0.2
      */
