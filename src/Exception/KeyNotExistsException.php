@@ -39,10 +39,7 @@ class KeyNotExistsException extends Exception
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $key = null)
     {
         if (!$message) {
-            $message = 'Array key does not exist';
-            if ($key) {
-                $message = sprintf('Array key `%s` does not exist', $key);
-            }
+            $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';
         }
         parent::__construct($message, $code, $previous);
         $this->key = $key;

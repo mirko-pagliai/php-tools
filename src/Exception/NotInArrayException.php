@@ -32,10 +32,7 @@ class NotInArrayException extends InvalidValueException
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, $value = null)
     {
         if (!$message) {
-            $message = 'Value is not in the array';
-            if ($value && is_stringable($value)) {
-                $message = sprintf('Value `%s` is not in the array', (string)$value);
-            }
+            $message = is_stringable($value) ? sprintf('Value `%s` is not in the array', (string)$value) : 'Value is not in the array';
         }
         parent::__construct($message, $code, $previous, $value);
     }
