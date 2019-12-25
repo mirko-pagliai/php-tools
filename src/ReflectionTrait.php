@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -29,7 +30,7 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @return \ReflectionMethod
      */
-    protected function _getMethodInstance(&$object, $methodName)
+    protected function _getMethodInstance(&$object, string $methodName): ReflectionMethod
     {
         $method = new ReflectionMethod(get_class($object), $methodName);
         $method->setAccessible(true);
@@ -43,7 +44,7 @@ trait ReflectionTrait
      * @param string $name Property name
      * @return \ReflectionProperty
      */
-    protected function _getPropertyInstance(&$object, $name)
+    protected function _getPropertyInstance(&$object, string $name): ReflectionProperty
     {
         $property = new ReflectionProperty(get_class($object), $name);
         $property->setAccessible(true);
@@ -64,7 +65,7 @@ trait ReflectionTrait
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      * @since 1.1.4
      */
-    protected function getProperties($object, $filter = 256 | 512 | 1024)
+    protected function getProperties($object, int $filter = 256 | 512 | 1024): array
     {
         $object = is_object($object) ? $object : new $object();
         $properties = (new ReflectionClass($object))->getProperties($filter);
@@ -91,7 +92,7 @@ trait ReflectionTrait
      * @return mixed Property value
      * @uses _getPropertyInstance()
      */
-    protected function getProperty($object, $name)
+    protected function getProperty($object, string $name)
     {
         $object = is_object($object) ? $object : new $object();
 
@@ -107,7 +108,7 @@ trait ReflectionTrait
      * @return mixed Method return
      * @uses _getMethodInstance()
      */
-    protected function invokeMethod($object, $methodName, array $parameters = [])
+    protected function invokeMethod($object, string $methodName, array $parameters = [])
     {
         $object = is_object($object) ? $object : new $object();
 
@@ -122,7 +123,7 @@ trait ReflectionTrait
      * @return mixed Old property value
      * @uses _getPropertyInstance()
      */
-    protected function setProperty(&$object, $name, $value)
+    protected function setProperty(&$object, string $name, $value)
     {
         $property = $this->_getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);

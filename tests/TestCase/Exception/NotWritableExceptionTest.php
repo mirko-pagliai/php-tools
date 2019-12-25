@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -32,14 +32,14 @@ class NotWritableExceptionTest extends TestCase
         try {
             throw new NotWritableException(null, 0, null, $file);
         } catch (NotWritableException $e) {
-            $this->assertSame('File or directory `dir/notWritableFile` is not writable', $e->getMessage());
+            $this->assertSame('Filename `dir/notWritableFile` is not writable', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 
         try {
             throw new NotWritableException();
         } catch (NotWritableException $e) {
-            $this->assertSame('File or directory is not writable', $e->getMessage());
+            $this->assertSame('Filename is not writable', $e->getMessage());
             $this->assertNull($e->getFilePath());
         }
     }

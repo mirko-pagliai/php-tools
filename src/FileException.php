@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -13,42 +13,40 @@
  * @since       1.2.12
  */
 
-namespace Tools\Exception;
+namespace Tools;
 
 use Exception;
 
 /**
- * Abstract exception for exceptions that are throwed by an invalid value
+ * Abstract exception for exceptions that are throwed by a file
  */
-abstract class InvalidValueException extends Exception
+abstract class FileException extends Exception
 {
     /**
-     * Value
-     * @var mixed
+     * Path
+     * @var string|null
      */
-    protected $value = null;
+    protected $path;
 
     /**
      * Constructor
      * @param string|null $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
-     * @param mixed $value The value that throwed the exception
-     * @uses $value
+     * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $value = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         parent::__construct($message, $code, $previous);
-        $this->value = $value;
+        $this->path = $path;
     }
 
     /**
-     * Gets the value that throwed the exception
-     * @return mixed
-     * @uses $value
+     * Gets the path of the file that throwed the exception
+     * @return string|null
      */
-    public function getValue()
+    public function getFilePath(): ?string
     {
-        return $this->value;
+        return $this->path;
     }
 }

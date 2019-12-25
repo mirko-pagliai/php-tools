@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -34,15 +35,11 @@ class KeyNotExistsException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $key Name of the key that do not exist
-     * @uses $key
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $key = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $key = null)
     {
         if (!$message) {
-            $message = 'Array key does not exist';
-            if ($key) {
-                $message = sprintf('Array key `%s` does not exist', $key);
-            }
+            $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';
         }
         parent::__construct($message, $code, $previous);
         $this->key = $key;
@@ -52,9 +49,8 @@ class KeyNotExistsException extends Exception
      * Gets the name of the key that do not exist
      * @return string|null
      * @since 1.2.11
-     * @uses $key
      */
-    public function getKeyName()
+    public function getKeyName(): ?string
     {
         return $this->key;
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -33,11 +34,9 @@ if (!function_exists('file_exists_or_fail')) {
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
      */
-    function file_exists_or_fail($filename, $message = null, $exception = FileNotExistsException::class)
+    function file_exists_or_fail(string $filename, $message = null, $exception = FileNotExistsException::class): string
     {
-        if (!$message) {
-            $message = sprintf('File or directory `%s` does not exist', rtr($filename));
-        }
+        $message = $message ?: sprintf('File or directory `%s` does not exist', rtr($filename));
         is_true_or_fail(is_readable($filename), $message, $exception);
 
         return $filename;
@@ -56,7 +55,7 @@ if (!function_exists('in_array_or_fail')) {
      * @return mixed
      * @since 1.2.6
      */
-    function in_array_or_fail($value, $array, $message = null, $exception = NotInArrayException::class)
+    function in_array_or_fail($value, array $array, $message = null, $exception = NotInArrayException::class)
     {
         if (!$message && is_stringable($value) == 'The value is not in array') {
             $message = sprintf('The value `%s` is not in array', (string)$value);
@@ -78,11 +77,9 @@ if (!function_exists('is_dir_or_fail')) {
      * @return string
      * @throws \Tools\Exception\NotDirectoryException
      */
-    function is_dir_or_fail($filename, $message = null, $exception = NotDirectoryException::class)
+    function is_dir_or_fail(string $filename, $message = null, $exception = NotDirectoryException::class): string
     {
-        if (!$message) {
-            $message = sprintf('Filename `%s` is not a directory', rtr($filename));
-        }
+        $message = $message ?: sprintf('Filename `%s` is not a directory', rtr($filename));
         is_true_or_fail(is_dir($filename), $message, $exception);
 
         return $filename;
@@ -122,11 +119,9 @@ if (!function_exists('is_readable_or_fail')) {
      * @return string
      * @throws \Tools\Exception\NotReadableException
      */
-    function is_readable_or_fail($filename, $message = null, $exception = NotReadableException::class)
+    function is_readable_or_fail(string $filename, $message = null, $exception = NotReadableException::class): string
     {
-        if (!$message) {
-            $message = sprintf('File or directory `%s` is not readable', rtr($filename));
-        }
+        $message = $message ?: sprintf('File or directory `%s` is not readable', rtr($filename));
         is_true_or_fail(is_readable($filename), $message, $exception);
 
         return $filename;
@@ -153,11 +148,11 @@ if (!function_exists('is_true_or_fail')) {
             return $value;
         }
 
-        if ($message instanceof \Exception || (is_string($message) && class_exists($message))) {
-            list($exception, $message) = [$message, 'The value is not equal to `true`'];
+        if ($message instanceof \Throwable || (is_string($message) && class_exists($message))) {
+            [$exception, $message] = [$message, 'The value is not equal to `true`'];
         }
 
-        if (!$exception instanceof \Exception) {
+        if (!$exception instanceof \Throwable) {
             if (!is_string($exception)) {
                 trigger_error('`$exception` parameter must be a string');
             }
@@ -167,8 +162,8 @@ if (!function_exists('is_true_or_fail')) {
             $exception = new $exception($message);
         }
 
-        if (!$exception instanceof \Exception) {
-            trigger_error(sprintf('`%s` is not and instance of `Exception`', get_class($exception)));
+        if (!$exception instanceof \Throwable) {
+            trigger_error(sprintf('`%s` is not and instance of `Throwable`', get_class($exception)));
         }
 
         throw $exception;
@@ -186,11 +181,9 @@ if (!function_exists('is_writable_or_fail')) {
      * @return string
      * @throws \Tools\Exception\NotWritableException
      */
-    function is_writable_or_fail($filename, $message = null, $exception = NotWritableException::class)
+    function is_writable_or_fail(string $filename, $message = null, $exception = NotWritableException::class): string
     {
-        if (!$message) {
-            $message = sprintf('File or directory `%s` is not writable', rtr($filename));
-        }
+        $message = $message ?: sprintf('File or directory `%s` is not writable', rtr($filename));
         is_true_or_fail(is_writable($filename), $message, $exception);
 
         return $filename;

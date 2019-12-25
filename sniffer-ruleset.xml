@@ -2,6 +2,9 @@
 <ruleset name="php-tools">
     <rule ref="./vendor/cakephp/cakephp-codesniffer/CakePHP/ruleset.xml"/>
 
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <severity>0</severity>
+    </rule>
     <rule ref="Generic.PHP.NoSilencedErrors.Discouraged">
         <severity>0</severity>
     </rule>
@@ -9,6 +12,12 @@
         <severity>0</severity>
     </rule>
     <rule ref="PSR12.ControlStructures.ControlStructureSpacing">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference.ClassNameReferencedViaMagicConstant">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
         <severity>0</severity>
     </rule>
 

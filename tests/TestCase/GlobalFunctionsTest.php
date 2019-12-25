@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -17,7 +18,6 @@ namespace Tools\Test;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
-use App\ExampleOfTraversable;
 use BadMethodCallException;
 use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
@@ -292,18 +292,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_iterable()` global function
-     * @test
-     */
-    public function testIsIterable()
-    {
-        $this->assertTrue(is_iterable([]));
-        $this->assertTrue(is_iterable(new ExampleOfTraversable()));
-        $this->assertFalse(is_iterable('string'));
-        $this->assertFalse(is_iterable(new ExampleChildClass()));
-    }
-
-    /**
      * Test for `is_json()` global function
      * @test
      */
@@ -311,7 +299,6 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
         $this->assertFalse(is_json('this is a no json string'));
-        $this->assertFalse(is_json(false));
     }
 
     /**
@@ -344,14 +331,6 @@ class GlobalFunctionsTest extends TestCase
 
         //This class implements the `__toString()` method
         $this->assertTrue(is_stringable(new ExampleOfStringable()));
-
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(can_be_string('string'));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->expectExceptionMessage('`can_be_string()` function is deprecated. Use `is_stringable()');
-        can_be_string('string');
     }
 
     /**

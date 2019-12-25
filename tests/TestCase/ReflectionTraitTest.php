@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -24,6 +25,22 @@ use Tools\TestSuite\TestCase;
 class ReflectionTraitTest extends TestCase
 {
     /**
+     * @var \App\ExampleClass
+     */
+    protected $example;
+
+    /**
+     * Called before every test method
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->example = new ExampleClass();
+    }
+
+    /**
      * Tests for `getProperties()` method
      * @test
      */
@@ -37,19 +54,18 @@ class ReflectionTraitTest extends TestCase
             'staticProperty' => 'a static property',
         ];
 
-        $example = new ExampleClass();
-        $this->assertEquals($expected, $this->getProperties($example));
+        $this->assertEquals($expected, $this->getProperties($this->example));
         $this->assertEquals($expected, $this->getProperties(ExampleClass::class));
         $this->assertEquals($expected, $this->getProperties(new ExampleClass()));
 
-        $this->assertArrayKeysEqual(['publicProperty', 'staticProperty'], $this->getProperties($example, ReflectionProperty::IS_PUBLIC));
-        $this->assertArrayKeysEqual(['firstProperty', 'secondProperty'], $this->getProperties($example, ReflectionProperty::IS_PROTECTED));
-        $this->assertArrayKeysEqual(['privateProperty'], $this->getProperties($example, ReflectionProperty::IS_PRIVATE));
-        $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($example, ReflectionProperty::IS_STATIC));
+        $this->assertArrayKeysEqual(['publicProperty', 'staticProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PUBLIC));
+        $this->assertArrayKeysEqual(['firstProperty', 'secondProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PROTECTED));
+        $this->assertArrayKeysEqual(['privateProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PRIVATE));
+        $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($this->example, ReflectionProperty::IS_STATIC));
 
         unset($expected['privateProperty']);
-        $example = $this->getMockBuilder(ExampleClass::class)->getMock();
-        $this->assertEquals($expected, $this->getProperties($example));
+        $this->example = $this->getMockBuilder(ExampleClass::class)->getMock();
+        $this->assertEquals($expected, $this->getProperties($this->example));
     }
 
     /**
@@ -58,9 +74,8 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperty()
     {
-        $example = new ExampleClass();
-        $this->assertNull($this->getProperty($example, 'firstProperty'));
-        $this->assertEquals('a protected property', $this->getProperty($example, 'secondProperty'));
+        $this->assertNull($this->getProperty($this->example, 'firstProperty'));
+        $this->assertEquals('a protected property', $this->getProperty($this->example, 'secondProperty'));
         $this->assertEquals('a protected property', $this->getProperty(ExampleClass::class, 'secondProperty'));
         $this->assertEquals('a protected property', $this->getProperty(new ExampleClass(), 'secondProperty'));
     }
@@ -71,9 +86,8 @@ class ReflectionTraitTest extends TestCase
      */
     public function testInvokeMethod()
     {
-        $example = new ExampleClass();
-        $this->assertEquals('a protected method', $this->invokeMethod($example, 'protectedMethod'));
-        $this->assertEquals('example string', $this->invokeMethod($example, 'protectedMethod', ['example string']));
+        $this->assertEquals('a protected method', $this->invokeMethod($this->example, 'protectedMethod'));
+        $this->assertEquals('example string', $this->invokeMethod($this->example, 'protectedMethod', ['example string']));
         $this->assertEquals('a protected method', $this->invokeMethod(ExampleClass::class, 'protectedMethod'));
         $this->assertEquals('a protected method', $this->invokeMethod(new ExampleClass(), 'protectedMethod'));
     }
@@ -84,14 +98,13 @@ class ReflectionTraitTest extends TestCase
      */
     public function testSetProperty()
     {
-        $example = new ExampleClass();
-        $result = $this->setProperty($example, 'firstProperty', 'example string');
+        $result = $this->setProperty($this->example, 'firstProperty', 'example string');
         $this->assertNull($result);
-        $this->assertEquals('example string', $example->firstProperty);
+        $this->assertEquals('example string', $this->example->firstProperty);
 
-        $expectedResult = $example->secondProperty;
-        $result = $this->setProperty($example, 'secondProperty', null);
+        $expectedResult = $this->example->secondProperty;
+        $result = $this->setProperty($this->example, 'secondProperty', null);
         $this->assertEquals($expectedResult, $result);
-        $this->assertNull($example->secondProperty);
+        $this->assertNull($this->example->secondProperty);
     }
 }

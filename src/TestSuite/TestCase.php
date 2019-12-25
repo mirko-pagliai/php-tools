@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -21,7 +22,7 @@ use Tools\ReflectionTrait;
 /**
  * TestCase class
  */
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     use ReflectionTrait;
     use TestTrait;
@@ -30,7 +31,7 @@ class TestCase extends PHPUnitTestCase
      * Teardown any static object changes and restore them
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

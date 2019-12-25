@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -32,14 +32,14 @@ class FileNotExistsExceptionTest extends TestCase
         try {
             throw new FileNotExistsException(null, 0, null, $file);
         } catch (FileNotExistsException $e) {
-            $this->assertSame('File or directory `dir/noExistingFile` does not exist', $e->getMessage());
+            $this->assertSame('Filename `dir/noExistingFile` does not exist', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 
         try {
             throw new FileNotExistsException();
         } catch (FileNotExistsException $e) {
-            $this->assertSame('File or directory does not exist', $e->getMessage());
+            $this->assertSame('Filename does not exist', $e->getMessage());
             $this->assertNull($e->getFilePath());
         }
     }
