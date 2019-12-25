@@ -68,15 +68,15 @@ if (!function_exists('create_tmp_file')) {
      * @param string|null $dir The directory where the temporary filename will
      *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
-     * @return string|null Path of temporary filename or `null`
+     * @return string Path of temporary filename
      * @since 1.1.7
      */
-    function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): ?string
+    function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
     {
-        $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
-        $filename = tempnam($dir, $prefix);
+        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        create_file($filename, $data);
 
-        return create_file($filename, $data) ? $filename : null;
+        return $filename;
     }
 }
 

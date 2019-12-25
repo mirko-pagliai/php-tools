@@ -31,7 +31,7 @@ class FilesystemFunctionsTest extends TestCase
     {
         $expected = DS . 'tmp' . DS;
         $this->assertSame($expected, add_slash_term(DS . 'tmp'));
-        $this->assertSame($expected, add_slash_term(DS . 'tmp' . DS));
+        $this->assertSame($expected, add_slash_term($expected));
     }
 
     /**
@@ -58,13 +58,11 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testCreateTmpFile()
     {
-        $filename = create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, '');
-
-        $filename = create_tmp_file('string');
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, 'string');
+        foreach (['', 'string'] as $string) {
+            $filename = create_tmp_file($string);
+            $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+            $this->assertStringEqualsFile($filename, $string);
+        }
     }
 
     /**

@@ -39,12 +39,12 @@ if (!function_exists('array_clean')) {
     function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
         $keys = array_keys($array);
-        $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
+        $onlyNumKeys = $keys === array_filter($keys, 'is_numeric');
         $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
         $array = array_unique($array);
 
         //Performs `array_values()` only if all array keys are numeric
-        return $hasOnlyNumericKeys ? array_values($array) : $array;
+        return $onlyNumKeys ? array_values($array) : $array;
     }
 }
 
@@ -54,7 +54,7 @@ if (!function_exists('array_key_first')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.12
      */
@@ -70,7 +70,7 @@ if (!function_exists('array_key_last')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.12
      */
