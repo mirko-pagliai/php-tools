@@ -15,9 +15,6 @@ declare(strict_types=1);
 
 require_once 'vendor/autoload.php';
 
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once 'apache_functions.php';
-
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
