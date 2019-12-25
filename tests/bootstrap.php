@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -13,9 +14,6 @@
  */
 
 require_once 'vendor/autoload.php';
-
-//This adds `apache_get_modules()` and `apache_get_version()` functions
-require_once 'apache_functions.php';
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
@@ -48,11 +46,4 @@ if (!function_exists('createSomeFiles')) {
 
         return $files;
     }
-}
-
-if (!class_exists('PHPUnit\Runner\Version')) {
-    class_alias('PHPUnit_Framework_AssertionFailedError', 'PHPUnit\Framework\AssertionFailedError');
-    class_alias('PHPUnit_Framework_Error_Deprecated', 'PHPUnit\Framework\Error\Deprecated');
-    class_alias('PHPUnit_Framework_Error_Notice', 'PHPUnit\Framework\Error\Notice');
-    class_alias('PHPUnit_Framework_MockObject_MockObject', 'PHPUnit\Framework\MockObject\MockObject');
 }

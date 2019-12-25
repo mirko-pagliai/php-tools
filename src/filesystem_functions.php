@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -23,7 +24,7 @@ if (!function_exists('add_slash_term')) {
      * @return string Path with the slash term
      * @since 1.2.6
      */
-    function add_slash_term($path)
+    function add_slash_term(string $path): string
     {
         return is_slash_term($path) ? $path : $path . DS;
     }
@@ -41,7 +42,7 @@ if (!function_exists('create_file')) {
      * @return bool
      * @since 1.1.7
      */
-    function create_file($filename, $data = null, $dirMode = 0777)
+    function create_file(string $filename, $data = null, int $dirMode = 0777): bool
     {
         try {
             $filesystem = new Filesystem();
@@ -67,15 +68,15 @@ if (!function_exists('create_tmp_file')) {
      * @param string|null $dir The directory where the temporary filename will
      *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
-     * @return string|bool Path of temporary filename or `false` on failure
+     * @return string Path of temporary filename
      * @since 1.1.7
      */
-    function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
+    function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
     {
-        $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
-        $filename = tempnam($dir, $prefix);
+        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        create_file($filename, $data);
 
-        return create_file($filename, $data) ? $filename : false;
+        return $filename;
     }
 }
 
@@ -88,7 +89,7 @@ if (!function_exists('dir_tree')) {
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
      */
-    function dir_tree($path, $exceptions = false)
+    function dir_tree(string $path, $exceptions = false): array
     {
         $path = rtrim($path, DS);
         $finder = new Finder();
@@ -137,7 +138,7 @@ if (!function_exists('fileperms_as_octal')) {
      * @return string Permissions as four-chars string
      * @since 1.2.0
      */
-    function fileperms_as_octal($filename)
+    function fileperms_as_octal(string $filename): string
     {
         return (string)substr(sprintf('%o', fileperms($filename)), -4);
     }
@@ -150,7 +151,7 @@ if (!function_exists('fileperms_to_string')) {
      * @return string Permissions as four-chars string
      * @since 1.2.0
      */
-    function fileperms_to_string($perms)
+    function fileperms_to_string($perms): string
     {
         return is_string($perms) ? $perms : sprintf("%04o", $perms);
     }
@@ -167,7 +168,7 @@ if (!function_exists('get_extension')) {
      * @return string|null
      * @since 1.0.2
      */
-    function get_extension($filename)
+    function get_extension(string $filename): ?string
     {
         //Gets the basename and, if the filename is an url, removes query string
         //  and fragments (#)
@@ -187,22 +188,6 @@ if (!function_exists('get_extension')) {
     }
 }
 
-if (!function_exists('is_absolute')) {
-    /**
-     * Checks if the given path is absolute
-     * @deprecated 1.2.12 Use `Filesystem::isAbsolutePath()` instead
-     * @param string $path Path
-     * @return bool
-     * @since 1.2.8
-     */
-    function is_absolute($path)
-    {
-        deprecationWarning('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
-
-        return (new Filesystem())->isAbsolutePath($path);
-    }
-}
-
 if (!function_exists('is_slash_term')) {
     /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
@@ -210,7 +195,7 @@ if (!function_exists('is_slash_term')) {
      * @return bool
      * @since 1.0.3
      */
-    function is_slash_term($path)
+    function is_slash_term(string $path): bool
     {
         return in_array($path[strlen($path) - 1], ['/', '\\']);
     }
@@ -226,9 +211,9 @@ if (!function_exists('is_writable_resursive')) {
      * @return bool
      * @since 1.0.7
      */
-    function is_writable_resursive($dirname, $checkOnlyDir = true)
+    function is_writable_resursive(string $dirname, bool $checkOnlyDir = true): bool
     {
-        list($directories, $files) = dir_tree($dirname);
+        [$directories, $files] = dir_tree($dirname);
         $itemsToCheck = $checkOnlyDir ? $directories : array_merge($directories, $files);
 
         if (!in_array($dirname, $itemsToCheck)) {
@@ -259,7 +244,7 @@ if (!function_exists('rmdir_recursive')) {
      * @since 1.0.6
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    function rmdir_recursive($dirname)
+    function rmdir_recursive(string $dirname): void
     {
         if (!is_dir($dirname)) {
             return;
@@ -279,7 +264,7 @@ if (!function_exists('rtr')) {
      * @return string Relative path
      * @throws \RuntimeException
      */
-    function rtr($path)
+    function rtr(string $path): string
     {
         $root = getenv('ROOT') ?: ROOT;
         is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
@@ -309,9 +294,9 @@ if (!function_exists('unlink_recursive')) {
      * @since 1.0.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    function unlink_recursive($dirname, $exceptions = false)
+    function unlink_recursive(string $dirname, $exceptions = false): void
     {
-        list(, $files) = dir_tree($dirname, $exceptions);
+        [, $files] = dir_tree($dirname, $exceptions);
         $filesystem = new Filesystem();
         $filesystem->remove($files);
     }

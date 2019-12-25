@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -35,15 +36,15 @@ if (!function_exists('array_clean')) {
      * @link http://php.net/manual/en/function.array-filter.php
      * @since 1.1.13
      */
-    function array_clean(array $array, $callback = null, $flag = 0)
+    function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
         $keys = array_keys($array);
-        $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
+        $onlyNumKeys = $keys === array_filter($keys, 'is_numeric');
         $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
         $array = array_unique($array);
 
         //Performs `array_values()` only if all array keys are numeric
-        return $hasOnlyNumericKeys ? array_values($array) : $array;
+        return $onlyNumKeys ? array_values($array) : $array;
     }
 }
 
@@ -53,7 +54,7 @@ if (!function_exists('array_key_first')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.12
      */
@@ -69,7 +70,7 @@ if (!function_exists('array_key_last')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.12
      */
@@ -139,22 +140,6 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
-if (!function_exists('can_be_string')) {
-    /**
-     * Checks is a value can be converted to string
-     * @deprecated 1.2.8 Use `is_stringable()` instead
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.2.5
-     */
-    function can_be_string($var)
-    {
-        deprecationWarning('`can_be_string()` function is deprecated. Use `is_stringable()` instead');
-
-        return is_stringable($var);
-    }
-}
-
 if (!function_exists('clean_url')) {
     /**
      * Cleans an url. It removes all unnecessary parts, as fragment (#),
@@ -165,7 +150,7 @@ if (!function_exists('clean_url')) {
      * @return string
      * @since 1.0.3
      */
-    function clean_url($url, $removeWWW = false, $removeTrailingSlash = false)
+    function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
         $url = preg_replace('/(\#.*)$/', '', $url);
 
@@ -186,7 +171,7 @@ if (!function_exists('deprecationWarning')) {
      * @return void
      * @since 1.1.7
      */
-    function deprecationWarning($message, $stackFrame = 1)
+    function deprecationWarning(string $message, int $stackFrame = 1): void
     {
         if (!(error_reporting() & E_USER_DEPRECATED)) {
             return;
@@ -219,7 +204,7 @@ if (!function_exists('get_child_methods')) {
      * @return array|null
      * @since 1.0.1
      */
-    function get_child_methods($class)
+    function get_child_methods(string $class): ?array
     {
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
@@ -239,7 +224,7 @@ if (!function_exists('get_class_short_name')) {
      * @return string
      * @since 1.0.2
      */
-    function get_class_short_name($class)
+    function get_class_short_name($class): string
     {
         return (new ReflectionClass($class))->getShortName();
     }
@@ -254,11 +239,11 @@ if (!function_exists('get_hostname_from_url')) {
      * @return string|null
      * @since 1.0.2
      */
-    function get_hostname_from_url($url)
+    function get_hostname_from_url(string $url): ?string
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
+        return string_starts_with($host ?? '', 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -270,7 +255,7 @@ if (!function_exists('is_external_url')) {
      * @return bool
      * @since 1.0.4
      */
-    function is_external_url($url, $hostname)
+    function is_external_url(string $url, string $hostname): bool
     {
         $hostForUrl = get_hostname_from_url($url);
 
@@ -286,25 +271,9 @@ if (!function_exists('is_html')) {
      * @return bool
      * @since 1.1.13
      */
-    function is_html($string)
+    function is_html(string $string): bool
     {
         return strcasecmp($string, strip_tags($string)) !== 0;
-    }
-}
-
-if (!function_exists('is_iterable')) {
-    /**
-     * Checks if a var is iterable (is an array or an instance of `Traversable`).
-     *
-     * This function exists in PHP >= 7.1.0.
-     * @link http://php.net/manual/en/function.is-iterable.php
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.1.12
-     */
-    function is_iterable($var)
-    {
-        return is_array($var) || $var instanceof \Traversable;
     }
 }
 
@@ -314,12 +283,8 @@ if (!function_exists('is_json')) {
      * @param string $string String
      * @return bool
      */
-    function is_json($string)
+    function is_json(string $string): bool
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         json_decode($string);
 
         return json_last_error() === JSON_ERROR_NONE;
@@ -329,10 +294,10 @@ if (!function_exists('is_json')) {
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
-     * @param string $string String
+     * @param string|int $string String
      * @return bool
      */
-    function is_positive($string)
+    function is_positive($string): bool
     {
         return is_numeric($string) && $string > 0 && $string == round($string);
     }
@@ -345,7 +310,7 @@ if (!function_exists('is_stringable')) {
      * @return bool
      * @since 1.2.5
      */
-    function is_stringable($var)
+    function is_stringable($var): bool
     {
         return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
     }
@@ -357,10 +322,12 @@ if (!function_exists('is_url')) {
      * @param string $string String
      * @return bool
      */
-    function is_url($string)
+    function is_url(string $string): bool
     {
-        return is_string($string)
-            && (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i", $string);
+        return (bool)preg_match(
+            "/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i",
+            $string
+        );
     }
 }
 
@@ -376,7 +343,7 @@ if (!function_exists('objects_map')) {
      * @since 1.1.11
      * @throws \BadMethodCallException
      */
-    function objects_map(array $objects, $method, array $args = [])
+    function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function ($object) use ($method, $args) {
             is_true_or_fail(method_exists($object, $method), sprintf(
@@ -398,7 +365,7 @@ if (!function_exists('string_ends_with')) {
      * @return bool
      * @since 1.1.12
      */
-    function string_ends_with($haystack, $needle)
+    function string_ends_with(string $haystack, string $needle): bool
     {
         $length = strlen($needle);
 
@@ -414,7 +381,7 @@ if (!function_exists('string_starts_with')) {
      * @return bool
      * @since 1.1.12
      */
-    function string_starts_with($haystack, $needle)
+    function string_starts_with(string $haystack, string $needle): bool
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
     }
@@ -428,7 +395,7 @@ if (!function_exists('url_to_absolute')) {
      * @return string
      * @since 1.1.16
      */
-    function url_to_absolute($path, $relative)
+    function url_to_absolute(string $path, string $relative): string
     {
         $path = clean_url($path, false, true);
         $path = preg_match('/^(\w+:\/\/.+)\/[^\.\/]+\.[^\.\/]+$/', $path, $matches) ? $matches[1] : $path;
@@ -443,7 +410,7 @@ if (!function_exists('which')) {
      * @param string $command Command
      * @return string|null
      */
-    function which($command)
+    function which(string $command): ?string
     {
         exec(sprintf('%s %s 2>&1', IS_WIN ? 'where' : 'which', $command), $path, $exitCode);
         $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;

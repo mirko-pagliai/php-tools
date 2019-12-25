@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -148,9 +149,9 @@ class OrFailFunctionsTest extends TestCase
             }, 'The value is not equal to `true`');
         }
 
-        //Failure with a `null` message
+        //Failure with an empty string message
         try {
-            is_true_or_fail(false, null);
+            is_true_or_fail(false, '');
         } catch (Exception $e) {
             $this->assertEmpty($e->getMessage());
         } finally {
@@ -200,7 +201,7 @@ class OrFailFunctionsTest extends TestCase
     public function testIsTrueOrFailNotInstanceOfException()
     {
         $this->expectException(Notice::class);
-        $this->expectExceptionMessage('`App\ExampleClass` is not and instance of `Exception`');
+        $this->expectExceptionMessage('`App\ExampleClass` is not and instance of `Throwable`');
         is_true_or_fail(false, null, ExampleClass::class);
     }
 

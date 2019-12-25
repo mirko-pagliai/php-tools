@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 /**
  * This file is part of php-tools.
  *
@@ -15,7 +15,7 @@
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "File or directory is not readable" exception
@@ -29,13 +29,10 @@ class NotReadableException extends FileException
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
+    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
-            $message = 'File or directory is not readable';
-            if ($path) {
-                $message = sprintf('File or directory `%s` is not readable', rtr($path));
-            }
+            $message = $path ? sprintf('Filename `%s` is not readable', rtr($path)) : 'Filename is not readable';
         }
         parent::__construct($message, $code, $previous, $path);
     }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /**
  * This file is part of php-tools.
@@ -17,6 +18,7 @@ namespace Tools\Test\TestSuite;
 use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
+use App\ExampleOfTraversable;
 use App\SkipTestCase;
 use BadMethodCallException;
 use Exception;
@@ -37,15 +39,23 @@ class TestTraitTest extends TestCase
      */
     public function testMagicCallAndCallStatic()
     {
+        $function = function () {
+        };
         //Methods that use the `assertInternalType()` method
         foreach ([
             'assertIsArray' => ['array'],
             'assertIsBool' => true,
+            'assertIsCallable' => $function,
             'assertIsFloat' => 1.1,
+            'assertIsHtml' => '<b>html</b>',
             'assertIsInt' => 1,
+            'assertIsIterable' => new ExampleOfTraversable(),
             'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
             'assertIsObject' => new stdClass(),
+            'assertIsPositive' => '1',
+            'assertIsResource' => tmpfile(),
             'assertIsString' => 'string',
+            'assertIsUrl' => 'http://localhost',
         ] as $assertMethod => $value) {
             $this->{$assertMethod}($value);
             self::{$assertMethod}($value);
@@ -231,7 +241,6 @@ class TestTraitTest extends TestCase
         $filename = TMP . 'pic.jpg';
         imagejpeg(imagecreatetruecolor(120, 20), $filename);
         $this->assertImageSize(120, 20, $filename);
-        $this->assertImageSize('120', '20', $filename);
     }
 
     /**
