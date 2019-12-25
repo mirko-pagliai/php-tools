@@ -38,15 +38,23 @@ class TestTraitTest extends TestCase
      */
     public function testMagicCallAndCallStatic()
     {
+        $function = function () {
+        };
         //Methods that use the `assertInternalType()` method
         foreach ([
             'assertIsArray' => ['array'],
             'assertIsBool' => true,
+            'assertIsCallable' => $function,
             'assertIsFloat' => 1.1,
+            'assertIsHtml' => '<b>html</b>',
             'assertIsInt' => 1,
+            'assertIsIterable' => new \App\ExampleOfTraversable(),
             'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
             'assertIsObject' => new stdClass(),
+            'assertIsPositive' => '1',
+            'assertIsResource' => tmpfile(),
             'assertIsString' => 'string',
+            'assertIsUrl' => 'http://localhost',
         ] as $assertMethod => $value) {
             $this->{$assertMethod}($value);
             self::{$assertMethod}($value);

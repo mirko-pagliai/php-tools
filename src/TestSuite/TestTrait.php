@@ -18,7 +18,6 @@ namespace Tools\TestSuite;
 
 use BadMethodCallException;
 use Exception;
-use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Error\Error;
 use Throwable;
 
@@ -78,16 +77,7 @@ trait TestTrait
                 ));
             }
 
-            $type = substr($name, 8);
-
-            if (defined(sprintf('%s::TYPE_%s', IsType::class, strtoupper($type)))) {
-                $arguments = array_merge([lcfirst($type)], $arguments);
-                call_user_func_array([__CLASS__, 'assertInternalType'], $arguments);
-
-                return;
-            }
-
-            $function = sprintf('is_%s', strtolower($type));
+            $function = sprintf('is_%s', strtolower(substr($name, 8)));
             if (function_exists($function)) {
                 $var = array_shift($arguments);
                 $arguments = array_merge([$function($var)], $arguments);
