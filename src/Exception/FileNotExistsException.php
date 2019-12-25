@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "File or directory does not exist" exception

@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "Filename is not a directory" exception

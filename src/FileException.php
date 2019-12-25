@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @since       1.2.12
  */
 
-namespace Tools\Exception;
+namespace Tools;
 
 use Exception;
 

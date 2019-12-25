@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Tools\Exception\InvalidValueException;
+use Tools\InvalidValueException;
 
 /**
  * "Not positive value" exception
