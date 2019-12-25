@@ -17,7 +17,7 @@
         "symfony/var-dumper": "^4.3"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "dev-next",
+        "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^7.0|^8.0"
     },
     "autoload": {
