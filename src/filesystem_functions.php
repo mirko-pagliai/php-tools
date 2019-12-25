@@ -188,22 +188,6 @@ if (!function_exists('get_extension')) {
     }
 }
 
-if (!function_exists('is_absolute')) {
-    /**
-     * Checks if the given path is absolute
-     * @deprecated 1.2.12 Use `Filesystem::isAbsolutePath()` instead
-     * @param string $path Path
-     * @return bool
-     * @since 1.2.8
-     */
-    function is_absolute($path)
-    {
-        deprecationWarning('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
-
-        return (new Filesystem())->isAbsolutePath($path);
-    }
-}
-
 if (!function_exists('is_slash_term')) {
     /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
