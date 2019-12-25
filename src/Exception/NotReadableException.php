@@ -32,10 +32,7 @@ class NotReadableException extends FileException
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
-            $message = 'File or directory is not readable';
-            if ($path) {
-                $message = sprintf('File or directory `%s` is not readable', rtr($path));
-            }
+            $message = $path ? sprintf('Filename `%s` is not readable', rtr($path)) : 'Filename is not readable';
         }
         parent::__construct($message, $code, $previous, $path);
     }

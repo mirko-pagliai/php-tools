@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.3 branch
 ### 1.3.0
+* some default exception messages have been simplified;
 * updated for `php` 7.1 and `phpunit` 8.
 
 ## 1.2 branch
