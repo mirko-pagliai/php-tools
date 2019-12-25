@@ -8,13 +8,7 @@
     <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
         <severity>0</severity>
     </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.CloseParenthesisLine">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.FirstExpressionLine">
-        <severity>0</severity>
-    </rule>
-    <rule ref="PSR12.ControlStructures.ControlStructureSpacing.LineIndent">
+    <rule ref="PSR12.ControlStructures.ControlStructureSpacing">
         <severity>0</severity>
     </rule>
 
