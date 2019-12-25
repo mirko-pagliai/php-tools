@@ -34,7 +34,6 @@ abstract class InvalidValueException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param mixed $value The value that throwed the exception
-     * @uses $value
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, $value = null)
     {
@@ -45,7 +44,6 @@ abstract class InvalidValueException extends Exception
     /**
      * Gets the value that throwed the exception
      * @return mixed
-     * @uses $value
      */
     public function getValue()
     {

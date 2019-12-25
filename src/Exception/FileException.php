@@ -34,7 +34,6 @@ abstract class FileException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
-     * @uses $path
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
@@ -45,7 +44,6 @@ abstract class FileException extends Exception
     /**
      * Gets the path of the file that throwed the exception
      * @return string|null
-     * @uses $path
      */
     public function getFilePath(): ?string
     {

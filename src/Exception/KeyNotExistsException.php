@@ -35,7 +35,6 @@ class KeyNotExistsException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $key Name of the key that do not exist
-     * @uses $key
      */
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $key = null)
     {
@@ -53,7 +52,6 @@ class KeyNotExistsException extends Exception
      * Gets the name of the key that do not exist
      * @return string|null
      * @since 1.2.11
-     * @uses $key
      */
     public function getKeyName(): ?string
     {
