@@ -17,7 +17,6 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\Error\Error;
-use Throwable;
 
 /**
  * A trait that provides some assertion methods

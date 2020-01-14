@@ -8,4 +8,16 @@
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
         <exclude-pattern>/tests/test_app</exclude-pattern>
     </rule>
+    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.NullCoalesceOperatorNotUsed">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.PHP.ShortList.LongListUsed">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilitySymbolRequired">
+        <severity>0</severity>
+    </rule>
 </ruleset>
