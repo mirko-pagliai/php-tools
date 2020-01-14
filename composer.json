@@ -11,10 +11,10 @@
     "require": {
         "php": ">=7.1",
         "pguardiario/phpuri": "^1",
-        "symfony/dom-crawler": "^4.3",
-        "symfony/filesystem": "^4.3",
-        "symfony/finder": "^4.3",
-        "symfony/var-dumper": "^4.3"
+        "symfony/dom-crawler": "^4.3|^5.0",
+        "symfony/filesystem": "^4.3|^5.0",
+        "symfony/finder": "^4.3|^5.0",
+        "symfony/var-dumper": "^4.3|^5.0"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",

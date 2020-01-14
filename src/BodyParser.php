@@ -93,7 +93,7 @@ class BodyParser
         $crawler = new Crawler($this->body);
 
         foreach ($this->tags as $tag => $attribute) {
-            foreach ($crawler->filterXPath('//' . $tag)->extract($attribute) as $link) {
+            foreach ($crawler->filterXPath('//' . $tag)->extract([$attribute]) as $link) {
                 if ($link) {
                     $links[] = clean_url(url_to_absolute($this->url, $link), true, true);
                 }
