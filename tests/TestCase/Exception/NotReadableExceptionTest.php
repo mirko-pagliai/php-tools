@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -32,14 +31,14 @@ class NotReadableExceptionTest extends TestCase
         try {
             throw new NotReadableException(null, 0, null, $file);
         } catch (NotReadableException $e) {
-            $this->assertSame('File or directory `dir/notReadableFile` is not readable', $e->getMessage());
+            $this->assertSame('Filename `dir/notReadableFile` is not readable', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 
         try {
             throw new NotReadableException();
         } catch (NotReadableException $e) {
-            $this->assertSame('File or directory is not readable', $e->getMessage());
+            $this->assertSame('Filename is not readable', $e->getMessage());
             $this->assertNull($e->getFilePath());
         }
     }

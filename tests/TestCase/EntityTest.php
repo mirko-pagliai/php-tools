@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -49,12 +48,19 @@ class EntityTest extends TestCase
         $line = __LINE__ + 1;
         debug($this->Entity);
         $dump = ob_get_clean();
-        $this->assertContains(EntityExample::class, $dump);
+        $assertStringContainsString = function () {
+            $method = 'assertContains';
+            if (method_exists($this, 'assertStringContainsString')) {
+                $method = 'assertStringContainsString';
+            }
+            call_user_func_array([$this, $method], func_get_args());
+        };
+        $assertStringContainsString(EntityExample::class, $dump);
 
         $this->skipIf(IS_WIN);
-        $this->assertContains(__FILE__ . ' (line ' . $line . ')', $dump);
-        $this->assertContains('########## DEBUG ##########', $dump);
-        $this->assertContains('App\EntityExample {', $dump);
+        $assertStringContainsString(__FILE__ . ' (line ' . $line . ')', $dump);
+        $assertStringContainsString('########## DEBUG ##########', $dump);
+        $assertStringContainsString('App\EntityExample {', $dump);
     }
 
     /**

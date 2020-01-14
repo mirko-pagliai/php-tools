@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -15,7 +14,6 @@
 
 namespace Tools;
 
-use Psr\Http\Message\StreamInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -67,25 +65,18 @@ class BodyParser
 
     /**
      * Constructor
-     * @param string|\Psr\Http\Message\StreamInterface $body Body as string or
-     *  a `StreamInterface` instance
+     * @param string|\Psr\Http\Message\StreamInterface $body Body
      * @param string $url Reference url. Used to determine the relative links
-     * @uses $body
-     * @uses $url
      */
     public function __construct($body, $url)
     {
-        $this->body = $body instanceof StreamInterface ? (string)$body : $body;
+        $this->body = (string)$body;
         $this->url = $url;
     }
 
     /**
      * Extracs links from body
      * @return array
-     * @uses $body
-     * @uses $extractedLinks
-     * @uses $tags
-     * @uses $url
      */
     public function extractLinks()
     {
@@ -100,7 +91,7 @@ class BodyParser
         $crawler = new Crawler($this->body);
 
         foreach ($this->tags as $tag => $attribute) {
-            foreach ($crawler->filterXPath('//' . $tag)->extract($attribute) as $link) {
+            foreach ($crawler->filterXPath('//' . $tag)->extract([$attribute]) as $link) {
                 if ($link) {
                     $links[] = clean_url(url_to_absolute($this->url, $link), true, true);
                 }

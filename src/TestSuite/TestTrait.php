@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -17,8 +16,8 @@ namespace Tools\TestSuite;
 
 use BadMethodCallException;
 use Exception;
-use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Error\Error;
+use Throwable;
 
 /**
  * A trait that provides some assertion methods
@@ -76,16 +75,7 @@ trait TestTrait
                 ));
             }
 
-            $type = substr($name, 8);
-
-            if (defined(sprintf('%s::TYPE_%s', IsType::class, strtoupper($type)))) {
-                $arguments = array_merge([lcfirst($type)], $arguments);
-                call_user_func_array([__CLASS__, 'assertInternalType'], $arguments);
-
-                return;
-            }
-
-            $function = sprintf('is_%s', strtolower($type));
+            $function = sprintf('is_%s', strtolower(substr($name, 8)));
             if (function_exists($function)) {
                 $var = array_shift($arguments);
                 $arguments = array_merge([$function($var)], $arguments);
@@ -218,8 +208,8 @@ trait TestTrait
 
     /**
      * Asserts that an image file has `$expectedWidth` and `$expectedHeight`
-     * @param int|string $expectedWidth Expected image width
-     * @param int|string $expectedHeight Expected mage height
+     * @param int $expectedWidth Expected image width
+     * @param int $expectedHeight Expected mage height
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -257,7 +247,6 @@ trait TestTrait
      */
     protected function assertObjectPropertiesEqual(array $expectedProperties, $object, $message = '')
     {
-        self::assertIsObject($object);
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 

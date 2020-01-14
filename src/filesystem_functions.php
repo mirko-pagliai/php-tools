@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -67,15 +66,15 @@ if (!function_exists('create_tmp_file')) {
      * @param string|null $dir The directory where the temporary filename will
      *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
-     * @return string|bool Path of temporary filename or `false` on failure
+     * @return string Path of temporary filename
      * @since 1.1.7
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        $dir = $dir ?: (defined('TMP') ? TMP : sys_get_temp_dir());
-        $filename = tempnam($dir, $prefix);
+        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        create_file($filename, $data);
 
-        return create_file($filename, $data) ? $filename : false;
+        return $filename;
     }
 }
 
@@ -184,22 +183,6 @@ if (!function_exists('get_extension')) {
         $pos = strpos($filename, '.', 1);
 
         return $pos === false ? null : strtolower(substr($filename, $pos + 1));
-    }
-}
-
-if (!function_exists('is_absolute')) {
-    /**
-     * Checks if the given path is absolute
-     * @deprecated 1.2.12 Use `Filesystem::isAbsolutePath()` instead
-     * @param string $path Path
-     * @return bool
-     * @since 1.2.8
-     */
-    function is_absolute($path)
-    {
-        deprecationWarning('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
-
-        return (new Filesystem())->isAbsolutePath($path);
     }
 }
 

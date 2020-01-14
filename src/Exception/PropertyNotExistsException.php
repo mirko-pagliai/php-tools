@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -34,15 +33,11 @@ class PropertyNotExistsException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $property Name of the property that do not exist
-     * @uses $property
      */
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $property = null)
     {
         if (!$message) {
-            $message = 'Property does not exist';
-            if ($property) {
-                $message = sprintf('Property `%s` does not exist', $property);
-            }
+            $message = $property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist';
         }
         parent::__construct($message, $code, $previous);
         $this->property = $property;
@@ -52,7 +47,6 @@ class PropertyNotExistsException extends Exception
      * Gets the name of the property that do not exist
      * @return string|null
      * @since 1.2.11
-     * @uses $property
      */
     public function getPropertyName()
     {

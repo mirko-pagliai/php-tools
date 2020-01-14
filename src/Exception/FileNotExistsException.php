@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -15,7 +14,7 @@
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "File or directory does not exist" exception
@@ -32,10 +31,7 @@ class FileNotExistsException extends FileException
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
         if (!$message) {
-            $message = 'File or directory does not exist';
-            if ($path) {
-                $message = sprintf('File or directory `%s` does not exist', rtr($path));
-            }
+            $message = $path ? sprintf('Filename `%s` does not exist', rtr($path)) : 'Filename does not exist';
         }
         parent::__construct($message, $code, $previous, $path);
     }

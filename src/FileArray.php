@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -42,8 +41,6 @@ class FileArray
      * @param array $data Optional initial data
      * @throws \Tools\Exception\NotWritableException
      * @uses read()
-     * @uses $data
-     * @uses $filename
      */
     public function __construct($filename, array $data = [])
     {
@@ -57,7 +54,6 @@ class FileArray
      * Appends data to existing data
      * @param mixed $data Data
      * @return $this
-     * @uses $data
      */
     public function append($data)
     {
@@ -73,7 +69,6 @@ class FileArray
      * @param int $key Key number
      * @return $this
      * @throws \Tools\Exception\KeyNotExistsException
-     * @uses $data
      */
     public function delete($key)
     {
@@ -88,7 +83,6 @@ class FileArray
      * Checks if a key number exists
      * @param int $key Key number
      * @return bool
-     * @uses $data
      */
     public function exists($key)
     {
@@ -100,7 +94,6 @@ class FileArray
      * @param int $key Key number
      * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
-     * @uses $data
      */
     public function get($key)
     {
@@ -113,7 +106,6 @@ class FileArray
      * Prepends data to existing data
      * @param mixed $data Data
      * @return $this
-     * @uses $data
      */
     public function prepend($data)
     {
@@ -131,8 +123,6 @@ class FileArray
      * If there are no data or if the file does not exist, it still returns an
      *  empty array.
      * @return array
-     * @uses $data
-     * @uses $filename
      */
     public function read()
     {
@@ -151,7 +141,6 @@ class FileArray
      * @param int $size Maximun number of values
      * @param int $from What position to start taking values
      * @return $this
-     * @uses $data
      */
     public function take($size, $from = 0)
     {
@@ -163,8 +152,6 @@ class FileArray
     /**
      * Writes data to the file
      * @return bool
-     * @uses $data
-     * @uses $filename
      */
     public function write()
     {

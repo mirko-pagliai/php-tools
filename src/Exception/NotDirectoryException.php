@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -15,7 +14,7 @@
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "Filename is not a directory" exception
@@ -32,10 +31,7 @@ class NotDirectoryException extends FileException
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
         if (!$message) {
-            $message = 'Filename is not a directory';
-            if ($path) {
-                $message = sprintf('Filename `%s` is not a directory', rtr($path));
-            }
+            $message = $path ? sprintf('Filename `%s` is not a directory', rtr($path)) : 'Filename is not a directory';
         }
         parent::__construct($message, $code, $previous, $path);
     }

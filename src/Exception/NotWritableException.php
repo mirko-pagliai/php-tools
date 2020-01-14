@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -15,7 +14,7 @@
 
 namespace Tools\Exception;
 
-use Tools\Exception\FileException;
+use Tools\FileException;
 
 /**
  * "File or directory is not writable" exception
@@ -32,10 +31,7 @@ class NotWritableException extends FileException
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
         if (!$message) {
-            $message = 'File or directory is not writable';
-            if ($path) {
-                $message = sprintf('File or directory `%s` is not writable', rtr($path));
-            }
+            $message = $path ? sprintf('Filename `%s` is not writable', rtr($path)) : 'Filename is not writable';
         }
         parent::__construct($message, $code, $previous, $path);
     }

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -13,7 +12,7 @@
  * @since       1.2.12
  */
 
-namespace Tools\Exception;
+namespace Tools;
 
 use Exception;
 
@@ -34,7 +33,6 @@ abstract class InvalidValueException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param mixed $value The value that throwed the exception
-     * @uses $value
      */
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $value = null)
     {
@@ -45,7 +43,6 @@ abstract class InvalidValueException extends Exception
     /**
      * Gets the value that throwed the exception
      * @return mixed
-     * @uses $value
      */
     public function getValue()
     {

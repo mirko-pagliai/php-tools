@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -21,7 +20,7 @@ use Tools\ReflectionTrait;
 /**
  * TestCase class
  */
-class TestCase extends PHPUnitTestCase
+abstract class TestCase extends PHPUnitTestCase
 {
     use ReflectionTrait;
     use TestTrait;

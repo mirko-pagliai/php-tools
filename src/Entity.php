@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -33,7 +32,6 @@ abstract class Entity implements ArrayAccess
     /**
      * Initializes the internal properties
      * @param array $properties Properties to set
-     * @uses $properties
      */
     public function __construct(array $properties = [])
     {
@@ -66,7 +64,6 @@ abstract class Entity implements ArrayAccess
      * Checks if a property exists
      * @param string $property Property name
      * @return bool
-     * @uses $properties
      */
     public function has($property)
     {
@@ -79,7 +76,6 @@ abstract class Entity implements ArrayAccess
      * @param mixed $default Default value if the property does not exist
      * @return mixed Property value
      * @uses has()
-     * @uses $properties
      */
     public function get($property, $default = null)
     {
@@ -90,7 +86,6 @@ abstract class Entity implements ArrayAccess
      * Implements `isset($entity);`
      * @param mixed $offset The offset to check
      * @return bool
-     * @uses $properties
      */
     public function offsetExists($offset)
     {
@@ -101,7 +96,6 @@ abstract class Entity implements ArrayAccess
      * Implements `$entity[$offset];`
      * @param mixed $offset The offset to get
      * @return mixed
-     * @uses $properties
      */
     public function offsetGet($offset)
     {
@@ -113,7 +107,6 @@ abstract class Entity implements ArrayAccess
      * @param mixed $offset The offset to set
      * @param mixed $value The value to set.
      * @return void
-     * @uses $properties
      */
     public function offsetSet($offset, $value)
     {
@@ -124,7 +117,6 @@ abstract class Entity implements ArrayAccess
      * Implements `unset($result[$offset]);`
      * @param mixed $offset The offset to remove
      * @return void
-     * @uses $properties
      */
     public function offsetUnset($offset)
     {
@@ -137,7 +129,6 @@ abstract class Entity implements ArrayAccess
      *  properties with their respective values
      * @param mixed $value The value to set to the property
      * @return $this
-     * @uses $properties
      */
     public function set($property, $value = null)
     {
@@ -155,7 +146,6 @@ abstract class Entity implements ArrayAccess
     /**
      * Returns an array with all the properties that have been set to this entity
      * @return array
-     * @uses $properties
      */
     public function toArray()
     {

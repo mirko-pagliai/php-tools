@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -38,12 +37,12 @@ if (!function_exists('array_clean')) {
     function array_clean(array $array, $callback = null, $flag = 0)
     {
         $keys = array_keys($array);
-        $hasOnlyNumericKeys = $keys === array_filter($keys, 'is_numeric');
+        $onlyNumKeys = $keys === array_filter($keys, 'is_numeric');
         $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
         $array = array_unique($array);
 
         //Performs `array_values()` only if all array keys are numeric
-        return $hasOnlyNumericKeys ? array_values($array) : $array;
+        return $onlyNumKeys ? array_values($array) : $array;
     }
 }
 
@@ -53,7 +52,7 @@ if (!function_exists('array_key_first')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-first.php
      * @since 1.1.12
      */
@@ -69,7 +68,7 @@ if (!function_exists('array_key_last')) {
      *
      * This function exists in PHP >= 7.3.
      * @param array $array Array
-     * @return mixed
+     * @return string|int Key
      * @link http://php.net/manual/en/function.array-key-last.php
      * @since 1.1.12
      */
@@ -136,22 +135,6 @@ if (!function_exists('array_value_last_recursive')) {
         $value = array_value_last($array);
 
         return is_array($value) ? array_value_last_recursive($value) : $value;
-    }
-}
-
-if (!function_exists('can_be_string')) {
-    /**
-     * Checks is a value can be converted to string
-     * @deprecated 1.2.8 Use `is_stringable()` instead
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.2.5
-     */
-    function can_be_string($var)
-    {
-        deprecationWarning('`can_be_string()` function is deprecated. Use `is_stringable()` instead');
-
-        return is_stringable($var);
     }
 }
 
@@ -258,7 +241,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return string_starts_with($host, 'www.') ? substr($host, 4) : $host;
+        return string_starts_with((string)$host, 'www.') ? substr($host, 4) : $host;
     }
 }
 
@@ -292,22 +275,6 @@ if (!function_exists('is_html')) {
     }
 }
 
-if (!function_exists('is_iterable')) {
-    /**
-     * Checks if a var is iterable (is an array or an instance of `Traversable`).
-     *
-     * This function exists in PHP >= 7.1.0.
-     * @link http://php.net/manual/en/function.is-iterable.php
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.1.12
-     */
-    function is_iterable($var)
-    {
-        return is_array($var) || $var instanceof \Traversable;
-    }
-}
-
 if (!function_exists('is_json')) {
     /**
      * Checks if a string is JSON
@@ -316,10 +283,6 @@ if (!function_exists('is_json')) {
      */
     function is_json($string)
     {
-        if (!is_string($string)) {
-            return false;
-        }
-
         json_decode($string);
 
         return json_last_error() === JSON_ERROR_NONE;
@@ -329,7 +292,7 @@ if (!function_exists('is_json')) {
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
-     * @param string $string String
+     * @param string|int $string String
      * @return bool
      */
     function is_positive($string)
@@ -359,8 +322,10 @@ if (!function_exists('is_url')) {
      */
     function is_url($string)
     {
-        return is_string($string)
-            && (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i", $string);
+        return (bool)preg_match(
+            "/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i",
+            $string
+        );
     }
 }
 

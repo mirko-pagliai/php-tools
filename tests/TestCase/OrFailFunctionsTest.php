@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -148,9 +147,9 @@ class OrFailFunctionsTest extends TestCase
             }, 'The value is not equal to `true`');
         }
 
-        //Failure with a `null` message
+        //Failure with an empty string message
         try {
-            is_true_or_fail(false, null);
+            is_true_or_fail(false, '');
         } catch (Exception $e) {
             $this->assertEmpty($e->getMessage());
         } finally {

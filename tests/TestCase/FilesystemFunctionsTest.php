@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -14,7 +13,6 @@
 
 namespace Tools\Test;
 
-use PHPUnit\Framework\Error\Deprecated;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -30,7 +28,7 @@ class FilesystemFunctionsTest extends TestCase
     {
         $expected = DS . 'tmp' . DS;
         $this->assertSame($expected, add_slash_term(DS . 'tmp'));
-        $this->assertSame($expected, add_slash_term(DS . 'tmp' . DS));
+        $this->assertSame($expected, add_slash_term($expected));
     }
 
     /**
@@ -57,13 +55,11 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testCreateTmpFile()
     {
-        $filename = create_tmp_file();
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, '');
-
-        $filename = create_tmp_file('string');
-        $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-        $this->assertStringEqualsFile($filename, 'string');
+        foreach (['', 'string'] as $string) {
+            $filename = create_tmp_file($string);
+            $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+            $this->assertStringEqualsFile($filename, $string);
+        }
     }
 
     /**
@@ -180,22 +176,6 @@ class FilesystemFunctionsTest extends TestCase
         ] as $url) {
             $this->assertEquals('sql.gz', get_extension($url));
         }
-    }
-
-    /**
-     * Test for `is_absolute()` global function
-     * @test
-     */
-    public function testIsAbsolute()
-    {
-        $errorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(is_absolute(DS . 'path' . DS));
-        $this->assertFalse(is_absolute('path' . DS));
-        error_reporting($errorReporting);
-
-        $this->expectException(Deprecated::class);
-        $this->expectExceptionMessage('`is_absolute()` function is deprecated. Use `Filesystem::isAbsolutePath()` instead');
-        is_absolute('path' . DS);
     }
 
     /**

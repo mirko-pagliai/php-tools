@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is part of php-tools.
  *
@@ -13,7 +12,7 @@
  * @since       1.2.12
  */
 
-namespace Tools\Exception;
+namespace Tools;
 
 use Exception;
 
@@ -34,7 +33,6 @@ abstract class FileException extends Exception
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
-     * @uses $path
      */
     public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
     {
@@ -45,7 +43,6 @@ abstract class FileException extends Exception
     /**
      * Gets the path of the file that throwed the exception
      * @return string|null
-     * @uses $path
      */
     public function getFilePath()
     {
