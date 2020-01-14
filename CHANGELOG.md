@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.3 branch
+### 1.3.1
+* compatibility with Symfony Components `5.x`.
+
 ### 1.3.0
 * `is_absolute()` global function had been deprecated and has now been removed;
 * `FileException` and `InvalidValueException` have been moved in the `Tools`
