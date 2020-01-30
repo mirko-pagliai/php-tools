@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use ArrayAccess;
+use InvalidArgumentException;
 
 /**
  * An Entity class.
@@ -131,11 +132,15 @@ abstract class Entity implements ArrayAccess
      *  properties with their respective values
      * @param mixed $value The value to set to the property
      * @return $this
+     * @throws \InvalidArgumentException
      */
     public function set($property, $value = null)
     {
-        if (is_string($property) && $value != '') {
+        if (is_string($property) && $value !== '') {
             $property = [$property => $value];
+        }
+        if (!is_array($property)) {
+            throw new InvalidArgumentException('Cannot set an empty property');
         }
 
         foreach ($property as $name => $value) {

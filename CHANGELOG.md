@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.3 branch
+### 1.3.2
+* fixed bug for `Entity::set()` method. It can thrown an exception for empty
+    property.
+
 ### 1.3.1
 * compatibility with Symfony Components `5.x`.
 
