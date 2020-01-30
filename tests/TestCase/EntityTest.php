@@ -14,6 +14,7 @@
 namespace Tools\Test;
 
 use App\EntityExample;
+use InvalidArgumentException;
 use Tools\Entity;
 use Tools\TestSuite\TestCase;
 
@@ -97,9 +98,13 @@ class EntityTest extends TestCase
         $this->assertSame('newValue', $this->Entity->get('newKey'));
 
         $result = $this->Entity->set(['alfa' => 'first', 'beta' => 'second']);
-        $this->assertInstanceOf(Entity::class, $result);
         $this->assertSame('first', $this->Entity->get('alfa'));
         $this->assertSame('second', $this->Entity->get('beta'));
+
+        $this->assertNull($this->Entity->set('newKey', null)->get('newKey'));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->Entity->set('newKey', '');
     }
 
     /**
