@@ -300,6 +300,22 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `is_localhost()` global function
+     * @test
+     */
+    public function testIsLocalhost()
+    {
+        $_SERVER['REMOTE_ADDR'] = '8.8.8.8';
+        $this->assertFalse(is_localhost());
+
+        foreach (['127.0.0.1', '::1'] as $ip) {
+            $_SERVER['REMOTE_ADDR'] = $ip;
+            $this->assertTrue(is_localhost());
+        }
+        unset($_SERVER['REMOTE_ADDR']);
+    }
+
+    /**
      * Test for `is_positive()` global function
      * @test
      */
