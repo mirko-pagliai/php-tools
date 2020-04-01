@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.3 branch
+### 1.3.3
+* added `is_localhost()` global function;
+* some functions have been moved to `network_functions.php` file.
+
 ### 1.3.2
 * fixed bug for `Entity::set()` method. It can thrown an exception for empty
     property.
