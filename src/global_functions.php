@@ -138,28 +138,6 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
-if (!function_exists('clean_url')) {
-    /**
-     * Cleans an url. It removes all unnecessary parts, as fragment (#),
-     *  trailing slash and `www` prefix
-     * @param string $url Url
-     * @param bool $removeWWW Removes the www prefix
-     * @param bool $removeTrailingSlash Removes the trailing slash
-     * @return string
-     * @since 1.0.3
-     */
-    function clean_url($url, $removeWWW = false, $removeTrailingSlash = false)
-    {
-        $url = preg_replace('/(\#.*)$/', '', $url);
-
-        if ($removeWWW) {
-            $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
-        }
-
-        return $removeTrailingSlash ? rtrim($url, '/') : $url;
-    }
-}
-
 if (!function_exists('deprecationWarning')) {
     /**
      * Helper method for outputting deprecation warnings
@@ -228,40 +206,6 @@ if (!function_exists('get_class_short_name')) {
     }
 }
 
-if (!function_exists('get_hostname_from_url')) {
-    /**
-     * Gets the host name from an url.
-     *
-     * It also removes the `www` prefix.
-     * @param string $url Url
-     * @return string|null
-     * @since 1.0.2
-     */
-    function get_hostname_from_url($url)
-    {
-        $host = parse_url($url, PHP_URL_HOST);
-
-        return string_starts_with((string)$host, 'www.') ? substr($host, 4) : $host;
-    }
-}
-
-if (!function_exists('is_external_url')) {
-    /**
-     * Checks if an url is external, relative to the passed hostname
-     * @param string $url Url to check
-     * @param string $hostname Hostname for the comparison
-     * @return bool
-     * @since 1.0.4
-     */
-    function is_external_url($url, $hostname)
-    {
-        $hostForUrl = get_hostname_from_url($url);
-
-        //Url with the same host and relative url are not external
-        return $hostForUrl && strcasecmp($hostForUrl, $hostname) !== 0;
-    }
-}
-
 if (!function_exists('is_html')) {
     /**
      * Checks if a string is HTML
@@ -289,18 +233,6 @@ if (!function_exists('is_json')) {
     }
 }
 
-if (!function_exists('is_localhost')) {
-    /**
-     * Checks if it's localhost
-     * @return bool
-     * @since 1.3.3
-     */
-    function is_localhost()
-    {
-        return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
-    }
-}
-
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
@@ -323,21 +255,6 @@ if (!function_exists('is_stringable')) {
     function is_stringable($var)
     {
         return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
-    }
-}
-
-if (!function_exists('is_url')) {
-    /**
-     * Checks if a string is a valid url
-     * @param string $string String
-     * @return bool
-     */
-    function is_url($string)
-    {
-        return (bool)preg_match(
-            "/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i",
-            $string
-        );
     }
 }
 
@@ -394,23 +311,6 @@ if (!function_exists('string_starts_with')) {
     function string_starts_with($haystack, $needle)
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
-    }
-}
-
-if (!function_exists('url_to_absolute')) {
-    /**
-     * Builds an absolute url
-     * @param string $path Basic path, on which to construct the absolute url
-     * @param string $relative Relative url to join
-     * @return string
-     * @since 1.1.16
-     */
-    function url_to_absolute($path, $relative)
-    {
-        $path = clean_url($path, false, true);
-        $path = preg_match('/^(\w+:\/\/.+)\/[^\.\/]+\.[^\.\/]+$/', $path, $matches) ? $matches[1] : $path;
-
-        return \phpUri::parse($path . '/')->join($relative);
     }
 }
 
