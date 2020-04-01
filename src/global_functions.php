@@ -291,6 +291,18 @@ if (!function_exists('is_json')) {
     }
 }
 
+if (!function_exists('is_localhost')) {
+    /**
+     * Checks if it's localhost
+     * @return bool
+     * @since 1.3.3
+     */
+    function is_localhost(): bool
+    {
+        return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
+    }
+}
+
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
