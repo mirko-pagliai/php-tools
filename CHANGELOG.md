@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.3 branch
+### 1.3.4
+* updated `sniffer-ruleset.xml`.
+
 ### 1.3.3
 * added `is_localhost()` global function;
 * some functions have been moved to `network_functions.php` file.
