@@ -248,6 +248,19 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `string_contains()` global function
+     * @test
+     */
+    public function testStringContains()
+    {
+        foreach (['aaa', 'aaab', 'baaaa', 'baaac'] as $var) {
+            $this->assertTrue(string_contains($var, 'aaa'));
+        }
+
+        $this->assertFalse(string_contains('abcd', 'e'));
+    }
+
+    /**
      * Test for `string_ends_with()` global function
      * @test
      */
