@@ -300,6 +300,20 @@ if (!function_exists('string_ends_with')) {
     }
 }
 
+if (!function_exists('string_contains')) {
+    /**
+     * Checks if a string contains a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.3.5
+     */
+    function string_contains(string $haystack, string $needle)
+    {
+        return strpos($haystack, $needle) !== false;
+    }
+}
+
 if (!function_exists('string_starts_with')) {
     /**
      * Checks if a string starts with a string
