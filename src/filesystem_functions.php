@@ -266,8 +266,11 @@ if (!function_exists('rtr')) {
      */
     function rtr(string $path): string
     {
-        $root = getenv('ROOT') ?: ROOT;
-        is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+        $root = getenv('ROOT');
+        if (!$root) {
+            is_true_or_fail(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+            $root = ROOT;
+        }
 
         $filesystem = new Filesystem();
         if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {

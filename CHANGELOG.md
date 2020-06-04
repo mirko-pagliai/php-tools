@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.3 branch
+### 1.3.6
+* fixed bug for `rtr()` global function.
+
 ### 1.3.5
 * added `string_contains()` global function.
 
