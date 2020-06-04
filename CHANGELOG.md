@@ -1,7 +1,9 @@
 # 1.x branch
 ## 1.3 branch
 ### 1.3.6
-* fixed bug for `rtr()` global function.
+* fixed bug for `rtr()` global function;
+* fixed bug for `objects_map()` global function. It now works if the class
+    provides the `__call()` method.
 
 ### 1.3.5
 * added `string_contains()` global function.

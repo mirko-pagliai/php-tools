@@ -275,7 +275,7 @@ if (!function_exists('objects_map')) {
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function ($object) use ($method, $args) {
-            is_true_or_fail(method_exists($object, $method), sprintf(
+            is_true_or_fail(method_exists($object, '__call') || method_exists($object, $method), sprintf(
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
