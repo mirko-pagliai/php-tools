@@ -308,7 +308,7 @@ if (!function_exists('string_contains')) {
      * @param string $haystack The string
      * @param string $needle The searched value
      * @return bool
-     * @since 1.3.5
+     * @since 1.4.0
      */
     function string_contains(string $haystack, string $needle): bool
     {

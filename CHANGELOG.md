@@ -1,6 +1,7 @@
 # 1.x branch
-## 1.3 branch
-### 1.3.5
+## 1.4 branch
+### 1.4.0
+* requires at least PHP 7.2.5;
 * added all classes for event management and the `EventAssertTrait` to assert
     whether events were fired or not;
 * added `string_contains()` global function;
