@@ -9,7 +9,7 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.3.5
+ * @since       1.4.0
  */
 namespace Tools\TestSuite;
 

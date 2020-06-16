@@ -1,6 +1,7 @@
 language: php
 
 php:
+<<<<<<< HEAD
   - 5.6
   - 7.0
   - 7.1

@@ -9,12 +9,12 @@
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
- * @since       1.3.5
+ * @since       1.4.0
  */
 namespace Tools\Event;
 
-use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 use Symfony\Component\EventDispatcher\Event as SymfonyEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 use Tools\Event\Event;
 use Tools\Event\EventList;
 
