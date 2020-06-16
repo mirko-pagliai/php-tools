@@ -46,7 +46,7 @@ if (!function_exists('get_hostname_from_url')) {
     {
         $host = parse_url($url, PHP_URL_HOST);
 
-        return string_starts_with($host ?? '', 'www.') ? substr($host, 4) : $host;
+        return string_starts_with($host ? $host : '', 'www.') ? substr($host, 4) : $host;
     }
 }
 

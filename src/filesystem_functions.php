@@ -151,7 +151,7 @@ if (!function_exists('fileperms_to_string')) {
      */
     function fileperms_to_string($perms)
     {
-        return is_string($perms) ? $perms : sprintf("%04o", $perms);
+        return is_string($perms) ? $perms : sprintf('%04o', $perms);
     }
 }
 
@@ -264,8 +264,11 @@ if (!function_exists('rtr')) {
      */
     function rtr($path)
     {
-        $root = getenv('ROOT') ?: ROOT;
-        is_true_or_fail($root, 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+        $root = getenv('ROOT');
+        if (!$root) {
+            is_true_or_fail(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+            $root = ROOT;
+        }
 
         $filesystem = new Filesystem();
         if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
