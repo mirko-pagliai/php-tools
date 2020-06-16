@@ -153,7 +153,7 @@ if (!function_exists('fileperms_to_string')) {
      */
     function fileperms_to_string($perms): string
     {
-        return is_string($perms) ? $perms : sprintf("%04o", $perms);
+        return is_string($perms) ? $perms : sprintf('%04o', $perms);
     }
 }
 
