@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace Tools\Event;
 
+use RuntimeException;
 use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
 
 /**
@@ -44,6 +45,21 @@ class Event extends BaseEvent
     {
         $this->name = $name;
         $this->args = (array)$args;
+    }
+
+    /**
+     * Gets the argument with the specified index of this event
+     * @param int $index Index
+     * @return mixed
+     * @throws \RuntimeException
+     */
+    public function getArg(int $index)
+    {
+        if (!array_key_exists($index, $this->args)) {
+            throw new RuntimeException(sprintf('Argument with index `%s` does not exist', $index));
+        }
+
+        return $this->args[$index];
     }
 
     /**
