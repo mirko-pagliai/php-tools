@@ -19,7 +19,10 @@ use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 use Tools\Event\EventList;
 
 /**
- * EventDispatcher
+ * EventDispatcher.
+ *
+ * Listeners are registered on the manager and events are dispatched through the
+ * manager.
  */
 class EventDispatcher extends BaseEventDispatcher
 {

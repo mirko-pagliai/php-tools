@@ -18,6 +18,11 @@ namespace Tools\Event;
 use ArrayAccess;
 use Tools\Event\Event;
 
+/**
+ * EventList.
+ *
+ * It allows you to manage the events already dispatched.
+ */
 class EventList implements ArrayAccess
 {
     /**
