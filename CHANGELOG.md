@@ -9,6 +9,7 @@
 * fixed bug for `objects_map()` global function. It now works if the class
     provides the `__call()` method.
 
+## 1.3 branch
 ### 1.3.4
 * updated `sniffer-ruleset.xml`.
 
