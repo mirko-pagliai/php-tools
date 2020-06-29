@@ -12,6 +12,7 @@
  */
 namespace Tools\Test\Event;
 
+use RuntimeException;
 use Tools\Entity;
 use Tools\Event\Event;
 use Tools\TestSuite\TestCase;
@@ -34,7 +35,7 @@ class EventTest extends TestCase
     {
         parent::setUp();
 
-        $this->Event = new Event('myEvent', ['arg1', 'args']);
+        $this->Event = new Event('myEvent', ['arg1', 'arg2']);
     }
 
     /**
@@ -47,12 +48,26 @@ class EventTest extends TestCase
     }
 
     /**
+     * Test for `getArg()` method
+     * @test
+     */
+    public function testGetArg()
+    {
+        $this->assertSame('arg1', $this->Event->getArg(0));
+        $this->assertSame('arg2', $this->Event->getArg(1));
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Argument with index `2` does not exist');
+        $this->assertSame('arg2', $this->Event->getArg(2));
+    }
+
+    /**
      * Test for `getArgs()` method
      * @test
      */
     public function testGetArgs()
     {
-        $this->assertSame(['arg1', 'args'], $this->Event->getArgs());
+        $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
         //With `ArrayAccess` as event argument
         $stub = $this->getMockForAbstractClass(Entity::class);
