@@ -1,4 +1,14 @@
 # 1.x branch
+## 1.4 branch
+### 1.4.0
+* requires at least PHP 7.2.5;
+* added all classes for event management and the `EventAssertTrait` to assert
+    whether events were fired or not;
+* added `string_contains()` global function;
+* fixed bug for `rtr()` global function;
+* fixed bug for `objects_map()` global function. It now works if the class
+    provides the `__call()` method.
+
 ## 1.3 branch
 ### 1.3.4
 * updated `sniffer-ruleset.xml`.

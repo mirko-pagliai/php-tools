@@ -275,7 +275,7 @@ if (!function_exists('objects_map')) {
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function ($object) use ($method, $args) {
-            is_true_or_fail(method_exists($object, $method), sprintf(
+            is_true_or_fail(method_exists($object, '__call') || method_exists($object, $method), sprintf(
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
@@ -299,6 +299,20 @@ if (!function_exists('string_ends_with')) {
         $length = strlen($needle);
 
         return !$length ?: substr($haystack, -$length) === $needle;
+    }
+}
+
+if (!function_exists('string_contains')) {
+    /**
+     * Checks if a string contains a string
+     * @param string $haystack The string
+     * @param string $needle The searched value
+     * @return bool
+     * @since 1.4.0
+     */
+    function string_contains(string $haystack, string $needle): bool
+    {
+        return strpos($haystack, $needle) !== false;
     }
 }
 
