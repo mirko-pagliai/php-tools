@@ -1,0 +1,1554 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>php-tools- Functions index</title>
+        <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/highlight/default.css">
+        <script src="assets/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <nav class="navbar sticky-top navbar-dark bg-dark">
+            <a class="navbar-brand mb-0 h1" href="index.html">php-tools</a>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-lg-4 p-3">
+                    <ul class="list-unstyled m-0">
+    <li class="text-truncate">
+        <a href="Class-Tools-BodyParser.html" title="Tools\BodyParser">Tools\BodyParser</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Entity.html" title="Tools\Entity">Tools\Entity</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-Event.html" title="Tools\Event\Event">Tools\Event\Event</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventDispatcher.html" title="Tools\Event\EventDispatcher">Tools\Event\EventDispatcher</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventDispatcherTrait.html" title="Tools\Event\EventDispatcherTrait">Tools\Event\EventDispatcherTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventList.html" title="Tools\Event\EventList">Tools\Event\EventList</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-FileNotExistsException.html" title="Tools\Exception\FileNotExistsException">Tools\Exception\FileNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-KeyNotExistsException.html" title="Tools\Exception\KeyNotExistsException">Tools\Exception\KeyNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotDirectoryException.html" title="Tools\Exception\NotDirectoryException">Tools\Exception\NotDirectoryException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotInArrayException.html" title="Tools\Exception\NotInArrayException">Tools\Exception\NotInArrayException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotPositiveException.html" title="Tools\Exception\NotPositiveException">Tools\Exception\NotPositiveException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotReadableException.html" title="Tools\Exception\NotReadableException">Tools\Exception\NotReadableException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotWritableException.html" title="Tools\Exception\NotWritableException">Tools\Exception\NotWritableException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-FileArray.html" title="Tools\FileArray">Tools\FileArray</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-FileException.html" title="Tools\FileException">Tools\FileException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-InvalidValueException.html" title="Tools\InvalidValueException">Tools\InvalidValueException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-ReflectionTrait.html" title="Tools\ReflectionTrait">Tools\ReflectionTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-EventAssertTrait.html" title="Tools\TestSuite\EventAssertTrait">Tools\TestSuite\EventAssertTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-TestCase.html" title="Tools\TestSuite\TestCase">Tools\TestSuite\TestCase</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-TestTrait.html" title="Tools\TestSuite\TestTrait">Tools\TestSuite\TestTrait</a>
+    </li>
+</ul>
+                </div>
+                <div class="col p-3">
+                        <h2>Functions index</h2>
+
+            <h4>Functions summary</h4>
+        <ul>
+                            <li>
+                    <div>
+    <code>
+        <a href="#file_exists_or_fail">file_exists_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks whether a file or directory exists and throws an exception if the
+file does not exist</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#in_array_or_fail">in_array_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a value exists in an array and throws an exception if the
+value is not in array</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_dir_or_fail">is_dir_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Tells whether the filename is a directory and throws an exception if the
+filename is not a directory</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_positive_or_fail">is_positive_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Throws an exception if the value is not a positive</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_readable_or_fail">is_readable_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Tells whether a file exists and is readable and throws an exception if
+the file is not readable</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_true_or_fail">is_true_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Throws an exception if the value is not equal to <code>true</code>.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_writable_or_fail">is_writable_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Tells whether the filename is writable and throws an exception if the
+file is not writable</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#key_exists_or_fail">key_exists_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if the given key or index exists in the array and throws an
+exception if the key does not exist.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#property_exists_or_fail">property_exists_or_fail()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a property exists and throws an exception if the property does
+not exist.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#debug">debug()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Prints out debug information about given variable.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#dd">dd()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Prints out debug information about given variable and dies</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#add_slash_term">add_slash_term()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Adds the slash term to a path, if it doesn't have one</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#create_file">create_file()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Creates a file. Alias for <code>mkdir()</code> and <code>file_put_contents()</code>.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#create_tmp_file">create_tmp_file()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#dir_tree">dir_tree()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns an array of nested directories and files in each directory</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#fileperms_as_octal">fileperms_as_octal()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets permissions for the given file.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#fileperms_to_string">fileperms_to_string()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns permissions from octal value (<code>0755</code>) to string (<code>'0755'</code>)</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#get_extension">get_extension()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets the extension from a filename.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_slash_term">is_slash_term()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a path ends in a slash (i.e. is slash-terminated)</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_writable_resursive">is_writable_resursive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Tells whether a directory and its subdirectories are writable.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#rmdir_recursive">rmdir_recursive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Removes the directory itself and all its contents, including
+subdirectories and files.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#rtr">rtr()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns a path relative to the root.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#unlink_recursive">unlink_recursive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Recursively removes all the files contained in a directory and within its
+sub-directories. This function only removes the files, leaving the
+directories unaltered.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#clean_url">clean_url()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Cleans an url. It removes all unnecessary parts, as fragment (#),
+trailing slash and <code>www</code> prefix</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#get_hostname_from_url">get_hostname_from_url()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets the host name from an url.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_external_url">is_external_url()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if an url is external, relative to the passed hostname</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_localhost">is_localhost()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if it's localhost</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_url">is_url()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string is a valid url</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#url_to_absolute">url_to_absolute()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Builds an absolute url</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_clean">array_clean()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Cleans an array. It filters elements, removes duplicate values and
+reorders the keys.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_key_first">array_key_first()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the first key of an array.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_key_last">array_key_last()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the last key of an array.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_value_first">array_value_first()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the first value of an array</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_value_first_recursive">array_value_first_recursive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the first value of an array recursively.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_value_last">array_value_last()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the last value of an array</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#array_value_last_recursive">array_value_last_recursive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Returns the last value of an array recursively.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#deprecationWarning">deprecationWarning()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Helper method for outputting deprecation warnings</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#get_child_methods">get_child_methods()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets the class methods' names, but unlike the <code>get_class_methods()</code>
+function, this function excludes the methods of the parent class</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#get_class_short_name">get_class_short_name()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets class short name (the part without the namespace)</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_html">is_html()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string is HTML</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_json">is_json()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string is JSON</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_positive">is_positive()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string is a positive number</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#is_stringable">is_stringable()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks is a value can be converted to string</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#objects_map">objects_map()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Executes an object method for all objects of the given arrays</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#string_ends_with">string_ends_with()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string ends with a string</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#string_contains">string_contains()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string contains a string</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#string_starts_with">string_starts_with()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Checks if a string starts with a string</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#which">which()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Executes the <code>which</code> command and shows the full path of (shell) commands</p></div>
+</div>                </li>
+                    </ul>
+    
+
+            <h4>Functions detail</h4>
+                    <div class="mb-4">
+                <a name="file_exists_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>file_exists_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">file_exists_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks whether a file or directory exists and throws an exception if the
+file does not exist</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the file or directory</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $message = null</code> <p>The failure message that will be appended to the
+generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\FileNotExistsException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="in_array_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>in_array_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">in_array_or_fail(mixed $value, array $array, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a value exists in an array and throws an exception if the
+value is not in array</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $value</code> <p>The searched value</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>The array</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $message = null</code> <p>The failure message that will be appended to
+the generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_dir_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_dir_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_dir_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Tells whether the filename is a directory and throws an exception if the
+filename is not a directory</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the directory</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $message = null</code> <p>The failure message that will be appended to the
+generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\NotDirectoryException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="is_positive_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_positive_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_positive_or_fail(mixed $value, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Throws an exception if the value is not a positive</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $value</code> <p>The value you want to check</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $message = null</code> <p>The failure message that will be appended to the
+generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\NotPositiveException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="is_readable_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_readable_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_readable_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Tells whether a file exists and is readable and throws an exception if
+the file is not readable</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the file or directory</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $message = null</code> <p>The failure message that will be appended to
+the generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\NotReadableException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="is_true_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_true_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_true_or_fail(mixed $value, string $message = 'The value is no...', Throwable|string $exception = 'ErrorException')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Throws an exception if the value is not equal to <code>true</code>.</p>
+<p>You can also pass the exception as a second parameter, instead of the
+message.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $value</code> <p>The value you want to check</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $message = 'The value is no...'</code> <p>The failure message that will be appended to the
+generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'ErrorException'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Exception</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="is_writable_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_writable_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_writable_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Tells whether the filename is writable and throws an exception if the
+file is not writable</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the file or directory</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $message = null</code> <p>The failure message that will be appended to
+the generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\NotWritableException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="key_exists_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>key_exists_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">key_exists_or_fail(mixed $key, array $array, Throwable|string $message = null, string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if the given key or index exists in the array and throws an
+exception if the key does not exist.</p>
+<p>If you pass an array of keys, they will all be checked.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $key</code> <p>Key to check or an array of keys</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>An array with keys to check</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $message = null</code> <p>The failure message that will be appended to
+the generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\KeyNotExistsException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="property_exists_or_fail"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>property_exists_or_fail()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">property_exists_or_fail(object|string $object, string|array $property, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a property exists and throws an exception if the property does
+not exist.</p>
+<p>If the object has the <code>has()</code> method, it uses that method. Otherwise it
+use the <code>property_exists()</code> function.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">object|string $object</code> <p>The class name or an object of the class to test for</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|array $property</code> <p>Name of the property or an array of names</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $message = null</code> <p>The failure message that will be appended to
+the generated message</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">Throwable|string $exception = 'Tools\\Exception...'</code> <p>The exception class you want to set</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\PropertyNotExistsException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="debug"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>debug()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">debug()</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Prints out debug information about given variable.</p>
+<p>Alias for the <code>dump()</code> global function provided by <code>VarDumper</code> component.</p></small>
+    </blockquote></div>            </div>
+                    <div class="mb-4">
+                <a name="dd"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>dd()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">dd()</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Prints out debug information about given variable and dies</p></small>
+    </blockquote></div>            </div>
+                    <div class="mb-4">
+                <a name="add_slash_term"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>add_slash_term()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">add_slash_term(string $path)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Adds the slash term to a path, if it doesn't have one</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $path</code> <p>Path</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+        <div><p>Path with the slash term</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="create_file"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>create_file()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">create_file(string $filename, mixed $data = null, integer $dirMode = 511)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Creates a file. Alias for <code>mkdir()</code> and <code>file_put_contents()</code>.</p>
+<p>It also recursively creates the directory where the file will be created.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the file where to write the data</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">mixed $data = null</code> <p>The data to write. Can be either a string, an array or
+a stream resource</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">integer $dirMode = 511</code> <p>Mode for the directory, if it does not exist</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="create_tmp_file"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>create_tmp_file()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">create_tmp_file(mixed $data = null, string|null $dir = null, string|null $prefix = 'tmp')</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.</p>
+<p>You can pass a directory where to create the file. If <code>null</code>, the file
+will be created in <code>TMP</code>, if the constant is defined, otherwise in the
+temporary directory of the system.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $data = null</code> <p>The data to write. Can be either a string, an array or
+a stream resource</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $dir = null</code> <p>The directory where the temporary filename will
+be created</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string|null $prefix = 'tmp'</code> <p>The prefix of the generated temporary filename</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+        <div><p>Path of temporary filename</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="dir_tree"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>dir_tree()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">dir_tree(string $path, array|bool $exceptions = false)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns an array of nested directories and files in each directory</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $path</code> <p>The directory path to build the tree from</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">array|bool $exceptions = false</code> <p>Either an array of filename or folder names
+to exclude or boolean true to not grab dot files/folders</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>array</code></div>
+        <div><p>Array of nested directories and files in each directory</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="fileperms_as_octal"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>fileperms_as_octal()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">fileperms_as_octal(string $filename)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets permissions for the given file.</p>
+<p>Unlike the <code>fileperms()</code> function provided by PHP, this function returns
+the permissions as four-chars string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Path to the file</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+        <div><p>Permissions as four-chars string</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="fileperms_to_string"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>fileperms_to_string()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">fileperms_to_string(int|string $perms)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns permissions from octal value (<code>0755</code>) to string (<code>'0755'</code>)</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">int|string $perms</code> <p>Permissions as octal value</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+        <div><p>Permissions as four-chars string</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="get_extension"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>get_extension()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">get_extension(string $filename)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets the extension from a filename.</p>
+<p>Unlike other functions, this removes query string and fragments (if the
+filename is an url) and knows how to recognize extensions made up of
+several parts (eg, <code>sql.gz</code>).</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $filename</code> <p>Filename</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string|null</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_slash_term"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_slash_term()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_slash_term(string $path)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a path ends in a slash (i.e. is slash-terminated)</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $path</code> <p>Path</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_writable_resursive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_writable_resursive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_writable_resursive(string $dirname, boolean $checkOnlyDir = true)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Tells whether a directory and its subdirectories are writable.</p>
+<p>It can also check that all the files are writable.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $dirname</code> <p>Path to the directory</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $checkOnlyDir = true</code> <p>If <code>true</code>, also checks for all files</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="rmdir_recursive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>rmdir_recursive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">rmdir_recursive(string $dirname)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Removes the directory itself and all its contents, including
+subdirectories and files.</p>
+<p>To remove only files contained in a directory and its sub-directories,
+leaving the directories unaltered, use the <code>unlink_recursive()</code>
+function instead.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $dirname</code> <p>Path to the directory</p>
+    </div>
+
+    <h6>See</h6>
+    <div class="mb-3">
+        <div>unlink_recursive()</div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Filesystem\Exception\IOException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="rtr"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>rtr()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">rtr(string $path)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns a path relative to the root.</p>
+<p>The root path must be set with the <code>ROOT</code> environment variable (using the
+<code>putenv()</code> function) or the <code>ROOT</code> constant.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $path</code> <p>Absolute path</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+        <div><p>Relative path</p></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>RuntimeException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="unlink_recursive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>unlink_recursive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">unlink_recursive(string $dirname, array|bool $exceptions = false)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Recursively removes all the files contained in a directory and within its
+sub-directories. This function only removes the files, leaving the
+directories unaltered.</p>
+<p>To remove the directory itself and all its contents, use the
+<code>rmdir_recursive()</code> function instead.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $dirname</code> <p>The directory path</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">array|bool $exceptions = false</code> <p>Either an array of files to exclude
+or boolean true to not grab dot files</p>
+    </div>
+
+    <h6>See</h6>
+    <div class="mb-3">
+        <div>rmdir_recursive()</div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Filesystem\Exception\IOException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="clean_url"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>clean_url()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">clean_url(string $url, boolean $removeWWW = false, boolean $removeTrailingSlash = false)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Cleans an url. It removes all unnecessary parts, as fragment (#),
+trailing slash and <code>www</code> prefix</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $url</code> <p>Url</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $removeWWW = false</code> <p>Removes the www prefix</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $removeTrailingSlash = false</code> <p>Removes the trailing slash</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="get_hostname_from_url"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>get_hostname_from_url()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">get_hostname_from_url(string $url)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets the host name from an url.</p>
+<p>It also removes the <code>www</code> prefix.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $url</code> <p>Url</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string|null</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_external_url"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_external_url()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_external_url(string $url, string $hostname)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if an url is external, relative to the passed hostname</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $url</code> <p>Url to check</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $hostname</code> <p>Hostname for the comparison</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_localhost"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_localhost()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_localhost()</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if it's localhost</p></small>
+    </blockquote>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_url"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_url()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_url(string $string)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string is a valid url</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $string</code> <p>String</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="url_to_absolute"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>url_to_absolute()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">url_to_absolute(string $path, string $relative)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Builds an absolute url</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $path</code> <p>Basic path, on which to construct the absolute url</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $relative</code> <p>Relative url to join</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_clean"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_clean()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_clean(array $array, callable|null $callback = null, integer $flag = 0)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Cleans an array. It filters elements, removes duplicate values and
+reorders the keys.</p>
+<p>Elements will be filtered with the <code>array_filter()</code> function. If<code>$callback</code>
+is <code>null</code>, all entries of array equal to <code>FALSE</code>  will be removed.</p>
+<p>The keys will be re-ordered with the `array_values() function only if all
+the keys in the original array are numeric.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array you want to clean</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">callable|null $callback = null</code> <p>The callback function to filter. If no
+callback is supplied, all entries of array equal to <code>FALSE</code>  will be
+removed</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">integer $flag = 0</code> <p>Flag determining what arguments are sent to callback</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>array</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_key_first"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_key_first()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_key_first(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the first key of an array.</p>
+<p>This function exists in PHP &gt;= 7.3.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string|int</code></div>
+        <div><p>Key</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_key_last"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_key_last()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_key_last(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the last key of an array.</p>
+<p>This function exists in PHP &gt;= 7.3.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string|int</code></div>
+        <div><p>Key</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_value_first"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_value_first()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_value_first(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the first value of an array</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_value_first_recursive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_value_first_recursive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_value_first_recursive(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the first value of an array recursively.</p>
+<p>In other words, it returns the first value found that is not an array.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_value_last"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_value_last()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_value_last(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the last value of an array</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="array_value_last_recursive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>array_value_last_recursive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">array_value_last_recursive(array $array)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Returns the last value of an array recursively.</p>
+<p>In other words, it returns the last value found that is not an array.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $array</code> <p>Array</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="deprecationWarning"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>deprecationWarning()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">deprecationWarning(string $message, integer $stackFrame = 1)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Helper method for outputting deprecation warnings</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $message</code> <p>The message to output as a deprecation warning</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">integer $stackFrame = 1</code> <p>The stack frame to include in the error. Defaults to 1
+as that should point to application/plugin code</p>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="get_child_methods"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>get_child_methods()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">get_child_methods(string $class)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets the class methods' names, but unlike the <code>get_class_methods()</code>
+function, this function excludes the methods of the parent class</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $class</code> <p>Class name</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>array|null</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="get_class_short_name"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>get_class_short_name()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">get_class_short_name(mixed $class)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets class short name (the part without the namespace)</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $class</code> <p>Classname or object</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_html"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_html()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_html(string $string)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string is HTML</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $string</code> <p>String</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_json"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_json()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_json(string $string)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string is JSON</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $string</code> <p>String</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_positive"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_positive()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_positive(string|int $string)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string is a positive number</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string|int $string</code> <p>String</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="is_stringable"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_stringable()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">is_stringable(mixed $var)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks is a value can be converted to string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $var</code> <p>A var you want to check</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="objects_map"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>objects_map()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">objects_map(array $objects, string $method, array $args = [])</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Executes an object method for all objects of the given arrays</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">array $objects</code> <p>An array of objects. Each object must have the
+method to be called</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $method</code> <p>The method to be called for each object</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">array $args = []</code> <p>Optional arguments for the method to be called</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>array</code></div>
+        <div><p>Returns an array containing all the returned values of the
+called method applied to each object</p></div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>BadMethodCallException</code></div>
+    </div>
+</div>            </div>
+                    <div class="mb-4">
+                <a name="string_ends_with"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>string_ends_with()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">string_ends_with(string $haystack, string $needle)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string ends with a string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $haystack</code> <p>The string</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $needle</code> <p>The searched value</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="string_contains"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>string_contains()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">string_contains(string $haystack, string $needle)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string contains a string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $haystack</code> <p>The string</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $needle</code> <p>The searched value</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="string_starts_with"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>string_starts_with()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">string_starts_with(string $haystack, string $needle)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if a string starts with a string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $haystack</code> <p>The string</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">string $needle</code> <p>The searched value</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="which"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>which()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">which(string $command)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Executes the <code>which</code> command and shows the full path of (shell) commands</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $command</code> <p>Command</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string|null</code></div>
+    </div></div>            </div>
+            
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+    <p class="bg-light m-0 p-3 small text-center">
+        This documentation was built automatically thanks to <a href="https://github.com/mirko-pagliai/php-doc-maker" target="_blank">php-doc-maker</a>
+    </p>
+</div>
+    </body>
+</html>

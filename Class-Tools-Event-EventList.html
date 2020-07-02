@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>php-tools-                 Class
+     Tools\Event\EventList
+</title>
+        <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/highlight/default.css">
+        <script src="assets/highlight/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body>
+        <nav class="navbar sticky-top navbar-dark bg-dark">
+            <a class="navbar-brand mb-0 h1" href="index.html">php-tools</a>
+        </nav>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3 col-lg-4 p-3">
+                    <ul class="list-unstyled m-0">
+    <li class="text-truncate">
+        <a href="Class-Tools-BodyParser.html" title="Tools\BodyParser">Tools\BodyParser</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Entity.html" title="Tools\Entity">Tools\Entity</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-Event.html" title="Tools\Event\Event">Tools\Event\Event</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventDispatcher.html" title="Tools\Event\EventDispatcher">Tools\Event\EventDispatcher</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventDispatcherTrait.html" title="Tools\Event\EventDispatcherTrait">Tools\Event\EventDispatcherTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Event-EventList.html" title="Tools\Event\EventList">Tools\Event\EventList</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-FileNotExistsException.html" title="Tools\Exception\FileNotExistsException">Tools\Exception\FileNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-KeyNotExistsException.html" title="Tools\Exception\KeyNotExistsException">Tools\Exception\KeyNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotDirectoryException.html" title="Tools\Exception\NotDirectoryException">Tools\Exception\NotDirectoryException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotInArrayException.html" title="Tools\Exception\NotInArrayException">Tools\Exception\NotInArrayException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotPositiveException.html" title="Tools\Exception\NotPositiveException">Tools\Exception\NotPositiveException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotReadableException.html" title="Tools\Exception\NotReadableException">Tools\Exception\NotReadableException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-NotWritableException.html" title="Tools\Exception\NotWritableException">Tools\Exception\NotWritableException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-FileArray.html" title="Tools\FileArray">Tools\FileArray</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-FileException.html" title="Tools\FileException">Tools\FileException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-InvalidValueException.html" title="Tools\InvalidValueException">Tools\InvalidValueException</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-ReflectionTrait.html" title="Tools\ReflectionTrait">Tools\ReflectionTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-EventAssertTrait.html" title="Tools\TestSuite\EventAssertTrait">Tools\TestSuite\EventAssertTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-TestCase.html" title="Tools\TestSuite\TestCase">Tools\TestSuite\TestCase</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-TestTrait.html" title="Tools\TestSuite\TestTrait">Tools\TestSuite\TestTrait</a>
+    </li>
+</ul>
+                </div>
+                <div class="col p-3">
+                        <h2>            Class
+     <em>EventList</em></h2>
+
+    <div><p>EventList.</p>
+<p>It allows you to manage the events already dispatched.</p></div>
+
+    
+            <p>
+            Implements <code>ArrayAccess</code>.
+        </p>
+    
+    
+    <div class="p-3 mb-2 bg-light text-dark">
+        <div><strong>Namespace:</strong> Tools\Event</div>
+        <div><strong>Location:</strong> /home/mirko/Libs/php-tools/src/Event/EventList.php</div>
+    </div>
+
+    
+            <h4>Properties summary</h4>
+        <ul>
+                            <li>
+                    <div>
+    <code>$_events</code> <span class="badge badge-light">protected</span>
+</div>
+<div><span class="badge badge-light">array</span></div>
+<div><p>Events list</p></div>
+                </li>
+                    </ul>
+    
+            <h4>Methods summary</h4>
+        <ul>
+                            <li>
+                    <div>
+    <code>
+        <a href="#flush">flush()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Empties the list of dispatched events</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#add">add()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Adds an event to the list when event listing is enabled</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#offsetExists">offsetExists()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Whether a offset exists</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#offsetGet">offsetGet()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Offset to retrieve</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#offsetSet">offsetSet()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Offset to set</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#offsetUnset">offsetUnset()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Offset to unset</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#count">count()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Counts events</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
+        <a href="#hasEvent">hasEvent()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div><p>Checks if an event is in the list</p></div>
+</div>                </li>
+                    </ul>
+    
+            <h4>Methods detail</h4>
+                    <div class="mb-4">
+                <a name="flush"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>flush()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">flush()</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Empties the list of dispatched events</p></small>
+    </blockquote></div>            </div>
+                    <div class="mb-4">
+                <a name="add"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>add()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">add(Tools\Event\Event $event)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Adds an event to the list when event listing is enabled</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">Tools\Event\Event $event</code> <p>An event to the list of dispatched events.</p>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="offsetExists"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>offsetExists()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">offsetExists(mixed $offset)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Whether a offset exists</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $offset</code> <p>An offset to check for</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+        <div><p>True on success or false on failure</p></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="offsetGet"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>offsetGet()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">offsetGet(mixed $offset)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Offset to retrieve</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $offset</code> <p>The offset to retrieve</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>mixed</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="offsetSet"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>offsetSet()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">offsetSet(mixed $offset, mixed $value)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Offset to set</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $offset</code> <p>The offset to assign the value to</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">mixed $value</code> <p>The value to set</p>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="offsetUnset"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>offsetUnset()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">offsetUnset(mixed $offset)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Offset to unset</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">mixed $offset</code> <p>The offset to unset</p>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="count"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>count()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">count()</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Counts events</p></small>
+    </blockquote>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>int</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="hasEvent"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>hasEvent()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">hasEvent(string $name)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Checks if an event is in the list</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $name</code> <p>Event name</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div></div>            </div>
+            
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+    <p class="bg-light m-0 p-3 small text-center">
+        This documentation was built automatically thanks to <a href="https://github.com/mirko-pagliai/php-doc-maker" target="_blank">php-doc-maker</a>
+    </p>
+</div>
+    </body>
+</html>
