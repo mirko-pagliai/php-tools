@@ -89,7 +89,7 @@
                         <h2>            Class
      <em>FileArray</em></h2>
 
-    <div><p>This class allows you to read and write arrays using text files</p></div>
+    <p>This class allows you to read and write arrays using text files</p>
 
     
     
@@ -192,8 +192,8 @@
 <div class="ml-3">
     <pre><code class="language-php">__construct(string $filename, array $data = [])</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Construct.</p>
-<p>If you want to create a file and you have an already prepared array,
+        <small class="font-weight-light"><p>Construct.
+If you want to create a file and you have an already prepared array,
 instead of reading data from an existing file, you can use the <code>$data</code>
 parameter.</p></small>
     </blockquote>
@@ -235,8 +235,8 @@ parameter.</p></small>
 <div class="ml-3">
     <pre><code class="language-php">delete(integer $key)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Deletes a value from its key number.</p>
-<p>Note that the keys will be re-ordered.</p></small>
+        <small class="font-weight-light"><p>Deletes a value from its key number.
+Note that the keys will be re-ordered.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -320,8 +320,8 @@ parameter.</p></small>
 <div class="ml-3">
     <pre><code class="language-php">read()</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Reads data.</p>
-<p>The first time, the file content is read. The next time the property
+        <small class="font-weight-light"><p>Reads data.
+The first time, the file content is read. The next time the property
 value will be returned.</p>
 <p>If there are no data or if the file does not exist, it still returns an
 empty array.</p></small>
@@ -337,8 +337,8 @@ empty array.</p></small>
 <div class="ml-3">
     <pre><code class="language-php">take(integer $size, integer $from = 0)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Extract a slice of data, with maximum <code>$size</code> values.</p>
-<p>If a second parameter is passed, it will determine from what position to
+        <small class="font-weight-light"><p>Extract a slice of data, with maximum <code>$size</code> values.
+If a second parameter is passed, it will determine from what position to
 start taking values.</p></small>
     </blockquote>
 

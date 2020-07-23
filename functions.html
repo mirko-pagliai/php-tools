@@ -603,8 +603,8 @@ the generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">is_true_or_fail(mixed $value, string $message = 'The value is no...', Throwable|string $exception = 'ErrorException')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Throws an exception if the value is not equal to <code>true</code>.</p>
-<p>You can also pass the exception as a second parameter, instead of the
+        <small class="font-weight-light"><p>Throws an exception if the value is not equal to <code>true</code>.
+You can also pass the exception as a second parameter, instead of the
 message.</p></small>
     </blockquote>
 
@@ -669,8 +669,8 @@ the generated message</p>
     <pre><code class="language-php">key_exists_or_fail(mixed $key, array $array, Throwable|string $message = null, string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Checks if the given key or index exists in the array and throws an
-exception if the key does not exist.</p>
-<p>If you pass an array of keys, they will all be checked.</p></small>
+exception if the key does not exist.
+If you pass an array of keys, they will all be checked.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -705,8 +705,8 @@ the generated message</p>
     <pre><code class="language-php">property_exists_or_fail(object|string $object, string|array $property, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Checks if a property exists and throws an exception if the property does
-not exist.</p>
-<p>If the object has the <code>has()</code> method, it uses that method. Otherwise it
+not exist.
+If the object has the <code>has()</code> method, it uses that method. Otherwise it
 use the <code>property_exists()</code> function.</p></small>
     </blockquote>
 
@@ -741,8 +741,8 @@ the generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">debug()</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Prints out debug information about given variable.</p>
-<p>Alias for the <code>dump()</code> global function provided by <code>VarDumper</code> component.</p></small>
+        <small class="font-weight-light"><p>Prints out debug information about given variable.
+Alias for the <code>dump()</code> global function provided by <code>VarDumper</code> component.</p></small>
     </blockquote></div>            </div>
                     <div class="mb-4">
                 <a name="dd"></a>
@@ -777,8 +777,8 @@ the generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">create_file(string $filename, mixed $data = null, integer $dirMode = 511)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Creates a file. Alias for <code>mkdir()</code> and <code>file_put_contents()</code>.</p>
-<p>It also recursively creates the directory where the file will be created.</p></small>
+        <small class="font-weight-light"><p>Creates a file. Alias for <code>mkdir()</code> and <code>file_put_contents()</code>.
+It also recursively creates the directory where the file will be created.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -803,8 +803,8 @@ a stream resource</p>
 <div class="ml-3">
     <pre><code class="language-php">create_tmp_file(mixed $data = null, string|null $dir = null, string|null $prefix = 'tmp')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.</p>
-<p>You can pass a directory where to create the file. If <code>null</code>, the file
+        <small class="font-weight-light"><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.
+You can pass a directory where to create the file. If <code>null</code>, the file
 will be created in <code>TMP</code>, if the constant is defined, otherwise in the
 temporary directory of the system.</p></small>
     </blockquote>
@@ -856,8 +856,8 @@ to exclude or boolean true to not grab dot files/folders</p>
 <div class="ml-3">
     <pre><code class="language-php">fileperms_as_octal(string $filename)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets permissions for the given file.</p>
-<p>Unlike the <code>fileperms()</code> function provided by PHP, this function returns
+        <small class="font-weight-light"><p>Gets permissions for the given file.
+Unlike the <code>fileperms()</code> function provided by PHP, this function returns
 the permissions as four-chars string</p></small>
     </blockquote>
 
@@ -896,8 +896,8 @@ the permissions as four-chars string</p></small>
 <div class="ml-3">
     <pre><code class="language-php">get_extension(string $filename)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets the extension from a filename.</p>
-<p>Unlike other functions, this removes query string and fragments (if the
+        <small class="font-weight-light"><p>Gets the extension from a filename.
+Unlike other functions, this removes query string and fragments (if the
 filename is an url) and knows how to recognize extensions made up of
 several parts (eg, <code>sql.gz</code>).</p></small>
     </blockquote>
@@ -935,8 +935,8 @@ several parts (eg, <code>sql.gz</code>).</p></small>
 <div class="ml-3">
     <pre><code class="language-php">is_writable_resursive(string $dirname, boolean $checkOnlyDir = true)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Tells whether a directory and its subdirectories are writable.</p>
-<p>It can also check that all the files are writable.</p></small>
+        <small class="font-weight-light"><p>Tells whether a directory and its subdirectories are writable.
+It can also check that all the files are writable.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -958,8 +958,8 @@ several parts (eg, <code>sql.gz</code>).</p></small>
     <pre><code class="language-php">rmdir_recursive(string $dirname)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Removes the directory itself and all its contents, including
-subdirectories and files.</p>
-<p>To remove only files contained in a directory and its sub-directories,
+subdirectories and files.
+To remove only files contained in a directory and its sub-directories,
 leaving the directories unaltered, use the <code>unlink_recursive()</code>
 function instead.</p></small>
     </blockquote>
@@ -985,8 +985,8 @@ function instead.</p></small>
 <div class="ml-3">
     <pre><code class="language-php">rtr(string $path)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Returns a path relative to the root.</p>
-<p>The root path must be set with the <code>ROOT</code> environment variable (using the
+        <small class="font-weight-light"><p>Returns a path relative to the root.
+The root path must be set with the <code>ROOT</code> environment variable (using the
 <code>putenv()</code> function) or the <code>ROOT</code> constant.</p></small>
     </blockquote>
 
@@ -1014,8 +1014,8 @@ function instead.</p></small>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Recursively removes all the files contained in a directory and within its
 sub-directories. This function only removes the files, leaving the
-directories unaltered.</p>
-<p>To remove the directory itself and all its contents, use the
+directories unaltered.
+To remove the directory itself and all its contents, use the
 <code>rmdir_recursive()</code> function instead.</p></small>
     </blockquote>
 
@@ -1069,8 +1069,8 @@ trailing slash and <code>www</code> prefix</p></small>
 <div class="ml-3">
     <pre><code class="language-php">get_hostname_from_url(string $url)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets the host name from an url.</p>
-<p>It also removes the <code>www</code> prefix.</p></small>
+        <small class="font-weight-light"><p>Gets the host name from an url.
+It also removes the <code>www</code> prefix.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -1162,8 +1162,8 @@ trailing slash and <code>www</code> prefix</p></small>
     <pre><code class="language-php">array_clean(array $array, callable|null $callback = null, integer $flag = 0)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Cleans an array. It filters elements, removes duplicate values and
-reorders the keys.</p>
-<p>Elements will be filtered with the <code>array_filter()</code> function. If<code>$callback</code>
+reorders the keys.
+Elements will be filtered with the <code>array_filter()</code> function. If<code>$callback</code>
 is <code>null</code>, all entries of array equal to <code>FALSE</code>  will be removed.</p>
 <p>The keys will be re-ordered with the `array_values() function only if all
 the keys in the original array are numeric.</p></small>
@@ -1192,8 +1192,8 @@ removed</p>
 <div class="ml-3">
     <pre><code class="language-php">array_key_first(array $array)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Returns the first key of an array.</p>
-<p>This function exists in PHP &gt;= 7.3.</p></small>
+        <small class="font-weight-light"><p>Returns the first key of an array.
+This function exists in PHP &gt;= 7.3.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -1212,8 +1212,8 @@ removed</p>
 <div class="ml-3">
     <pre><code class="language-php">array_key_last(array $array)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Returns the last key of an array.</p>
-<p>This function exists in PHP &gt;= 7.3.</p></small>
+        <small class="font-weight-light"><p>Returns the last key of an array.
+This function exists in PHP &gt;= 7.3.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -1250,8 +1250,8 @@ removed</p>
 <div class="ml-3">
     <pre><code class="language-php">array_value_first_recursive(array $array)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Returns the first value of an array recursively.</p>
-<p>In other words, it returns the first value found that is not an array.</p></small>
+        <small class="font-weight-light"><p>Returns the first value of an array recursively.
+In other words, it returns the first value found that is not an array.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -1287,8 +1287,8 @@ removed</p>
 <div class="ml-3">
     <pre><code class="language-php">array_value_last_recursive(array $array)</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Returns the last value of an array recursively.</p>
-<p>In other words, it returns the last value found that is not an array.</p></small>
+        <small class="font-weight-light"><p>Returns the last value of an array recursively.
+In other words, it returns the last value found that is not an array.</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
