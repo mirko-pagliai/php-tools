@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.1
+* added `EventList::toArray()` method.
+
 ### 1.4.0
 * requires at least PHP 7.2.5;
 * added all classes for event management and the `EventAssertTrait` to assert

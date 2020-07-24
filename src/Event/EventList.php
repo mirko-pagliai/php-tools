@@ -124,4 +124,14 @@ class EventList implements ArrayAccess
 
         return false;
     }
+
+    /**
+     * Returns the `EventList` as array
+     * @return array
+     * @since 1.4.1
+     */
+    public function toArray(): array
+    {
+        return $this->_events;
+    }
 }
