@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -50,8 +51,12 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertTrue(create_file($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
-        $this->skipIf(IS_WIN);
-        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
+        //Using a no existing directory, but ignoring errors
+        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
+
+        //Using a no existing directory
+        $this->expectException(IOException::class);
+        create_file(DS . 'noExistingDir' . DS . 'file');
     }
 
     /**

@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
@@ -40,10 +40,13 @@ if (!function_exists('create_file')) {
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
      * @param int $dirMode Mode for the directory, if it does not exist
+     * @param bool $ignoreErrors With `true`, errors will be ignored and will
+     *  return `false`
      * @return bool
      * @since 1.1.7
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    function create_file(string $filename, $data = null, int $dirMode = 0777): bool
+    function create_file(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): bool
     {
         try {
             $filesystem = new Filesystem();
@@ -51,7 +54,12 @@ if (!function_exists('create_file')) {
             $filesystem->dumpFile($filename, $data);
 
             return true;
-        } catch (IOExceptionInterface $e) {
+        }
+        catch (IOException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
             return false;
         }
     }
