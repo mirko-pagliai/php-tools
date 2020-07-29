@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -15,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -22,6 +24,7 @@ use Tools\TestSuite\TestCase;
  */
 class FilesystemFunctionsTest extends TestCase
 {
+
     /**
      * Test for `add_slash_term()` global function
      * @test
@@ -111,10 +114,12 @@ class FilesystemFunctionsTest extends TestCase
             $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
         }
 
-        //Using a file or a no existing file
-        foreach ([create_tmp_file(), TMP . 'noExisting'] as $directory) {
-            $this->assertEquals([[], []], dir_tree($directory));
-        }
+        //Using a no existing directory, but ignoring errors
+        $this->assertSame([[], []], dir_tree(TMP . 'noExisting', false, true));
+
+        //Using a no existing directory
+        $this->expectException(DirectoryNotFoundException::class);
+        dir_tree(TMP . 'noExisting');
     }
 
     /**

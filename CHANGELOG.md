@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.2
+* by default, `dir_tree()` can throw an exception (for example if the directory
+    does not exist). Added the third `$ignoreErrors` parameter, which allows to
+    ignore any errors and return empty arrays.
+
 ### 1.4.1
 * added `EventList::toArray()` method.
 

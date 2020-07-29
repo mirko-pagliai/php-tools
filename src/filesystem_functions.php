@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 if (!function_exists('add_slash_term')) {
@@ -86,10 +87,13 @@ if (!function_exists('dir_tree')) {
      * @param string $path The directory path to build the tree from
      * @param array|bool $exceptions Either an array of filename or folder names
      *  to exclude or boolean true to not grab dot files/folders
+     * @param bool $ignoreErrors With `true`, errors will be ignored and will
+     *  return empty arrays
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
-    function dir_tree(string $path, $exceptions = false): array
+    function dir_tree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
         $path = rtrim($path, DS);
         $finder = new Finder();
@@ -121,7 +125,10 @@ if (!function_exists('dir_tree')) {
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
-        } catch (\InvalidArgumentException $e) {
+        } catch (DirectoryNotFoundException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
             return [[], []];
         }
     }
@@ -300,7 +307,7 @@ if (!function_exists('unlink_recursive')) {
     function unlink_recursive(string $dirname, $exceptions = false): void
     {
         [, $files] = dir_tree($dirname, $exceptions);
-        $filesystem = new Filesystem();
-        $filesystem->remove($files);
+            $filesystem = new Filesystem();
+            $filesystem->remove($files);
     }
 }
