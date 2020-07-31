@@ -333,7 +333,7 @@ if (!function_exists('unlink_recursive')) {
             $filesystem->remove($files);
 
             return true;
-        } catch (IOException|DirectoryNotFoundException $e) {
+        } catch (IOException | DirectoryNotFoundException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }
