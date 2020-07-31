@@ -221,7 +221,10 @@ class FilesystemFunctionsTest extends TestCase
     public function testIsWritableRecursive()
     {
         $this->assertTrue(is_writable_resursive(TMP));
-        $this->assertFalse(is_writable_resursive(DS . 'bin'));
+
+        if (!IS_WIN) {
+            $this->assertFalse(is_writable_resursive(DS . 'bin'));
+        }
 
         //Using a no existing directory, but ignoring errors
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting', true, true));
