@@ -5,6 +5,7 @@
     `unlink_recursive()` functions can throw an exception. Added the third
     `$ignoreErrors` parameter, which allows to ignore any errors and return a
     default value;
+* `rmdir_recursive()` returns a boolean;
 * fixed bug for `dir_tree()` function on the filesystem root.
 
 ### 1.4.1
