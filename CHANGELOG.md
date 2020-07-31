@@ -1,12 +1,10 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.2
-* by default, `create_file()` can throw an exception (for example if the directory
-    does not exist). Added the third `$ignoreErrors` parameter, which allows to
-    ignore any errors and return `false`;
-* by default, `dir_tree()` can throw an exception (for example if the directory
-    does not exist). Added the third `$ignoreErrors` parameter, which allows to
-    ignore any errors and return empty arrays.
+* by default, `create_file()`, `dir_tree()` `is_writable_resursive()` and
+    `unlink_recursive()` functions can throw an exception. Added the third
+    `$ignoreErrors` parameter, which allows to ignore any errors and return a
+    default value.
 
 ### 1.4.1
 * added `EventList::toArray()` method.
