@@ -124,9 +124,9 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` is not readable');
+        }, 'File or directory `' . TMP . 'noExisting` does not exist');
         $this->assertException(NotReadableException::class, function () {
-            is_readable_or_fail(TMP . 'noExisting', 'an exception');
+            is_readable_or_fail(TMP . 'noExisting', 'an exception', NotReadableException::class);
         }, 'an exception');
         $this->assertException(Exception::class, function () {
             is_readable_or_fail(TMP . 'noExisting', new Exception('an exception'));
@@ -153,7 +153,7 @@ class OrFailFunctionsTest extends TestCase
         try {
             is_true_or_fail(false, '');
         } catch (Exception $e) {
-            $this->assertEmpty($e->getMessage());
+            $this->assertSame('`false` is not equal to `true`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail('No exception throw');
@@ -201,7 +201,7 @@ class OrFailFunctionsTest extends TestCase
     public function testIsTrueOrFailNotInstanceOfException()
     {
         $this->expectException(Notice::class);
-        $this->expectExceptionMessage('`App\ExampleClass` is not and instance of `Throwable`');
+        $this->expectExceptionMessage('`App\ExampleClass` is not an instance of `Throwable`');
         is_true_or_fail(false, null, ExampleClass::class);
     }
 
@@ -227,7 +227,7 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` is not writable');
+        }, 'File or directory `' . TMP . 'noExisting` does not exist');
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting', 'an exception');
         }, 'an exception');

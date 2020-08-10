@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.1
+* added `Exceptionist` class;
 * added `EventList::toArray()` method.
 
 ### 1.4.0
