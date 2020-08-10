@@ -24,7 +24,6 @@ use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\TestSuite\TestCase;
 
@@ -178,21 +177,6 @@ class TestTraitTest extends TestCase
             }
             unset($e);
         }
-    }
-
-    /**
-     * Tests for `assertException()` method on `Notice` exception
-     * @requires PHPUnit 6.0
-     * @requires PHP 7.0
-     * @test
-     */
-    public function testAssertExceptionOnNotice()
-    {
-        //This will throw a `Notice` exception
-        $this->expectException(Notice::class);
-        $this->assertException(Exception::class, function () {
-            throw new Notice('a notice', 0, __FILE__, __LINE__);
-        });
     }
 
     /**

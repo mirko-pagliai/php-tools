@@ -123,8 +123,6 @@ trait TestTrait
 
         try {
             call_user_func($function);
-        } catch (Error $e) {
-            throw $e;
         } catch (Exception $e) {
             parent::assertInstanceof(
                 $expectedException,
@@ -143,6 +141,8 @@ trait TestTrait
                     $e->getMessage()
                 ));
             }
+        } catch (Error $e) {
+            throw $e;
         }
 
         if (!isset($e)) {
