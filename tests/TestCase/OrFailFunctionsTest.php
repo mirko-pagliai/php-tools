@@ -17,8 +17,7 @@ namespace Tools\Test;
 
 use App\ExampleClass;
 use Exception;
-use PHPUnit\Framework\Error\Notice;
-use Tools\Exception\FileNotExistsException;
+use PHPUnit\Framework\Error\Deprecated;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotInArrayException;
@@ -39,18 +38,12 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testFileExistsOrFail()
     {
-        $file = create_tmp_file();
-        $this->assertSame($file, file_exists_or_fail($file));
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(file_exists_or_fail(create_tmp_file()));
 
-        $this->assertException(FileNotExistsException::class, function () {
-            file_exists_or_fail(TMP . 'noExisting');
-        }, 'File or directory `' . TMP . 'noExisting` does not exist');
-        $this->assertException(FileNotExistsException::class, function () {
-            file_exists_or_fail(TMP . 'noExisting', 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            file_exists_or_fail(TMP . 'noExisting', new Exception('an exception'));
-        }, 'an exception');
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        file_exists_or_fail(create_tmp_file());
     }
 
     /**
@@ -59,17 +52,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testInArrayOrFail()
     {
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame('a', in_array_or_fail('a', ['a', 'b']));
 
         $this->assertException(NotInArrayException::class, function () {
             in_array_or_fail('a', []);
         }, 'The value `a` is not in array');
-        $this->assertException(NotInArrayException::class, function () {
-            in_array_or_fail('a', [], 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            in_array_or_fail('a', [], new Exception('an exception'));
-        }, 'an exception');
+
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        in_array_or_fail('a', ['a', 'b']);
     }
 
     /**
@@ -78,19 +70,17 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsDirOrFail()
     {
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame(TMP, is_dir_or_fail(TMP));
 
         $filename = create_tmp_file();
-
         $this->assertException(NotDirectoryException::class, function () use ($filename) {
             is_dir_or_fail($filename);
         }, 'Filename `' . $filename . '` is not a directory');
-        $this->assertException(NotDirectoryException::class, function () use ($filename) {
-            is_dir_or_fail($filename, 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () use ($filename) {
-            is_dir_or_fail($filename, new Exception('an exception'));
-        }, 'an exception');
+
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        is_dir_or_fail(TMP);
     }
 
     /**
@@ -99,18 +89,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsPositiveOrFail()
     {
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame(1, is_positive_or_fail(1));
-        $this->assertSame('1', is_positive_or_fail('1'));
 
         $this->assertException(NotPositiveException::class, function () {
             is_positive_or_fail(-1);
         }, 'The value `-1` is not a positive');
-        $this->assertException(NotPositiveException::class, function () {
-            is_positive_or_fail(-1, 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            is_positive_or_fail(-1, new Exception('an exception'));
-        }, 'an exception');
+
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        is_positive_or_fail(1);
     }
 
     /**
@@ -119,18 +107,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsReadableOrFail()
     {
-        $file = create_tmp_file();
-        $this->assertSame($file, is_readable_or_fail($file));
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(is_readable_or_fail(create_tmp_file()));
 
         $this->assertException(NotReadableException::class, function () {
             is_readable_or_fail(TMP . 'noExisting');
         }, 'File or directory `' . TMP . 'noExisting` does not exist');
-        $this->assertException(NotReadableException::class, function () {
-            is_readable_or_fail(TMP . 'noExisting', 'an exception', NotReadableException::class);
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            is_readable_or_fail(TMP . 'noExisting', new Exception('an exception'));
-        }, 'an exception');
+
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        is_readable_or_fail(create_tmp_file());
     }
 
     /**
@@ -139,81 +125,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsTrueOrFail()
     {
-        foreach (['string', ['array'], new ExampleClass(), true, 1, 0.1] as $value) {
-            $this->assertSame($value, is_true_or_fail($value));
-        }
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertSame('string', is_true_or_fail('string'));
 
-        foreach ([null, false, 0, '0', []] as $value) {
-            $this->assertException(Exception::class, function () use ($value) {
-                is_true_or_fail($value);
-            }, 'The value is not equal to `true`');
-        }
-
-        //Failure with an empty string message
-        try {
-            is_true_or_fail(false, '');
-        } catch (Exception $e) {
-            $this->assertSame('`false` is not equal to `true`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail('No exception throw');
-            }
-        }
-
-        //Failure with a custom message
         $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, '`false` is not `true`');
-        }, '`false` is not `true`');
+            is_true_or_fail(false);
+        }, 'The value is not equal to `true`');
 
-        //Failure with custom message and exception class string
-        foreach ([Exception::class, 'Exception'] as $exceptionClass) {
-            $this->assertException(Exception::class, function () use ($exceptionClass) {
-                is_true_or_fail(false, '`false` is not `true`', $exceptionClass);
-            }, '`false` is not `true`');
-        }
-
-        //Failure with a custom exception class string as second argument
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, Exception::class);
-        });
-
-        //Failure with custom message and an instantiated exception
-        $this->assertException(Exception::class, function () {
-            is_true_or_fail(false, null, new Exception('an exception'));
-        }, 'an exception');
-    }
-
-    /**
-     * Test for `is_true_or_fail()` function, with a no string exception
-     * @test
-     */
-    public function testIsTrueOrFailExceptionNotString()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('`$exception` parameter must be a string');
-        is_true_or_fail(false, null, new ExampleClass());
-    }
-
-    /**
-     * Test for `is_true_or_fail()` function, with a nn instance of `Exception`
-     * @test
-     */
-    public function testIsTrueOrFailNotInstanceOfException()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('`App\ExampleClass` is not an instance of `Throwable`');
-        is_true_or_fail(false, null, ExampleClass::class);
-    }
-
-    /**
-     * Test for `is_true_or_fail()` function, with a no existing exception
-     * @test
-     */
-    public function testIsTrueOrFailNoExistingClass()
-    {
-        $this->expectException(Notice::class);
-        $this->expectExceptionMessage('Class `noExisting\Class` does not exist');
-        is_true_or_fail(false, null, 'noExisting\Class');
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        is_true_or_fail('string');
     }
 
     /**
@@ -222,18 +143,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testIsWritableOrFail()
     {
-        $file = create_tmp_file();
-        $this->assertSame($file, is_writable_or_fail($file));
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(is_writable_or_fail(create_tmp_file()));
 
         $this->assertException(NotWritableException::class, function () {
             is_writable_or_fail(TMP . 'noExisting');
         }, 'File or directory `' . TMP . 'noExisting` does not exist');
-        $this->assertException(NotWritableException::class, function () {
-            is_writable_or_fail(TMP . 'noExisting', 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            is_writable_or_fail(TMP . 'noExisting', new Exception('an exception'));
-        }, 'an exception');
+
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        is_writable_or_fail(create_tmp_file());
     }
 
     /**
@@ -242,29 +161,16 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testKeyExistsOrFail()
     {
-        $array = ['a' => 'alfa', 'b' => 'beta', 'gamma'];
-        $this->assertSame('a', key_exists_or_fail('a', $array));
-        $this->assertSame(['a', 0], key_exists_or_fail(['a', 0], $array));
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertSame('a', key_exists_or_fail('a', ['a' => 'alfa', 'b' => 'beta', 'gamma']));
 
-        $this->assertException(KeyNotExistsException::class, function () use ($array) {
-            key_exists_or_fail(['a', 'c'], $array);
-        }, 'Key `c` does not exist');
+        $this->assertException(KeyNotExistsException::class, function () {
+            key_exists_or_fail(['a'], ['d' => 'delta']);
+        }, 'Key `a` does not exist');
 
-        foreach ([
-            'd',
-            ['a', 'd'],
-            ['d', 'c'],
-        ] as $key) {
-            $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
-                key_exists_or_fail($key, $array);
-            }, 'Key `d` does not exist');
-            $this->assertException(KeyNotExistsException::class, function () use ($array, $key) {
-                key_exists_or_fail($key, $array, 'an exception');
-            }, 'an exception');
-            $this->assertException(Exception::class, function () use ($array, $key) {
-                key_exists_or_fail($key, $array, new Exception('an exception'));
-            }, 'an exception');
-        }
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        key_exists_or_fail('a', ['a' => 'alfa']);
     }
 
     /**
@@ -273,41 +179,15 @@ class OrFailFunctionsTest extends TestCase
      */
     public function testPropertyExistsOrFail()
     {
+        $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame('publicProperty', property_exists_or_fail(new ExampleClass(), 'publicProperty'));
 
-        $object = new ExampleClass();
-        $object->name = 'My name';
-        $object->surname = 'My surname';
-        $this->assertSame('name', property_exists_or_fail($object, 'name'));
-        $this->assertSame(['name', 'surname'], property_exists_or_fail($object, ['name', 'surname']));
-
-        $this->assertException(PropertyNotExistsException::class, function () use ($object) {
-            property_exists_or_fail($object, ['name', 'anotherName']);
-        }, 'Object does not have `anotherName` property');
-
-        $object = $this->getMockBuilder(ExampleClass::class)
-            ->setMethods(['has'])
-            ->getMock();
-
-        $object->expects($this->once())
-            ->method('has')
-            ->with('publicProperty')
-            ->willReturn(true);
-
-        $this->assertSame('publicProperty', property_exists_or_fail($object, 'publicProperty'));
-
         $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new ExampleClass(), 'noExisting');
-        }, 'Object does not have `noExisting` property');
+            property_exists_or_fail(new ExampleClass(), ['name']);
+        }, 'Object does not have `name` property');
 
-        $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new ExampleClass(), 'noExisting');
-        }, 'Object does not have `noExisting` property');
-        $this->assertException(PropertyNotExistsException::class, function () {
-            property_exists_or_fail(new ExampleClass(), 'noExisting', 'an exception');
-        }, 'an exception');
-        $this->assertException(Exception::class, function () {
-            property_exists_or_fail(new ExampleClass(), 'noExisting', new Exception('an exception'));
-        }, 'an exception');
+        $this->expectException(Deprecated::class);
+        error_reporting($oldErrorReporting);
+        property_exists_or_fail(new ExampleClass(), 'publicProperty');
     }
 }

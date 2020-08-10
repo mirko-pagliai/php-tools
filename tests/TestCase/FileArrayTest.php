@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use Tools\Exception\KeyNotExistsException;
-use Tools\Exception\NotWritableException;
 use Tools\FileArray;
 use Tools\TestSuite\TestCase;
 
@@ -53,7 +52,6 @@ class FileArrayTest extends TestCase
     public function testConstruct()
     {
         //With a no writable directory
-        $this->expectException(NotWritableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExistingDir` does not exist');
         new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
     }

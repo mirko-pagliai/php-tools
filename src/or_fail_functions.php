@@ -33,10 +33,13 @@ if (!function_exists('file_exists_or_fail')) {
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
+     * @deprecated Use `Exceptionist::fileExists()` instead
      * @throws \Tools\Exception\FileNotExistsException
      */
     function file_exists_or_fail(string $filename, $message = null, $exception = FileNotExistsException::class): string
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::fileExists()` instead.');
+
         return Exceptionist::fileExists($filename, $message, $exception);
     }
 }
@@ -51,10 +54,13 @@ if (!function_exists('in_array_or_fail')) {
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
+     * @deprecated Use `Exceptionist::inArray()` instead
      * @since 1.2.6
      */
     function in_array_or_fail($value, array $array, $message = null, $exception = NotInArrayException::class)
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::inArray()` instead.');
+
         if (!$message && is_stringable($value) == 'The value is not in array') {
             $message = sprintf('The value `%s` is not in array', (string)$value);
         }
@@ -73,10 +79,13 @@ if (!function_exists('is_dir_or_fail')) {
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
+     * @deprecated Use `Exceptionist::isDir()` instead
      * @throws \Tools\Exception\NotDirectoryException
      */
     function is_dir_or_fail(string $filename, $message = null, $exception = NotDirectoryException::class): string
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::isDir()` instead.');
+
         $message = $message ?: sprintf('Filename `%s` is not a directory', rtr($filename));
 
         return Exceptionist::isDir($filename, $message, $exception);
@@ -92,11 +101,14 @@ if (!function_exists('is_positive_or_fail')) {
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
+     * @deprecated Use `Exceptionist::isPositive()` instead
      * @since 1.2.5
      * @throws \Tools\Exception\NotPositiveException
      */
     function is_positive_or_fail($value, $message = null, $exception = NotPositiveException::class)
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::isPositive()` instead.');
+
         if (!$message && is_stringable($value)) {
             $message = sprintf('The value `%s` is not a positive', (string)$value);
         }
@@ -114,11 +126,14 @@ if (!function_exists('is_readable_or_fail')) {
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
+     * @deprecated Use `Exceptionist::isReadable()` instead
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
      */
     function is_readable_or_fail(string $filename, $message = null, $exception = NotReadableException::class): string
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::isReadable()` instead.');
+
         return Exceptionist::isReadable($filename, $message, $exception);
     }
 }
@@ -134,11 +149,14 @@ if (!function_exists('is_true_or_fail')) {
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
+     * @deprecated Use `Exceptionist::isTrue()` instead
      * @since 1.1.7
      * @throws \Exception
      */
     function is_true_or_fail($value, $message = 'The value is not equal to `true`', $exception = \ErrorException::class)
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::isTrue()` instead.');
+
         return Exceptionist::isTrue($value, $message, $exception);
     }
 }
@@ -152,11 +170,14 @@ if (!function_exists('is_writable_or_fail')) {
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
+     * @deprecated Use `Exceptionist::isWritable()` instead
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      */
     function is_writable_or_fail(string $filename, $message = null, $exception = NotWritableException::class): string
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::isWritable()` instead.');
+
         return Exceptionist::isWritable($filename, $message, $exception);
     }
 }
@@ -173,10 +194,13 @@ if (!function_exists('key_exists_or_fail')) {
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return mixed
+     * @deprecated Use `Exceptionist::arrayKeyExists()` instead
      * @throws \Tools\Exception\KeyNotExistsException
      */
     function key_exists_or_fail($key, array $array, $message = null, $exception = KeyNotExistsException::class)
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::arrayKeyExists()` instead.');
+
         return Exceptionist::arrayKeyExists($key, $array, $message, $exception);
     }
 }
@@ -194,11 +218,14 @@ if (!function_exists('property_exists_or_fail')) {
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
+     * @deprecated Use `Exceptionist::objectPropertyExists()` instead
      * @since 1.1.14
      * @throws \Tools\Exception\PropertyNotExistsException
      */
     function property_exists_or_fail($object, $property, $message = null, $exception = PropertyNotExistsException::class)
     {
+        deprecationWarning('Deprecated. Use `Exceptionist::objectPropertyExists()` instead.');
+
         return Exceptionist::objectPropertyExists($object, $property, $message, $exception);
     }
 }

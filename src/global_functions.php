@@ -13,6 +13,8 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Tools\Exceptionist;
+
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
@@ -149,7 +151,7 @@ if (!function_exists('deprecationWarning')) {
      * @return void
      * @since 1.1.7
      */
-    function deprecationWarning(string $message, int $stackFrame = 1): void
+    function deprecationWarning(string $message, int $stackFrame = 0): void
     {
         if (!(error_reporting() & E_USER_DEPRECATED)) {
             return;
@@ -275,7 +277,7 @@ if (!function_exists('objects_map')) {
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function ($object) use ($method, $args) {
-            is_true_or_fail(method_exists($object, '__call') || method_exists($object, $method), sprintf(
+            Exceptionist::isTrue(method_exists($object, '__call') || method_exists($object, $method), sprintf(
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
