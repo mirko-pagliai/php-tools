@@ -1,7 +1,15 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.1
-* added `EventList::toArray()` method.
+* added `slug()` global function;
+* added `Exceptionist` class. All `_or_fail()` methods are now deprecated;
+* added `EventList::toArray()` method;
+* by default, `create_file()`, `dir_tree()` `is_writable_resursive()` and
+    `unlink_recursive()` functions can throw an exception. Added the third
+    `$ignoreErrors` parameter, which allows to ignore any errors and return a
+    default value;
+* `rmdir_recursive()` returns a boolean;
+* fixed bug for `dir_tree()` function on the filesystem root.
 
 ### 1.4.0
 * requires at least PHP 7.2.5;
