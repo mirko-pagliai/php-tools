@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -48,7 +50,13 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertStringEqualsFile($filename, 'string');
 
         $this->skipIf(IS_WIN);
-        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file'));
+
+        //Using a no existing directory, but ignoring errors
+        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
+
+        //Using a no existing directory
+        $this->expectException(IOException::class);
+        create_file(DS . 'noExistingDir' . DS . 'file');
     }
 
     /**
@@ -111,10 +119,12 @@ class FilesystemFunctionsTest extends TestCase
             $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
         }
 
-        //Using a file or a no existing file
-        foreach ([create_tmp_file(), TMP . 'noExisting'] as $directory) {
-            $this->assertEquals([[], []], dir_tree($directory));
-        }
+        //Using a no existing directory, but ignoring errors
+        $this->assertSame([[], []], dir_tree(TMP . 'noExisting', false, true));
+
+        //Using a no existing directory
+        $this->expectException(DirectoryNotFoundException::class);
+        dir_tree(TMP . 'noExisting');
     }
 
     /**
@@ -213,6 +223,16 @@ class FilesystemFunctionsTest extends TestCase
     public function testIsWritableRecursive()
     {
         $this->assertTrue(is_writable_resursive(TMP));
+
+        if (!IS_WIN) {
+            $this->assertFalse(is_writable_resursive(DS . 'bin'));
+        }
+
+        //Using a no existing directory, but ignoring errors
+        $this->assertFalse(is_writable_resursive(TMP . 'noExisting', true, true));
+
+        //Using a no existing directory
+        $this->expectException(DirectoryNotFoundException::class);
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
     }
 
@@ -222,14 +242,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testRmdirRecursive()
     {
-        $files = createSomeFiles();
-        rmdir_recursive(TMP . 'exampleDir');
-        array_map([$this, 'assertFileNotExists'], $files);
-        array_map([$this, 'assertDirectoryNotExists'], array_map('dirname', $files));
+        createSomeFiles();
+        $this->assertTrue(rmdir_recursive(TMP . 'exampleDir'));
+        $this->assertDirectoryNotExists(TMP . 'exampleDir');
 
         //Does not delete a file
         $filename = create_tmp_file();
-        rmdir_recursive($filename);
+        $this->assertFalse(rmdir_recursive($filename));
         $this->assertFileExists($filename);
     }
 
@@ -252,22 +271,25 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
+        //Creates some files and some links
         $files = createSomeFiles();
-
-        //Creates some links
         if (!IS_WIN) {
             foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
                 $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-                @symlink($filename, $link);
+                symlink($filename, $link);
                 $files[] = $link;
             }
         }
 
-        unlink_recursive(TMP . 'exampleDir');
+        $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
         array_map([$this, 'assertFileNotExists'], $files);
+        $this->assertDirectoryExists(TMP . 'exampleDir');
 
-        //Directories still exist
-        $this->skipIf(IS_WIN);
-        array_map([$this, 'assertDirectoryExists'], array_map('dirname', $files));
+        //Using a no existing directory, but ignoring errors
+        $this->assertFalse(unlink_recursive(TMP . 'noExisting', false, true));
+
+        //Using a no existing directory
+        $this->expectException(DirectoryNotFoundException::class);
+        unlink_recursive(TMP . 'noExisting');
     }
 }
