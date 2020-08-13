@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
 
 if (!defined('IS_WIN')) {
@@ -285,6 +286,23 @@ if (!function_exists('objects_map')) {
 
             return call_user_func_array([$object, $method], $args);
         }, $objects);
+    }
+}
+
+if (!function_exists('slug')) {
+    /**
+     * Gets a slug from a string
+     * @param string $string The string you want to generate the slug from
+     * @param bool $lowerCase With `true` the string will be lowercase
+     * @return string
+     * @see https://symfony.com/doc/current/components/string.html#slugger
+     * @since 1.4.1
+     */
+    function slug(string $string, bool $lowerCase = true): string
+    {
+        $slug = (string)(new AsciiSlugger())->slug($string);
+
+        return $lowerCase ? strtolower($slug) : $slug;
     }
 }
 

@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.2
+* added `slug()` global function;
 * by default, `create_file()`, `dir_tree()` `is_writable_resursive()` and
     `unlink_recursive()` functions can throw an exception. Added the third
     `$ignoreErrors` parameter, which allows to ignore any errors and return a

@@ -18,7 +18,8 @@
         "symfony/filesystem": "^5.0",
         "symfony/finder": "^5.0",
         "symfony/string": "^5.0",
-        "symfony/var-dumper": "^5.0"
+        "symfony/var-dumper": "^5.0",
+        "symfony/translation-contracts": "^2.1"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
