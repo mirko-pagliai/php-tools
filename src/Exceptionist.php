@@ -197,9 +197,11 @@ class Exceptionist
         if ($value) {
             return $value;
         }
-
         if ($message instanceof Throwable || (is_string($message) && class_exists($message))) {
             [$exception, $message] = [$message, ''];
+        }
+        if (!$exception instanceof Throwable && !is_string($exception)) {
+            trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');
         }
 
         if (!$message) {
@@ -217,20 +219,6 @@ class Exceptionist
             }
         }
 
-        if (!$exception instanceof Throwable) {
-            if (!is_string($exception)) {
-                trigger_error('`$exception` parameter must be a string');
-            }
-            if (!class_exists($exception)) {
-                trigger_error(sprintf('Class `%s` does not exist', $exception));
-            }
-            $exception = new $exception($message);
-        }
-
-        if (!$exception instanceof Throwable) {
-            trigger_error(sprintf('`%s` is not an instance of `Throwable`', get_class($exception)));
-        }
-
-        throw $exception;
+        throw $exception instanceof Throwable ? $exception : new $exception($message);
     }
 }

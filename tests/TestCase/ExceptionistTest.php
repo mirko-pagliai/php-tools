@@ -201,7 +201,7 @@ class ExceptionistTest extends TestCase
         }, $message);
 
         $this->assertException(ErrorException::class, function () use ($message) {
-            Exceptionist::isTrue(false, new \ErrorException($message));
+            Exceptionist::isTrue(false, new ErrorException($message));
         }, $message);
 
         $this->assertException(ErrorException::class, function () use ($message) {
@@ -216,11 +216,7 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithInvalidExceptionClass()
     {
         $this->assertException(Notice::class, function () {
-            Exceptionist::isTrue(false, 'message', \stdClass::class);
-        }, '`stdClass` is not an instance of `Throwable`');
-
-        $this->assertException(Notice::class, function () {
-            Exceptionist::isTrue(false, 'message', 'noExistingException');
-        }, 'Class `noExistingException` does not exist');
+            Exceptionist::isTrue(false, '', new \stdClass());
+        }, '`$exception` parameter must be an instance of `Throwable` or a string');
     }
 }
