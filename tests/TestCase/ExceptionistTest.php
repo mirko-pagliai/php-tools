@@ -208,4 +208,15 @@ class ExceptionistTest extends TestCase
             Exceptionist::isTrue(false, $message, ErrorException::class);
         }, $message);
     }
+
+    /**
+     * Test for `isTrue()` method, with an invalid exception class
+     * @test
+     */
+    public function testIsTrueFailureWithInvalidExceptionClass()
+    {
+        $this->assertException(Notice::class, function () {
+            Exceptionist::isTrue(false, '', new \stdClass());
+        }, '`$exception` parameter must be an instance of `Throwable` or a string');
+    }
 }

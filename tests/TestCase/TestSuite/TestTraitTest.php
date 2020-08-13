@@ -22,7 +22,6 @@ use App\ExampleOfTraversable;
 use App\SkipTestCase;
 use BadMethodCallException;
 use Exception;
-use Error;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
@@ -175,20 +174,6 @@ class TestTraitTest extends TestCase
         } finally {
             if (!isset($e)) {
                 self::fail('No exception throw');
-            }
-            unset($e);
-        }
-
-        //With `Error`
-        try {
-            $this->assertException(Exception::class, function () {
-                throw new Error('Error!');
-            });
-        } catch (Error $e) {
-            $this->assertStringStartsWith('Error!', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail('No error throw');
             }
             unset($e);
         }

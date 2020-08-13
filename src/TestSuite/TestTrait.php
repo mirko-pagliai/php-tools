@@ -141,8 +141,6 @@ trait TestTrait
                     $e->getMessage()
                 ));
             }
-        } catch (Error $e) {
-            throw $e;
         }
 
         if (!isset($e)) {

@@ -201,7 +201,7 @@ class Exceptionist
             [$exception, $message] = [$message, ''];
         }
         if (!$exception instanceof Throwable && !is_string($exception)) {
-            trigger_error('`$exception` parameter must be a string');
+            trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');
         }
 
         if (!$message) {
