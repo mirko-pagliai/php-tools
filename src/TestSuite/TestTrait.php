@@ -107,14 +107,14 @@ trait TestTrait
 
     /**
      * Asserts that a callable throws an exception
-     * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
      *  raise the expected exception
+     * @param string $expectedException Expected exception
      * @param string|null $expectedMessage The expected message or `null`
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException(string $expectedException, callable $function, ?string $expectedMessage = null): void
+    protected static function assertException(callable $function, string $expectedException = Exception::class, ?string $expectedMessage = null): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));

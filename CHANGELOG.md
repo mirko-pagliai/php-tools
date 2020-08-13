@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.0
+* changed the order of arguments for the `TestTrait::assertException()` method.
+    The callable is now the first argument;
 * all `_or_fail()` methods have been removed.
 
 ## 1.4 branch
