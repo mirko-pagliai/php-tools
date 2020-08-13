@@ -16,6 +16,7 @@ declare(strict_types=1);
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Tools\Exceptionist;
 
 if (!function_exists('add_slash_term')) {
     /**
@@ -262,13 +263,13 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \RuntimeException
+     * @throws \Exception
      */
     function rtr(string $path): string
     {
         $root = getenv('ROOT');
         if (!$root) {
-            is_true_or_fail(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
             $root = ROOT;
         }
 

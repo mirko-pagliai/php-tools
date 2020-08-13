@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.1
+* added `Exceptionist` class. All `_or_fail()` methods are now deprecated;
 * added `EventList::toArray()` method.
 
 ### 1.4.0

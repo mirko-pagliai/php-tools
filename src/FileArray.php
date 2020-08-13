@@ -16,6 +16,8 @@ declare(strict_types=1);
 
 namespace Tools;
 
+use Tools\Exceptionist;
+
 /**
  * This class allows you to read and write arrays using text files
  */
@@ -46,7 +48,7 @@ class FileArray
      */
     public function __construct(string $filename, array $data = [])
     {
-        is_writable_or_fail(is_file($filename) ? $filename : dirname($filename));
+        Exceptionist::isWritable(is_file($filename) ? $filename : dirname($filename));
 
         $this->filename = $filename;
         $this->data = $data ?: $this->read();
@@ -74,7 +76,7 @@ class FileArray
      */
     public function delete(int $key)
     {
-        key_exists_or_fail($key, $this->data);
+        Exceptionist::arrayKeyExists($key, $this->data);
         unset($this->data[$key]);
         $this->data = array_values($this->data);
 
@@ -99,7 +101,7 @@ class FileArray
      */
     public function get(int $key)
     {
-        key_exists_or_fail($key, $this->data);
+        Exceptionist::arrayKeyExists($key, $this->data);
 
         return $this->data[$key];
     }
