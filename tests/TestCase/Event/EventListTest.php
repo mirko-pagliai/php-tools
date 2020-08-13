@@ -99,4 +99,18 @@ class EventListTest extends TestCase
         $this->assertTrue($this->EventList->hasEvent('myEvent'));
         $this->assertFalse($this->EventList->hasEvent('noExisting'));
     }
+
+    /**
+     * Test for `toArray()` method
+     * @test
+     */
+    public function testToArray()
+    {
+        $this->assertSame([], $this->EventList->toArray());
+
+        $this->EventList->add(new Event('myEvent'));
+        $result = $this->EventList->toArray();
+        $this->assertIsArray($result);
+        $this->assertContainsOnlyInstancesOf(Event::class, $result);
+    }
 }
