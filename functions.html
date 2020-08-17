@@ -61,6 +61,9 @@
         <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
     </li>
     <li class="text-truncate">
+        <a href="Class-Tools-Exceptionist.html" title="Tools\Exceptionist">Tools\Exceptionist</a>
+    </li>
+    <li class="text-truncate">
         <a href="Class-Tools-FileArray.html" title="Tools\FileArray">Tools\FileArray</a>
     </li>
     <li class="text-truncate">
@@ -91,70 +94,80 @@
                             <li>
                     <div>
     <code>
-        <a href="#file_exists_or_fail">file_exists_or_fail()</a>
+        <a href="#file_exists_or_fail"><del>file_exists_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
-    <div><p>Checks whether a file or directory exists and throws an exception if the
-file does not exist</p></div>
+    <span class="badge badge-light">deprecated</span>
+    <div><p>Checks whether a file or directory exists and throws an exception if does
+not exist</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#in_array_or_fail">in_array_or_fail()</a>
+        <a href="#in_array_or_fail"><del>in_array_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
+    <span class="badge badge-light">deprecated</span>
     <div><p>Checks if a value exists in an array and throws an exception if the
 value is not in array</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#is_dir_or_fail">is_dir_or_fail()</a>
+        <a href="#is_dir_or_fail"><del>is_dir_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
-    <div><p>Tells whether the filename is a directory and throws an exception if the
+    <span class="badge badge-light">deprecated</span>
+    <div><p>Checks whether the filename is a directory and throws an exception if the
 filename is not a directory</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#is_positive_or_fail">is_positive_or_fail()</a>
+        <a href="#is_positive_or_fail"><del>is_positive_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
-    <div><p>Throws an exception if the value is not a positive</p></div>
+    <span class="badge badge-light">deprecated</span>
+    <div><p>Checks whether the value is a positive and throws an exception if the
+value is not a positive</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#is_readable_or_fail">is_readable_or_fail()</a>
+        <a href="#is_readable_or_fail"><del>is_readable_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
-    <div><p>Tells whether a file exists and is readable and throws an exception if
-the file is not readable</p></div>
+    <span class="badge badge-light">deprecated</span>
+    <div><p>Checks whether a file or directory exists and is readable and throws an
+exception if is not readable</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#is_true_or_fail">is_true_or_fail()</a>
+        <a href="#is_true_or_fail"><del>is_true_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
+    <span class="badge badge-light">deprecated</span>
     <div><p>Throws an exception if the value is not equal to <code>true</code>.</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#is_writable_or_fail">is_writable_or_fail()</a>
+        <a href="#is_writable_or_fail"><del>is_writable_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
-    <div><p>Tells whether the filename is writable and throws an exception if the
-file is not writable</p></div>
+    <span class="badge badge-light">deprecated</span>
+    <div><p>Checks whether a file or directory exists and is writable and throws an
+exception if is not writable</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#key_exists_or_fail">key_exists_or_fail()</a>
+        <a href="#key_exists_or_fail"><del>key_exists_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
+    <span class="badge badge-light">deprecated</span>
     <div><p>Checks if the given key or index exists in the array and throws an
 exception if the key does not exist.</p></div>
 </div>                </li>
                             <li>
                     <div>
     <code>
-        <a href="#property_exists_or_fail">property_exists_or_fail()</a>
+        <a href="#property_exists_or_fail"><del>property_exists_or_fail()</del></a>
     </code> <span class="badge badge-light"></span>
+    <span class="badge badge-light">deprecated</span>
     <div><p>Checks if a property exists and throws an exception if the property does
 not exist.</p></div>
 </div>                </li>
@@ -412,6 +425,13 @@ function, this function excludes the methods of the parent class</p></div>
                             <li>
                     <div>
     <code>
+        <a href="#slug">slug()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets a slug from a string</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
         <a href="#string_ends_with">string_ends_with()</a>
     </code> <span class="badge badge-light"></span>
     <div><p>Checks if a string ends with a string</p></div>
@@ -433,6 +453,13 @@ function, this function excludes the methods of the parent class</p></div>
                             <li>
                     <div>
     <code>
+        <a href="#uncamelcase">uncamelcase()</a>
+    </code> <span class="badge badge-light"></span>
+    <div><p>Gets an &quot;uncamelcase&quot; string.</p></div>
+</div>                </li>
+                            <li>
+                    <div>
+    <code>
         <a href="#which">which()</a>
     </code> <span class="badge badge-light"></span>
     <div><p>Executes the <code>which</code> command and shows the full path of (shell) commands</p></div>
@@ -447,8 +474,8 @@ function, this function excludes the methods of the parent class</p></div>
 <div class="ml-3">
     <pre><code class="language-php">file_exists_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Checks whether a file or directory exists and throws an exception if the
-file does not exist</p></small>
+        <small class="font-weight-light"><p>Checks whether a file or directory exists and throws an exception if does
+not exist</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -466,6 +493,11 @@ generated message</p>
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>string</code></div>
+    </div>
+
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::fileExists()</code> instead</p></div>
     </div>
 
     <h6>Throws</h6>
@@ -501,6 +533,11 @@ the generated message</p>
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>mixed</code></div>
+    </div>
+
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::inArray()</code> instead</p></div>
     </div></div>            </div>
                     <div class="mb-4">
                 <a name="is_dir_or_fail"></a>
@@ -508,7 +545,7 @@ the generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">is_dir_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Tells whether the filename is a directory and throws an exception if the
+        <small class="font-weight-light"><p>Checks whether the filename is a directory and throws an exception if the
 filename is not a directory</p></small>
     </blockquote>
 
@@ -529,6 +566,11 @@ generated message</p>
         <div><code>string</code></div>
     </div>
 
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::isDir()</code> instead</p></div>
+    </div>
+
     <h6>Throws</h6>
     <div class="mb-3">
         <div><code>Tools\Exception\NotDirectoryException</code></div>
@@ -540,7 +582,8 @@ generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">is_positive_or_fail(mixed $value, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Throws an exception if the value is not a positive</p></small>
+        <small class="font-weight-light"><p>Checks whether the value is a positive and throws an exception if the
+value is not a positive</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -560,6 +603,11 @@ generated message</p>
         <div><code>mixed</code></div>
     </div>
 
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::isPositive()</code> instead</p></div>
+    </div>
+
     <h6>Throws</h6>
     <div class="mb-3">
         <div><code>Tools\Exception\NotPositiveException</code></div>
@@ -571,8 +619,8 @@ generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">is_readable_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Tells whether a file exists and is readable and throws an exception if
-the file is not readable</p></small>
+        <small class="font-weight-light"><p>Checks whether a file or directory exists and is readable and throws an
+exception if is not readable</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -592,7 +640,15 @@ the generated message</p>
         <div><code>string</code></div>
     </div>
 
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::isReadable()</code> instead</p></div>
+    </div>
+
     <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\FileNotExistsException</code></div>
+    </div>
     <div class="mb-3">
         <div><code>Tools\Exception\NotReadableException</code></div>
     </div>
@@ -625,6 +681,11 @@ generated message</p>
         <div><code>mixed</code></div>
     </div>
 
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::isTrue()</code> instead</p></div>
+    </div>
+
     <h6>Throws</h6>
     <div class="mb-3">
         <div><code>Exception</code></div>
@@ -636,8 +697,8 @@ generated message</p>
 <div class="ml-3">
     <pre><code class="language-php">is_writable_or_fail(string $filename, string|null $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
     <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Tells whether the filename is writable and throws an exception if the
-file is not writable</p></small>
+        <small class="font-weight-light"><p>Checks whether a file or directory exists and is writable and throws an
+exception if is not writable</p></small>
     </blockquote>
 
     <h6>Parameters</h6>
@@ -657,7 +718,15 @@ the generated message</p>
         <div><code>string</code></div>
     </div>
 
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::isWritable()</code> instead</p></div>
+    </div>
+
     <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Tools\Exception\FileNotExistsException</code></div>
+    </div>
     <div class="mb-3">
         <div><code>Tools\Exception\NotWritableException</code></div>
     </div>
@@ -691,6 +760,11 @@ the generated message</p>
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>mixed</code></div>
+    </div>
+
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::arrayKeyExists()</code> instead</p></div>
     </div>
 
     <h6>Throws</h6>
@@ -728,6 +802,11 @@ the generated message</p>
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>mixed</code></div>
+    </div>
+
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div><p>Use <code>Exceptionist::objectPropertyExists()</code> instead</p></div>
     </div>
 
     <h6>Throws</h6>
@@ -775,7 +854,7 @@ Alias for the <code>dump()</code> global function provided by <code>VarDumper</c
                 <a name="create_file"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>create_file()</h5></div>
 <div class="ml-3">
-    <pre><code class="language-php">create_file(string $filename, mixed $data = null, integer $dirMode = 511)</code></pre>
+    <pre><code class="language-php">create_file(string $filename, mixed $data = null, integer $dirMode = 511, boolean $ignoreErrors = false)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Creates a file. Alias for <code>mkdir()</code> and <code>file_put_contents()</code>.
 It also recursively creates the directory where the file will be created.</p></small>
@@ -792,11 +871,20 @@ a stream resource</p>
     <div class="mb-3">
         <code class="language-php">integer $dirMode = 511</code> <p>Mode for the directory, if it does not exist</p>
     </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $ignoreErrors = false</code> <p>With <code>true</code>, errors will be ignored</p>
+    </div>
 
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>bool</code></div>
-    </div></div>            </div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Filesystem\Exception\IOException</code></div>
+    </div>
+</div>            </div>
                     <div class="mb-4">
                 <a name="create_tmp_file"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>create_tmp_file()</h5></div>
@@ -831,7 +919,7 @@ be created</p>
                 <a name="dir_tree"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>dir_tree()</h5></div>
 <div class="ml-3">
-    <pre><code class="language-php">dir_tree(string $path, array|bool $exceptions = false)</code></pre>
+    <pre><code class="language-php">dir_tree(string $path, array|bool $exceptions = false, boolean $ignoreErrors = false)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Returns an array of nested directories and files in each directory</p></small>
     </blockquote>
@@ -844,12 +932,21 @@ be created</p>
         <code class="language-php">array|bool $exceptions = false</code> <p>Either an array of filename or folder names
 to exclude or boolean true to not grab dot files/folders</p>
     </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $ignoreErrors = false</code> <p>With <code>true</code>, errors will be ignored</p>
+    </div>
 
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>array</code></div>
         <div><p>Array of nested directories and files in each directory</p></div>
-    </div></div>            </div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Finder\Exception\DirectoryNotFoundException</code></div>
+    </div>
+</div>            </div>
                     <div class="mb-4">
                 <a name="fileperms_as_octal"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>fileperms_as_octal()</h5></div>
@@ -933,7 +1030,7 @@ several parts (eg, <code>sql.gz</code>).</p></small>
                 <a name="is_writable_resursive"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>is_writable_resursive()</h5></div>
 <div class="ml-3">
-    <pre><code class="language-php">is_writable_resursive(string $dirname, boolean $checkOnlyDir = true)</code></pre>
+    <pre><code class="language-php">is_writable_resursive(string $dirname, boolean $checkOnlyDir = true, boolean $ignoreErrors = false)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Tells whether a directory and its subdirectories are writable.
 It can also check that all the files are writable.</p></small>
@@ -946,11 +1043,20 @@ It can also check that all the files are writable.</p></small>
     <div class="mb-3">
         <code class="language-php">boolean $checkOnlyDir = true</code> <p>If <code>true</code>, also checks for all files</p>
     </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $ignoreErrors = false</code> <p>With <code>true</code>, errors will be ignored</p>
+    </div>
 
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>bool</code></div>
-    </div></div>            </div>
+    </div>
+
+    <h6>Throws</h6>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Finder\Exception\DirectoryNotFoundException</code></div>
+    </div>
+</div>            </div>
                     <div class="mb-4">
                 <a name="rmdir_recursive"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>rmdir_recursive()</h5></div>
@@ -967,6 +1073,11 @@ function instead.</p></small>
     <h6>Parameters</h6>
     <div class="mb-3">
         <code class="language-php">string $dirname</code> <p>Path to the directory</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
     </div>
 
     <h6>See</h6>
@@ -1003,14 +1114,14 @@ The root path must be set with the <code>ROOT</code> environment variable (using
 
     <h6>Throws</h6>
     <div class="mb-3">
-        <div><code>RuntimeException</code></div>
+        <div><code>Exception</code></div>
     </div>
 </div>            </div>
                     <div class="mb-4">
                 <a name="unlink_recursive"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>unlink_recursive()</h5></div>
 <div class="ml-3">
-    <pre><code class="language-php">unlink_recursive(string $dirname, array|bool $exceptions = false)</code></pre>
+    <pre><code class="language-php">unlink_recursive(string $dirname, array|bool $exceptions = false, boolean $ignoreErrors = false)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Recursively removes all the files contained in a directory and within its
 sub-directories. This function only removes the files, leaving the
@@ -1027,6 +1138,14 @@ To remove the directory itself and all its contents, use the
         <code class="language-php">array|bool $exceptions = false</code> <p>Either an array of files to exclude
 or boolean true to not grab dot files</p>
     </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $ignoreErrors = false</code> <p>With <code>true</code>, errors will be ignored</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>bool</code></div>
+    </div>
 
     <h6>See</h6>
     <div class="mb-3">
@@ -1036,6 +1155,9 @@ or boolean true to not grab dot files</p>
     <h6>Throws</h6>
     <div class="mb-3">
         <div><code>Symfony\Component\Filesystem\Exception\IOException</code></div>
+    </div>
+    <div class="mb-3">
+        <div><code>Symfony\Component\Finder\Exception\DirectoryNotFoundException</code></div>
     </div>
 </div>            </div>
                     <div class="mb-4">
@@ -1304,7 +1426,7 @@ In other words, it returns the last value found that is not an array.</p></small
                 <a name="deprecationWarning"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>deprecationWarning()</h5></div>
 <div class="ml-3">
-    <pre><code class="language-php">deprecationWarning(string $message, integer $stackFrame = 1)</code></pre>
+    <pre><code class="language-php">deprecationWarning(string $message, integer $stackFrame = 0)</code></pre>
     <blockquote class="blockquote">
         <small class="font-weight-light"><p>Helper method for outputting deprecation warnings</p></small>
     </blockquote>
@@ -1314,7 +1436,7 @@ In other words, it returns the last value found that is not an array.</p></small
         <code class="language-php">string $message</code> <p>The message to output as a deprecation warning</p>
     </div>
     <div class="mb-3">
-        <code class="language-php">integer $stackFrame = 1</code> <p>The stack frame to include in the error. Defaults to 1
+        <code class="language-php">integer $stackFrame = 0</code> <p>The stack frame to include in the error. Defaults to 1
 as that should point to application/plugin code</p>
     </div></div>            </div>
                     <div class="mb-4">
@@ -1460,6 +1582,32 @@ called method applied to each object</p></div>
     </div>
 </div>            </div>
                     <div class="mb-4">
+                <a name="slug"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>slug()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">slug(string $string, boolean $lowerCase = true)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets a slug from a string</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $string</code> <p>The string you want to generate the slug from</p>
+    </div>
+    <div class="mb-3">
+        <code class="language-php">boolean $lowerCase = true</code> <p>With <code>true</code> the string will be lowercase</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
+    </div>
+
+    <h6>See</h6>
+    <div class="mb-3">
+        <div>https://symfony.com/doc/current/components/string.html#slugger</div>
+    </div></div>            </div>
+                    <div class="mb-4">
                 <a name="string_ends_with"></a>
 <div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>string_ends_with()</h5></div>
 <div class="ml-3">
@@ -1521,6 +1669,25 @@ called method applied to each object</p></div>
     <h6>Return</h6>
     <div class="mb-3">
         <div><code>bool</code></div>
+    </div></div>            </div>
+                    <div class="mb-4">
+                <a name="uncamelcase"></a>
+<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>uncamelcase()</h5></div>
+<div class="ml-3">
+    <pre><code class="language-php">uncamelcase(string $string)</code></pre>
+    <blockquote class="blockquote">
+        <small class="font-weight-light"><p>Gets an &quot;uncamelcase&quot; string.
+For example, from <code>thisIsAString</code> to <code>this_is_a_string</code>.</p></small>
+    </blockquote>
+
+    <h6>Parameters</h6>
+    <div class="mb-3">
+        <code class="language-php">string $string</code> <p>The string you want to uncamelcase</p>
+    </div>
+
+    <h6>Return</h6>
+    <div class="mb-3">
+        <div><code>string</code></div>
     </div></div>            </div>
                     <div class="mb-4">
                 <a name="which"></a>
