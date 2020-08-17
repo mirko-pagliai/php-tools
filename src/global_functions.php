@@ -348,6 +348,21 @@ if (!function_exists('string_starts_with')) {
     }
 }
 
+if (!function_exists('uncamelcase')) {
+    /**
+     * Gets an "uncamelcase" string.
+     *
+     * For example, from `thisIsAString` to `this_is_a_string`.
+     * @param string $string The string you want to uncamelcase
+     * @return string
+     * @since 1.4.2
+     */
+    function uncamelcase($string)
+    {
+        return strtolower(preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $string));
+    }
+}
+
 if (!function_exists('which')) {
     /**
      * Executes the `which` command and shows the full path of (shell) commands

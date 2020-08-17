@@ -13,7 +13,6 @@
 
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 use Tools\Exceptionist;
 
@@ -129,7 +128,7 @@ if (!function_exists('dir_tree')) {
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
-        } catch (DirectoryNotFoundException $e) {
+        } catch (DirectoryNotFoundException | \InvalidArgumentException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }
@@ -242,7 +241,7 @@ if (!function_exists('is_writable_resursive')) {
             }
 
             return true;
-        } catch (DirectoryNotFoundException $e) {
+        } catch (\InvalidArgumentException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }
@@ -332,7 +331,7 @@ if (!function_exists('unlink_recursive')) {
             $filesystem->remove($files);
 
             return true;
-        } catch (IOException | DirectoryNotFoundException $e) {
+        } catch (IOException | \InvalidArgumentException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }

@@ -13,8 +13,8 @@
 
 namespace Tools\Test;
 
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -121,7 +121,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertSame([[], []], dir_tree(TMP . 'noExisting', false, true));
 
         //Using a no existing directory
-        $this->expectException(DirectoryNotFoundException::class);
+        $this->expectException(InvalidArgumentException::class);
         dir_tree(TMP . 'noExisting');
     }
 
@@ -230,7 +230,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting', true, true));
 
         //Using a no existing directory
-        $this->expectException(DirectoryNotFoundException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
     }
 
@@ -287,7 +287,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertFalse(unlink_recursive(TMP . 'noExisting', false, true));
 
         //Using a no existing directory
-        $this->expectException(DirectoryNotFoundException::class);
+        $this->expectException(InvalidArgumentException::class);
         unlink_recursive(TMP . 'noExisting');
     }
 }

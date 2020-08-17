@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.2
+* added `uncamelcase()` global function.
+
 ### 1.4.1
 * added `slug()` global function;
 * added `Exceptionist` class. All `_or_fail()` methods are now deprecated;
