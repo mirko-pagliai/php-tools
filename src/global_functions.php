@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
+use function Symfony\Component\String\u;
 
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
@@ -347,6 +348,21 @@ if (!function_exists('string_starts_with')) {
     function string_starts_with(string $haystack, string $needle): bool
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
+    }
+}
+
+if (!function_exists('uncamelcase')) {
+    /**
+     * Gets an "uncamelcase" string.
+     *
+     * For example, from `thisIsAString` to `this_is_a_string`.
+     * @param string $string The string you want to uncamelcase
+     * @return string
+     * @since 1.4.2
+     */
+    function uncamelcase(string $string): string
+    {
+        return (string)u($string)->snake();
     }
 }
 

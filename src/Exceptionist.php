@@ -22,7 +22,6 @@ use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\PropertyNotExistsException;
-use function Symfony\Component\String\u;
 
 /**
  * Exceptionist
@@ -61,7 +60,7 @@ class Exceptionist
     public static function __callStatic(string $name, array $arguments)
     {
         //Gets the PHP function name
-        $name = (string)u($name)->snake();
+        $name = uncamelcase($name);
         if (!function_exists($name)) {
             trigger_error(sprintf('Function `%s()` does not exist', $name));
         }
