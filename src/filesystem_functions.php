@@ -11,9 +11,11 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
+use Tools\Exceptionist;
 
 if (!function_exists('add_slash_term')) {
     /**
@@ -37,10 +39,12 @@ if (!function_exists('create_file')) {
      * @param mixed $data The data to write. Can be either a string, an array or
      *  a stream resource
      * @param int $dirMode Mode for the directory, if it does not exist
+     * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @since 1.1.7
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    function create_file($filename, $data = null, $dirMode = 0777)
+    function create_file($filename, $data = null, $dirMode = 0777, $ignoreErrors = false)
     {
         try {
             $filesystem = new Filesystem();
@@ -48,7 +52,11 @@ if (!function_exists('create_file')) {
             $filesystem->dumpFile($filename, $data);
 
             return true;
-        } catch (IOExceptionInterface $e) {
+        } catch (IOException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
             return false;
         }
     }
@@ -84,12 +92,14 @@ if (!function_exists('dir_tree')) {
      * @param string $path The directory path to build the tree from
      * @param array|bool $exceptions Either an array of filename or folder names
      *  to exclude or boolean true to not grab dot files/folders
+     * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array Array of nested directories and files in each directory
      * @since 1.0.7
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
-    function dir_tree($path, $exceptions = false)
+    function dir_tree($path, $exceptions = false, $ignoreErrors = false)
     {
-        $path = rtrim($path, DS);
+        $path = $path === DS ? DS : rtrim($path, DS);
         $finder = new Finder();
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
@@ -119,7 +129,11 @@ if (!function_exists('dir_tree')) {
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
-        } catch (\InvalidArgumentException $e) {
+        } catch (DirectoryNotFoundException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
             return [[], []];
         }
     }
@@ -206,25 +220,35 @@ if (!function_exists('is_writable_resursive')) {
      * It can also check that all the files are writable.
      * @param string $dirname Path to the directory
      * @param bool $checkOnlyDir If `true`, also checks for all files
+     * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @since 1.0.7
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
-    function is_writable_resursive($dirname, $checkOnlyDir = true)
+    function is_writable_resursive($dirname, $checkOnlyDir = true, $ignoreErrors = false)
     {
-        list($directories, $files) = dir_tree($dirname);
-        $itemsToCheck = $checkOnlyDir ? $directories : array_merge($directories, $files);
+        try {
+            list($directories, $files) = dir_tree($dirname);
+            $items = $checkOnlyDir ? $directories : array_merge($directories, $files);
 
-        if (!in_array($dirname, $itemsToCheck)) {
-            $itemsToCheck[] = $dirname;
-        }
-
-        foreach ($itemsToCheck as $item) {
-            if (!is_readable($item) || !is_writable($item)) {
-                return false;
+            if (!in_array($dirname, $items)) {
+                $items[] = $dirname;
             }
-        }
 
-        return true;
+            foreach ($items as $item) {
+                if (!is_readable($item) || !is_writable($item)) {
+                    return false;
+                }
+            }
+
+            return true;
+        } catch (DirectoryNotFoundException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
+            return false;
+        }
     }
 }
 
@@ -237,7 +261,7 @@ if (!function_exists('rmdir_recursive')) {
      *  leaving the directories unaltered, use the `unlink_recursive()`
      *  function instead.
      * @param string $dirname Path to the directory
-     * @return void
+     * @return bool
      * @see unlink_recursive()
      * @since 1.0.6
      * @throws \Symfony\Component\Filesystem\Exception\IOException
@@ -245,10 +269,13 @@ if (!function_exists('rmdir_recursive')) {
     function rmdir_recursive($dirname)
     {
         if (!is_dir($dirname)) {
-            return;
+            return false;
         }
+
         $filesystem = new Filesystem();
         $filesystem->remove($dirname);
+
+        return true;
     }
 }
 
@@ -260,13 +287,13 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \RuntimeException
+     * @throws \Exception
      */
     function rtr($path)
     {
         $root = getenv('ROOT');
         if (!$root) {
-            is_true_or_fail(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant', \RuntimeException::class);
+            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
             $root = ROOT;
         }
 
@@ -290,15 +317,27 @@ if (!function_exists('unlink_recursive')) {
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
-     * @return void
+     * @param bool $ignoreErrors With `true`, errors will be ignored
+     * @return bool
      * @see rmdir_recursive()
      * @since 1.0.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
-    function unlink_recursive($dirname, $exceptions = false)
+    function unlink_recursive($dirname, $exceptions = false, $ignoreErrors = false)
     {
-        list(, $files) = dir_tree($dirname, $exceptions);
-        $filesystem = new Filesystem();
-        $filesystem->remove($files);
+        try {
+            list(, $files) = dir_tree($dirname, $exceptions);
+            $filesystem = new Filesystem();
+            $filesystem->remove($files);
+
+            return true;
+        } catch (IOException | DirectoryNotFoundException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
+            return false;
+        }
     }
 }

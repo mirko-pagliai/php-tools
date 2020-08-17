@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -16,7 +17,6 @@ namespace Tools\TestSuite;
 
 use BadMethodCallException;
 use Exception;
-use PHPUnit\Framework\Error\Error;
 
 /**
  * A trait that provides some assertion methods
@@ -120,8 +120,6 @@ trait TestTrait
 
         try {
             call_user_func($function);
-        } catch (Error $e) {
-            throw $e;
         } catch (Exception $e) {
             parent::assertInstanceof(
                 $expectedException,

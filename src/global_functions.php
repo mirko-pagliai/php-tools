@@ -11,6 +11,8 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Tools\Exceptionist;
+
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
@@ -147,7 +149,7 @@ if (!function_exists('deprecationWarning')) {
      * @return void
      * @since 1.1.7
      */
-    function deprecationWarning($message, $stackFrame = 1)
+    function deprecationWarning($message, $stackFrame = 0)
     {
         if (!(error_reporting() & E_USER_DEPRECATED)) {
             return;
@@ -273,7 +275,7 @@ if (!function_exists('objects_map')) {
     function objects_map(array $objects, $method, array $args = [])
     {
         return array_map(function ($object) use ($method, $args) {
-            is_true_or_fail(method_exists($object, '__call') || method_exists($object, $method), sprintf(
+            Exceptionist::isTrue(method_exists($object, '__call') || method_exists($object, $method), sprintf(
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
@@ -281,6 +283,24 @@ if (!function_exists('objects_map')) {
 
             return call_user_func_array([$object, $method], $args);
         }, $objects);
+    }
+}
+
+if (!function_exists('slug')) {
+    /**
+     * Gets a slug from a string
+     * @param string $string The string you want to generate the slug from
+     * @param bool $lowerCase With `true` the string will be lowercase
+     * @return string
+     * @see https://symfony.com/doc/current/components/string.html#slugger
+     * @since 1.4.1
+     */
+    function slug($string, $lowerCase = true)
+    {
+        $slug = str_replace(['_', '//', '\\', '\'', ' '], '-', $string);
+        $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
+
+        return $lowerCase ? strtolower($slug) : $slug;
     }
 }
 

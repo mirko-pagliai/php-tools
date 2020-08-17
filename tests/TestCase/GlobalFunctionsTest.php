@@ -207,6 +207,25 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `slug()` global function
+     * @test
+     */
+    public function testSlug()
+    {
+        foreach ([
+            'This is a Slug',
+            'This\'is a slug',
+            'This\\Is\\A\\Slug',
+            'This ìs a slùg',
+            'this_is_a_slug',
+        ] as $string) {
+            $this->assertSame('this-is-a-slug', slug($string));
+        }
+
+        $this->assertSame('This-is-a-Slug', slug('This is a Slug', false));
+    }
+
+    /**
      * Test for `is_stringable()` global function
      * @test
      */
