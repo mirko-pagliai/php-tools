@@ -310,6 +310,17 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `uncamelcase()` global function
+     * @test
+     */
+    public function testUncamelcase()
+    {
+        foreach (['ThisIsASlug', 'thisIsASlug'] as $string) {
+            $this->assertSame('this_is_a_slug', uncamelcase($string));
+        }
+    }
+
+    /**
      * Test for `which()` global function
      * @test
      */
