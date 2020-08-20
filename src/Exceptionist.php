@@ -65,7 +65,7 @@ class Exceptionist
         }
 
         //Splits and orders arguments
-        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
+        list($arguments, $message, $exception) = $arguments + [[], '', Exception::class];
         //Calls the PHP function and gets the result
         try {
             $result = call_user_func_array($name, (array)$arguments);
@@ -196,7 +196,7 @@ class Exceptionist
             return $value;
         }
         if ($message instanceof Throwable || (is_string($message) && class_exists($message))) {
-            [$exception, $message] = [$message, ''];
+            list($exception, $message) = [$message, ''];
         }
         if (!$exception instanceof Throwable && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');

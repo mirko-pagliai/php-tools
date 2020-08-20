@@ -128,7 +128,13 @@ if (!function_exists('dir_tree')) {
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
             return [$dirs, $files];
-        } catch (DirectoryNotFoundException | \InvalidArgumentException $e) {
+        } catch (DirectoryNotFoundException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
+            return [[], []];
+        } catch (\InvalidArgumentException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }
@@ -331,7 +337,13 @@ if (!function_exists('unlink_recursive')) {
             $filesystem->remove($files);
 
             return true;
-        } catch (IOException | \InvalidArgumentException $e) {
+        } catch (IOException $e) {
+            if (!$ignoreErrors) {
+                throw $e;
+            }
+
+            return false;
+        } catch (\InvalidArgumentException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }

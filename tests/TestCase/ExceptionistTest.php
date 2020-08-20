@@ -180,7 +180,7 @@ class ExceptionistTest extends TestCase
             ['', 'An empty string is not equal to `true`'],
             [0, 'Value `0` is not equal to `true`'],
         ] as $exception) {
-            [$value, $expectedMessage] = $exception;
+            list($value, $expectedMessage) = $exception;
             $this->assertException(Exception::class, function () use ($value) {
                 Exceptionist::isTrue($value);
             }, $expectedMessage);
