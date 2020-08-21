@@ -5,7 +5,7 @@
 
     <rule ref="./sniffer-ruleset.xml"/>
 
-    <rule ref="CakePHP.Formatting.UseInAlphabeticalOrder.UseInAlphabeticalOrder">
-        <severity>0</severity>
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
+        <exclude-pattern>/tests/test_app</exclude-pattern>
     </rule>
 </ruleset>
