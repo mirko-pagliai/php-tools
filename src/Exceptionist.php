@@ -16,7 +16,6 @@ namespace Tools;
 
 use ErrorException;
 use Exception;
-use Throwable;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
@@ -195,10 +194,10 @@ class Exceptionist
         if ($value) {
             return $value;
         }
-        if ($message instanceof Throwable || (is_string($message) && class_exists($message))) {
+        if ($message instanceof \Exception || (is_string($message) && class_exists($message))) {
             list($exception, $message) = [$message, ''];
         }
-        if (!$exception instanceof Throwable && !is_string($exception)) {
+        if (!$exception instanceof \Exception && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');
         }
 
@@ -217,6 +216,6 @@ class Exceptionist
             }
         }
 
-        throw $exception instanceof Throwable ? $exception : new $exception($message);
+        throw $exception instanceof \Exception ? $exception : new $exception($message);
     }
 }
