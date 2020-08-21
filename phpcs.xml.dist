@@ -5,22 +5,7 @@
 
     <rule ref="./sniffer-ruleset.xml"/>
 
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
-        <exclude-pattern>/tests/test_app</exclude-pattern>
-    </rule>
-    <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator.NullCoalesceOperatorNotUsed">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.PHP.ShortList.LongListUsed">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue.NullabilitySymbolRequired">
-        <severity>0</severity>
-    </rule>
-    <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
+    <rule ref="CakePHP.Formatting.UseInAlphabeticalOrder.UseInAlphabeticalOrder">
         <severity>0</severity>
     </rule>
 </ruleset>
