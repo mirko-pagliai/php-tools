@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Tools;
 
+use BadMethodCallException;
 use ErrorException;
 use Exception;
 use Throwable;
@@ -157,6 +158,26 @@ class Exceptionist
         self::isTrue(is_writable($filename), $message, $exception);
 
         return $filename;
+    }
+
+    /**
+     * Checks whether a class method exists
+     * @param string|object $object An object instance or a class name
+     * @param string $methodName The method name
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return array Array with class name and method name
+     * @since 1.4.3
+     * @throws \BadMethodCallException
+     */
+    public static function methodExists($object, string $methodName, $message = '', $exception = BadMethodCallException::class): array
+    {
+        $object = is_string($object) ? $object : get_class($object);
+        $message = $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName);
+        self::isTrue(method_exists($object, $methodName), $message, $exception);
+
+        return [$object, $methodName];
     }
 
     /**
