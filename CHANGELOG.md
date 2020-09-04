@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.3
+* added `Exceptionist::methodExists()` method.
+
 ### 1.4.2
 * added `uncamelcase()` global function.
 
