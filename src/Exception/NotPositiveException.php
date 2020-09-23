@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 /**
  * This file is part of php-tools.
  *
@@ -18,7 +19,7 @@ namespace Tools\Exception;
 use Tools\InvalidValueException;
 
 /**
- * "Not positive value" exception
+ * "Not positive value" exception.
  */
 class NotPositiveException extends InvalidValueException
 {

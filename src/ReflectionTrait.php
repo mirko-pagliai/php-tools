@@ -20,7 +20,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * A Reflection trait
+ * A `Reflection` trait.
  */
 trait ReflectionTrait
 {

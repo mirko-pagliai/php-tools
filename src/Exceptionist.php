@@ -25,7 +25,7 @@ use Tools\Exception\NotReadableException;
 use Tools\Exception\PropertyNotExistsException;
 
 /**
- * Exceptionist
+ * Exceptionist.
  * @method array isArray(array $args, string $message, $exception)
  * @method string isDir(string $filename, string $message, $exception)
  * @method mixed isPositive($value, string $message, $exception)
