@@ -3,11 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>php-tools-                 Trait
-     Tools\ReflectionTrait
-</title>
+        <title>php-tools - Trait Tools\ReflectionTrait</title>
         <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/highlight/default.css">
+        <link rel="stylesheet" href="assets/highlight/styles/default.css">
+        <link rel="stylesheet" href="assets/default.css">
         <script src="assets/highlight/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
@@ -19,7 +18,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 col-lg-4 p-3">
-                    <ul class="list-unstyled m-0">
+<ul class="list-unstyled m-0">
     <li class="text-truncate">
         <a href="Class-Tools-BodyParser.html" title="Tools\BodyParser">Tools\BodyParser</a>
     </li>
@@ -86,219 +85,333 @@
     <li class="text-truncate">
         <a href="Class-Tools-TestSuite-TestTrait.html" title="Tools\TestSuite\TestTrait">Tools\TestSuite\TestTrait</a>
     </li>
+    <li>
+        <a href="functions.html" title="Functions">Functions</a>
+    </li>
 </ul>
                 </div>
-                <div class="col p-3">
-                        <h2>            Trait
-     <em>ReflectionTrait</em></h2>
+                <div class="col-md-9 col-lg-8 p-3">
+                        <div class="class-element">
+    <h2>Trait <em>ReflectionTrait</em></h2>
 
-    <p>A Reflection trait</p>
+    <div class="description"><p>A <code>Reflection</code> trait.</p></div>
 
-    
-    
-    
-    <div class="p-3 mb-2 bg-light text-dark">
-        <div><strong>Namespace:</strong> Tools</div>
-        <div><strong>Location:</strong> /home/mirko/Libs/php-tools/src/ReflectionTrait.php</div>
+
+
+
+    <div class="namespace">
+        <div><strong>Namespace:</strong> <pre class="d-inline">Tools</pre></div>
+        <div><strong>Location:</strong> <pre class="d-inline">/home/mirko/Libs/php-tools/src/ReflectionTrait.php</pre></div>
     </div>
 
-    
-    
-            <h4>Methods summary</h4>
-        <ul>
-                            <li>
-                    <div>
+
+
+    <h4>Methods summary</h4>
+    <ul>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#_getMethodInstance">_getMethodInstance()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Internal method to get the <code>ReflectionMethod</code> instance</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Internal method to get the <code>ReflectionMethod</code> instance</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#_getPropertyInstance">_getPropertyInstance()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Internal method to get the <code>ReflectionProperty</code> instance</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Internal method to get the <code>ReflectionProperty</code> instance</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#getProperties">getProperties()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Gets all properties as array with property names as keys.</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Gets all properties as array with property names as keys.</p>
+<p>If the object is a mock, it removes the properties added by PHPUnit.</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#getProperty">getProperty()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Gets a property value</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Gets a property value</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#invokeMethod">invokeMethod()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Invokes a method</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Invokes a method</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#setProperty">setProperty()</a>
     </code> <span class="badge badge-light">protected</span>
-    <div><p>Sets a property value</p></div>
-</div>                </li>
-                    </ul>
-    
-            <h4>Methods detail</h4>
-                    <div class="mb-4">
-                <a name="_getMethodInstance"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>_getMethodInstance()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">_getMethodInstance(object $object, string $methodName)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Internal method to get the <code>ReflectionMethod</code> instance</p></small>
-    </blockquote>
+    <div class="description"><p>Sets a property value</p></div>
 
-    <h6>Parameters</h6>
-    <div class="mb-3">
-        <code class="language-php">object $object</code> <p>Instantiated object that we will run method on</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">string $methodName</code> <p>Method name</p>
-    </div>
+</div>
+        </li>
+    </ul>
 
+    <h4>Methods detail</h4>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="_getMethodInstance"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>_getMethodInstance()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">_getMethodInstance(object $object, string $methodName)</code></pre>
+        <div class="description"><p>Internal method to get the <code>ReflectionMethod</code> instance</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">object $object</code></pre>
+            <div class="description"><p>Instantiated object that we will run method on</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $methodName</code></pre>
+            <div class="description"><p>Method name</p></div>
+        </div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>ReflectionMethod</code></div>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="_getPropertyInstance"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>_getPropertyInstance()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">_getPropertyInstance(object $object, string $name)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Internal method to get the <code>ReflectionProperty</code> instance</p></small>
-    </blockquote>
-
-    <h6>Parameters</h6>
-    <div class="mb-3">
-        <code class="language-php">object $object</code> <p>Instantiated object that has the property</p>
+        <pre><code class="language-php">ReflectionMethod</code></pre>
     </div>
-    <div class="mb-3">
-        <code class="language-php">string $name</code> <p>Property name</p>
-    </div>
+</div>
 
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="_getPropertyInstance"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>_getPropertyInstance()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">_getPropertyInstance(object $object, string $name)</code></pre>
+        <div class="description"><p>Internal method to get the <code>ReflectionProperty</code> instance</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">object $object</code></pre>
+            <div class="description"><p>Instantiated object that has the property</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $name</code></pre>
+            <div class="description"><p>Property name</p></div>
+        </div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>ReflectionProperty</code></div>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="getProperties"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>getProperties()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">getProperties(string|object $object, integer $filter = 1792)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets all properties as array with property names as keys.
-If the object is a mock, it removes the properties added by PHPUnit.</p></small>
-    </blockquote>
-
-    <h6>Parameters</h6>
-    <div class="mb-3">
-        <code class="language-php">string|object $object</code> <p>Instantiated object from which to get
-properties or class name</p>
+        <pre><code class="language-php">ReflectionProperty</code></pre>
     </div>
-    <div class="mb-3">
-        <code class="language-php">integer $filter = 1792</code> <p>The optional filter, for filtering desired property
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="getProperties"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>getProperties()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">getProperties(string|object $object, integer $filter = 1792)</code></pre>
+        <div class="description"><p>Gets all properties as array with property names as keys.</p>
+<p>If the object is a mock, it removes the properties added by PHPUnit.</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string|object $object</code></pre>
+            <div class="description"><p>Instantiated object from which to get
+properties or class name</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">integer $filter = 1792</code></pre>
+            <div class="description"><p>The optional filter, for filtering desired property
 types. It's configured using <code>ReflectionProperty</code> constants, and
-default is public, protected and private properties</p>
-    </div>
+default is public, protected and private properties</p></div>
+        </div>
 
+<div class="tag-element">
+    <h6>Link</h6>
+    <div class="mb-3">
+        <div class="description"><a href="http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers" target="_blank">http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers</a></div>
+    </div>
+</div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>array</code></div>
-        <div><p>Property names as keys and property values as values</p></div>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="getProperty"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>getProperty()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">getProperty(string|object $object, string $name)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets a property value</p></small>
-    </blockquote>
-
-    <h6>Parameters</h6>
-    <div class="mb-3">
-        <code class="language-php">string|object $object</code> <p>Instantiated object that has the property
-or class name</p>
+        <pre><code class="language-php">array</code></pre>
+        <div class="description"><p>Property names as keys and property values as values</p></div>
     </div>
-    <div class="mb-3">
-        <code class="language-php">string $name</code> <p>Property name</p>
-    </div>
+</div>
 
+<div class="tag-element">
+    <h6>Since</h6>
+    <div class="mb-3">
+        <div class="description"><p>1.1.4</p></div>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="getProperty"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>getProperty()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">getProperty(string|object $object, string $name)</code></pre>
+        <div class="description"><p>Gets a property value</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string|object $object</code></pre>
+            <div class="description"><p>Instantiated object that has the property
+or class name</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $name</code></pre>
+            <div class="description"><p>Property name</p></div>
+        </div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>mixed</code></div>
-        <div><p>Property value</p></div>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="invokeMethod"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>invokeMethod()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">invokeMethod(string|object $object, string $methodName, array $parameters = [])</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Invokes a method</p></small>
-    </blockquote>
+        <pre><code class="language-php">mixed</code></pre>
+        <div class="description"><p>Property value</p></div>
+    </div>
+</div>
 
-    <h6>Parameters</h6>
+<div class="tag-element">
+    <h6>Uses</h6>
     <div class="mb-3">
-        <code class="language-php">string|object $object</code> <p>Instantiated object that we will run method
-on or class name</p>
+        <div class="description"><p>_getPropertyInstance()</p></div>
     </div>
-    <div class="mb-3">
-        <code class="language-php">string $methodName</code> <p>Method name</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">array $parameters = []</code> <p>Array of parameters to pass into method</p>
-    </div>
+</div>
 
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="invokeMethod"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>invokeMethod()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">invokeMethod(string|object $object, string $methodName, array $parameters = [])</code></pre>
+        <div class="description"><p>Invokes a method</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string|object $object</code></pre>
+            <div class="description"><p>Instantiated object that we will run method
+on or class name</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $methodName</code></pre>
+            <div class="description"><p>Method name</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">array $parameters = []</code></pre>
+            <div class="description"><p>Array of parameters to pass into method</p></div>
+        </div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>mixed</code></div>
-        <div><p>Method return</p></div>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="setProperty"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>setProperty()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">setProperty(object $object, string $name, mixed $value)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Sets a property value</p></small>
-    </blockquote>
+        <pre><code class="language-php">mixed</code></pre>
+        <div class="description"><p>Method return</p></div>
+    </div>
+</div>
 
-    <h6>Parameters</h6>
+<div class="tag-element">
+    <h6>Uses</h6>
     <div class="mb-3">
-        <code class="language-php">object $object</code> <p>Instantiated object that has the property</p>
+        <div class="description"><p>_getMethodInstance()</p></div>
     </div>
-    <div class="mb-3">
-        <code class="language-php">string $name</code> <p>Property name</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">mixed $value</code> <p>Value you want to set</p>
-    </div>
+</div>
 
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="setProperty"></a>
+    <div class="title">
+        <div>protected</div>
+        <h5>setProperty()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">setProperty(object $object, string $name, mixed $value)</code></pre>
+        <div class="description"><p>Sets a property value</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">object $object</code></pre>
+            <div class="description"><p>Instantiated object that has the property</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $name</code></pre>
+            <div class="description"><p>Property name</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">mixed $value</code></pre>
+            <div class="description"><p>Value you want to set</p></div>
+        </div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>mixed</code></div>
-        <div><p>Old property value</p></div>
-    </div></div>            </div>
-            
+        <pre><code class="language-php">mixed</code></pre>
+        <div class="description"><p>Old property value</p></div>
+    </div>
+</div>
+
+<div class="tag-element">
+    <h6>Uses</h6>
+    <div class="mb-3">
+        <div class="description"><p>_getPropertyInstance()</p></div>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
 
-        <div id="footer">
+<div id="footer">
     <p class="bg-light m-0 p-3 small text-center">
         This documentation was built automatically thanks to <a href="https://github.com/mirko-pagliai/php-doc-maker" target="_blank">php-doc-maker</a>
     </p>

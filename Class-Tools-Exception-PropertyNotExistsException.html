@@ -3,11 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>php-tools-                 Class
-     Tools\Exception\PropertyNotExistsException
-</title>
+        <title>php-tools - Class Tools\Exception\PropertyNotExistsException</title>
         <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/highlight/default.css">
+        <link rel="stylesheet" href="assets/highlight/styles/default.css">
+        <link rel="stylesheet" href="assets/default.css">
         <script src="assets/highlight/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
@@ -19,7 +18,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 col-lg-4 p-3">
-                    <ul class="list-unstyled m-0">
+<ul class="list-unstyled m-0">
     <li class="text-truncate">
         <a href="Class-Tools-BodyParser.html" title="Tools\BodyParser">Tools\BodyParser</a>
     </li>
@@ -86,97 +85,131 @@
     <li class="text-truncate">
         <a href="Class-Tools-TestSuite-TestTrait.html" title="Tools\TestSuite\TestTrait">Tools\TestSuite\TestTrait</a>
     </li>
+    <li>
+        <a href="functions.html" title="Functions">Functions</a>
+    </li>
 </ul>
                 </div>
-                <div class="col p-3">
-                        <h2>            Class
-     <em>PropertyNotExistsException</em></h2>
+                <div class="col-md-9 col-lg-8 p-3">
+                        <div class="class-element">
+    <h2>Class <em>PropertyNotExistsException</em></h2>
 
-    <p>"Property does not exist" exception</p>
+    <div class="description"><p>&quot;Property does not exist&quot; exception.</p></div>
 
-            <p>
-            Extends <code>Exception</code>.
-        </p>
-    
-    
-    
-    <div class="p-3 mb-2 bg-light text-dark">
-        <div><strong>Namespace:</strong> Tools\Exception</div>
-        <div><strong>Location:</strong> /home/mirko/Libs/php-tools/src/Exception/PropertyNotExistsException.php</div>
+    <div class="mb-2">Extends <code>Exception</code>.</div>
+
+
+
+    <div class="namespace">
+        <div><strong>Namespace:</strong> <pre class="d-inline">Tools\Exception</pre></div>
+        <div><strong>Location:</strong> <pre class="d-inline">/home/mirko/Libs/php-tools/src/Exception/PropertyNotExistsException.php</pre></div>
     </div>
 
-    
-            <h4>Properties summary</h4>
-        <ul>
-                            <li>
-                    <div>
-    <code>$property</code> <span class="badge badge-light">protected</span>
+
+    <h4>Properties summary</h4>
+    <ul>
+        <li>
+<div class="property-element">
+    <div>
+        <code>$property</code> <span class="badge badge-light">protected</span>
+    </div>
+    <pre>string|null</pre>
+    <div class="description"><p>Property name</p></div>
 </div>
-<div><span class="badge badge-light">string|null</span></div>
-<div><p>Property name</p></div>
-                </li>
-                    </ul>
-    
-            <h4>Methods summary</h4>
-        <ul>
-                            <li>
-                    <div>
+        </li>
+    </ul>
+
+    <h4>Methods summary</h4>
+    <ul>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#__construct">__construct()</a>
     </code> <span class="badge badge-light">public</span>
-    <div><p>Constructor</p></div>
-</div>                </li>
-                            <li>
-                    <div>
+    <div class="description"><p>Constructor</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
     <code>
         <a href="#getPropertyName">getPropertyName()</a>
     </code> <span class="badge badge-light">public</span>
-    <div><p>Gets the name of the property that do not exist</p></div>
-</div>                </li>
-                    </ul>
-    
-            <h4>Methods detail</h4>
-                    <div class="mb-4">
-                <a name="__construct"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>__construct()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">__construct(string|null $message = null, integer $code = 0, Throwable|null $previous = null, string|null $property = null)</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Constructor</p></small>
-    </blockquote>
+    <div class="description"><p>Gets the name of the property that do not exist</p></div>
 
-    <h6>Parameters</h6>
-    <div class="mb-3">
-        <code class="language-php">string|null $message = null</code> <p>The string of the error message</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">integer $code = 0</code> <p>The code of the error</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">Throwable|null $previous = null</code> <p>the previous exception</p>
-    </div>
-    <div class="mb-3">
-        <code class="language-php">string|null $property = null</code> <p>Name of the property that do not exist</p>
-    </div></div>            </div>
-                    <div class="mb-4">
-                <a name="getPropertyName"></a>
-<div class="pb-1 pt-2 px-2 mb-3 bg-info text-white"><h5>getPropertyName()</h5></div>
-<div class="ml-3">
-    <pre><code class="language-php">getPropertyName()</code></pre>
-    <blockquote class="blockquote">
-        <small class="font-weight-light"><p>Gets the name of the property that do not exist</p></small>
-    </blockquote>
+</div>
+        </li>
+    </ul>
 
+    <h4>Methods detail</h4>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="__construct"></a>
+    <div class="title">
+        <div>public</div>
+        <h5>__construct()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">__construct(string|null $message = null, integer $code = 0, Throwable|null $previous = null, string|null $property = null)</code></pre>
+        <div class="description"><p>Constructor</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string|null $message = null</code></pre>
+            <div class="description"><p>The string of the error message</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">integer $code = 0</code></pre>
+            <div class="description"><p>The code of the error</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">Throwable|null $previous = null</code></pre>
+            <div class="description"><p>the previous exception</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string|null $property = null</code></pre>
+            <div class="description"><p>Name of the property that do not exist</p></div>
+        </div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="getPropertyName"></a>
+    <div class="title">
+        <div>public</div>
+        <h5>getPropertyName()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">getPropertyName()</code></pre>
+        <div class="description"><p>Gets the name of the property that do not exist</p></div>
+
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
-        <div><code>string|null</code></div>
-    </div></div>            </div>
-            
+        <pre><code class="language-php">string|null</code></pre>
+    </div>
+</div>
+
+<div class="tag-element">
+    <h6>Since</h6>
+    <div class="mb-3">
+        <div class="description"><p>1.2.11</p></div>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+</div>
+
                 </div>
             </div>
         </div>
 
-        <div id="footer">
+<div id="footer">
     <p class="bg-light m-0 p-3 small text-center">
         This documentation was built automatically thanks to <a href="https://github.com/mirko-pagliai/php-doc-maker" target="_blank">php-doc-maker</a>
     </p>
