@@ -2,7 +2,7 @@
 ## 1.4 branch
 ### 1.4.3
 * added `Exceptionist::methodExists()` method;
-* fixed compatibility with PHP 7.4.
+* fixed compatibility with PHP 7.4 and phpunit 9.
 
 ### 1.4.2
 * added `uncamelcase()` global function.
