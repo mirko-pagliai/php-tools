@@ -19,7 +19,7 @@ use RuntimeException;
 use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
 
 /**
- * Event
+ * Event instance.
  */
 class Event extends BaseEvent
 {

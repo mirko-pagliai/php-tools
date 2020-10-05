@@ -18,7 +18,7 @@ namespace Tools\TestSuite;
 use Tools\Event\EventDispatcher;
 
 /**
- * Trait to assert whether events were fired or not
+ * Trait to assert whether events were fired or not.
  */
 trait EventAssertTrait
 {

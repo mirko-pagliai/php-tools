@@ -143,8 +143,8 @@ class GlobalFunctionsTest extends TestCase
         error_reporting($current);
 
         $this->expectException(Deprecated::class);
-        $this->expectExceptionMessageRegExp('/^This method is deprecated/');
-        $this->expectExceptionMessageRegExp('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
+        $this->expectExceptionMessageMatches('/^This method is deprecated/');
+        $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');
     }
 
@@ -206,6 +206,25 @@ class GlobalFunctionsTest extends TestCase
         foreach ([0, -1, 1.1, '0', '1.1'] as $string) {
             $this->assertFalse(is_positive($string));
         }
+    }
+
+    /**
+     * Test for `slug()` global function
+     * @test
+     */
+    public function testSlug()
+    {
+        foreach ([
+            'This is a Slug',
+            'This\'is a slug',
+            'This\\Is\\A\\Slug',
+            'This ìs a slùg',
+            'this_is_a_slug',
+        ] as $string) {
+            $this->assertSame('this-is-a-slug', slug($string));
+        }
+
+        $this->assertSame('This-is-a-Slug', slug('This is a Slug', false));
     }
 
     /**
@@ -287,6 +306,17 @@ class GlobalFunctionsTest extends TestCase
         }
         foreach ([' ', 'some words', 'test'] as $var) {
             $this->assertFalse(string_starts_with($string, $var));
+        }
+    }
+
+    /**
+     * Test for `uncamelcase()` global function
+     * @test
+     */
+    public function testUncamelcase()
+    {
+        foreach (['ThisIsASlug', 'thisIsASlug'] as $string) {
+            $this->assertSame('this_is_a_slug', uncamelcase($string));
         }
     }
 

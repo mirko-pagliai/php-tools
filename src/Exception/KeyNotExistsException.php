@@ -19,7 +19,7 @@ namespace Tools\Exception;
 use Exception;
 
 /**
- * "Array key does not exist" exception
+ * "Array key does not exist" exception.
  */
 class KeyNotExistsException extends Exception
 {

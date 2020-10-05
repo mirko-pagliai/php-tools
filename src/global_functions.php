@@ -13,7 +13,9 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
+use function Symfony\Component\String\u;
 
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
@@ -288,6 +290,23 @@ if (!function_exists('objects_map')) {
     }
 }
 
+if (!function_exists('slug')) {
+    /**
+     * Gets a slug from a string
+     * @param string $string The string you want to generate the slug from
+     * @param bool $lowerCase With `true` the string will be lowercase
+     * @return string
+     * @see https://symfony.com/doc/current/components/string.html#slugger
+     * @since 1.4.1
+     */
+    function slug(string $string, bool $lowerCase = true): string
+    {
+        $slug = (string)(new AsciiSlugger())->slug($string);
+
+        return $lowerCase ? strtolower($slug) : $slug;
+    }
+}
+
 if (!function_exists('string_ends_with')) {
     /**
      * Checks if a string ends with a string
@@ -329,6 +348,21 @@ if (!function_exists('string_starts_with')) {
     function string_starts_with(string $haystack, string $needle): bool
     {
          return substr($haystack, 0, strlen($needle)) === $needle;
+    }
+}
+
+if (!function_exists('uncamelcase')) {
+    /**
+     * Gets an "uncamelcase" string.
+     *
+     * For example, from `thisIsAString` to `this_is_a_string`.
+     * @param string $string The string you want to uncamelcase
+     * @return string
+     * @since 1.4.2
+     */
+    function uncamelcase(string $string): string
+    {
+        return (string)u($string)->snake();
     }
 }
 

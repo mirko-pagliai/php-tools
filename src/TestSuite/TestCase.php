@@ -20,7 +20,7 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\ReflectionTrait;
 
 /**
- * TestCase class
+ * TestCase class.
  */
 abstract class TestCase extends PHPUnitTestCase
 {
@@ -28,7 +28,9 @@ abstract class TestCase extends PHPUnitTestCase
     use TestTrait;
 
     /**
-     * Teardown any static object changes and restore them
+     * Teardown any static object changes and restore them.
+     *
+     * It empties the temporary files directory.
      * @return void
      */
     public function tearDown(): void
