@@ -52,10 +52,12 @@ abstract class TestCase extends PHPUnitTestCase
      */
     public function expectExceptionMessageMatches(string $regularExpression): void
     {
-        if (method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
-            parent::expectExceptionMessageMatches($regularExpression);
-        } else {
+        if (!method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
             $this->expectExceptionMessageRegExp($regularExpression);
+
+            return;
         }
+
+        parent::expectExceptionMessageMatches($regularExpression);
     }
 }
