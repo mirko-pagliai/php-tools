@@ -42,6 +42,7 @@ class EventDispatcherTraitTest extends TestCase
     /**
      * Test for `dispatchEvent()` method
      * @test
+     * @todo Remove the `error_reporting()` in a future release
      */
     public function testDispatchEvent()
     {
