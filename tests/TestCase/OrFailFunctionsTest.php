@@ -184,7 +184,7 @@ class OrFailFunctionsTest extends TestCase
 
         $this->assertException(PropertyNotExistsException::class, function () {
             property_exists_or_fail(new ExampleClass(), ['name']);
-        }, 'Object does not have `name` property');
+        }, 'Property `' . ExampleClass::class . '::$name` does not exist');
 
         $this->expectException(Deprecated::class);
         error_reporting($oldErrorReporting);
