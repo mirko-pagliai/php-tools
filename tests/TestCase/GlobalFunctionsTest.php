@@ -75,6 +75,21 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `array_unique_recursive()` global function
+     * @test
+     */
+    public function testArrayUniqueRecursive()
+    {
+        $array = [
+            ['first', 'second'],
+            ['first', 'second'],
+            ['other'],
+        ];
+
+        $this->assertSame([['first', 'second'], ['other']], array_unique_recursive($array));
+    }
+
+    /**
      * Test for `array_value_first()` global function
      * @test
      */
