@@ -89,7 +89,7 @@ if (!function_exists('array_unique_recursive')) {
      * @return array
      * @since 1.4.3
      */
-    function array_unique_recursive(array $array): array
+    function array_unique_recursive(array $array)
     {
         return array_values(array_map('unserialize', array_unique(array_map('serialize', $array))));
     }

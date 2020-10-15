@@ -169,7 +169,7 @@ class Exceptionist
      * @since 1.4.3
      * @throws \BadMethodCallException
      */
-    public static function methodExists($object, string $methodName, $message = '', $exception = BadMethodCallException::class): array
+    public static function methodExists($object, $methodName, $message = '', $exception = BadMethodCallException::class)
     {
         $object = is_string($object) ? $object : get_class($object);
         $message = $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName);

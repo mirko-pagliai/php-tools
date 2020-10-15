@@ -48,7 +48,7 @@ abstract class TestCase extends PHPUnitTestCase
      * @return void
      * @todo To be removed in a future release
      */
-    public function expectExceptionMessageMatches(string $regularExpression): void
+    public function expectExceptionMessageMatches($regularExpression)
     {
         $methodToCall = method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches') ? [parent::class, 'expectExceptionMessageMatches'] : [$this, 'expectExceptionMessageRegExp'];
         call_user_func($methodToCall, $regularExpression);
