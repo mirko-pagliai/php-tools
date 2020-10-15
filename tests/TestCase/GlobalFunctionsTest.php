@@ -75,6 +75,21 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `array_unique_recursive()` global function
+     * @test
+     */
+    public function testArrayUniqueRecursive()
+    {
+        $array = [
+            ['first', 'second'],
+            ['first', 'second'],
+            ['other'],
+        ];
+
+        $this->assertSame([['first', 'second'], ['other']], array_unique_recursive($array));
+    }
+
+    /**
      * Test for `array_value_first()` global function
      * @test
      */
@@ -143,8 +158,8 @@ class GlobalFunctionsTest extends TestCase
         error_reporting($current);
 
         $this->expectException(Deprecated::class);
-        $this->expectExceptionMessageRegExp('/^This method is deprecated/');
-        $this->expectExceptionMessageRegExp('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
+        $this->expectExceptionMessageMatches('/^This method is deprecated/');
+        $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');
     }
 

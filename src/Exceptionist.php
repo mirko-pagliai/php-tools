@@ -25,7 +25,7 @@ use Tools\Exception\NotReadableException;
 use Tools\Exception\PropertyNotExistsException;
 
 /**
- * Exceptionist
+ * Exceptionist.
  * @method array isArray(array $args, string $message, $exception)
  * @method string isDir(string $filename, string $message, $exception)
  * @method mixed isPositive($value, string $message, $exception)
@@ -197,7 +197,7 @@ class Exceptionist
     {
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
-            self::isTrue($result, $message ?: sprintf('Object does not have `%s` property', $name), $exception);
+            self::isTrue($result, $message ?: sprintf('Property `%s::$%s` does not exist', get_class($object), $name), $exception);
         }
 
         return $property;

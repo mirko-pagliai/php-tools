@@ -84,6 +84,21 @@ if (!function_exists('array_key_last')) {
     }
 }
 
+if (!function_exists('array_unique_recursive')) {
+    /**
+     * `array_unique()` for multidimensional arrays.
+     *
+     * Removes duplicate values from an array.
+     * @param array $array Multidimensional array
+     * @return array
+     * @since 1.4.3
+     */
+    function array_unique_recursive(array $array): array
+    {
+        return array_values(array_map('unserialize', array_unique(array_map('serialize', $array))));
+    }
+}
+
 if (!function_exists('array_value_first')) {
     /**
      * Returns the first value of an array

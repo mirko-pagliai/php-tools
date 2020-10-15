@@ -1,7 +1,10 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.3
-* added `Exceptionist::methodExists()` method.
+* added `array_unique_recursive()` global function;
+* added `Exceptionist::methodExists()` method;
+* improved the failure message for the `Exceptionist::objectPropertyExists()` method;
+* fixed compatibility with PHP 7.4 and phpunit 9.
 
 ### 1.4.2
 * added `uncamelcase()` global function.

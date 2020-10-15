@@ -42,9 +42,13 @@ class EventDispatcherTraitTest extends TestCase
     /**
      * Test for `dispatchEvent()` method
      * @test
+     * @todo Remove the `error_reporting()` in a future release
      */
     public function testDispatchEvent()
     {
+        $errorLevel = error_reporting();
+        error_reporting(E_ALL ^ E_DEPRECATED);
+
         $dispatcher = $this->getMockBuilder(EventDispatcher::class)
             ->setMethods(['dispatch'])
             ->getMock();
@@ -53,5 +57,6 @@ class EventDispatcherTraitTest extends TestCase
 
         $result = $this->setEventDispatcher($dispatcher)->dispatchEvent('myEvent', ['arg']);
         $this->assertInstanceOf(Event::class, $result);
+        error_reporting($errorLevel);
     }
 }
