@@ -14,6 +14,7 @@
 
 namespace Tools;
 
+use BadMethodCallException;
 use ErrorException;
 use Exception;
 use Tools\Exception\FileNotExistsException;
@@ -22,7 +23,7 @@ use Tools\Exception\NotReadableException;
 use Tools\Exception\PropertyNotExistsException;
 
 /**
- * Exceptionist
+ * Exceptionist.
  * @method array isArray(array $args, string $message, $exception)
  * @method string isDir(string $filename, string $message, $exception)
  * @method mixed isPositive($value, string $message, $exception)
@@ -158,6 +159,26 @@ class Exceptionist
     }
 
     /**
+     * Checks whether a class method exists
+     * @param string|object $object An object instance or a class name
+     * @param string $methodName The method name
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return array Array with class name and method name
+     * @since 1.4.3
+     * @throws \BadMethodCallException
+     */
+    public static function methodExists($object, string $methodName, $message = '', $exception = BadMethodCallException::class): array
+    {
+        $object = is_string($object) ? $object : get_class($object);
+        $message = $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName);
+        self::isTrue(method_exists($object, $methodName), $message, $exception);
+
+        return [$object, $methodName];
+    }
+
+    /**
      * Checks whether an object proprerty exists.
      *
      * If the object owns the `has()` method, it uses that method. Otherwise it
@@ -174,7 +195,7 @@ class Exceptionist
     {
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
-            self::isTrue($result, $message ?: sprintf('Object does not have `%s` property', $name), $exception);
+            self::isTrue($result, $message ?: sprintf('Property `%s::$%s` does not exist', get_class($object), $name), $exception);
         }
 
         return $property;

@@ -19,7 +19,7 @@ use BadMethodCallException;
 use Exception;
 
 /**
- * A trait that provides some assertion methods
+ * A trait that provides some assertion methods.
  * @method void assertIsArray($var, $message = '') Asserts that `$var` is an array
  * @method void assertIsBool($var, $message = '') Asserts that `$var` is a boolean
  * @method void assertIsCallable($var, $message = '') Asserts that `$var` is a callable

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools\Exception;
 use Tools\FileException;
 
 /**
- * "Filename is not a directory" exception
+ * "Filename is not a directory" exception.
  */
 class NotDirectoryException extends FileException
 {

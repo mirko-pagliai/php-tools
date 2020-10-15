@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools\Exception;
 use Tools\InvalidValueException;
 
 /**
- * "Not in array" exception
+ * "Not in array" exception.
  */
 class NotInArrayException extends InvalidValueException
 {

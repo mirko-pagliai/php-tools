@@ -17,7 +17,7 @@ use RuntimeException;
 use Symfony\Component\EventDispatcher\Event as BaseEvent;
 
 /**
- * Event
+ * Event instance.
  */
 class Event extends BaseEvent
 {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools;
 use Exception;
 
 /**
- * Abstract exception for exceptions that are throwed by a file
+ * Abstract exception for exceptions that are throwed by a file.
  */
 abstract class FileException extends Exception
 {

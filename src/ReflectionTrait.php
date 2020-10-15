@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -18,7 +19,7 @@ use ReflectionMethod;
 use ReflectionProperty;
 
 /**
- * A Reflection trait
+ * A `Reflection` trait.
  */
 trait ReflectionTrait
 {
@@ -63,7 +64,7 @@ trait ReflectionTrait
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      * @since 1.1.4
      */
-    protected function getProperties($object, $filter = 256 | 512 | 1024)
+    protected function getProperties($object, $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE)
     {
         $object = is_object($object) ? $object : new $object();
         $properties = (new ReflectionClass($object))->getProperties($filter);

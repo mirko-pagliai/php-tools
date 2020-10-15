@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools\Exception;
 use Exception;
 
 /**
- * "Property does not exist" exception
+ * "Property does not exist" exception.
  */
 class PropertyNotExistsException extends Exception
 {

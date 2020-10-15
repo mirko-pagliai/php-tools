@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools\Exception;
 use Tools\FileException;
 
 /**
- * "File or directory does not exist" exception
+ * "File or directory does not exist" exception.
  */
 class FileNotExistsException extends FileException
 {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools;
 use Exception;
 
 /**
- * Abstract exception for exceptions that are throwed by an invalid value
+ * Abstract exception for exceptions that are throwed by an invalid value.
  */
 abstract class InvalidValueException extends Exception
 {

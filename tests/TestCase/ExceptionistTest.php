@@ -15,6 +15,7 @@
 namespace Tools\Test;
 
 use App\ExampleClass;
+use BadMethodCallException;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
@@ -125,6 +126,21 @@ class ExceptionistTest extends TestCase
     }
 
     /**
+     * Test for `methodExists()` method
+     * @test
+     */
+    public function testMethodExists()
+    {
+        foreach ([new ExampleClass(), ExampleClass::class] as $object) {
+            $this->assertSame([ExampleClass::class, 'setProperty'], Exceptionist::methodExists($object, 'setProperty'));
+        }
+
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExisting()` does not exist');
+        Exceptionist::methodExists($object, 'noExisting');
+    }
+
+    /**
      * Test for `objectPropertyExists()` method
      * @test
      */
@@ -150,7 +166,7 @@ class ExceptionistTest extends TestCase
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists($object, 'publicProperty'));
 
         $this->expectException(PropertyNotExistsException::class);
-        $this->expectExceptionMessage('Object does not have `noExisting` property');
+        $this->expectExceptionMessage('Property `' . ExampleClass::class . '::$noExisting` does not exist');
         Exceptionist::objectPropertyExists(new ExampleClass(), 'noExisting');
     }
 

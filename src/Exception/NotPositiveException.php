@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -17,7 +18,7 @@ namespace Tools\Exception;
 use Tools\InvalidValueException;
 
 /**
- * "Not positive value" exception
+ * "Not positive value" exception.
  */
 class NotPositiveException extends InvalidValueException
 {
