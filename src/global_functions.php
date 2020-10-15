@@ -89,7 +89,7 @@ if (!function_exists('array_unique_recursive')) {
      * `array_unique()` for multidimensional arrays.
      *
      * Removes duplicate values from an array.
-     * @param array $array
+     * @param array $array Multidimensional array
      * @return array
      * @since 1.4.3
      */
