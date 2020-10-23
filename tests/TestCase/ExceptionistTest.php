@@ -167,7 +167,7 @@ class ExceptionistTest extends TestCase
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists($object, 'publicProperty'));
 
         $this->expectException(PropertyNotExistsException::class);
-        $this->expectExceptionMessage('Object does not have `noExisting` property');
+        $this->expectExceptionMessage('Property `' . ExampleClass::class . '::$noExisting` does not exist');
         Exceptionist::objectPropertyExists(new ExampleClass(), 'noExisting');
     }
 
