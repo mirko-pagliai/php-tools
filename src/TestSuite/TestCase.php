@@ -17,7 +17,7 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use Tools\ReflectionTrait;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * TestCase class.
