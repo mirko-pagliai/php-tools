@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.4
+* some functions have been moved to `array_functions.php` file.
+
 ### 1.4.3
 * added `array_unique_recursive()` global function;
 * added `Exceptionist::methodExists()` method;
