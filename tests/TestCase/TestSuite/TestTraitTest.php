@@ -25,6 +25,7 @@ use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -196,7 +197,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $file = create_tmp_file('string');
+        $file = (new Filesystem())->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
         $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
@@ -208,7 +209,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $file = create_tmp_file();
+        $file = (new Filesystem())->createTmpFile();
         $this->assertFilePerms('0600', $file);
         $this->assertFilePerms(0600, $file);
         $this->assertFilePerms(['0600', '0666'], $file);

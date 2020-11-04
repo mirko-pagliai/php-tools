@@ -19,6 +19,7 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use Throwable;
+use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
@@ -164,7 +165,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
-        self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
+        self::assertContains((new Filesystem())->getExtension($filename), (array)$expectedExtension, $message);
     }
 
     /**

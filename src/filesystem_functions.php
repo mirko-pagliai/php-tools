@@ -13,11 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
-use Symfony\Component\Finder\Finder;
-use Tools\Exceptionist;
+use Tools\Filesystem;
 
 if (!function_exists('add_slash_term')) {
     /**
@@ -28,7 +24,9 @@ if (!function_exists('add_slash_term')) {
      */
     function add_slash_term(string $path): string
     {
-        return is_slash_term($path) ? $path : $path . DS;
+        deprecationWarning('Deprecated. Use instead `Filesystem::addSlashTerm()`');
+
+        return (new Filesystem())->addSlashTerm($path);
     }
 }
 
@@ -48,19 +46,9 @@ if (!function_exists('create_file')) {
      */
     function create_file(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): bool
     {
-        try {
-            $filesystem = new Filesystem();
-            $filesystem->mkdir(dirname($filename), $dirMode);
-            $filesystem->dumpFile($filename, $data);
+        deprecationWarning('Deprecated. Use instead `Filesystem::createFile()`');
 
-            return true;
-        } catch (IOException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->createFile($filename, $data, $dirMode, $ignoreErrors);
     }
 }
 
@@ -81,10 +69,9 @@ if (!function_exists('create_tmp_file')) {
      */
     function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
     {
-        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
-        create_file($filename, $data);
+        deprecationWarning('Deprecated. Use instead `Filesystem::createTmpFile()`');
 
-        return $filename;
+        return (new Filesystem())->createTmpFile($data, $dir, $prefix);
     }
 }
 
@@ -101,43 +88,9 @@ if (!function_exists('dir_tree')) {
      */
     function dir_tree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
-        $path = $path === DS ? DS : rtrim($path, DS);
-        $finder = new Finder();
-        $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
+        deprecationWarning('Deprecated. Use instead `Filesystem::getDirTree()`');
 
-        $skipHidden = false;
-        $finder->ignoreDotFiles(false);
-        if (in_array('.', $exceptions)) {
-            $skipHidden = true;
-            unset($exceptions[array_search('.', $exceptions)]);
-            $finder->ignoreDotFiles(true);
-        }
-
-        try {
-            $finder->directories()->ignoreUnreadableDirs()->in($path);
-            if ($exceptions) {
-                $finder->exclude($exceptions);
-            }
-            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
-            array_unshift($dirs, rtrim($path, DS));
-
-            $finder->files()->in($path);
-            if ($exceptions) {
-                $exceptions = array_map(function ($exception) {
-                    return preg_quote($exception, '/');
-                }, $exceptions);
-                $finder->notName('/(' . implode('|', $exceptions) . ')/');
-            }
-            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
-
-            return [$dirs, $files];
-        } catch (DirectoryNotFoundException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return [[], []];
-        }
+        return (new Filesystem())->getDirTree($path, $exceptions, $ignoreErrors);
     }
 }
 
@@ -184,21 +137,9 @@ if (!function_exists('get_extension')) {
      */
     function get_extension(string $filename): ?string
     {
-        //Gets the basename and, if the filename is an url, removes query string
-        //  and fragments (#)
-        $filename = parse_url(basename($filename), PHP_URL_PATH);
+        deprecationWarning('Deprecated. Use instead `Filesystem::getExtension()`');
 
-        //On Windows, finds the occurrence of the last slash
-        $pos = strripos($filename, '\\');
-        if ($pos !== false) {
-            $filename = substr($filename, $pos + 1);
-        }
-
-        //Finds the occurrence of the first point. The offset is 1, so as to
-        //  preserve the hidden files
-        $pos = strpos($filename, '.', 1);
-
-        return $pos === false ? null : strtolower(substr($filename, $pos + 1));
+        return (new Filesystem())->getExtension($filename);
     }
 }
 
@@ -211,7 +152,9 @@ if (!function_exists('is_slash_term')) {
      */
     function is_slash_term(string $path): bool
     {
-        return in_array($path[strlen($path) - 1], ['/', '\\']);
+        deprecationWarning('Deprecated. Use instead `Filesystem::isSlashTerm()`');
+
+        return (new Filesystem())->isSlashTerm($path);
     }
 }
 
@@ -229,28 +172,9 @@ if (!function_exists('is_writable_resursive')) {
      */
     function is_writable_resursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
-        try {
-            [$directories, $files] = dir_tree($dirname);
-            $items = $checkOnlyDir ? $directories : array_merge($directories, $files);
+        deprecationWarning('Deprecated. Use instead `Filesystem::isWritableResursive()`');
 
-            if (!in_array($dirname, $items)) {
-                $items[] = $dirname;
-            }
-
-            foreach ($items as $item) {
-                if (!is_readable($item) || !is_writable($item)) {
-                    return false;
-                }
-            }
-
-            return true;
-        } catch (DirectoryNotFoundException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->isWritableResursive($dirname, $checkOnlyDir, $ignoreErrors);
     }
 }
 
@@ -270,14 +194,9 @@ if (!function_exists('rmdir_recursive')) {
      */
     function rmdir_recursive(string $dirname): bool
     {
-        if (!is_dir($dirname)) {
-            return false;
-        }
+        deprecationWarning('Deprecated. Use instead `Filesystem::rmdirRecursive()`');
 
-        $filesystem = new Filesystem();
-        $filesystem->remove($dirname);
-
-        return true;
+        return (new Filesystem())->rmdirRecursive($dirname);
     }
 }
 
@@ -293,18 +212,9 @@ if (!function_exists('rtr')) {
      */
     function rtr(string $path): string
     {
-        $root = getenv('ROOT');
-        if (!$root) {
-            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            $root = ROOT;
-        }
+        deprecationWarning('Deprecated. Use instead `Filesystem::rtr()`');
 
-        $filesystem = new Filesystem();
-        if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            $path = $filesystem->makePathRelative($path, $root);
-        }
-
-        return rtrim($path, '/');
+        return (new Filesystem())->rtr($path);
     }
 }
 
@@ -328,18 +238,8 @@ if (!function_exists('unlink_recursive')) {
      */
     function unlink_recursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
     {
-        try {
-            [, $files] = dir_tree($dirname, $exceptions);
-            $filesystem = new Filesystem();
-            $filesystem->remove($files);
+        deprecationWarning('Deprecated. Use instead `Filesystem::unlinkRecursive()`');
 
-            return true;
-        } catch (IOException | DirectoryNotFoundException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->unlinkRecursive($dirname, $exceptions, $ignoreErrors);
     }
 }

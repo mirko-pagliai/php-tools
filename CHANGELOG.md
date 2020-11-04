@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.4
+* added `Filesystem` class, all filesystem global function are now deprecated;
 * some functions have been moved to `array_functions.php` file.
 
 ### 1.4.3
