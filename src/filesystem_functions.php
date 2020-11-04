@@ -20,6 +20,7 @@ if (!function_exists('add_slash_term')) {
      * Adds the slash term to a path, if it doesn't have one
      * @param string $path Path
      * @return string Path with the slash term
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.2.6
      */
     function add_slash_term(string $path): string
@@ -41,6 +42,7 @@ if (!function_exists('create_file')) {
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.1.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
@@ -65,6 +67,7 @@ if (!function_exists('create_tmp_file')) {
      *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.1.7
      */
     function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
@@ -83,6 +86,7 @@ if (!function_exists('dir_tree')) {
      *  to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array Array of nested directories and files in each directory
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.7
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
@@ -133,6 +137,7 @@ if (!function_exists('get_extension')) {
      *  several parts (eg, `sql.gz`).
      * @param string $filename Filename
      * @return string|null
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.2
      */
     function get_extension(string $filename): ?string
@@ -148,6 +153,7 @@ if (!function_exists('is_slash_term')) {
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.3
      */
     function is_slash_term(string $path): bool
@@ -167,6 +173,7 @@ if (!function_exists('is_writable_resursive')) {
      * @param bool $checkOnlyDir If `true`, also checks for all files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.7
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
@@ -188,6 +195,7 @@ if (!function_exists('rmdir_recursive')) {
      *  function instead.
      * @param string $dirname Path to the directory
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @see unlink_recursive()
      * @since 1.0.6
      * @throws \Symfony\Component\Filesystem\Exception\IOException
@@ -208,6 +216,7 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @throws \Exception
      */
     function rtr(string $path): string
@@ -231,6 +240,7 @@ if (!function_exists('unlink_recursive')) {
      *  or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @see rmdir_recursive()
      * @since 1.0.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
