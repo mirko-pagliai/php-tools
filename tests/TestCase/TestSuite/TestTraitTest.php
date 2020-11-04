@@ -209,12 +209,20 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFilePerms()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $file = (new Filesystem())->createTmpFile();
         $this->assertFilePerms('0600', $file);
         $this->assertFilePerms(0600, $file);
         $this->assertFilePerms(['0600', '0666'], $file);
         $this->assertFilePerms([0600, 0666], $file);
         $this->assertFilePerms(['0600', 0666], $file);
+        $this->assertFilePerms('0700', $file);
+        $this->assertFilePerms(['0700', '0777'], $file);
+        error_reporting($current);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('Deprecated. Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`');
+        $this->assertFilePerms('0700', $file);
     }
 
     /**
