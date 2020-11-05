@@ -215,11 +215,11 @@ class Filesystem extends BaseFilesystem
      *  subdirectories and files.
      *
      * To remove only files contained in a directory and its sub-directories,
-     *  leaving the directories unaltered, use the `unlink_recursive()`
-     *  function instead.
+     *  leaving the directories unaltered, use the `unlinkRecursive()`
+     *  method instead.
      * @param string $dirname Path to the directory
      * @return bool
-     * @see unlink_recursive()
+     * @see \Tools\Filesystem::unlinkRecursive()
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     public function rmdirRecursive(string $dirname): bool
@@ -227,7 +227,6 @@ class Filesystem extends BaseFilesystem
         if (!is_dir($dirname)) {
             return false;
         }
-
         $this->remove($dirname);
 
         return true;
@@ -263,13 +262,13 @@ class Filesystem extends BaseFilesystem
      *  directories unaltered.
      *
      * To remove the directory itself and all its contents, use the
-     *  `rmdir_recursive()` function instead.
+     *  `rmdirRecursive()` method instead.
      * @param string $dirname The directory path
      * @param array|bool $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
-     * @see rmdir_recursive()
+     * @see \Tools\Filesystem::rmdirRecursive()
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
