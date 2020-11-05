@@ -92,7 +92,15 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testFilepermsAsOctal()
     {
-        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal((new Filesystem())->createTmpFile()));
+        $file = (new Filesystem())->createTmpFile();
+
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal($file));
+        error_reporting($current);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
+        fileperms_as_octal($file);
     }
 
     /**
@@ -101,8 +109,14 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testFilepermsToString()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame('0755', fileperms_to_string(0755));
         $this->assertSame('0755', fileperms_to_string('0755'));
+        error_reporting($current);
+
+        $this->expectException(Deprecated::class);
+        $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
+        fileperms_to_string(0755);
     }
 
     /**

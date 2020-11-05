@@ -107,10 +107,13 @@ if (!function_exists('fileperms_as_octal')) {
      * @link http://php.net/manual/en/function.fileperms.php
      * @param string $filename Path to the file
      * @return string Permissions as four-chars string
+     * @deprecated It will be removed in a future release
      * @since 1.2.0
      */
     function fileperms_as_octal(string $filename): string
     {
+        deprecationWarning('Deprecated. It will be removed in a future release');
+
         return (string)substr(sprintf('%o', fileperms($filename)), -4);
     }
 }
@@ -120,10 +123,13 @@ if (!function_exists('fileperms_to_string')) {
      * Returns permissions from octal value (`0755`) to string (`'0755'`)
      * @param int|string $perms Permissions as octal value
      * @return string Permissions as four-chars string
+     * @deprecated It will be removed in a future release
      * @since 1.2.0
      */
     function fileperms_to_string($perms): string
     {
+        deprecationWarning('Deprecated. It will be removed in a future release');
+
         return is_string($perms) ? $perms : sprintf('%04o', $perms);
     }
 }

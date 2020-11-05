@@ -5,6 +5,8 @@
 * `TestTrait::assertFilePerms()` is deprecated. Use instead
     `assertFileIsReadable()`/`assertFileIsWritable()`/
     `assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`;
+* `fileperms_as_octal()` and `fileperms_to_string()` global functions are now
+    deprecated and will be removed in a future release;
 * some functions have been moved to `array_functions.php` file.
 
 ### 1.4.3
