@@ -17,66 +17,82 @@ namespace Tools\Test;
 
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
- * FilesystemFunctionsTest class
+ * FilesystemTest class
  */
-class FilesystemFunctionsTest extends TestCase
+class FilesystemTest extends TestCase
 {
     /**
-     * Test for `add_slash_term()` global function
+     * @var \Tools\Filesystem
+     */
+    protected $Filesystem;
+
+    /**
+     * This method is called before each test
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->Filesystem = new Filesystem();
+    }
+
+    /**
+     * Test for `addSlashTerm()` method
      * @test
      */
     public function testAddSlashTerm()
     {
         $expected = DS . 'tmp' . DS;
-        $this->assertSame($expected, add_slash_term(DS . 'tmp'));
-        $this->assertSame($expected, add_slash_term($expected));
+        $this->assertSame($expected, $this->Filesystem->addSlashTerm(DS . 'tmp'));
+        $this->assertSame($expected, $this->Filesystem->addSlashTerm($expected));
     }
 
     /**
-     * Test for `create_file()` global function
+     * Test for `createFile()` method
      * @test
      */
     public function testCreateFile()
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
-        $this->assertTrue(create_file($filename));
+        $this->assertTrue($this->Filesystem->createFile($filename));
         $this->assertStringEqualsFile($filename, '');
 
         unlink($filename);
-        $this->assertTrue(create_file($filename, 'string'));
+        $this->assertTrue($this->Filesystem->createFile($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
         $this->skipIf(IS_WIN);
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
+        $this->assertFalse($this->Filesystem->createFile(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
 
         //Using a no existing directory
         $this->expectException(IOException::class);
-        create_file(DS . 'noExistingDir' . DS . 'file');
+        $this->Filesystem->createFile(DS . 'noExistingDir' . DS . 'file');
     }
 
     /**
-     * Test for `create_tmp_file()` global function
+     * Test for `createTmpFile()` method
      * @test
      */
     public function testCreateTmpFile()
     {
         foreach (['', 'string'] as $string) {
-            $filename = create_tmp_file($string);
+            $filename = $this->Filesystem->createTmpFile($string);
             $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
             $this->assertStringEqualsFile($filename, $string);
         }
     }
 
     /**
-     * Test for `dir_tree()` global function
+     * Test for `getDirTree()` method
      * @test
      */
-    public function testDirTree()
+    public function testGetDirTree()
     {
         $expectedDirs = [
             TMP . 'exampleDir',
@@ -88,8 +104,8 @@ class FilesystemFunctionsTest extends TestCase
         ];
         $expectedFiles = createSomeFiles();
 
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir'));
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir' . DS));
+        $this->assertEquals([$expectedDirs, $expectedFiles], $this->Filesystem->getDirTree(TMP . 'exampleDir'));
+        $this->assertEquals([$expectedDirs, $expectedFiles], $this->Filesystem->getDirTree(TMP . 'exampleDir' . DS));
 
         //Excludes some files
         foreach ([
@@ -101,53 +117,34 @@ class FilesystemFunctionsTest extends TestCase
             $currentExpectedFiles = array_clean($expectedFiles, function ($value) use ($exceptions) {
                 return !in_array(basename($value), $exceptions);
             });
-            $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
+            $this->assertEquals([$expectedDirs, $currentExpectedFiles], $this->Filesystem->getDirTree(TMP . 'exampleDir', $exceptions));
         }
 
         //Excludes a directory
-        [$result] = dir_tree(TMP . 'exampleDir', 'subDir2');
+        [$result] = $this->Filesystem->getDirTree(TMP . 'exampleDir', 'subDir2');
         $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2', $result);
         $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3', $result);
 
         //Excludes hidden files
         foreach ([true, '.', ['.']] as $exceptions) {
-            [$result] = dir_tree(TMP . 'exampleDir', $exceptions);
+            [$result] = $this->Filesystem->getDirTree(TMP . 'exampleDir', $exceptions);
             $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir', $result);
 
-            [, $result] = dir_tree(TMP . 'exampleDir', $exceptions);
+            [, $result] = $this->Filesystem->getDirTree(TMP . 'exampleDir', $exceptions);
             $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7', $result);
             $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
         }
 
         //Using a no existing directory, but ignoring errors
-        $this->assertSame([[], []], dir_tree(TMP . 'noExisting', false, true));
+        $this->assertSame([[], []], $this->Filesystem->getDirTree(TMP . 'noExisting', false, true));
 
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
-        dir_tree(TMP . 'noExisting');
+        $this->Filesystem->getDirTree(TMP . 'noExisting');
     }
 
     /**
-     * Test for `fileperms_as_octal()` global function
-     * @test
-     */
-    public function testFilepermsAsOctal()
-    {
-        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal(create_tmp_file()));
-    }
-
-    /**
-     * Test for `fileperms_to_string()` global function
-     * @test
-     */
-    public function testFilepermsToString()
-    {
-        $this->assertSame('0755', fileperms_to_string(0755));
-        $this->assertSame('0755', fileperms_to_string('0755'));
-    }
-
-    /**
-     * Test for `get_extension()` global function
+     * Test for `getExtension()` method
      * @test
      */
     public function testGetExtension()
@@ -163,7 +160,7 @@ class FilesystemFunctionsTest extends TestCase
             '.txt' => null,
             '.hiddenFile' => null,
         ] as $filename => $expectedExtension) {
-            $this->assertEquals($expectedExtension, get_extension($filename));
+            $this->assertEquals($expectedExtension, $this->Filesystem->getExtension($filename));
         }
 
         foreach ([
@@ -177,7 +174,7 @@ class FilesystemFunctionsTest extends TestCase
             'C:\subdir\backup.sql.gz',
             'C:\withDot.\backup.sql.gz',
         ] as $filename) {
-            $this->assertEquals('sql.gz', get_extension($filename));
+            $this->assertEquals('sql.gz', $this->Filesystem->getExtension($filename));
         }
 
         foreach ([
@@ -186,12 +183,12 @@ class FilesystemFunctionsTest extends TestCase
             'http://example.com/backup.sql.gz?',
             'http://example.com/backup.sql.gz?name=value',
         ] as $url) {
-            $this->assertEquals('sql.gz', get_extension($url));
+            $this->assertEquals('sql.gz', $this->Filesystem->getExtension($url));
         }
     }
 
     /**
-     * Test for `is_slash_term()` global function
+     * Test for `isSlashTerm()` method
      * @test
      */
     public function testIsSlashTerm()
@@ -202,7 +199,7 @@ class FilesystemFunctionsTest extends TestCase
             'path\\',
             '\\path\\',
         ] as $path) {
-            $this->assertTrue(is_slash_term($path));
+            $this->assertTrue($this->Filesystem->isSlashTerm($path));
         }
 
         foreach ([
@@ -212,61 +209,61 @@ class FilesystemFunctionsTest extends TestCase
             'path.ext',
             '/path.ext',
         ] as $path) {
-            $this->assertFalse(is_slash_term($path));
+            $this->assertFalse($this->Filesystem->isSlashTerm($path));
         }
     }
 
     /**
-     * Test for `is_writable_resursive()` global function
+     * Test for `isWritableResursive()` method
      * @test
      */
     public function testIsWritableRecursive()
     {
-        $this->assertTrue(is_writable_resursive(TMP));
+        $this->assertTrue($this->Filesystem->isWritableResursive(TMP));
 
         if (!IS_WIN) {
-            $this->assertFalse(is_writable_resursive(DS . 'bin'));
+            $this->assertFalse($this->Filesystem->isWritableResursive(DS . 'bin'));
         }
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(is_writable_resursive(TMP . 'noExisting', true, true));
+        $this->assertFalse($this->Filesystem->isWritableResursive(TMP . 'noExisting', true, true));
 
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
-        $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
+        $this->assertFalse($this->Filesystem->isWritableResursive(TMP . 'noExisting'));
     }
 
     /**
-     * Test for `rmdir_recursive()` global function
+     * Test for `rmdirRecursive()` method
      * @test
      */
     public function testRmdirRecursive()
     {
         createSomeFiles();
-        $this->assertTrue(rmdir_recursive(TMP . 'exampleDir'));
+        $this->assertTrue($this->Filesystem->rmdirRecursive(TMP . 'exampleDir'));
         $this->assertDirectoryNotExists(TMP . 'exampleDir');
 
         //Does not delete a file
-        $filename = create_tmp_file();
-        $this->assertFalse(rmdir_recursive($filename));
+        $filename = $this->Filesystem->createTmpFile();
+        $this->assertFalse($this->Filesystem->rmdirRecursive($filename));
         $this->assertFileExists($filename);
     }
 
     /**
-     * Test for `rtr()` global function
+     * Test for `rtr()` method
      * @test
      */
     public function testRtr()
     {
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my/folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my/folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
-     * Test for `unlink_resursive()` global function
+     * Test for `unlinkResursive()` method
      * @test
      */
     public function testUnlinkRecursive()
@@ -274,22 +271,22 @@ class FilesystemFunctionsTest extends TestCase
         //Creates some files and some links
         $files = createSomeFiles();
         if (!IS_WIN) {
-            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
+            foreach ([$this->Filesystem->createTmpFile(), $this->Filesystem->createTmpFile()] as $filename) {
                 $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
                 symlink($filename, $link);
                 $files[] = $link;
             }
         }
 
-        $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
+        $this->assertTrue($this->Filesystem->unlinkRecursive(TMP . 'exampleDir'));
         array_map([$this, 'assertFileNotExists'], $files);
         $this->assertDirectoryExists(TMP . 'exampleDir');
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(unlink_recursive(TMP . 'noExisting', false, true));
+        $this->assertFalse($this->Filesystem->unlinkRecursive(TMP . 'noExisting', false, true));
 
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
-        unlink_recursive(TMP . 'noExisting');
+        $this->Filesystem->unlinkRecursive(TMP . 'noExisting');
     }
 }

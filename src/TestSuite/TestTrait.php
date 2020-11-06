@@ -19,6 +19,7 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use Throwable;
+use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
@@ -164,7 +165,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
-        self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
+        self::assertContains((new Filesystem())->getExtension($filename), (array)$expectedExtension, $message);
     }
 
     /**
@@ -182,27 +183,6 @@ trait TestTrait
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
-    }
-
-    /**
-     * Asserts that a filename has some file permissions.
-     *
-     * If `$expectedPerms` is an array, asserts that the filename has at
-     *  least one of those values
-     * @param string|int|array $expectedPerms Expected permission values as a
-     *  four-chars string or octal value
-     * @param string $filename Filename
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @since 1.0.9
-     */
-    protected static function assertFilePerms($expectedPerms, string $filename, string $message = ''): void
-    {
-        parent::assertFileExists($filename);
-
-        $expectedPerms = array_map('fileperms_to_string', (array)$expectedPerms);
-        self::assertContains(fileperms_as_octal($filename), $expectedPerms, $message);
     }
 
     /**

@@ -23,8 +23,8 @@ use App\SkipTestCase;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -142,9 +142,9 @@ class TestTraitTest extends TestCase
         try {
             $this->assertException(function () {
                 throw new Exception();
-            }, Deprecated::class);
+            }, BadMethodCallException::class);
         } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `Exception`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail('No exception throw');
@@ -198,24 +198,9 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $file = create_tmp_file('string');
+        $file = (new Filesystem())->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
         $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
-    }
-
-    /**
-     * Tests for `assertFilePerms()` method
-     * @requires OS Linux
-     * @test
-     */
-    public function testAssertFilePerms()
-    {
-        $file = create_tmp_file();
-        $this->assertFilePerms('0600', $file);
-        $this->assertFilePerms(0600, $file);
-        $this->assertFilePerms(['0600', '0666'], $file);
-        $this->assertFilePerms([0600, 0666], $file);
-        $this->assertFilePerms(['0600', 0666], $file);
     }
 
     /**

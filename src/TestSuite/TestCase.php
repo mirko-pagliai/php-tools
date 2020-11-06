@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Tools\Filesystem;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
@@ -37,8 +38,9 @@ abstract class TestCase extends PHPUnitTestCase
     {
         parent::tearDown();
 
-        if (add_slash_term(TMP) !== add_slash_term(sys_get_temp_dir())) {
-            unlink_recursive(TMP);
+        $Filesystem = new Filesystem();
+        if ($Filesystem->addSlashTerm(TMP) !== $Filesystem->addSlashTerm(sys_get_temp_dir())) {
+            $Filesystem->unlinkRecursive(TMP);
         }
     }
 

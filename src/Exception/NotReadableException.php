@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use Tools\FileException;
+use Tools\Filesystem;
 
 /**
  * "File or directory is not readable" exception.
@@ -33,7 +34,7 @@ class NotReadableException extends FileException
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
-            $message = $path ? sprintf('Filename `%s` is not readable', rtr($path)) : 'Filename is not readable';
+            $message = $path ? sprintf('Filename `%s` is not readable', (new Filesystem())->rtr($path)) : 'Filename is not readable';
         }
         parent::__construct($message, $code, $previous, $path);
     }

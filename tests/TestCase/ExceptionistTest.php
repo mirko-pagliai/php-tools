@@ -25,6 +25,7 @@ use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Exceptionist;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -90,7 +91,7 @@ class ExceptionistTest extends TestCase
      */
     public function testFileExists()
     {
-        $file = create_tmp_file();
+        $file = (new Filesystem())->createTmpFile();
         $this->assertSame($file, Exceptionist::fileExists($file));
 
         $this->expectException(FileNotExistsException::class);
@@ -104,7 +105,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsReadable()
     {
-        $file = create_tmp_file();
+        $file = (new Filesystem())->createTmpFile();
         $this->assertSame($file, Exceptionist::isReadable($file));
 
         $this->expectException(NotReadableException::class);
@@ -118,7 +119,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsWritable()
     {
-        $file = create_tmp_file();
+        $file = (new Filesystem())->createTmpFile();
         $this->assertSame($file, Exceptionist::isWritable($file));
 
         $this->expectException(NotReadableException::class);

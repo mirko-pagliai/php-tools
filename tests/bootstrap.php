@@ -15,6 +15,8 @@ declare(strict_types=1);
 
 require_once 'vendor/autoload.php';
 
+use Tools\Filesystem;
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
@@ -41,7 +43,8 @@ if (!function_exists('createSomeFiles')) {
         ];
 
         //Creates directories and files
-        array_walk($files, 'create_file');
+        $Filesystem = new Filesystem();
+        array_walk($files, [$Filesystem, 'createFile']);
         @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;
