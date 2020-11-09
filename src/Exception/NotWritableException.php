@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use Tools\FileException;
+use Tools\Filesystem;
 
 /**
  * "File or directory is not writable" exception.
@@ -33,7 +34,7 @@ class NotWritableException extends FileException
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
-            $message = $path ? sprintf('Filename `%s` is not writable', rtr($path)) : 'Filename is not writable';
+            $message = $path ? sprintf('Filename `%s` is not writable', (new Filesystem())->rtr($path)) : 'Filename is not writable';
         }
         parent::__construct($message, $code, $previous, $path);
     }

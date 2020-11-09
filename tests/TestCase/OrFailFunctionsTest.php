@@ -17,7 +17,6 @@ namespace Tools\Test;
 
 use App\ExampleClass;
 use Exception;
-use PHPUnit\Framework\Error\Deprecated;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotDirectoryException;
 use Tools\Exception\NotInArrayException;
@@ -41,7 +40,7 @@ class OrFailFunctionsTest extends TestCase
         $oldErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertNotEmpty(file_exists_or_fail(create_tmp_file()));
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         file_exists_or_fail(create_tmp_file());
     }
@@ -59,7 +58,7 @@ class OrFailFunctionsTest extends TestCase
             in_array_or_fail('a', []);
         }, 'The value `a` is not in array');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         in_array_or_fail('a', ['a', 'b']);
     }
@@ -78,7 +77,7 @@ class OrFailFunctionsTest extends TestCase
             is_dir_or_fail($filename);
         }, 'Filename `' . $filename . '` is not a directory');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         is_dir_or_fail(TMP);
     }
@@ -96,7 +95,7 @@ class OrFailFunctionsTest extends TestCase
             is_positive_or_fail(-1);
         }, 'The value `-1` is not a positive');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         is_positive_or_fail(1);
     }
@@ -114,7 +113,7 @@ class OrFailFunctionsTest extends TestCase
             is_readable_or_fail(TMP . 'noExisting');
         }, 'File or directory `' . TMP . 'noExisting` does not exist');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         is_readable_or_fail(create_tmp_file());
     }
@@ -132,7 +131,7 @@ class OrFailFunctionsTest extends TestCase
             is_true_or_fail(false);
         }, 'The value is not equal to `true`');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         is_true_or_fail('string');
     }
@@ -150,7 +149,7 @@ class OrFailFunctionsTest extends TestCase
             is_writable_or_fail(TMP . 'noExisting');
         }, 'File or directory `' . TMP . 'noExisting` does not exist');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         is_writable_or_fail(create_tmp_file());
     }
@@ -168,7 +167,7 @@ class OrFailFunctionsTest extends TestCase
             key_exists_or_fail(['a'], ['d' => 'delta']);
         }, 'Key `a` does not exist');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         key_exists_or_fail('a', ['a' => 'alfa']);
     }
@@ -186,7 +185,7 @@ class OrFailFunctionsTest extends TestCase
             property_exists_or_fail(new ExampleClass(), ['name']);
         }, 'Property `' . ExampleClass::class . '::$name` does not exist');
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         error_reporting($oldErrorReporting);
         property_exists_or_fail(new ExampleClass(), 'publicProperty');
     }

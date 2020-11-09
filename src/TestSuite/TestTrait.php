@@ -19,6 +19,7 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use Throwable;
+use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
@@ -164,7 +165,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
-        self::assertContains(get_extension($filename), (array)$expectedExtension, $message);
+        self::assertContains((new Filesystem())->getExtension($filename), (array)$expectedExtension, $message);
     }
 
     /**
@@ -195,14 +196,27 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
+     * @deprecated Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`
      * @since 1.0.9
      */
     protected static function assertFilePerms($expectedPerms, string $filename, string $message = ''): void
     {
-        parent::assertFileExists($filename);
+        deprecationWarning('Deprecated. Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`');
 
-        $expectedPerms = array_map('fileperms_to_string', (array)$expectedPerms);
-        self::assertContains(fileperms_as_octal($filename), $expectedPerms, $message);
+        $isWritable = false;
+        foreach ((array)$expectedPerms as $perms) {
+            if (string_starts_with(fileperms_to_string($perms), '07')) {
+                $isWritable = true;
+
+                break;
+            }
+        }
+
+        $method = $isWritable ? 'assertFileIsWritable' : 'assertFileIsReadable';
+        if (is_dir($filename)) {
+            $method = $isWritable ? 'assertDirectoryIsWritable' : 'assertDirectoryIsReadable';
+        }
+        call_user_func_array(['parent', $method], [$filename, $message]);
     }
 
     /**

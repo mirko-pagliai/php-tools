@@ -25,6 +25,7 @@ use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -196,7 +197,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $file = create_tmp_file('string');
+        $file = (new Filesystem())->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
         $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
@@ -208,12 +209,21 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFilePerms()
     {
-        $file = create_tmp_file();
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $file = (new Filesystem())->createTmpFile();
         $this->assertFilePerms('0600', $file);
         $this->assertFilePerms(0600, $file);
         $this->assertFilePerms(['0600', '0666'], $file);
         $this->assertFilePerms([0600, 0666], $file);
         $this->assertFilePerms(['0600', 0666], $file);
+        $this->assertFilePerms('0700', $file);
+        $this->assertFilePerms(['0700', '0777'], $file);
+        $this->assertFilePerms(['0700', '0777'], TMP);
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`');
+        $this->assertFilePerms('0700', $file);
     }
 
     /**

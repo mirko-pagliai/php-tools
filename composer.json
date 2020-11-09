@@ -30,6 +30,7 @@
             "Tools\\": "src"
         },
         "files": [
+            "src/array_functions.php",
             "src/debug_functions.php",
             "src/filesystem_functions.php",
             "src/global_functions.php",

@@ -17,6 +17,7 @@ namespace Tools\Test;
 
 use Tools\Exception\KeyNotExistsException;
 use Tools\FileArray;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -28,6 +29,11 @@ class FileArrayTest extends TestCase
      * @var \Tools\FileArray
      */
     protected $FileArray;
+
+    /**
+     * @var \Tools\Filesystem
+     */
+    protected $Filesystem;
 
     /**
      * @var array
@@ -42,7 +48,8 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->FileArray = new FileArray(create_tmp_file(), $this->example);
+        $this->Filesystem = new Filesystem();
+        $this->FileArray = new FileArray($this->Filesystem->createTmpFile(), $this->example);
     }
 
     /**
@@ -125,7 +132,7 @@ class FileArrayTest extends TestCase
     {
         $this->assertEquals($this->example, $this->FileArray->read());
 
-        $file = create_tmp_file();
+        $file = $this->Filesystem->createTmpFile();
         $FileArray = new FileArray($file);
         $this->assertEquals(['string'], $FileArray->append('string')->read());
         $FileArray->write();
@@ -135,7 +142,7 @@ class FileArrayTest extends TestCase
         $this->assertEquals(['prepended', 'string'], $FileArray->prepend('prepended')->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        $this->assertEquals([], (new FileArray(create_tmp_file('a string')))->read());
+        $this->assertEquals([], (new FileArray($this->Filesystem->createTmpFile('a string')))->read());
         $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
     }
 
