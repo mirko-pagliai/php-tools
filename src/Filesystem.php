@@ -165,6 +165,25 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Gets the root path.
+     *
+     * The root path must be set with the `ROOT` environment variable (using the
+     *  `putenv()` function) or the `ROOT` constant.
+     * @return string
+     * @throws \Exception
+     */
+    public function getRoot(): string
+    {
+        $root = getenv('ROOT');
+        if (!$root) {
+            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
+            $root = ROOT;
+        }
+
+        return $root;
+    }
+
+    /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
@@ -233,22 +252,13 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Returns a path relative to the root.
-     *
-     * The root path must be set with the `ROOT` environment variable (using the
-     *  `putenv()` function) or the `ROOT` constant.
+     * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \Exception
      */
     public function rtr(string $path): string
     {
-        $root = getenv('ROOT');
-        if (!$root) {
-            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            $root = ROOT;
-        }
-
+        $root = $this->getRoot();
         if ($this->isAbsolutePath($path) && string_starts_with($path, $root)) {
             $path = $this->makePathRelative($path, $root);
         }
