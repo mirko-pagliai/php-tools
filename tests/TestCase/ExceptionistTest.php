@@ -54,7 +54,7 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethodWithErrorFromFunction()
     {
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessage('Error calling `in_array()`: in_array() expects at least 2 parameters, 1 given');
         Exceptionist::inArray(['a']);
     }
@@ -65,7 +65,7 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethodWithNoExistingFunction()
     {
-        $this->expectException(Notice::class);
+        $this->expectNotice();
         $this->expectExceptionMessage('Function `not_existing_method()` does not exist');
         Exceptionist::notExistingMethod(1);
     }
