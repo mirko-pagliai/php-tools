@@ -176,6 +176,7 @@ if (!function_exists('slug')) {
     {
         $slug = str_replace(['_', '//', '\\', '\'', ' '], '-', $string);
         $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
+        $slug = preg_replace('/[[:^print:]]/', '', $slug);
 
         return $lowerCase ? strtolower($slug) : $slug;
     }
