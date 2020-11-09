@@ -174,8 +174,18 @@ if (!function_exists('slug')) {
      */
     function slug($string, $lowerCase = true)
     {
-        $slug = str_replace(['_', '//', '\\', '\'', ' ', '`'], '-', $string);
-        $slug = str_replace('`', '', $string);
+
+  // replace non letter or digits by -
+  $slug = preg_replace('~[^\pL\d]+~u', '-', $string);
+
+  // transliterate
+  $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+
+  // remove unwanted characters
+  $slug = preg_replace('~[^-\w]+~', '', $slug);
+
+//        $slug = str_replace(['_', '//', '\\', '\'', ' ', '`'], '-', $string);
+//        $slug = str_replace('`', '', $string);
 //        $slug = iconv('UTF-8', 'ASCII//TRANSLIT', $slug);
 
         return $lowerCase ? strtolower($slug) : $slug;
