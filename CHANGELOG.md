@@ -13,6 +13,7 @@
 ## 1.4 branch
 ### 1.4.4
 * added `Filesystem` class, all filesystem global function are now deprecated;
+* added `Filesystem::getRoot()` method;
 * added `\Tools\TestSuite\BackwardCompatibilityTrait` to provide methods to
     achieve PHPUnit backward compatibility;
 * `TestTrait::assertFilePerms()` is deprecated. Use instead

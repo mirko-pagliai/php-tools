@@ -188,6 +188,19 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `getRoot()` method
+     * @test
+     */
+    public function testGetRoot()
+    {
+        $this->assertSame(ROOT, $this->Filesystem->getRoot());
+
+        //Resets the ROOT value, removing the final slash
+        putenv('ROOT=' . rtrim(ROOT, DS));
+        $this->assertSame(rtrim(ROOT, DS), $this->Filesystem->getRoot());
+    }
+
+    /**
      * Test for `isSlashTerm()` method
      * @test
      */
