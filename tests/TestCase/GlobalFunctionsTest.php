@@ -19,7 +19,6 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
-use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
 use Tools\TestSuite\TestCase;
 
@@ -38,7 +37,7 @@ class GlobalFunctionsTest extends TestCase
         deprecationWarning('This method is deprecated');
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessageMatches('/^This method is deprecated/');
         $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');

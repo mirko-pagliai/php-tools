@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
-use PHPUnit\Framework\Error\Deprecated;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
@@ -34,7 +33,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertSame(DS . 'tmp' . DS, add_slash_term(DS . 'tmp'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::addSlashTerm()`');
         add_slash_term(DS . 'tmp');
     }
@@ -49,9 +48,9 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertTrue(create_file(TMP . 'dirToBeCreated' . DS . 'exampleFile'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::createFile()`');
-        create_file(TMP . 'dirToBeCreated' . DS . 'exampleFile');
+        create_file(TMP . 'exampleFile');
     }
 
     /**
@@ -64,7 +63,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertNotEmpty(create_tmp_file());
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::createTmpFile()`');
         create_tmp_file();
     }
@@ -81,7 +80,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertNotEmpty(dir_tree(TMP . 'exampleDir'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::getDirTree()`');
         dir_tree(TMP . 'exampleDir');
     }
@@ -98,7 +97,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal($file));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
         fileperms_as_octal($file);
     }
@@ -114,7 +113,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertSame('0755', fileperms_to_string('0755'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
         fileperms_to_string(0755);
     }
@@ -129,7 +128,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertEquals('sql.bz2', get_extension('backup.sql.bz2'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::getExtension()`');
         get_extension('backup.sql.bz2');
     }
@@ -144,7 +143,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertTrue(is_slash_term('path/'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::isSlashTerm()`');
         $this->assertTrue(is_slash_term('path/'));
     }
@@ -159,7 +158,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertTrue(is_writable_resursive(TMP));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::isWritableResursive()`');
         is_writable_resursive(TMP);
     }
@@ -176,7 +175,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertTrue(rmdir_recursive(TMP . 'exampleDir'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::rmdirRecursive()`');
         rmdir_recursive(TMP . 'exampleDir');
     }
@@ -191,7 +190,7 @@ class FilesystemFunctionsTest extends TestCase
         $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::rtr()`');
         rtr(ROOT . 'my' . DS . 'folder');
     }
@@ -208,7 +207,7 @@ class FilesystemFunctionsTest extends TestCase
         error_reporting($current);
 
         createSomeFiles();
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::unlinkRecursive()`');
         unlink_recursive(TMP . 'exampleDir');
     }

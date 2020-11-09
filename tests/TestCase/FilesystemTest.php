@@ -83,7 +83,7 @@ class FilesystemTest extends TestCase
     {
         foreach (['', 'string'] as $string) {
             $filename = $this->Filesystem->createTmpFile($string);
-            $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+            $this->assertMatchesRegularExpression(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
             $this->assertStringEqualsFile($filename, $string);
         }
     }
@@ -241,7 +241,7 @@ class FilesystemTest extends TestCase
     {
         createSomeFiles();
         $this->assertTrue($this->Filesystem->rmdirRecursive(TMP . 'exampleDir'));
-        $this->assertDirectoryNotExists(TMP . 'exampleDir');
+        $this->assertDirectoryDoesNotExist(TMP . 'exampleDir');
 
         //Does not delete a file
         $filename = $this->Filesystem->createTmpFile();
@@ -279,7 +279,7 @@ class FilesystemTest extends TestCase
         }
 
         $this->assertTrue($this->Filesystem->unlinkRecursive(TMP . 'exampleDir'));
-        array_map([$this, 'assertFileNotExists'], $files);
+        array_map([$this, 'assertFileDoesNotExist'], $files);
         $this->assertDirectoryExists(TMP . 'exampleDir');
 
         //Using a no existing directory, but ignoring errors

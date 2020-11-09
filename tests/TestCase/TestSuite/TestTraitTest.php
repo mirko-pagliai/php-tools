@@ -220,7 +220,7 @@ class TestTraitTest extends TestCase
         $this->assertFilePerms(['0700', '0777'], $file);
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessage('Deprecated. Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`');
         $this->assertFilePerms('0700', $file);
     }
