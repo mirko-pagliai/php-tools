@@ -17,7 +17,6 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
-use PHPUnit\Framework\Error\Deprecated;
 use stdClass;
 use Tools\TestSuite\TestCase;
 
@@ -26,125 +25,6 @@ use Tools\TestSuite\TestCase;
  */
 class GlobalFunctionsTest extends TestCase
 {
-    /**
-     * Test for `array_clean()` global function
-     * @test
-     */
-    public function testArrayClean()
-    {
-        $filterMethod = function ($value) {
-            return $value && $value != 'third';
-        };
-
-        $array = ['first', 'second', false, 0, 'second', 'third', null, '', 'fourth'];
-        $this->assertSame(['first', 'second', 'third', 'fourth'], array_clean($array));
-        $this->assertSame(['first', 'second', 'fourth'], array_clean($array, $filterMethod));
-
-        $array = ['a' => 'first', 0 => 'second', false, 'c' => 'third', 'd' => 'second'];
-        $this->assertSame(['a' => 'first', 0 => 'second', 'c' => 'third'], array_clean($array));
-        $this->assertSame(['a' => 'first', 0 => 'second'], array_clean($array, $filterMethod));
-
-        $expected = ['a' => 'first', 1 => false, 'c' => 'third', 'd' => 'second'];
-        $this->assertSame($expected, array_clean($array, $filterMethod, ARRAY_FILTER_USE_KEY));
-    }
-
-    /**
-     * Test for `array_key_first()` global function
-     * @test
-     */
-    public function testArrayKeyFirst()
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(0, array_key_first($array));
-        $this->assertEquals('a', array_key_first(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_key_first([]));
-    }
-
-    /**
-     * Test for `array_key_last()` global function
-     * @test
-     */
-    public function testArrayKeyLast()
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(2, array_key_last($array));
-        $this->assertEquals('c', array_key_last(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_key_last([]));
-    }
-
-    /**
-     * Test for `array_unique_recursive()` global function
-     * @test
-     */
-    public function testArrayUniqueRecursive()
-    {
-        $array = [
-            ['first', 'second'],
-            ['first', 'second'],
-            ['other'],
-        ];
-
-        $this->assertSame([['first', 'second'], ['other']], array_unique_recursive($array));
-    }
-
-    /**
-     * Test for `array_value_first()` global function
-     * @test
-     */
-    public function testArrayValueFirst()
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('first', array_value_first($array));
-        $this->assertEquals('first', array_value_first(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_value_first([]));
-    }
-
-    /**
-     * Test for `array_value_first_recursive()` global function
-     * @test
-     */
-    public function testArrayValueFirstRecursive()
-    {
-        $this->assertEquals(null, array_value_first_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]],
-        ] as $array) {
-            $this->assertEquals('first', array_value_first_recursive($array));
-        }
-    }
-
-    /**
-     * Test for `array_value_last()` global function
-     * @test
-     */
-    public function testArrayValueLast()
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals('third', array_value_last($array));
-        $this->assertEquals('third', array_value_last(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_value_last([]));
-    }
-
-    /**
-     * Test for `array_value_last_recursive()` global function
-     * @test
-     */
-    public function testArrayValueLastRecursive()
-    {
-        $this->assertEquals(null, array_value_last_recursive([]));
-        foreach ([
-            ['first', 'second', 'third', 'fourth'],
-            ['first', ['second', 'third'], ['fourth']],
-            [['first', 'second'], ['third'], ['fourth']],
-            [[['first'], 'second'], ['third'], [['fourth']]],
-        ] as $array) {
-            $this->assertEquals('fourth', array_value_last_recursive($array));
-        }
-    }
-
     /**
      * Test for `deprecationWarning()` global function
      * @test
@@ -155,7 +35,7 @@ class GlobalFunctionsTest extends TestCase
         deprecationWarning('This method is deprecated');
         error_reporting($current);
 
-        $this->expectException(Deprecated::class);
+        $this->expectDeprecation();
         $this->expectExceptionMessageMatches('/^This method is deprecated/');
         $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
         deprecationWarning('This method is deprecated');

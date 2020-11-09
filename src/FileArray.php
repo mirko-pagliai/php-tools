@@ -16,6 +16,7 @@
 namespace Tools;
 
 use Tools\Exceptionist;
+use Tools\Filesystem;
 
 /**
  * This class allows you to read and write arrays using text files
@@ -158,6 +159,6 @@ class FileArray
      */
     public function write()
     {
-        return create_file($this->filename, serialize($this->data));
+        return (new Filesystem())->createFile($this->filename, serialize($this->data));
     }
 }

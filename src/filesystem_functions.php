@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -11,21 +12,21 @@
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
-use Tools\Exceptionist;
+use Tools\Filesystem;
 
 if (!function_exists('add_slash_term')) {
     /**
      * Adds the slash term to a path, if it doesn't have one
      * @param string $path Path
      * @return string Path with the slash term
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.2.6
      */
     function add_slash_term($path)
     {
-        return is_slash_term($path) ? $path : $path . DS;
+        deprecationWarning('Deprecated. Use instead `Filesystem::addSlashTerm()`');
+
+        return (new Filesystem())->addSlashTerm($path);
     }
 }
 
@@ -40,24 +41,15 @@ if (!function_exists('create_file')) {
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.1.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function create_file($filename, $data = null, $dirMode = 0777, $ignoreErrors = false)
     {
-        try {
-            $filesystem = new Filesystem();
-            $filesystem->mkdir(dirname($filename), $dirMode);
-            $filesystem->dumpFile($filename, $data);
+        deprecationWarning('Deprecated. Use instead `Filesystem::createFile()`');
 
-            return true;
-        } catch (IOException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->createFile($filename, $data, $dirMode, $ignoreErrors);
     }
 }
 
@@ -74,14 +66,14 @@ if (!function_exists('create_tmp_file')) {
      *  be created
      * @param string|null $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.1.7
      */
     function create_tmp_file($data = null, $dir = null, $prefix = 'tmp')
     {
-        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
-        create_file($filename, $data);
+        deprecationWarning('Deprecated. Use instead `Filesystem::createTmpFile()`');
 
-        return $filename;
+        return (new Filesystem())->createTmpFile($data, $dir, $prefix);
     }
 }
 
@@ -93,54 +85,15 @@ if (!function_exists('dir_tree')) {
      *  to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array Array of nested directories and files in each directory
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.7
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     function dir_tree($path, $exceptions = false, $ignoreErrors = false)
     {
-        $path = $path === DS ? DS : rtrim($path, DS);
-        $finder = new Finder();
-        $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
+        deprecationWarning('Deprecated. Use instead `Filesystem::getDirTree()`');
 
-        $skipHidden = false;
-        $finder->ignoreDotFiles(false);
-        if (in_array('.', $exceptions)) {
-            $skipHidden = true;
-            unset($exceptions[array_search('.', $exceptions)]);
-            $finder->ignoreDotFiles(true);
-        }
-
-        try {
-            $finder->directories()->ignoreUnreadableDirs()->in($path);
-            if ($exceptions) {
-                $finder->exclude($exceptions);
-            }
-            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
-            array_unshift($dirs, rtrim($path, DS));
-
-            $finder->files()->in($path);
-            if ($exceptions) {
-                $exceptions = array_map(function ($exception) {
-                    return preg_quote($exception, '/');
-                }, $exceptions);
-                $finder->notName('/(' . implode('|', $exceptions) . ')/');
-            }
-            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
-
-            return [$dirs, $files];
-        } catch (DirectoryNotFoundException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return [[], []];
-        } catch (\InvalidArgumentException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return [[], []];
-        }
+        return (new Filesystem())->getDirTree($path, $exceptions, $ignoreErrors);
     }
 }
 
@@ -153,10 +106,13 @@ if (!function_exists('fileperms_as_octal')) {
      * @link http://php.net/manual/en/function.fileperms.php
      * @param string $filename Path to the file
      * @return string Permissions as four-chars string
+     * @deprecated It will be removed in a future release
      * @since 1.2.0
      */
     function fileperms_as_octal($filename)
     {
+        deprecationWarning('Deprecated. It will be removed in a future release');
+
         return (string)substr(sprintf('%o', fileperms($filename)), -4);
     }
 }
@@ -166,10 +122,13 @@ if (!function_exists('fileperms_to_string')) {
      * Returns permissions from octal value (`0755`) to string (`'0755'`)
      * @param int|string $perms Permissions as octal value
      * @return string Permissions as four-chars string
+     * @deprecated It will be removed in a future release
      * @since 1.2.0
      */
     function fileperms_to_string($perms)
     {
+        deprecationWarning('Deprecated. It will be removed in a future release');
+
         return is_string($perms) ? $perms : sprintf('%04o', $perms);
     }
 }
@@ -183,25 +142,14 @@ if (!function_exists('get_extension')) {
      *  several parts (eg, `sql.gz`).
      * @param string $filename Filename
      * @return string|null
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.2
      */
     function get_extension($filename)
     {
-        //Gets the basename and, if the filename is an url, removes query string
-        //  and fragments (#)
-        $filename = parse_url(basename($filename), PHP_URL_PATH);
+        deprecationWarning('Deprecated. Use instead `Filesystem::getExtension()`');
 
-        //On Windows, finds the occurrence of the last slash
-        $pos = strripos($filename, '\\');
-        if ($pos !== false) {
-            $filename = substr($filename, $pos + 1);
-        }
-
-        //Finds the occurrence of the first point. The offset is 1, so as to
-        //  preserve the hidden files
-        $pos = strpos($filename, '.', 1);
-
-        return $pos === false ? null : strtolower(substr($filename, $pos + 1));
+        return (new Filesystem())->getExtension($filename);
     }
 }
 
@@ -210,11 +158,14 @@ if (!function_exists('is_slash_term')) {
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.3
      */
     function is_slash_term($path)
     {
-        return in_array($path[strlen($path) - 1], ['/', '\\']);
+        deprecationWarning('Deprecated. Use instead `Filesystem::isSlashTerm()`');
+
+        return (new Filesystem())->isSlashTerm($path);
     }
 }
 
@@ -227,33 +178,15 @@ if (!function_exists('is_writable_resursive')) {
      * @param bool $checkOnlyDir If `true`, also checks for all files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.0.7
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     function is_writable_resursive($dirname, $checkOnlyDir = true, $ignoreErrors = false)
     {
-        try {
-            list($directories, $files) = dir_tree($dirname);
-            $items = $checkOnlyDir ? $directories : array_merge($directories, $files);
+        deprecationWarning('Deprecated. Use instead `Filesystem::isWritableResursive()`');
 
-            if (!in_array($dirname, $items)) {
-                $items[] = $dirname;
-            }
-
-            foreach ($items as $item) {
-                if (!is_readable($item) || !is_writable($item)) {
-                    return false;
-                }
-            }
-
-            return true;
-        } catch (\InvalidArgumentException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->isWritableResursive($dirname, $checkOnlyDir, $ignoreErrors);
     }
 }
 
@@ -267,20 +200,16 @@ if (!function_exists('rmdir_recursive')) {
      *  function instead.
      * @param string $dirname Path to the directory
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @see unlink_recursive()
      * @since 1.0.6
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
     function rmdir_recursive($dirname)
     {
-        if (!is_dir($dirname)) {
-            return false;
-        }
+        deprecationWarning('Deprecated. Use instead `Filesystem::rmdirRecursive()`');
 
-        $filesystem = new Filesystem();
-        $filesystem->remove($dirname);
-
-        return true;
+        return (new Filesystem())->rmdirRecursive($dirname);
     }
 }
 
@@ -292,22 +221,14 @@ if (!function_exists('rtr')) {
      *  `putenv()` function) or the `ROOT` constant.
      * @param string $path Absolute path
      * @return string Relative path
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @throws \Exception
      */
     function rtr($path)
     {
-        $root = getenv('ROOT');
-        if (!$root) {
-            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            $root = ROOT;
-        }
+        deprecationWarning('Deprecated. Use instead `Filesystem::rtr()`');
 
-        $filesystem = new Filesystem();
-        if ($filesystem->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            $path = $filesystem->makePathRelative($path, $root);
-        }
-
-        return rtrim($path, '/');
+        return (new Filesystem())->rtr($path);
     }
 }
 
@@ -324,6 +245,7 @@ if (!function_exists('unlink_recursive')) {
      *  or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
+     * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @see rmdir_recursive()
      * @since 1.0.7
      * @throws \Symfony\Component\Filesystem\Exception\IOException
@@ -331,24 +253,8 @@ if (!function_exists('unlink_recursive')) {
      */
     function unlink_recursive($dirname, $exceptions = false, $ignoreErrors = false)
     {
-        try {
-            list(, $files) = dir_tree($dirname, $exceptions);
-            $filesystem = new Filesystem();
-            $filesystem->remove($files);
+        deprecationWarning('Deprecated. Use instead `Filesystem::unlinkRecursive()`');
 
-            return true;
-        } catch (IOException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        } catch (\InvalidArgumentException $e) {
-            if (!$ignoreErrors) {
-                throw $e;
-            }
-
-            return false;
-        }
+        return (new Filesystem())->unlinkRecursive($dirname, $exceptions, $ignoreErrors);
     }
 }

@@ -15,13 +15,16 @@
 namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Tools\Filesystem;
 use Tools\ReflectionTrait;
+use Tools\TestSuite\BackwardCompatibilityTrait;
 
 /**
  * TestCase class.
  */
 abstract class TestCase extends PHPUnitTestCase
 {
+    use BackwardCompatibilityTrait;
     use ReflectionTrait;
     use TestTrait;
 
@@ -35,22 +38,9 @@ abstract class TestCase extends PHPUnitTestCase
     {
         parent::tearDown();
 
-        if (add_slash_term(TMP) !== add_slash_term(sys_get_temp_dir())) {
-            unlink_recursive(TMP);
+        $Filesystem = new Filesystem();
+        if ($Filesystem->addSlashTerm(TMP) !== $Filesystem->addSlashTerm(sys_get_temp_dir())) {
+            $Filesystem->unlinkRecursive(TMP);
         }
-    }
-
-    /**
-     * Sets up an expectation for an exception to be raised by the code under test.
-     *
-     * This provides backward compatibility for versions of `phpunit` lower than 8.5.
-     * @param string $regularExpression Expected regular expression for the exception message
-     * @return void
-     * @todo To be removed in a future release
-     */
-    public function expectExceptionMessageMatches($regularExpression)
-    {
-        $methodToCall = method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches') ? [parent::class, 'expectExceptionMessageMatches'] : [$this, 'expectExceptionMessageRegExp'];
-        call_user_func($methodToCall, $regularExpression);
     }
 }

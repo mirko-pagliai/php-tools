@@ -32,7 +32,7 @@ class NetworkFunctionsTest extends TestCase
             'http://mysite.com#fragment',
             'http://mysite.com/#fragment',
         ] as $url) {
-            $this->assertRegExp('/^http:\/\/mysite\.com\/?$/', clean_url($url));
+            $this->assertMatchesRegularExpression('/^http:\/\/mysite\.com\/?$/', clean_url($url));
         }
 
         foreach ([
@@ -45,7 +45,7 @@ class NetworkFunctionsTest extends TestCase
             '/relative#fragment',
             '/relative/#fragment',
         ] as $url) {
-            $this->assertRegExp('/^\/?relative\/?$/', clean_url($url));
+            $this->assertMatchesRegularExpression('/^\/?relative\/?$/', clean_url($url));
         }
 
         foreach ([
@@ -54,7 +54,7 @@ class NetworkFunctionsTest extends TestCase
             'https://www.mysite.com',
             'ftp://www.mysite.com',
         ] as $url) {
-            $this->assertRegExp('/^((https?|ftp):\/\/)?mysite\.com$/', clean_url($url, true));
+            $this->assertMatchesRegularExpression('/^((https?|ftp):\/\/)?mysite\.com$/', clean_url($url, true));
         }
 
         foreach ([

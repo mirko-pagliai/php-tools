@@ -13,8 +13,7 @@
 
 namespace Tools\Test;
 
-use InvalidArgumentException;
-use Symfony\Component\Filesystem\Exception\IOException;
+use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -28,9 +27,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testAddSlashTerm()
     {
-        $expected = DS . 'tmp' . DS;
-        $this->assertSame($expected, add_slash_term(DS . 'tmp'));
-        $this->assertSame($expected, add_slash_term($expected));
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertSame(DS . 'tmp' . DS, add_slash_term(DS . 'tmp'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::addSlashTerm()`');
+        add_slash_term(DS . 'tmp');
     }
 
     /**
@@ -39,22 +42,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testCreateFile()
     {
-        $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
-        $this->assertTrue(create_file($filename));
-        $this->assertStringEqualsFile($filename, '');
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(create_file(TMP . 'dirToBeCreated' . DS . 'exampleFile'));
+        error_reporting($current);
 
-        unlink($filename);
-        $this->assertTrue(create_file($filename, 'string'));
-        $this->assertStringEqualsFile($filename, 'string');
-
-        $this->skipIf(IS_WIN);
-
-        //Using a no existing directory, but ignoring errors
-        $this->assertFalse(create_file(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
-
-        //Using a no existing directory
-        $this->expectException(IOException::class);
-        create_file(DS . 'noExistingDir' . DS . 'file');
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::createFile()`');
+        create_file(TMP . 'exampleFile');
     }
 
     /**
@@ -63,11 +57,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testCreateTmpFile()
     {
-        foreach (['', 'string'] as $string) {
-            $filename = create_tmp_file($string);
-            $this->assertRegexp(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
-            $this->assertStringEqualsFile($filename, $string);
-        }
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(create_tmp_file());
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::createTmpFile()`');
+        create_tmp_file();
     }
 
     /**
@@ -76,53 +72,15 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testDirTree()
     {
-        $expectedDirs = [
-            TMP . 'exampleDir',
-            TMP . 'exampleDir' . DS . '.hiddenDir',
-            TMP . 'exampleDir' . DS . 'emptyDir',
-            TMP . 'exampleDir' . DS . 'subDir1',
-            TMP . 'exampleDir' . DS . 'subDir2',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3',
-        ];
-        $expectedFiles = createSomeFiles();
+        createSomeFiles();
 
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir'));
-        $this->assertEquals([$expectedDirs, $expectedFiles], dir_tree(TMP . 'exampleDir' . DS));
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertNotEmpty(dir_tree(TMP . 'exampleDir'));
+        error_reporting($current);
 
-        //Excludes some files
-        foreach ([
-            ['file2'],
-            ['file2', 'file3'],
-            ['.hiddenFile'],
-            ['.hiddenFile', 'file2', 'file3'],
-        ] as $exceptions) {
-            $currentExpectedFiles = array_clean($expectedFiles, function ($value) use ($exceptions) {
-                return !in_array(basename($value), $exceptions);
-            });
-            $this->assertEquals([$expectedDirs, $currentExpectedFiles], dir_tree(TMP . 'exampleDir', $exceptions));
-        }
-
-        //Excludes a directory
-        list($result) = dir_tree(TMP . 'exampleDir', 'subDir2');
-        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2', $result);
-        $this->assertNotContains(TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3', $result);
-
-        //Excludes hidden files
-        foreach ([true, '.', ['.']] as $exceptions) {
-            list($result) = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir', $result);
-
-            list(, $result) = dir_tree(TMP . 'exampleDir', $exceptions);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7', $result);
-            $this->assertNotContains(TMP . 'exampleDir' . DS . '.hiddenFile', $result);
-        }
-
-        //Using a no existing directory, but ignoring errors
-        $this->assertSame([[], []], dir_tree(TMP . 'noExisting', false, true));
-
-        //Using a no existing directory
-        $this->expectException(InvalidArgumentException::class);
-        dir_tree(TMP . 'noExisting');
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::getDirTree()`');
+        dir_tree(TMP . 'exampleDir');
     }
 
     /**
@@ -131,7 +89,15 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testFilepermsAsOctal()
     {
-        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal(create_tmp_file()));
+        $file = (new Filesystem())->createTmpFile();
+
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertSame(IS_WIN ? '0666' : '0600', fileperms_as_octal($file));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
+        fileperms_as_octal($file);
     }
 
     /**
@@ -140,8 +106,14 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testFilepermsToString()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame('0755', fileperms_to_string(0755));
         $this->assertSame('0755', fileperms_to_string('0755'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. It will be removed in a future release');
+        fileperms_to_string(0755);
     }
 
     /**
@@ -150,42 +122,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testGetExtension()
     {
-        foreach ([
-            'backup.sql' => 'sql',
-            'backup.sql.bz2' => 'sql.bz2',
-            'backup.sql.gz' => 'sql.gz',
-            'text.txt' => 'txt',
-            'TEXT.TXT' => 'txt',
-            'noExtension' => null,
-            'txt' => null,
-            '.txt' => null,
-            '.hiddenFile' => null,
-        ] as $filename => $expectedExtension) {
-            $this->assertEquals($expectedExtension, get_extension($filename));
-        }
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertEquals('sql.bz2', get_extension('backup.sql.bz2'));
+        error_reporting($current);
 
-        foreach ([
-            'backup.sql.gz',
-            '/backup.sql.gz',
-            '/full/path/to/backup.sql.gz',
-            'relative/path/to/backup.sql.gz',
-            ROOT . 'backup.sql.gz',
-            '/withDot./backup.sql.gz',
-            'C:\backup.sql.gz',
-            'C:\subdir\backup.sql.gz',
-            'C:\withDot.\backup.sql.gz',
-        ] as $filename) {
-            $this->assertEquals('sql.gz', get_extension($filename));
-        }
-
-        foreach ([
-            'http://example.com/backup.sql.gz',
-            'http://example.com/backup.sql.gz#fragment',
-            'http://example.com/backup.sql.gz?',
-            'http://example.com/backup.sql.gz?name=value',
-        ] as $url) {
-            $this->assertEquals('sql.gz', get_extension($url));
-        }
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::getExtension()`');
+        get_extension('backup.sql.bz2');
     }
 
     /**
@@ -194,24 +137,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testIsSlashTerm()
     {
-        foreach ([
-            'path/',
-            '/path/',
-            'path\\',
-            '\\path\\',
-        ] as $path) {
-            $this->assertTrue(is_slash_term($path));
-        }
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(is_slash_term('path/'));
+        error_reporting($current);
 
-        foreach ([
-            'path',
-            '/path',
-            '\\path',
-            'path.ext',
-            '/path.ext',
-        ] as $path) {
-            $this->assertFalse(is_slash_term($path));
-        }
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::isSlashTerm()`');
+        $this->assertTrue(is_slash_term('path/'));
     }
 
     /**
@@ -220,18 +152,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testIsWritableRecursive()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_writable_resursive(TMP));
+        error_reporting($current);
 
-        if (!IS_WIN) {
-            $this->assertFalse(is_writable_resursive(DS . 'bin'));
-        }
-
-        //Using a no existing directory, but ignoring errors
-        $this->assertFalse(is_writable_resursive(TMP . 'noExisting', true, true));
-
-        //Using a no existing directory
-        $this->expectException(InvalidArgumentException::class);
-        $this->assertFalse(is_writable_resursive(TMP . 'noExisting'));
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::isWritableResursive()`');
+        is_writable_resursive(TMP);
     }
 
     /**
@@ -241,13 +168,14 @@ class FilesystemFunctionsTest extends TestCase
     public function testRmdirRecursive()
     {
         createSomeFiles();
-        $this->assertTrue(rmdir_recursive(TMP . 'exampleDir'));
-        $this->assertDirectoryNotExists(TMP . 'exampleDir');
 
-        //Does not delete a file
-        $filename = create_tmp_file();
-        $this->assertFalse(rmdir_recursive($filename));
-        $this->assertFileExists($filename);
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(rmdir_recursive(TMP . 'exampleDir'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::rmdirRecursive()`');
+        rmdir_recursive(TMP . 'exampleDir');
     }
 
     /**
@@ -256,11 +184,13 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testRtr()
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
+        error_reporting($current);
 
-        //Resets the ROOT value, removing the final slash
-        putenv('ROOT=' . rtrim(ROOT, DS));
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::rtr()`');
+        rtr(ROOT . 'my' . DS . 'folder');
     }
 
     /**
@@ -269,25 +199,14 @@ class FilesystemFunctionsTest extends TestCase
      */
     public function testUnlinkRecursive()
     {
-        //Creates some files and some links
-        $files = createSomeFiles();
-        if (!IS_WIN) {
-            foreach ([create_tmp_file(), create_tmp_file()] as $filename) {
-                $link = TMP . 'exampleDir' . DS . 'link_to_' . basename($filename);
-                symlink($filename, $link);
-                $files[] = $link;
-            }
-        }
-
+        createSomeFiles();
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(unlink_recursive(TMP . 'exampleDir'));
-        array_map([$this, 'assertFileNotExists'], $files);
-        $this->assertDirectoryExists(TMP . 'exampleDir');
+        error_reporting($current);
 
-        //Using a no existing directory, but ignoring errors
-        $this->assertFalse(unlink_recursive(TMP . 'noExisting', false, true));
-
-        //Using a no existing directory
-        $this->expectException(InvalidArgumentException::class);
-        unlink_recursive(TMP . 'noExisting');
+        createSomeFiles();
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('Deprecated. Use instead `Filesystem::unlinkRecursive()`');
+        unlink_recursive(TMP . 'exampleDir');
     }
 }
