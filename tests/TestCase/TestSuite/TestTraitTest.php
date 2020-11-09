@@ -218,6 +218,7 @@ class TestTraitTest extends TestCase
         $this->assertFilePerms(['0600', 0666], $file);
         $this->assertFilePerms('0700', $file);
         $this->assertFilePerms(['0700', '0777'], $file);
+        $this->assertFilePerms(['0700', '0777'], TMP);
         error_reporting($current);
 
         $this->expectDeprecation();
