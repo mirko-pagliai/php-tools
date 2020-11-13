@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Tools\Filesystem;
@@ -198,6 +199,20 @@ class FilesystemTest extends TestCase
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
         $this->assertSame(rtrim(ROOT, DS), $this->Filesystem->getRoot());
+    }
+
+    /**
+     * Test for `makePathAbsolute()` method
+     * @test
+     */
+    public function testMakePathAbsolute()
+    {
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute(TMP . 'dir', TMP));
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute('dir', TMP));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The start path `relativePath` is not absolute');
+        $this->Filesystem->makePathAbsolute('dir', 'relativePath');
     }
 
     /**

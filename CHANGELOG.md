@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.5
+* added `Filesystem::makePathAbsolute()` method.
+
 ### 1.4.4
 * added `Filesystem` class, all filesystem global function are now deprecated;
 * added `Filesystem::getRoot()` method;

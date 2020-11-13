@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools;
 
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -181,6 +182,26 @@ class Filesystem extends BaseFilesystem
         }
 
         return $root;
+    }
+
+    /**
+     * Makes a relative path `$endPath` absolute, prepending `$startPath`
+     * @param string $endPath An end path to be made absolute
+     * @param string $startPath A start path to prepend
+     * @return string
+     * @since 1.4.5
+     * @throws InvalidArgumentException
+     */
+    public function makePathAbsolute(string $endPath, string $startPath): string
+    {
+        if (!$this->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
+        }
+        if ($this->isAbsolutePath($endPath)) {
+            return $endPath;
+        }
+
+        return $this->addSlashTerm($startPath) . $endPath;
     }
 
     /**
