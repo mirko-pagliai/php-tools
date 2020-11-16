@@ -51,6 +51,18 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `concatenate()` method
+     * @test
+     */
+    public function testConcatenate()
+    {
+        $this->assertSame('dir', $this->Filesystem->concatenate('dir'));
+        $this->assertSame('dir' . DS . 'subdir', $this->Filesystem->concatenate('dir', 'subdir'));
+        $this->assertSame('dir' . DS . 'subdir', $this->Filesystem->concatenate('dir' . DS, 'subdir'));
+        $this->assertSame('dir' . DS . 'subdir' . DS . 'subsubdir', $this->Filesystem->concatenate('dir', 'subdir', 'subsubdir'));
+    }
+
+    /**
      * Test for `createFile()` method
      * @test
      */

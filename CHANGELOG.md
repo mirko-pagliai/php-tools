@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.5
+* added `Filesystem::concatenate()` method;
 * added `Filesystem::makePathAbsolute()` method.
 
 ### 1.4.4
