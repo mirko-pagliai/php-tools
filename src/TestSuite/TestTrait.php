@@ -17,7 +17,6 @@ namespace Tools\TestSuite;
 
 use BadMethodCallException;
 use Exception;
-use Throwable;
 use Tools\Filesystem;
 
 /**
