@@ -190,7 +190,7 @@ class Filesystem extends BaseFilesystem
      * @since 1.4.5
      * @throws InvalidArgumentException
      */
-    public function makePathAbsolute(string $endPath, string $startPath): string
+    public function makePathAbsolute($endPath, $startPath)
     {
         if (!$this->isAbsolutePath($startPath)) {
             throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
