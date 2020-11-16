@@ -214,7 +214,7 @@ class Filesystem extends BaseFilesystem
             return $endPath;
         }
 
-        return $this->addSlashTerm($startPath) . $endPath;
+        return $this->concatenate($startPath, $endPath);
     }
 
     /**
