@@ -297,7 +297,7 @@ class Filesystem extends BaseFilesystem
             $path = $this->makePathRelative($path, $root);
         }
 
-        return rtrim($path, '/');
+        return rtrim($path, DS);
     }
 
     /**
