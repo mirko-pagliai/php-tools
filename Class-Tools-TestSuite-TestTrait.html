@@ -11,9 +11,11 @@
         <script>hljs.initHighlightingOnLoad();</script>
     </head>
     <body>
-        <nav class="navbar sticky-top navbar-dark bg-dark">
-            <a class="navbar-brand mb-0 h1" href="index.html">php-tools</a>
-        </nav>
+<nav class="navbar sticky-top navbar-dark bg-dark">
+    <a class="navbar-brand mb-0 h1" href="index.html">php-tools</a>
+    <div class="d-inline">
+    </div>
+</nav>
 
         <div class="container-fluid">
             <div class="row">
@@ -71,10 +73,16 @@
         <a href="Class-Tools-FileException.html" title="Tools\FileException">Tools\FileException</a>
     </li>
     <li class="text-truncate">
+        <a href="Class-Tools-Filesystem.html" title="Tools\Filesystem">Tools\Filesystem</a>
+    </li>
+    <li class="text-truncate">
         <a href="Class-Tools-InvalidValueException.html" title="Tools\InvalidValueException">Tools\InvalidValueException</a>
     </li>
     <li class="text-truncate">
         <a href="Class-Tools-ReflectionTrait.html" title="Tools\ReflectionTrait">Tools\ReflectionTrait</a>
+    </li>
+    <li class="text-truncate">
+        <a href="Class-Tools-TestSuite-BackwardCompatibilityTrait.html" title="Tools\TestSuite\BackwardCompatibilityTrait">Tools\TestSuite\BackwardCompatibilityTrait</a>
     </li>
     <li class="text-truncate">
         <a href="Class-Tools-TestSuite-EventAssertTrait.html" title="Tools\TestSuite\EventAssertTrait">Tools\TestSuite\EventAssertTrait</a>
@@ -91,7 +99,7 @@
 </ul>
                 </div>
                 <div class="col-md-9 col-lg-8 p-3">
-                        <div class="class-element">
+                    <div class="class-element">
     <h2>Trait <em>TestTrait</em></h2>
 
     <div class="description"><p>A trait that provides some assertion methods.</p></div>
@@ -174,8 +182,8 @@ least one of those values.</p></div>
         <li>
 <div class="method-summary-element">
     <code>
-        <a href="#assertFilePerms">assertFilePerms()</a>
-    </code> <span class="badge badge-light">protected</span> <span class="badge badge-light">static</span>
+        <a href="#assertFilePerms"><del>assertFilePerms()</del></a>
+    </code> <span class="badge badge-light">protected</span> <span class="badge badge-light">static</span> <span class="badge badge-light">deprecated</span>
     <div class="description"><p>Asserts that a filename has some file permissions.</p>
 <p>If <code>$expectedPerms</code> is an array, asserts that the filename has at
 least one of those values</p></div>
@@ -510,6 +518,13 @@ generated message</p></div>
         </div>
 
 <div class="tag-element">
+    <h6>Deprecated</h6>
+    <div class="mb-3">
+        <div class="description"><p>Use instead <code>assertFileIsReadable()</code>/<code>assertFileIsWritable()</code>/<code>assertDirectoryIsReadable()</code>/<code>assertDirectoryIsWritable()</code></p></div>
+    </div>
+</div>
+
+<div class="tag-element">
     <h6>Return</h6>
     <div class="mb-3">
         <pre><code class="language-php">void</code></pre>
@@ -709,7 +724,6 @@ generated message</p></div>
 </div>
     </div>
 </div>
-
                 </div>
             </div>
         </div>

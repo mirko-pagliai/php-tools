@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>php-tools - Trait Tools\TestSuite\EventAssertTrait</title>
+        <title>php-tools - Trait Tools\TestSuite\BackwardCompatibilityTrait</title>
         <link rel="stylesheet" href="assets/bootstrap/bootstrap.min.css">
         <link rel="stylesheet" href="assets/highlight/styles/default.css">
         <link rel="stylesheet" href="assets/default.css">
@@ -100,16 +100,16 @@
                 </div>
                 <div class="col-md-9 col-lg-8 p-3">
                     <div class="class-element">
-    <h2>Trait <em>EventAssertTrait</em></h2>
+    <h2>Trait <em>BackwardCompatibilityTrait</em></h2>
 
-    <div class="description"><p>Trait to assert whether events were fired or not.</p></div>
+    <div class="description"><p>This trait provides methods to achieve PHPUnit backward compatibility</p></div>
 
 
 
 
     <div class="namespace">
         <div><strong>Namespace:</strong> <pre class="d-inline">Tools\TestSuite</pre></div>
-        <div><strong>Location:</strong> <pre class="d-inline">/home/mirko/Libs/php-tools/src/TestSuite/EventAssertTrait.php</pre></div>
+        <div><strong>Location:</strong> <pre class="d-inline">/home/mirko/Libs/php-tools/src/TestSuite/BackwardCompatibilityTrait.php</pre></div>
     </div>
 
 
@@ -119,18 +119,54 @@
         <li>
 <div class="method-summary-element">
     <code>
-        <a href="#assertEventFired">assertEventFired()</a>
-    </code> <span class="badge badge-light">public</span>
-    <div class="description"><p>Asserts that an event was fired</p></div>
+        <a href="#assertDirectoryDoesNotExist">assertDirectoryDoesNotExist()</a>
+    </code> <span class="badge badge-light">public</span> <span class="badge badge-light">static</span>
+    <div class="description"><p>Asserts that a directory does not exist</p></div>
 
 </div>
         </li>
         <li>
 <div class="method-summary-element">
     <code>
-        <a href="#assertEventNotFired">assertEventNotFired()</a>
+        <a href="#assertFileDoesNotExist">assertFileDoesNotExist()</a>
+    </code> <span class="badge badge-light">public</span> <span class="badge badge-light">static</span>
+    <div class="description"><p>Asserts that a file does not exist</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
+    <code>
+        <a href="#assertMatchesRegularExpression">assertMatchesRegularExpression()</a>
+    </code> <span class="badge badge-light">public</span> <span class="badge badge-light">static</span>
+    <div class="description"><p>Asserts that a string matches a given regular expression</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
+    <code>
+        <a href="#expectNotice">expectNotice()</a>
     </code> <span class="badge badge-light">public</span>
-    <div class="description"><p>Asserts that an event was not fired</p></div>
+    <div class="description"><p>Expects a notice</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
+    <code>
+        <a href="#expectDeprecation">expectDeprecation()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div class="description"><p>Expects a deprecation</p></div>
+
+</div>
+        </li>
+        <li>
+<div class="method-summary-element">
+    <code>
+        <a href="#expectExceptionMessageMatches">expectExceptionMessageMatches()</a>
+    </code> <span class="badge badge-light">public</span>
+    <div class="description"><p>Expectes thath the exception message matches <code>$regularExpression</code>.</p></div>
 
 </div>
         </li>
@@ -139,27 +175,24 @@
     <h4>Methods detail</h4>
     <div class="mb-4">
 <div class="method-element">
-    <a name="assertEventFired"></a>
+    <a name="assertDirectoryDoesNotExist"></a>
     <div class="title">
-        <div>public</div>
-        <h5>assertEventFired()</h5>
+        <div>public static</div>
+        <h5>assertDirectoryDoesNotExist()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">assertEventFired(string $eventName, Tools\Event\EventDispatcher $EventDispatcher, string $message = '')</code></pre>
-        <div class="description"><p>Asserts that an event was fired</p></div>
+        <pre><code class="language-php">assertDirectoryDoesNotExist(string $directory, string $message = '')</code></pre>
+        <div class="description"><p>Asserts that a directory does not exist</p></div>
 
         <h6>Parameters</h6>
         <div class="parameter-element">
-            <pre><code class="language-php">string $eventName</code></pre>
-            <div class="description"><p>Event name</p></div>
-        </div>
-        <div class="parameter-element">
-            <pre><code class="language-php">Tools\Event\EventDispatcher $EventDispatcher</code></pre>
-            <div class="description"><p>Event dispatcher</p></div>
+            <pre><code class="language-php">string $directory</code></pre>
+            <div class="description"><p>Directory path</p></div>
         </div>
         <div class="parameter-element">
             <pre><code class="language-php">string $message = ''</code></pre>
-            <div class="description"><p>The message to use for failure</p></div>
+            <div class="description"><p>The failure message that will be appended to the
+generated message</p></div>
         </div>
 
 <div class="tag-element">
@@ -174,27 +207,131 @@
     </div>
     <div class="mb-4">
 <div class="method-element">
-    <a name="assertEventNotFired"></a>
+    <a name="assertFileDoesNotExist"></a>
     <div class="title">
-        <div>public</div>
-        <h5>assertEventNotFired()</h5>
+        <div>public static</div>
+        <h5>assertFileDoesNotExist()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">assertEventNotFired(string $eventName, Tools\Event\EventDispatcher $EventDispatcher, string $message = '')</code></pre>
-        <div class="description"><p>Asserts that an event was not fired</p></div>
+        <pre><code class="language-php">assertFileDoesNotExist(string $filename, string $message = '')</code></pre>
+        <div class="description"><p>Asserts that a file does not exist</p></div>
 
         <h6>Parameters</h6>
         <div class="parameter-element">
-            <pre><code class="language-php">string $eventName</code></pre>
-            <div class="description"><p>Event name</p></div>
-        </div>
-        <div class="parameter-element">
-            <pre><code class="language-php">Tools\Event\EventDispatcher $EventDispatcher</code></pre>
-            <div class="description"><p>Event dispatcher</p></div>
+            <pre><code class="language-php">string $filename</code></pre>
+            <div class="description"><p>Filename</p></div>
         </div>
         <div class="parameter-element">
             <pre><code class="language-php">string $message = ''</code></pre>
-            <div class="description"><p>The message to use for failure</p></div>
+            <div class="description"><p>The failure message that will be appended to the
+generated message</p></div>
+        </div>
+
+<div class="tag-element">
+    <h6>Return</h6>
+    <div class="mb-3">
+        <pre><code class="language-php">void</code></pre>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="assertMatchesRegularExpression"></a>
+    <div class="title">
+        <div>public static</div>
+        <h5>assertMatchesRegularExpression()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">assertMatchesRegularExpression(string $pattern, string $string, string $message = '')</code></pre>
+        <div class="description"><p>Asserts that a string matches a given regular expression</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $pattern</code></pre>
+            <div class="description"><p>A regular expression</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $string</code></pre>
+            <div class="description"><p>A string to check</p></div>
+        </div>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $message = ''</code></pre>
+            <div class="description"><p>The failure message that will be appended to the
+generated message</p></div>
+        </div>
+
+<div class="tag-element">
+    <h6>Return</h6>
+    <div class="mb-3">
+        <pre><code class="language-php">void</code></pre>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="expectNotice"></a>
+    <div class="title">
+        <div>public</div>
+        <h5>expectNotice()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">expectNotice()</code></pre>
+        <div class="description"><p>Expects a notice</p></div>
+
+
+<div class="tag-element">
+    <h6>Return</h6>
+    <div class="mb-3">
+        <pre><code class="language-php">void</code></pre>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="expectDeprecation"></a>
+    <div class="title">
+        <div>public</div>
+        <h5>expectDeprecation()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">expectDeprecation()</code></pre>
+        <div class="description"><p>Expects a deprecation</p></div>
+
+
+<div class="tag-element">
+    <h6>Return</h6>
+    <div class="mb-3">
+        <pre><code class="language-php">void</code></pre>
+    </div>
+</div>
+
+    </div>
+</div>
+    </div>
+    <div class="mb-4">
+<div class="method-element">
+    <a name="expectExceptionMessageMatches"></a>
+    <div class="title">
+        <div>public</div>
+        <h5>expectExceptionMessageMatches()</h5>
+    </div>
+    <div class="body">
+        <pre><code class="language-php">expectExceptionMessageMatches(string $regularExpression)</code></pre>
+        <div class="description"><p>Expectes thath the exception message matches <code>$regularExpression</code>.</p></div>
+
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">string $regularExpression</code></pre>
+            <div class="description"><p>A regular expression</p></div>
         </div>
 
 <div class="tag-element">
