@@ -188,7 +188,7 @@ class Filesystem extends BaseFilesystem
      * @param string $startPath A start path to prepend
      * @return string
      * @since 1.4.5
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      */
     public function makePathAbsolute($endPath, $startPath)
     {
