@@ -274,6 +274,20 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `normalizePath()` method
+     * @test
+     */
+    public function testNormalizePath()
+    {
+        foreach ([
+            'path/to/normalize',
+            'path\\to\\normalize',
+        ] as $path) {
+            $this->assertSame('path' . DS . 'to' . DS . 'normalize', $this->Filesystem->normalizePath($path));
+        }
+    }
+
+    /**
      * Test for `rmdirRecursive()` method
      * @test
      */
