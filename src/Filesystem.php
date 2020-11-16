@@ -305,8 +305,7 @@ class Filesystem extends BaseFilesystem
     {
         $root = $this->getRoot();
         if ($this->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            $path = $this->makePathRelative($path, $root);
-            $path = IS_WIN ? str_replace('/', '\\', $path) : $path;
+            $path = $this->normalizePath($this->makePathRelative($path, $root));
         }
 
         return rtrim($path, DS);
