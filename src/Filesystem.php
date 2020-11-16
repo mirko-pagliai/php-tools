@@ -39,6 +39,19 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Concatenates various paths together, adding the right slash term
+     * @param string $paths Various paths to be concatenated
+     * @return string The path concatenated
+     * @since 1.4.5
+     */
+    public function concatenate(string ...$paths): string
+    {
+        $end = array_pop($paths);
+
+        return implode('', array_map([$this, 'addSlashTerm'], $paths)) . $end;
+    }
+
+    /**
      * Creates a file. Alias for `mkdir()` and `file_put_contents()`.
      *
      * It also recursively creates the directory where the file will be created.
