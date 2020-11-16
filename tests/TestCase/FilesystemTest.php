@@ -214,20 +214,6 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `makePathAbsolute()` method
-     * @test
-     */
-    public function testMakePathAbsolute()
-    {
-        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute(TMP . 'dir', TMP));
-        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute('dir', TMP));
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The start path `relativePath` is not absolute');
-        $this->Filesystem->makePathAbsolute('dir', 'relativePath');
-    }
-
-    /**
      * Test for `isSlashTerm()` method
      * @test
      */
@@ -271,6 +257,20 @@ class FilesystemTest extends TestCase
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
         $this->assertFalse($this->Filesystem->isWritableResursive(TMP . 'noExisting'));
+    }
+
+    /**
+     * Test for `makePathAbsolute()` method
+     * @test
+     */
+    public function testMakePathAbsolute()
+    {
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute(TMP . 'dir', TMP));
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute('dir', TMP));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The start path `relativePath` is not absolute');
+        $this->Filesystem->makePathAbsolute('dir', 'relativePath');
     }
 
     /**
