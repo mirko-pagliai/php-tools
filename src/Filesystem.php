@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools;
 
+use InvalidArgumentException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -35,6 +36,19 @@ class Filesystem extends BaseFilesystem
     public function addSlashTerm(string $path): string
     {
         return $this->isSlashTerm($path) ? $path : $path . DS;
+    }
+
+    /**
+     * Concatenates various paths together, adding the right slash term
+     * @param string $paths Various paths to be concatenated
+     * @return string The path concatenated
+     * @since 1.4.5
+     */
+    public function concatenate(string ...$paths): string
+    {
+        $end = array_pop($paths);
+
+        return implode('', array_map([$this, 'addSlashTerm'], $paths)) . $end;
     }
 
     /**
@@ -184,6 +198,26 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Makes a relative path `$endPath` absolute, prepending `$startPath`
+     * @param string $endPath An end path to be made absolute
+     * @param string $startPath A start path to prepend
+     * @return string
+     * @since 1.4.5
+     * @throws \InvalidArgumentException
+     */
+    public function makePathAbsolute(string $endPath, string $startPath): string
+    {
+        if (!$this->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
+        }
+        if ($this->isAbsolutePath($endPath)) {
+            return $endPath;
+        }
+
+        return $this->concatenate($startPath, $endPath);
+    }
+
+    /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
@@ -263,7 +297,7 @@ class Filesystem extends BaseFilesystem
             $path = $this->makePathRelative($path, $root);
         }
 
-        return rtrim($path, '/');
+        return rtrim($path, DS);
     }
 
     /**
