@@ -221,7 +221,7 @@ class Filesystem extends BaseFilesystem
      * @return string Normalized path
      * @since 1.4.5
      */
-    public function normalizePath(string $path): string
+    public function normalizePath($path)
     {
         return str_replace(['/', '\\'], DS, $path);
     }
