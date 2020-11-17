@@ -5,6 +5,9 @@ parameters:
         - src
         - tests
 
+    bootstrapFiles:
+        - tests/bootstrap.php
+
     checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
@@ -13,7 +16,6 @@ parameters:
         -  tests/test_app/
 
     ignoreErrors:
-        - '#^Constant (TMP|ROOT) not found#'
         - '#^Call to an undefined static method#'
         - '#^Static call to instance method#'
         - '#^Ternary operator condition is always (true|false)\.$#'
@@ -46,10 +48,6 @@ parameters:
         -
             message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
             path: tests/TestCase/ExceptionistTest.php
-            count: 1
-        -
-            message: '#^Parameter \#1 \$eventDispatcher of method [\w\\]+EventDispatcherTraitTest::setEventDispatcher\(\) expects#'
-            path: tests/TestCase/Event/EventDispatcherTraitTest.php
             count: 1
         -
             message: '#^Negated boolean expression is always true\.$#'
