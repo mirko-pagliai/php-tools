@@ -187,7 +187,7 @@ class FilesystemFunctionsTest extends TestCase
     public function testRtr()
     {
         $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertSame('my/folder', rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my' . DS . 'folder', rtr(ROOT . 'my' . DS . 'folder'));
         error_reporting($current);
 
         $this->expectDeprecation();
