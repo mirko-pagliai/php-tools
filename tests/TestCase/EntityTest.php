@@ -51,12 +51,12 @@ class EntityTest extends TestCase
         $line = __LINE__ + 1;
         debug($this->Entity);
         $dump = ob_get_clean();
-        $assertStringContainsString = function () {
+        $assertStringContainsString = function (string $first, string $second) {
             $method = 'assertContains';
             if (method_exists($this, 'assertStringContainsString')) {
                 $method = 'assertStringContainsString';
             }
-            call_user_func_array([$this, $method], func_get_args());
+            call_user_func([$this, $method], $first, $second);
         };
         $assertStringContainsString(EntityExample::class, $dump);
 

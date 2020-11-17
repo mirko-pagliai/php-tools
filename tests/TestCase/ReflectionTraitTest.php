@@ -25,7 +25,7 @@ use Tools\TestSuite\TestCase;
 class ReflectionTraitTest extends TestCase
 {
     /**
-     * @var \App\ExampleClass
+     * @var \App\ExampleClass|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $example;
 

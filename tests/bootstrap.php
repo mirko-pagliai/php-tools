@@ -29,7 +29,7 @@ if (!function_exists('createSomeFiles')) {
      * @param array $files Files
      * @return array
      */
-    function createSomeFiles(array $files = [])
+    function createSomeFiles(array $files = []): array
     {
         $files = $files ?: [
             TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',

@@ -31,12 +31,12 @@ abstract class FileException extends Exception
 
     /**
      * Constructor
-     * @param string|null $message The string of the error message
+     * @param string $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
+    public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         parent::__construct($message, $code, $previous);
         $this->path = $path;

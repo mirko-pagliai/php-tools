@@ -65,12 +65,12 @@ if (!function_exists('create_tmp_file')) {
      *  a stream resource
      * @param string|null $dir The directory where the temporary filename will
      *  be created
-     * @param string|null $prefix The prefix of the generated temporary filename
+     * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
      * @deprecated Use instead `Filesystem::addSlashTerm()`
      * @since 1.1.7
      */
-    function create_tmp_file($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
+    function create_tmp_file($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         deprecationWarning('Deprecated. Use instead `Filesystem::createTmpFile()`');
 

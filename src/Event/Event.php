@@ -38,8 +38,8 @@ class Event extends BaseEvent
     /**
      * Construct
      * @param string $name Name of the event
-     * @param array|\ArrayAccess|null $args Any event argument you wish to be
-     *  transported with this event to it can be read by listeners
+     * @param mixed $args Any event argument you wish to be transported with
+     *  this event to it can be read by listeners
      */
     public function __construct(string $name, $args = null)
     {

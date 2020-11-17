@@ -119,7 +119,7 @@ if (!function_exists('is_json')) {
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
-     * @param string|int $string String
+     * @param float|string|int $string String
      * @return bool
      */
     function is_positive($string): bool
@@ -137,7 +137,7 @@ if (!function_exists('is_stringable')) {
      */
     function is_stringable($var): bool
     {
-        return method_exists($var, '__toString') || (is_scalar($var) && !is_null($var));
+        return method_exists($var, '__toString') || is_scalar($var);
     }
 }
 

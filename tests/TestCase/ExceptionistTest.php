@@ -150,7 +150,7 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
-        $object = new ExampleClass();
+        $object = new \stdClass();
         $object->name = 'My name';
         $object->surname = 'My surname';
         $this->assertSame('name', Exceptionist::objectPropertyExists($object, 'name'));

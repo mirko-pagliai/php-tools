@@ -45,24 +45,27 @@ if (!function_exists('debug') && function_exists('dump')) {
      * Prints out debug information about given variable.
      *
      * Alias for the `dump()` global function provided by `VarDumper` component.
+     * @param mixed $var Variable you want to debug
      * @return void
+     * @link https://symfony.com/doc/current/components/var_dumper.html#the-dump-function
      * @since 1.2.11
      */
-    function debug(): void
+    function debug($var): void
     {
-        call_user_func_array('dump', func_get_args());
+        call_user_func('dump', $var);
     }
 }
 
 if (!function_exists('dd') && function_exists('dump')) {
     /**
      * Prints out debug information about given variable and dies
+     * @param mixed $var Variable you want to debug
      * @return void
      * @since 1.2.11
      */
-    function dd(): void
+    function dd($var): void
     {
-        call_user_func_array('debug', func_get_args());
+        call_user_func('dump', $var);
         die(1);
     }
 }

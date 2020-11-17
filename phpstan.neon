@@ -1,0 +1,61 @@
+parameters:
+    level: 6
+
+    paths:
+        - src
+        - tests
+
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+    treatPhpDocTypesAsCertain: false
+
+    excludes_analyse:
+        -  tests/test_app/
+
+    ignoreErrors:
+        - '#^Constant (TMP|ROOT) not found#'
+        - '#^Call to an undefined static method#'
+        - '#^Static call to instance method#'
+        - '#^Ternary operator condition is always (true|false)\.$#'
+        - '#^Access to an undefined property Tools\\Entity#'
+        - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
+        -
+            message: '#Function get_child_methods\(\) never returns null so it can be removed from the return typehint\.$#'
+            path: src/global_functions.php
+        -
+            message: '#Else branch is unreachable because ternary operator condition is always true\.$#'
+            path: src/global_functions.php
+            count: 1
+        -
+            message: '#^Left side of \&\& is always false\.$#'
+            path: src/global_functions.php
+            count: 1
+        -
+            message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
+            path: src/BodyParser.php
+        -
+            message: '#^Negated boolean expression is always false\.$#'
+            path: src/Event/EventDispatcherTrait.php
+            count: 1
+        -
+            message: '#^Access to protected property#'
+            path:  tests/TestCase
+        -
+            message: '#^Method [\w\\]+Test::test\w+\(\) has no return typehint specified\.$#'
+            path:  tests/TestCase
+        -
+            message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
+            path: tests/TestCase/ExceptionistTest.php
+            count: 1
+        -
+            message: '#^Parameter \#1 \$eventDispatcher of method [\w\\]+EventDispatcherTraitTest::setEventDispatcher\(\) expects#'
+            path: tests/TestCase/Event/EventDispatcherTraitTest.php
+            count: 1
+        -
+            message: '#^Negated boolean expression is always true\.$#'
+            path: tests/TestCase/FilesystemTest.php
+            count: 2
+        -
+            message: '#^Method Tools\\TestSuite\\TestCase::assertIsJson\(\) invoked with 0 parameters#'
+            path: tests/TestCase/TestSuite/TestTraitTest.php
+            count: 1

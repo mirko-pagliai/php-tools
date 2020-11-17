@@ -73,6 +73,7 @@ class Exceptionist
         try {
             $result = call_user_func_array($name, (array)$arguments);
         } catch (Exception $e) {
+            $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         }
 
@@ -186,7 +187,7 @@ class Exceptionist
      *
      * If the object owns the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
-     * @param object|string $object The class name or an object of the class to test for
+     * @param object $object The class name or an object of the class to test for
      * @param string|array $property Name of the property or an array of names
      * @param string $message The failure message that will be appended to
      *  the generated message
