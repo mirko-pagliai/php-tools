@@ -216,6 +216,17 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Normalizes the path, applying the right slash term
+     * @param string $path Path you want normalized
+     * @return string Normalized path
+     * @since 1.4.5
+     */
+    public function normalizePath(string $path): string
+    {
+        return str_replace(['/', '\\'], DS, $path);
+    }
+
+    /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
@@ -292,10 +303,10 @@ class Filesystem extends BaseFilesystem
     {
         $root = $this->getRoot();
         if ($this->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            $path = $this->makePathRelative($path, $root);
+            $path = $this->normalizePath($this->makePathRelative($path, $root));
         }
 
-        return rtrim($path, '/');
+        return rtrim($path, DS);
     }
 
     /**

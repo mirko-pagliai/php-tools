@@ -74,7 +74,7 @@ class Exceptionist
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         }
 
-        //Calls the `isTrue` method with that result and returns arguments
+        //Calls the `isTrue()` method with that result and returns arguments
         forward_static_call([__CLASS__, 'isTrue'], $result, $message, $exception);
 
         return $arguments;

@@ -31,7 +31,7 @@ class FileNotExistsExceptionTest extends TestCase
         try {
             throw new FileNotExistsException(null, 0, null, $file);
         } catch (FileNotExistsException $e) {
-            $this->assertSame('Filename `dir/noExistingFile` does not exist', $e->getMessage());
+            $this->assertSame('Filename `dir' . DS . 'noExistingFile` does not exist', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 

@@ -31,7 +31,7 @@ class NotReadableExceptionTest extends TestCase
         try {
             throw new NotReadableException(null, 0, null, $file);
         } catch (NotReadableException $e) {
-            $this->assertSame('Filename `dir/notReadableFile` is not readable', $e->getMessage());
+            $this->assertSame('Filename `dir' . DS . 'notReadableFile` is not readable', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 
