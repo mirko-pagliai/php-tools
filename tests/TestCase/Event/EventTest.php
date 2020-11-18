@@ -37,7 +37,7 @@ class EventTest extends TestCase
     {
         parent::setUp();
 
-        $this->Event = new Event('myEvent', ['arg1', 'arg2']);
+        $this->Event = $this->Event ?: new Event('myEvent', ['arg1', 'arg2']);
     }
 
     /**

@@ -73,6 +73,7 @@ class Exceptionist
         try {
             $result = call_user_func_array($name, (array)$arguments);
         } catch (Exception $e) {
+            $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         }
 
@@ -88,13 +89,13 @@ class Exceptionist
      * If you pass an array of keys, they will all be checked.
      * @param mixed $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param \Throwable|string $message The failure message that will be appended to
+     * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param string $exception The exception class you want to set
+     * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public static function arrayKeyExists($key, array $array, $message = '', $exception = KeyNotExistsException::class)
+    public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
             $result = array_key_exists($name, $array);
@@ -107,13 +108,13 @@ class Exceptionist
     /**
      * Checks whether a file or directory exists
      * @param string $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
      */
-    public static function fileExists(string $filename, $message = '', $exception = FileNotExistsException::class): string
+    public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
     {
         $message = $message ?: sprintf('File or directory `%s` does not exist', (new Filesystem())->rtr($filename));
         self::isTrue(file_exists($filename), $message, $exception);
@@ -131,7 +132,7 @@ class Exceptionist
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
      */
-    public static function isReadable(string $filename, $message = '', $exception = NotReadableException::class): string
+    public static function isReadable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
     {
         self::fileExists($filename, $message, $exception);
 
@@ -151,7 +152,7 @@ class Exceptionist
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      */
-    public static function isWritable(string $filename, $message = '', $exception = NotReadableException::class): string
+    public static function isWritable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
     {
         self::fileExists($filename, $message, $exception);
 
@@ -172,7 +173,7 @@ class Exceptionist
      * @since 1.4.3
      * @throws \BadMethodCallException
      */
-    public static function methodExists($object, string $methodName, $message = '', $exception = BadMethodCallException::class): array
+    public static function methodExists($object, string $methodName, ?string $message = '', $exception = BadMethodCallException::class): array
     {
         $object = is_string($object) ? $object : get_class($object);
         $message = $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName);
@@ -186,15 +187,15 @@ class Exceptionist
      *
      * If the object owns the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
-     * @param object|string $object The class name or an object of the class to test for
+     * @param object $object The class name or an object of the class to test for
      * @param string|array $property Name of the property or an array of names
-     * @param string $message The failure message that will be appended to
+     * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    public static function objectPropertyExists(object $object, $property, $message = '', $exception = PropertyNotExistsException::class)
+    public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)
     {
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
@@ -207,7 +208,7 @@ class Exceptionist
     /**
      * Checks whether a value is `true`
      * @param mixed $value The value you want to check
-     * @param string $message The failure message that will be appended to the
+     * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
