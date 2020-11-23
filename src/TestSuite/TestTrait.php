@@ -62,7 +62,7 @@ trait TestTrait
      * @param array $arguments Arguments
      * @return void
      * @since 1.1.12
-     * @throws \Tools\Exception\BadMethodCallException
+     * @throws \BadMethodCallException
      */
     public static function __callStatic(string $name, array $arguments): void
     {

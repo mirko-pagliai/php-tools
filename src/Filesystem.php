@@ -89,10 +89,10 @@ class Filesystem extends BaseFilesystem
      *  a stream resource
      * @param string|null $dir The directory where the temporary filename will
      *  be created
-     * @param string|null $prefix The prefix of the generated temporary filename
+     * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
      */
-    public function createTmpFile($data = null, ?string $dir = null, ?string $prefix = 'tmp'): string
+    public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
         $this->createFile($filename, $data);
@@ -103,8 +103,8 @@ class Filesystem extends BaseFilesystem
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param array|bool $exceptions Either an array of filename or folder names
-     *  to exclude or boolean true to not grab dot files/folders
+     * @param string|array|bool $exceptions Either an array of filename or folder
+     *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
@@ -164,6 +164,9 @@ class Filesystem extends BaseFilesystem
         //Gets the basename and, if the filename is an url, removes query string
         //  and fragments (#)
         $filename = parse_url(basename($filename), PHP_URL_PATH);
+        if (!$filename) {
+            return null;
+        }
 
         //On Windows, finds the occurrence of the last slash
         $pos = strripos($filename, '\\');
@@ -215,6 +218,17 @@ class Filesystem extends BaseFilesystem
         }
 
         return $this->concatenate($startPath, $endPath);
+    }
+
+    /**
+     * Normalizes the path, applying the right slash term
+     * @param string $path Path you want normalized
+     * @return string Normalized path
+     * @since 1.4.5
+     */
+    public function normalizePath(string $path): string
+    {
+        return str_replace(['/', '\\'], DS, $path);
     }
 
     /**
@@ -294,7 +308,7 @@ class Filesystem extends BaseFilesystem
     {
         $root = $this->getRoot();
         if ($this->isAbsolutePath($path) && string_starts_with($path, $root)) {
-            $path = $this->makePathRelative($path, $root);
+            $path = $this->normalizePath($this->makePathRelative($path, $root));
         }
 
         return rtrim($path, DS);
@@ -308,7 +322,7 @@ class Filesystem extends BaseFilesystem
      * To remove the directory itself and all its contents, use the
      *  `rmdirRecursive()` method instead.
      * @param string $dirname The directory path
-     * @param array|bool $exceptions Either an array of files to exclude
+     * @param array|bool|string $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool

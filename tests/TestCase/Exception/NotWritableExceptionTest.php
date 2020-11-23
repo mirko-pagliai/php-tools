@@ -32,7 +32,7 @@ class NotWritableExceptionTest extends TestCase
         try {
             throw new NotWritableException(null, 0, null, $file);
         } catch (NotWritableException $e) {
-            $this->assertSame('Filename `dir/notWritableFile` is not writable', $e->getMessage());
+            $this->assertSame('Filename `dir' . DS . 'notWritableFile` is not writable', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 

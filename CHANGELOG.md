@@ -11,9 +11,13 @@
 * all `_or_fail()` methods have been removed.
 
 ## 1.4 branch
+### 1.4.6
+* added `Exceptionist::instanceOf()` method and the `ObjectWrongInstanceException`;
+* added `phpstan`, so fixed some code and descriptions.
+
 ### 1.4.5
-* added `Filesystem::concatenate()` method;
-* added `Filesystem::makePathAbsolute()` method.
+* added `concatenate()`, `makePathAbsolute()` and `normalizePath()` methods for
+    `Filesystem`.
 
 ### 1.4.4
 * added `Filesystem` class, all filesystem global function are now deprecated;

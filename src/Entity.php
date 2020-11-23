@@ -18,6 +18,7 @@ namespace Tools;
 
 use ArrayAccess;
 use InvalidArgumentException;
+use Tools\Exceptionist;
 
 /**
  * An Entity class.
@@ -139,13 +140,9 @@ abstract class Entity implements ArrayAccess
         if (is_string($property) && $value !== '') {
             $property = [$property => $value];
         }
-        if (!is_array($property)) {
-            throw new InvalidArgumentException('Cannot set an empty property');
-        }
+        Exceptionist::isArray([$property], 'Cannot set an empty property', InvalidArgumentException::class);
 
-        foreach ($property as $name => $value) {
-            $this->properties[$name] = $value;
-        }
+        $this->properties = array_merge($this->properties, $property);
 
         return $this;
     }

@@ -32,7 +32,7 @@ class NotDirectoryExceptionTest extends TestCase
         try {
             throw new NotDirectoryException(null, 0, null, $file);
         } catch (NotDirectoryException $e) {
-            $this->assertSame('Filename `dir/notDirectory` is not a directory', $e->getMessage());
+            $this->assertSame('Filename `dir' . DS . 'notDirectory` is not a directory', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
         }
 

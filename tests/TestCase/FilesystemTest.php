@@ -162,6 +162,8 @@ class FilesystemTest extends TestCase
      */
     public function testGetExtension()
     {
+        $this->assertNull($this->Filesystem->getExtension(''));
+
         foreach ([
             'backup.sql' => 'sql',
             'backup.sql.bz2' => 'sql.bz2',
@@ -214,20 +216,6 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `makePathAbsolute()` method
-     * @test
-     */
-    public function testMakePathAbsolute()
-    {
-        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute(TMP . 'dir', TMP));
-        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute('dir', TMP));
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The start path `relativePath` is not absolute');
-        $this->Filesystem->makePathAbsolute('dir', 'relativePath');
-    }
-
-    /**
      * Test for `isSlashTerm()` method
      * @test
      */
@@ -274,6 +262,34 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `makePathAbsolute()` method
+     * @test
+     */
+    public function testMakePathAbsolute()
+    {
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute(TMP . 'dir', TMP));
+        $this->assertSame(TMP . 'dir', $this->Filesystem->makePathAbsolute('dir', TMP));
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('The start path `relativePath` is not absolute');
+        $this->Filesystem->makePathAbsolute('dir', 'relativePath');
+    }
+
+    /**
+     * Test for `normalizePath()` method
+     * @test
+     */
+    public function testNormalizePath()
+    {
+        foreach ([
+            'path/to/normalize',
+            'path\\to\\normalize',
+        ] as $path) {
+            $this->assertSame('path' . DS . 'to' . DS . 'normalize', $this->Filesystem->normalizePath($path));
+        }
+    }
+
+    /**
      * Test for `rmdirRecursive()` method
      * @test
      */
@@ -295,11 +311,11 @@ class FilesystemTest extends TestCase
      */
     public function testRtr()
     {
-        $this->assertSame('my/folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my' . DS . 'folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
-        $this->assertSame('my/folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my' . DS . 'folder', $this->Filesystem->rtr(ROOT . 'my' . DS . 'folder'));
     }
 
     /**
