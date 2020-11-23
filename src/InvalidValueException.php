@@ -30,12 +30,12 @@ abstract class InvalidValueException extends Exception
 
     /**
      * Constructor
-     * @param string|null $message The string of the error message
+     * @param string $message The string of the error message
      * @param int $code The code of the error
      * @param \Throwable|null $previous the previous exception
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $value = null)
+    public function __construct($message = '', $code = 0, \Throwable $previous = null, $value = null)
     {
         parent::__construct($message, $code, $previous);
         $this->value = $value;

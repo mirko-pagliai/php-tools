@@ -20,6 +20,7 @@ use Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Filesystem;
 
@@ -71,6 +72,7 @@ class Exceptionist
         try {
             $result = call_user_func_array($name, (array)$arguments);
         } catch (Exception $e) {
+            $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         }
 
@@ -86,13 +88,13 @@ class Exceptionist
      * If you pass an array of keys, they will all be checked.
      * @param mixed $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param \Throwable|string $message The failure message that will be appended to
+     * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param string $exception The exception class you want to set
+     * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public static function arrayKeyExists($key, array $array, $message = '', $exception = KeyNotExistsException::class)
+    public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
             $result = array_key_exists($name, $array);
@@ -105,8 +107,8 @@ class Exceptionist
     /**
      * Checks whether a file or directory exists
      * @param string $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
@@ -117,6 +119,25 @@ class Exceptionist
         self::isTrue(file_exists($filename), $message, $exception);
 
         return $filename;
+    }
+
+    /**
+     * Checks whether an object is an instance of `$class`
+     * @param object $object The object you want to check
+     * @param string $class The class that the object should be an instance of
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return object
+     * @since 1.4.7
+     * @throws \Tools\Exception\ObjectWrongInstanceException
+     */
+    public static function instanceOf($object, $class, $message = '', $exception = ObjectWrongInstanceException::class)
+    {
+        $message = $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class);
+        self::isTrue($object instanceof $class, $message, $exception);
+
+        return $object;
     }
 
     /**
@@ -184,9 +205,9 @@ class Exceptionist
      *
      * If the object owns the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
-     * @param object|string $object The class name or an object of the class to test for
+     * @param object $object The class name or an object of the class to test for
      * @param string|array $property Name of the property or an array of names
-     * @param string $message The failure message that will be appended to
+     * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed
@@ -205,7 +226,7 @@ class Exceptionist
     /**
      * Checks whether a value is `true`
      * @param mixed $value The value you want to check
-     * @param string $message The failure message that will be appended to the
+     * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param \Throwable|string $exception The exception class you want to set
      * @return mixed

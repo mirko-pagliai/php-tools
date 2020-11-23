@@ -13,8 +13,8 @@
  */
 namespace Tools\Event;
 
-use RuntimeException;
 use Symfony\Component\EventDispatcher\Event as BaseEvent;
+use Tools\Exceptionist;
 
 /**
  * Event instance.
@@ -36,8 +36,8 @@ class Event extends BaseEvent
     /**
      * Construct
      * @param string $name Name of the event
-     * @param array|\ArrayAccess|null $args Any event argument you wish to be
-     *  transported with this event to it can be read by listeners
+     * @param mixed $args Any event argument you wish to be transported with
+     *  this event to it can be read by listeners
      */
     public function __construct($name, $args = null)
     {
@@ -49,13 +49,11 @@ class Event extends BaseEvent
      * Gets the argument with the specified index of this event
      * @param int $index Index
      * @return mixed
-     * @throws \RuntimeException
+     * @throws \Tools\Exception\KeyNotExistsException
      */
     public function getArg($index)
     {
-        if (!array_key_exists($index, $this->args)) {
-            throw new RuntimeException(sprintf('Argument with index `%s` does not exist', $index));
-        }
+        Exceptionist::arrayKeyExists($index, $this->args, sprintf('Argument with index `%s` does not exist', $index));
 
         return $this->args[$index];
     }

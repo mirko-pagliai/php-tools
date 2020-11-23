@@ -16,7 +16,9 @@ require_once 'vendor/autoload.php';
 
 use Tools\Filesystem;
 
-define('DS', DIRECTORY_SEPARATOR);
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
@@ -28,7 +30,7 @@ if (!function_exists('createSomeFiles')) {
      * @param array $files Files
      * @return array
      */
-    function createSomeFiles(array $files = [])
+    function createSomeFiles(array $files = []): array
     {
         $files = $files ?: [
             TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',

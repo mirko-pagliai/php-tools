@@ -22,6 +22,7 @@ use PHPUnit\Framework\Error\Notice;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Exceptionist;
 use Tools\Filesystem;
@@ -99,6 +100,20 @@ class ExceptionistTest extends TestCase
     }
 
     /**
+     * Test for `instanceOf()` method
+     * @test
+     */
+    public function testInstanceOf()
+    {
+        $instance = new \stdClass();
+        $this->assertSame($instance, Exceptionist::instanceOf($instance, \stdClass::class));
+
+        $this->expectException(ObjectWrongInstanceException::class);
+        $this->expectExceptionMessage('`stdClass` is not an instance of `App\ExampleClass`');
+        Exceptionist::instanceOf($instance, ExampleClass::class);
+    }
+
+    /**
      * Test for `isReadable()` method
      * @test
      */
@@ -149,7 +164,7 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
-        $object = new ExampleClass();
+        $object = new \stdClass();
         $object->name = 'My name';
         $object->surname = 'My surname';
         $this->assertSame('name', Exceptionist::objectPropertyExists($object, 'name'));

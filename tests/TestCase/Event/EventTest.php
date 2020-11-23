@@ -12,9 +12,9 @@
  */
 namespace Tools\Test\Event;
 
-use RuntimeException;
 use Tools\Entity;
 use Tools\Event\Event;
+use Tools\Exception\KeyNotExistsException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -35,7 +35,7 @@ class EventTest extends TestCase
     {
         parent::setUp();
 
-        $this->Event = new Event('myEvent', ['arg1', 'arg2']);
+        $this->Event = $this->Event ?: new Event('myEvent', ['arg1', 'arg2']);
     }
 
     /**
@@ -56,7 +56,7 @@ class EventTest extends TestCase
         $this->assertSame('arg1', $this->Event->getArg(0));
         $this->assertSame('arg2', $this->Event->getArg(1));
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(KeyNotExistsException::class);
         $this->expectExceptionMessage('Argument with index `2` does not exist');
         $this->assertSame('arg2', $this->Event->getArg(2));
     }

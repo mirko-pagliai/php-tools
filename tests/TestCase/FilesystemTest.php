@@ -160,6 +160,8 @@ class FilesystemTest extends TestCase
      */
     public function testGetExtension()
     {
+        $this->assertNull($this->Filesystem->getExtension(''));
+
         foreach ([
             'backup.sql' => 'sql',
             'backup.sql.bz2' => 'sql.bz2',

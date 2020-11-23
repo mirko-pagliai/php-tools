@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.6
+* added `Exceptionist::instanceOf()` method and the `ObjectWrongInstanceException`;
+* added `phpstan`, so fixed some code and descriptions.
+
 ### 1.4.5
 * added `concatenate()`, `makePathAbsolute()` and `normalizePath()` methods for
     `Filesystem`.

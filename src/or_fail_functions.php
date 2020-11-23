@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -195,7 +196,7 @@ if (!function_exists('key_exists_or_fail')) {
      * @deprecated Use `Exceptionist::arrayKeyExists()` instead
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    function key_exists_or_fail($key, array $array, $message = null, $exception = KeyNotExistsException::class)
+    function key_exists_or_fail($key, array $array, $message = '', $exception = KeyNotExistsException::class)
     {
         deprecationWarning('Deprecated. Use `Exceptionist::arrayKeyExists()` instead.');
 
@@ -220,7 +221,7 @@ if (!function_exists('property_exists_or_fail')) {
      * @since 1.1.14
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    function property_exists_or_fail($object, $property, $message = null, $exception = PropertyNotExistsException::class)
+    function property_exists_or_fail($object, $property, $message = '', $exception = PropertyNotExistsException::class)
     {
         deprecationWarning('Deprecated. Use `Exceptionist::objectPropertyExists()` instead.');
 
