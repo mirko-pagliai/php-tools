@@ -125,7 +125,7 @@ class Exceptionist
 
     /**
      * Checks whether an object is an instance of `$class`
-     * @param object|null $object The object you want to check
+     * @param object $object The object you want to check
      * @param string $class The class that the object should be an instance of
      * @param string|null $message The failure message that will be appended to
      *  the generated message
@@ -134,7 +134,7 @@ class Exceptionist
      * @since 1.4.7
      * @throws \Tools\Exception\ObjectWrongInstanceException
      */
-    public static function instanceOf(?object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
+    public static function instanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
         $message = $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class);
         self::isTrue($object instanceof $class, $message, $exception);

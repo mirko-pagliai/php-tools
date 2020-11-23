@@ -322,7 +322,7 @@ class Filesystem extends BaseFilesystem
      * To remove the directory itself and all its contents, use the
      *  `rmdirRecursive()` method instead.
      * @param string $dirname The directory path
-     * @param array|bool $exceptions Either an array of files to exclude
+     * @param array|bool|string $exceptions Either an array of files to exclude
      *  or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
