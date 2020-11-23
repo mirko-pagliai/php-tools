@@ -106,11 +106,11 @@ class ExceptionistTest extends TestCase
     public function testInstanceOf()
     {
         $instance = new \stdClass();
-        $this->assertSame($instance, Exceptionist::instanceOf($instance, \stdClass::class));
+        $this->assertSame($instance, Exceptionist::isInstanceOf($instance, \stdClass::class));
 
         $this->expectException(ObjectWrongInstanceException::class);
         $this->expectExceptionMessage('`stdClass` is not an instance of `App\ExampleClass`');
-        Exceptionist::instanceOf($instance, ExampleClass::class);
+        Exceptionist::isInstanceOf($instance, ExampleClass::class);
     }
 
     /**

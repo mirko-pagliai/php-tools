@@ -49,7 +49,7 @@ class EntityTest extends TestCase
         $line = __LINE__ + 1;
         debug($this->Entity);
         $dump = ob_get_clean();
-        $assertStringContainsString = function (string $first, string $second) {
+        $assertStringContainsString = function ($first, $second) {
             $method = 'assertContains';
             if (method_exists($this, 'assertStringContainsString')) {
                 $method = 'assertStringContainsString';

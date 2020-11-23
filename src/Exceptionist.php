@@ -94,7 +94,7 @@ class Exceptionist
      * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
+    public static function arrayKeyExists($key, array $array, $message = '', $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
             $result = array_key_exists($name, $array);
@@ -132,7 +132,7 @@ class Exceptionist
      * @since 1.4.7
      * @throws \Tools\Exception\ObjectWrongInstanceException
      */
-    public static function instanceOf($object, $class, $message = '', $exception = ObjectWrongInstanceException::class)
+    public static function isInstanceOf($object, $class, $message = '', $exception = ObjectWrongInstanceException::class)
     {
         $message = $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class);
         self::isTrue($object instanceof $class, $message, $exception);
