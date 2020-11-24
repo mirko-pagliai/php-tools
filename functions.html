@@ -61,6 +61,9 @@
         <a href="Class-Tools-Exception-NotWritableException.html" title="Tools\Exception\NotWritableException">Tools\Exception\NotWritableException</a>
     </li>
     <li class="text-truncate">
+        <a href="Class-Tools-Exception-ObjectWrongInstanceException.html" title="Tools\Exception\ObjectWrongInstanceException">Tools\Exception\ObjectWrongInstanceException</a>
+    </li>
+    <li class="text-truncate">
         <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
     </li>
     <li class="text-truncate">
@@ -1049,7 +1052,7 @@ the generated message</p></div>
         <h5>key_exists_or_fail()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">key_exists_or_fail(mixed $key, array $array, Throwable|string $message = null, string $exception = 'Tools\\Exception...')</code></pre>
+        <pre><code class="language-php">key_exists_or_fail(mixed $key, array $array, Throwable|string $message = '', string $exception = 'Tools\\Exception...')</code></pre>
         <div class="description"><p>Checks if the given key or index exists in the array and throws an
 exception if the key does not exist.</p>
 <p>If you pass an array of keys, they will all be checked.</p></div>
@@ -1064,7 +1067,7 @@ exception if the key does not exist.</p>
             <div class="description"><p>An array with keys to check</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">Throwable|string $message = null</code></pre>
+            <pre><code class="language-php">Throwable|string $message = ''</code></pre>
             <div class="description"><p>The failure message that will be appended to
 the generated message</p></div>
         </div>
@@ -1105,7 +1108,7 @@ the generated message</p></div>
         <h5>property_exists_or_fail()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">property_exists_or_fail(object|string $object, string|array $property, string $message = null, Throwable|string $exception = 'Tools\\Exception...')</code></pre>
+        <pre><code class="language-php">property_exists_or_fail(object|string $object, string|array $property, string $message = '', Throwable|string $exception = 'Tools\\Exception...')</code></pre>
         <div class="description"><p>Checks if a property exists and throws an exception if the property does
 not exist.</p>
 <p>If the object has the <code>has()</code> method, it uses that method. Otherwise it
@@ -1121,7 +1124,7 @@ use the <code>property_exists()</code> function.</p></div>
             <div class="description"><p>Name of the property or an array of names</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">string $message = null</code></pre>
+            <pre><code class="language-php">string $message = ''</code></pre>
             <div class="description"><p>The failure message that will be appended to
 the generated message</p></div>
         </div>
@@ -1169,10 +1172,22 @@ the generated message</p></div>
         <h5>debug()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">debug()</code></pre>
+        <pre><code class="language-php">debug(mixed $var)</code></pre>
         <div class="description"><p>Prints out debug information about given variable.</p>
 <p>Alias for the <code>dump()</code> global function provided by <code>VarDumper</code> component.</p></div>
 
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">mixed $var</code></pre>
+            <div class="description"><p>Variable you want to debug</p></div>
+        </div>
+
+<div class="tag-element">
+    <h6>Link</h6>
+    <div class="mb-3">
+        <div class="description"><a href="https://symfony.com/doc/current/components/var_dumper.html#the-dump-function" target="_blank">https://symfony.com/doc/current/components/var_dumper.html#the-dump-function</a></div>
+    </div>
+</div>
 
 <div class="tag-element">
     <h6>Return</h6>
@@ -1199,9 +1214,14 @@ the generated message</p></div>
         <h5>dd()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">dd()</code></pre>
+        <pre><code class="language-php">dd(mixed $var)</code></pre>
         <div class="description"><p>Prints out debug information about given variable and dies</p></div>
 
+        <h6>Parameters</h6>
+        <div class="parameter-element">
+            <pre><code class="language-php">mixed $var</code></pre>
+            <div class="description"><p>Variable you want to debug</p></div>
+        </div>
 
 <div class="tag-element">
     <h6>Return</h6>
@@ -1647,7 +1667,7 @@ a stream resource</p></div>
         <h5>create_tmp_file()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">create_tmp_file(mixed $data = null, string|null $dir = null, string|null $prefix = 'tmp')</code></pre>
+        <pre><code class="language-php">create_tmp_file(mixed $data = null, string|null $dir = null, string $prefix = 'tmp')</code></pre>
         <div class="description"><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.</p>
 <p>You can pass a directory where to create the file. If <code>null</code>, the file
 will be created in <code>TMP</code>, if the constant is defined, otherwise in the
@@ -1665,7 +1685,7 @@ a stream resource</p></div>
 be created</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">string|null $prefix = 'tmp'</code></pre>
+            <pre><code class="language-php">string $prefix = 'tmp'</code></pre>
             <div class="description"><p>The prefix of the generated temporary filename</p></div>
         </div>
 
@@ -2546,12 +2566,12 @@ function, this function excludes the methods of the parent class</p></div>
         <h5>is_positive()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">is_positive(string|int $string)</code></pre>
+        <pre><code class="language-php">is_positive(float|string|int $string)</code></pre>
         <div class="description"><p>Checks if a string is a positive number</p></div>
 
         <h6>Parameters</h6>
         <div class="parameter-element">
-            <pre><code class="language-php">string|int $string</code></pre>
+            <pre><code class="language-php">float|string|int $string</code></pre>
             <div class="description"><p>String</p></div>
         </div>
 

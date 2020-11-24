@@ -61,6 +61,9 @@
         <a href="Class-Tools-Exception-NotWritableException.html" title="Tools\Exception\NotWritableException">Tools\Exception\NotWritableException</a>
     </li>
     <li class="text-truncate">
+        <a href="Class-Tools-Exception-ObjectWrongInstanceException.html" title="Tools\Exception\ObjectWrongInstanceException">Tools\Exception\ObjectWrongInstanceException</a>
+    </li>
+    <li class="text-truncate">
         <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
     </li>
     <li class="text-truncate">
@@ -383,7 +386,7 @@ a stream resource</p></div>
         <h5>createTmpFile()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">createTmpFile(mixed $data = null, string|null $dir = null, string|null $prefix = 'tmp')</code></pre>
+        <pre><code class="language-php">createTmpFile(mixed $data = null, string|null $dir = null, string $prefix = 'tmp')</code></pre>
         <div class="description"><p>Creates a tenporary file. Alias for <code>tempnam()</code> and <code>file_put_contents()</code>.</p>
 <p>You can pass a directory where to create the file. If <code>null</code>, the file
 will be created in <code>TMP</code>, if the constant is defined, otherwise in the
@@ -401,7 +404,7 @@ a stream resource</p></div>
 be created</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">string|null $prefix = 'tmp'</code></pre>
+            <pre><code class="language-php">string $prefix = 'tmp'</code></pre>
             <div class="description"><p>The prefix of the generated temporary filename</p></div>
         </div>
 
@@ -424,7 +427,7 @@ be created</p></div>
         <h5>getDirTree()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">getDirTree(string $path, array|bool $exceptions = false, boolean $ignoreErrors = false)</code></pre>
+        <pre><code class="language-php">getDirTree(string $path, string|array|bool $exceptions = false, boolean $ignoreErrors = false)</code></pre>
         <div class="description"><p>Returns an array of nested directories and files in each directory</p></div>
 
         <h6>Parameters</h6>
@@ -433,9 +436,9 @@ be created</p></div>
             <div class="description"><p>The directory path to build the tree from</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">array|bool $exceptions = false</code></pre>
-            <div class="description"><p>Either an array of filename or folder names
-to exclude or boolean true to not grab dot files/folders</p></div>
+            <pre><code class="language-php">string|array|bool $exceptions = false</code></pre>
+            <div class="description"><p>Either an array of filename or folder
+names to exclude or boolean true to not grab dot files/folders</p></div>
         </div>
         <div class="parameter-element">
             <pre><code class="language-php">boolean $ignoreErrors = false</code></pre>
@@ -752,7 +755,7 @@ method instead.</p></div>
         <h5>unlinkRecursive()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">unlinkRecursive(string $dirname, array|bool $exceptions = false, boolean $ignoreErrors = false)</code></pre>
+        <pre><code class="language-php">unlinkRecursive(string $dirname, array|bool|string $exceptions = false, boolean $ignoreErrors = false)</code></pre>
         <div class="description"><p>Recursively removes all the files contained in a directory and within its
 sub-directories. This function only removes the files, leaving the
 directories unaltered.</p>
@@ -765,7 +768,7 @@ directories unaltered.</p>
             <div class="description"><p>The directory path</p></div>
         </div>
         <div class="parameter-element">
-            <pre><code class="language-php">array|bool $exceptions = false</code></pre>
+            <pre><code class="language-php">array|bool|string $exceptions = false</code></pre>
             <div class="description"><p>Either an array of files to exclude
 or boolean true to not grab dot files</p></div>
         </div>

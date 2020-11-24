@@ -61,6 +61,9 @@
         <a href="Class-Tools-Exception-NotWritableException.html" title="Tools\Exception\NotWritableException">Tools\Exception\NotWritableException</a>
     </li>
     <li class="text-truncate">
+        <a href="Class-Tools-Exception-ObjectWrongInstanceException.html" title="Tools\Exception\ObjectWrongInstanceException">Tools\Exception\ObjectWrongInstanceException</a>
+    </li>
+    <li class="text-truncate">
         <a href="Class-Tools-Exception-PropertyNotExistsException.html" title="Tools\Exception\PropertyNotExistsException">Tools\Exception\PropertyNotExistsException</a>
     </li>
     <li class="text-truncate">
@@ -158,12 +161,12 @@
         <h5>__construct()</h5>
     </div>
     <div class="body">
-        <pre><code class="language-php">__construct(string|null $message = null, integer $code = 0, Throwable|null $previous = null, mixed $value = null)</code></pre>
+        <pre><code class="language-php">__construct(string $message = '', integer $code = 0, Throwable|null $previous = null, mixed $value = null)</code></pre>
         <div class="description"><p>Constructor</p></div>
 
         <h6>Parameters</h6>
         <div class="parameter-element">
-            <pre><code class="language-php">string|null $message = null</code></pre>
+            <pre><code class="language-php">string $message = ''</code></pre>
             <div class="description"><p>The string of the error message</p></div>
         </div>
         <div class="parameter-element">
