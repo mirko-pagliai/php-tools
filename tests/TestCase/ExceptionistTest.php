@@ -100,7 +100,7 @@ class ExceptionistTest extends TestCase
     }
 
     /**
-     * Test for `instanceOf()` method
+     * Test for `isInstanceOf()` method
      * @test
      */
     public function testInstanceOf()
