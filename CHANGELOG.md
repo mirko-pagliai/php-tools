@@ -12,7 +12,7 @@
 
 ## 1.4 branch
 ### 1.4.6
-* added `Exceptionist::instanceOf()` method and the `ObjectWrongInstanceException`;
+* added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;
 * added `phpstan`, so fixed some code and descriptions.
 
 ### 1.4.5
