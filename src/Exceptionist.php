@@ -134,7 +134,7 @@ class Exceptionist
      * @since 1.4.7
      * @throws \Tools\Exception\ObjectWrongInstanceException
      */
-    public static function instanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
+    public static function isInstanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
         $message = $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class);
         self::isTrue($object instanceof $class, $message, $exception);
