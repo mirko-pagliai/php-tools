@@ -53,6 +53,9 @@ parameters:
             path: tests/TestCase/ExceptionistTest.php
             count: 1
         -
+            message: '#^Variable \$\w+ might not be defined\.$#'
+            path: tests/TestCase/ExceptionistTest.php
+        -
             message: '#^Negated boolean expression is always true\.$#'
             path: tests/TestCase/FilesystemTest.php
             count: 2
