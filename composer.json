@@ -30,10 +30,8 @@
         "files": [
             "src/array_functions.php",
             "src/debug_functions.php",
-            "src/filesystem_functions.php",
             "src/global_functions.php",
-            "src/network_functions.php",
-            "src/or_fail_functions.php"
+            "src/network_functions.php"
         ]
     },
     "autoload-dev": {
@@ -49,16 +47,16 @@
             "@test",
             "@composer update",
             "@test",
-            "@stan-setup",
             "@stan"
         ],
         "cs-check": "phpcs --standard=phpcs.xml.dist",
         "cs-fix": "phpcbf --standard=phpcs.xml.dist",
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-html coverage",
+        "coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=coverage",
         "phpstan": "phpstan.phar analyse",
         "psalm": "psalm.phar",
         "stan": [
+            "@stan-setup",
             "@phpstan",
             "@psalm"
         ],

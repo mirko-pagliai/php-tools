@@ -15,12 +15,12 @@
 
 namespace Tools\Exception;
 
-use Exception;
+use ErrorException;
 
 /**
  * "Property does not exist" exception.
  */
-class PropertyNotExistsException extends Exception
+class PropertyNotExistsException extends ErrorException
 {
     /**
      * Property name
@@ -31,16 +31,19 @@ class PropertyNotExistsException extends Exception
     /**
      * Constructor
      * @param string|null $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $property Name of the property that do not exist
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $property = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $property = null)
     {
         if (!$message) {
             $message = $property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist';
         }
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->property = $property;
     }
 

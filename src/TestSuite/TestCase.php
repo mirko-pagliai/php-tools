@@ -16,8 +16,8 @@ namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\Filesystem;
-use Tools\ReflectionTrait;
 use Tools\TestSuite\BackwardCompatibilityTrait;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * TestCase class.

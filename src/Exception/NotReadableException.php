@@ -25,16 +25,19 @@ class NotReadableException extends FileException
 {
     /**
      * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param string|null $message The string of the error message
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $path = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $path = null)
     {
         if (!$message) {
             $message = $path ? sprintf('Filename `%s` is not readable', (new Filesystem())->rtr($path)) : 'Filename is not readable';
         }
-        parent::__construct($message, $code, $previous, $path);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $path);
     }
 }

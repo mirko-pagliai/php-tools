@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -28,7 +29,7 @@ class NotInArrayExceptionTest extends TestCase
     public function testException()
     {
         try {
-            throw new NotInArrayException(null, 0, null, 'bad-value');
+            throw new NotInArrayException(null, 0, E_ERROR, '__FILE__', __LINE__, null, 'bad-value');
         } catch (NotInArrayException $e) {
             $this->assertSame('Value `bad-value` is not in the array', $e->getMessage());
             $this->assertSame('bad-value', $e->getValue());
@@ -42,7 +43,7 @@ class NotInArrayExceptionTest extends TestCase
         }
 
         try {
-            throw new NotInArrayException(null, 0, null, ['no-stringable']);
+            throw new NotInArrayException(null, 0, E_ERROR, '__FILE__', __LINE__, null, ['no-stringable']);
         } catch (NotInArrayException $e) {
             $this->assertSame('Value is not in the array', $e->getMessage());
             $this->assertSame(['no-stringable'], $e->getValue());

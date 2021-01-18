@@ -15,12 +15,12 @@
 
 namespace Tools;
 
-use Exception;
+use ErrorException;
 
 /**
  * Abstract exception for exceptions that are throwed by an invalid value.
  */
-abstract class InvalidValueException extends Exception
+abstract class InvalidValueException extends ErrorException
 {
     /**
      * Value
@@ -31,13 +31,16 @@ abstract class InvalidValueException extends Exception
     /**
      * Constructor
      * @param string $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct($message = '', $code = 0, \Throwable $previous = null, $value = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $value = null)
     {
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->value = $value;
     }
 

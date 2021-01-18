@@ -15,12 +15,12 @@
 
 namespace Tools\Exception;
 
-use Exception;
+use ErrorException;
 
 /**
  * "Array key does not exist" exception.
  */
-class KeyNotExistsException extends Exception
+class KeyNotExistsException extends ErrorException
 {
     /**
      * Key name
@@ -31,16 +31,19 @@ class KeyNotExistsException extends Exception
     /**
      * Constructor
      * @param string|null $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $key Name of the key that do not exist
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $key = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $key = null)
     {
         if (!$message) {
             $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';
         }
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->key = $key;
     }
 

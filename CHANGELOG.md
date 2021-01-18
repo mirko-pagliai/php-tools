@@ -1,4 +1,17 @@
 # 1.x branch
+## 1.5 branch
+### 1.5.0
+* the `Exceptionist` can now set file and line that throwned the exception. All
+    exception classes provided by `php-tools` now extend the `ErrorException`;
+* all filesystem global function have been removed, use `Filesystem` class instead;
+* `TestTrait::assertFilePerms()` has been removed. Use instead
+    `assertFileIsReadable()`/`assertFileIsWritable()`/
+    `assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`;
+* the `ReflectionTrait` has been moved on `Tools\TestSuite` namespace;
+* changed the order of arguments for the `TestTrait::assertException()` method.
+    The callable is now the first argument;
+* all `_or_fail()` methods have been removed.
+
 ## 1.4 branch
 ### 1.4.6
 * added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;

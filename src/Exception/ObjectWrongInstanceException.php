@@ -15,12 +15,12 @@
 
 namespace Tools\Exception;
 
-use Exception;
+use ErrorException;
 
 /**
  * "Object wrong instance" exception.
  */
-class ObjectWrongInstanceException extends Exception
+class ObjectWrongInstanceException extends ErrorException
 {
     /**
      * Object instance
@@ -31,16 +31,19 @@ class ObjectWrongInstanceException extends Exception
     /**
      * Constructor
      * @param string|null $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param object|null $object Object that is not a right instance
      */
-    public function __construct($message = null, $code = 0, \Throwable $previous = null, $object = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $object = null)
     {
         if (!$message) {
             $message = $object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance';
         }
-        parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->object = $object;
     }
 

@@ -34,6 +34,32 @@ use Tools\TestSuite\TestCase;
 class ExceptionistTest extends TestCase
 {
     /**
+     * Test to verify that the exceptions thrown by the `Exceptionist` report
+     *  the correct file and line
+     * @test
+     */
+    public function testLineAndFile()
+    {
+        try {
+            $line = __LINE__ + 1;
+            Exceptionist::isTrue(false);
+        } catch (ErrorException $e) {
+        } finally {
+            $this->assertSame(__FILE__, $e->getFile());
+            $this->assertSame($line, $e->getLine());
+        }
+
+        try {
+            $line = __LINE__ + 1;
+            Exceptionist::isReadable(DS . 'noExisting');
+        } catch (ErrorException $e) {
+        } finally {
+            $this->assertSame(__FILE__, $e->getFile());
+            $this->assertSame($line, $e->getLine());
+        }
+    }
+
+    /**
      * Test for `__callStatic()` magic method
      * @test
      */
@@ -213,9 +239,9 @@ class ExceptionistTest extends TestCase
             [0, 'Value `0` is not equal to `true`'],
         ] as $exception) {
             list($value, $expectedMessage) = $exception;
-            $this->assertException(Exception::class, function () use ($value) {
+            $this->assertException(function () use ($value) {
                 Exceptionist::isTrue($value);
-            }, $expectedMessage);
+            }, Exception::class, $expectedMessage);
         }
     }
 
@@ -227,17 +253,17 @@ class ExceptionistTest extends TestCase
     {
         $message = 'it\'s not `true`';
 
-        $this->assertException(Exception::class, function () use ($message) {
+        $this->assertException(function () use ($message) {
             Exceptionist::isTrue(false, $message);
-        }, $message);
+        }, Exception::class, $message);
 
-        $this->assertException(ErrorException::class, function () use ($message) {
+        $this->assertException(function () use ($message) {
             Exceptionist::isTrue(false, new ErrorException($message));
-        }, $message);
+        }, ErrorException::class, $message);
 
-        $this->assertException(ErrorException::class, function () use ($message) {
+        $this->assertException(function () use ($message) {
             Exceptionist::isTrue(false, $message, ErrorException::class);
-        }, $message);
+        }, ErrorException::class, $message);
     }
 
     /**
@@ -246,8 +272,8 @@ class ExceptionistTest extends TestCase
      */
     public function testIsTrueFailureWithInvalidExceptionClass()
     {
-        $this->assertException(Notice::class, function () {
+        $this->assertException(function () {
             Exceptionist::isTrue(false, '', new \stdClass());
-        }, '`$exception` parameter must be an instance of `Throwable` or a string');
+        }, Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
     }
 }

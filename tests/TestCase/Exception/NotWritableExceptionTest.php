@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -29,7 +30,7 @@ class NotWritableExceptionTest extends TestCase
     {
         $file = ROOT . 'dir' . DS . 'notWritableFile';
         try {
-            throw new NotWritableException(null, 0, null, $file);
+            throw new NotWritableException(null, 0, E_ERROR, '__FILE__', __LINE__, null, $file);
         } catch (NotWritableException $e) {
             $this->assertSame('Filename `dir' . DS . 'notWritableFile` is not writable', $e->getMessage());
             $this->assertSame($file, $e->getFilePath());
