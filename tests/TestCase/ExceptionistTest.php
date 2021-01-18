@@ -35,6 +35,32 @@ use Tools\TestSuite\TestCase;
 class ExceptionistTest extends TestCase
 {
     /**
+     * Test to verify that the exceptions thrown by the `Exceptionist` report
+     *  the correct file and line
+     * @test
+     */
+    public function testLineAndFile()
+    {
+        try {
+            $line = __LINE__ + 1;
+            Exceptionist::isTrue(false);
+        } catch (ErrorException $e) {
+        } finally {
+            $this->assertSame(__FILE__, $e->getFile());
+            $this->assertSame($line, $e->getLine());
+        }
+
+        try {
+            $line = __LINE__ + 1;
+            Exceptionist::isReadable(DS . 'noExisting');
+        } catch (ErrorException $e) {
+        } finally {
+            $this->assertSame(__FILE__, $e->getFile());
+            $this->assertSame($line, $e->getLine());
+        }
+    }
+
+    /**
      * Test for `__callStatic()` magic method
      * @test
      */
