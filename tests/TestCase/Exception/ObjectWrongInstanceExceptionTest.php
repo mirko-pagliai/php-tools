@@ -31,7 +31,7 @@ class ObjectWrongInstanceExceptionTest extends TestCase
     {
         $instance = new \stdClass();
         try {
-            throw new ObjectWrongInstanceException(null, 0, null, $instance);
+            throw new ObjectWrongInstanceException(null, 0, E_ERROR, '__FILE__', __LINE__, null, $instance);
         } catch (ObjectWrongInstanceException $e) {
             $this->assertSame('Object `stdClass` is not a right instance', $e->getMessage());
             $this->assertSame($instance, $e->getObject());

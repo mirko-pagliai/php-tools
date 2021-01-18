@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.0
+* all exception classes now extend the `ErrorException`;
 * all filesystem global function have been removed, use `Filesystem` class instead;
 * `TestTrait::assertFilePerms()` has been removed. Use instead
     `assertFileIsReadable()`/`assertFileIsWritable()`/

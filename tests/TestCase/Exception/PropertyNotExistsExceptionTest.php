@@ -29,7 +29,7 @@ class PropertyNotExistsExceptionTest extends TestCase
     public function testException()
     {
         try {
-            throw new PropertyNotExistsException(null, 0, null, 'a-key');
+            throw new PropertyNotExistsException(null, 0, E_ERROR, '__FILE__', __LINE__, null, 'a-key');
         } catch (PropertyNotExistsException $e) {
             $this->assertSame('Property `a-key` does not exist', $e->getMessage());
             $this->assertSame('a-key', $e->getPropertyName());

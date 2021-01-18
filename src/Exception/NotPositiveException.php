@@ -26,15 +26,18 @@ class NotPositiveException extends InvalidValueException
     /**
      * Constructor
      * @param string|null $message The string of the error message
-     * @param int $code The code of the error
-     * @param \Throwable|null $previous the previous exception
+     * @param int $code The exception code
+     * @param int $severity The severity level of the exception
+     * @param string $filename The filename where the exception is thrown
+     * @param int $lineno The line number where the exception is thrown
+     * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, $value = null)
+    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, $value = null)
     {
         if (!$message) {
             $message = is_stringable($value) ? sprintf('Value `%s` is not a positive', (string)$value) : 'Value is not a positive';
         }
-        parent::__construct($message, $code, $previous, $value);
+        parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $value);
     }
 }
