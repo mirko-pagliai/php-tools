@@ -20,7 +20,6 @@ parameters:
         - '#^Static call to instance method#'
         - '#^Ternary operator condition is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
-        - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
         -
             message: '#Function get_child_methods\(\) never returns null so it can be removed from the return typehint\.$#'
             path: src/global_functions.php
@@ -39,9 +38,6 @@ parameters:
             message: '#^Negated boolean expression is always false\.$#'
             path: src/Event/EventDispatcherTrait.php
             count: 1
-        -
-            message: '#^Call to an undefined method Tools\\TestSuite\\TestCase::expectExceptionMessageRegExp\(\)\.$#'
-            path: src/TestSuite/BackwardCompatibilityTrait.php
         -
             message: '#^Access to protected property#'
             path:  tests/TestCase
