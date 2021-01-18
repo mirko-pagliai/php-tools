@@ -46,7 +46,7 @@ class EventDispatcher extends BaseEventDispatcher
     /**
      * Dispatches an event
      * @param string|null $eventName Name of the event
-     * @param object $event An `Event` instance
+     * @param \Symfony\Component\EventDispatcher\Event|null $event An `Event` instance
      * @return object The `Event` that was dispatched
      */
     public function dispatch($eventName, SymfonyEvent $event = null)

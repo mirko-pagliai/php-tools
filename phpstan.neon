@@ -35,6 +35,12 @@ parameters:
             message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
             path: src/BodyParser.php
         -
+            message: '#^Cannot instantiate interface Throwable\.$#'
+            path: src/Exceptionist.php
+        -
+            message: '#^Parameter \#\d \$\w+ (\(string\|null\) )?of method [\w\\]+::\w+\(\) (should be compatible with|expects)#'
+            path: src/Event/EventDispatcher.php
+        -
             message: '#^Negated boolean expression is always false\.$#'
             path: src/Event/EventDispatcherTrait.php
             count: 1
@@ -42,7 +48,10 @@ parameters:
             message: '#^Access to protected property#'
             path:  tests/TestCase
         -
-            message: '#^Method [\w\\]+Test::test\w+\(\) has no return typehint specified\.$#'
+            message: '#^Method [\w\\]+::\w+\(\) has no return typehint specified\.$#'
+            path:  tests/TestCase
+        -
+            message: '#method [\w\\]+::\w+\(\) expects [\w\\]+, PHPUnit\\Framework\\MockObject\\MockObject given\.$#'
             path:  tests/TestCase
         -
             message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'

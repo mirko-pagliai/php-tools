@@ -16,12 +16,43 @@
 
     <issueHandlers>
         <MissingPropertyType errorLevel="suppress" />
+        <ReservedWord errorLevel="suppress" />
+
+        <ImplementedParamTypeMismatch>
+            <errorLevel type="suppress">
+                <file name="src/Event/EventDispatcher.php" />
+            </errorLevel>
+        </ImplementedParamTypeMismatch>
+
+        <InvalidArgument>
+            <errorLevel type="suppress">
+                <file name="src/Event/EventDispatcher.php" />
+            </errorLevel>
+        </InvalidArgument>
+
+        <InvalidScalarArgument>
+            <errorLevel type="suppress">
+                <file name="src/global_functions.php" />
+            </errorLevel>
+        </InvalidScalarArgument>
 
         <InvalidThrow>
             <errorLevel type="suppress">
                 <file name="src/Exceptionist.php" />
             </errorLevel>
         </InvalidThrow>
+
+        <ParamNameMismatch>
+            <errorLevel type="suppress">
+                <file name="src/Event/EventDispatcher.php" />
+            </errorLevel>
+        </ParamNameMismatch>
+
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <file name="src/Exceptionist.php" />
+            </errorLevel>
+        </UndefinedClass>
 
         <UndefinedDocblockClass>
             <errorLevel type="suppress">
