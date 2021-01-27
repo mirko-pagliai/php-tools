@@ -201,6 +201,16 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Returns a new `Filesystem` instance
+     * @return self
+     * @since 1.4.7
+     */
+    public static function instance(): Filesystem
+    {
+        return new Filesystem();
+    }
+
+    /**
      * Makes a relative path `$endPath` absolute, prepending `$startPath`
      * @param string $endPath An end path to be made absolute
      * @param string $startPath A start path to prepend

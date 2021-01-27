@@ -216,6 +216,16 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `instance()` method
+     * @test
+     */
+    public function testInstance()
+    {
+        $this->assertInstanceOf(Filesystem::class, Filesystem::instance());
+        $this->assertSame(ROOT . 'myDir', Filesystem::instance()->concatenate(ROOT, 'myDir'));
+    }
+
+    /**
      * Test for `isSlashTerm()` method
      * @test
      */
