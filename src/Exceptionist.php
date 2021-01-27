@@ -22,6 +22,7 @@ use Throwable;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Filesystem;
@@ -172,7 +173,7 @@ class Exceptionist
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      */
-    public static function isWritable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
+    public static function isWritable(string $filename, ?string $message = '', $exception = NotWritableException::class): string
     {
         self::fileExists($filename, $message, $exception);
 

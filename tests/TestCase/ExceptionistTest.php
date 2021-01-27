@@ -23,6 +23,7 @@ use PHPUnit\Framework\Error\Notice;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Exceptionist;
@@ -137,7 +138,7 @@ class ExceptionistTest extends TestCase
         $file = (new Filesystem())->createTmpFile();
         $this->assertSame($file, Exceptionist::isWritable($file));
 
-        $this->expectException(NotReadableException::class);
+        $this->expectException(NotWritableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
         Exceptionist::isWritable(TMP . 'noExisting');
     }

@@ -1,5 +1,7 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.7
+* `Exceptionist::isWritable()` now throws the `NotWritableException` correctly;
 ### 1.4.6
 * added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;
 * added `phpstan`, so fixed some code and descriptions.
