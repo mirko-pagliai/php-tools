@@ -18,7 +18,7 @@ parameters:
     ignoreErrors:
         - '#^Call to an undefined static method#'
         - '#^Static call to instance method#'
-        - '#^Ternary operator condition is always (true|false)\.$#'
+        - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
         - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
         -
@@ -40,6 +40,9 @@ parameters:
             path: src/Event/EventDispatcherTrait.php
             count: 1
         -
+            message: '#^Call to an undefined method Tools\\TestSuite\\TestCase::expectExceptionMessageRegExp\(\)\.$#'
+            path: src/TestSuite/BackwardCompatibilityTrait.php
+        -
             message: '#^Access to protected property#'
             path:  tests/TestCase
         -
@@ -49,10 +52,6 @@ parameters:
             message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
             path: tests/TestCase/ExceptionistTest.php
             count: 1
-        -
-            message: '#^Negated boolean expression is always true\.$#'
-            path: tests/TestCase/FilesystemTest.php
-            count: 2
         -
             message: '#^Method Tools\\TestSuite\\TestCase::assertIsJson\(\) invoked with 0 parameters#'
             path: tests/TestCase/TestSuite/TestTraitTest.php
