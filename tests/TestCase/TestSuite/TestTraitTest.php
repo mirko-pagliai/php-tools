@@ -198,7 +198,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $file = (new Filesystem())->createTmpFile('string');
+        $file = Filesystem::instance()->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
         $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }

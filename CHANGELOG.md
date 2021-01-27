@@ -13,6 +13,10 @@
 * all `_or_fail()` methods have been removed.
 
 ## 1.4 branch
+### 1.4.7
+* added `Filesystem::instance()` static method;
+* `Exceptionist::isWritable()` now throws the `NotWritableException` correctly.
+
 ### 1.4.6
 * added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;
 * added `phpstan`, so fixed some code and descriptions.
