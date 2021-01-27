@@ -211,37 +211,6 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Makes a relative path `$endPath` absolute, prepending `$startPath`
-     * @param string $endPath An end path to be made absolute
-     * @param string $startPath A start path to prepend
-     * @return string
-     * @since 1.4.5
-     * @throws \InvalidArgumentException
-     */
-    public function makePathAbsolute(string $endPath, string $startPath): string
-    {
-        if (!$this->isAbsolutePath($startPath)) {
-            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
-        }
-        if ($this->isAbsolutePath($endPath)) {
-            return $endPath;
-        }
-
-        return $this->concatenate($startPath, $endPath);
-    }
-
-    /**
-     * Normalizes the path, applying the right slash term
-     * @param string $path Path you want normalized
-     * @return string Normalized path
-     * @since 1.4.5
-     */
-    public function normalizePath(string $path): string
-    {
-        return str_replace(['/', '\\'], DS, $path);
-    }
-
-    /**
      * Checks if a path ends in a slash (i.e. is slash-terminated)
      * @param string $path Path
      * @return bool
@@ -285,6 +254,37 @@ class Filesystem extends BaseFilesystem
 
             return false;
         }
+    }
+
+    /**
+     * Makes a relative path `$endPath` absolute, prepending `$startPath`
+     * @param string $endPath An end path to be made absolute
+     * @param string $startPath A start path to prepend
+     * @return string
+     * @since 1.4.5
+     * @throws \InvalidArgumentException
+     */
+    public function makePathAbsolute(string $endPath, string $startPath): string
+    {
+        if (!$this->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
+        }
+        if ($this->isAbsolutePath($endPath)) {
+            return $endPath;
+        }
+
+        return $this->concatenate($startPath, $endPath);
+    }
+
+    /**
+     * Normalizes the path, applying the right slash term
+     * @param string $path Path you want normalized
+     * @return string Normalized path
+     * @since 1.4.5
+     */
+    public function normalizePath(string $path): string
+    {
+        return str_replace(['/', '\\'], DS, $path);
     }
 
     /**
