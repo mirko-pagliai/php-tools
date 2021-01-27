@@ -40,9 +40,8 @@ abstract class TestCase extends PHPUnitTestCase
     {
         parent::tearDown();
 
-        $Filesystem = new Filesystem();
-        if ($Filesystem->addSlashTerm(TMP) !== $Filesystem->addSlashTerm(sys_get_temp_dir())) {
-            $Filesystem->unlinkRecursive(TMP);
+        if (rtrim(TMP, DS) !== rtrim(sys_get_temp_dir(), DS)) {
+            Filesystem::instance()->unlinkRecursive(TMP);
         }
     }
 }

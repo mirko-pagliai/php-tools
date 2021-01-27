@@ -118,7 +118,7 @@ class Exceptionist
      */
     public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
     {
-        $message = $message ?: sprintf('File or directory `%s` does not exist', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` does not exist', Filesystem::instance()->rtr($filename));
         self::isTrue(file_exists($filename), $message, $exception);
 
         return $filename;
@@ -157,7 +157,7 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not readable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_readable($filename), $message, $exception);
 
         return $filename;
@@ -177,7 +177,7 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not writable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_writable($filename), $message, $exception);
 
         return $filename;

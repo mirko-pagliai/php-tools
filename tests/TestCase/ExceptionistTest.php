@@ -93,7 +93,7 @@ class ExceptionistTest extends TestCase
      */
     public function testFileExists()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::fileExists($file));
 
         $this->expectException(FileNotExistsException::class);
@@ -121,7 +121,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsReadable()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isReadable($file));
 
         $this->expectException(NotReadableException::class);
@@ -135,7 +135,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsWritable()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isWritable($file));
 
         $this->expectException(NotWritableException::class);
