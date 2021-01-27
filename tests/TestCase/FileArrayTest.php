@@ -29,11 +29,6 @@ class FileArrayTest extends TestCase
     protected $FileArray;
 
     /**
-     * @var \Tools\Filesystem
-     */
-    protected $Filesystem;
-
-    /**
      * @var array
      */
     protected $example = ['first', 'second', 'third', 'fourth', 'fifth'];
@@ -46,8 +41,7 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->Filesystem = new Filesystem();
-        $this->FileArray = new FileArray($this->Filesystem->createTmpFile(), $this->example);
+        $this->FileArray = new FileArray(Filesystem::instance()->createTmpFile(), $this->example);
     }
 
     /**
@@ -130,7 +124,7 @@ class FileArrayTest extends TestCase
     {
         $this->assertEquals($this->example, $this->FileArray->read());
 
-        $file = $this->Filesystem->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $FileArray = new FileArray($file);
         $this->assertEquals(['string'], $FileArray->append('string')->read());
         $FileArray->write();
@@ -140,7 +134,7 @@ class FileArrayTest extends TestCase
         $this->assertEquals(['prepended', 'string'], $FileArray->prepend('prepended')->read());
 
         //With invalid array or no existing file, in any case returns a empty array
-        $this->assertEquals([], (new FileArray($this->Filesystem->createTmpFile('a string')))->read());
+        $this->assertEquals([], (new FileArray(Filesystem::instance()->createTmpFile('a string')))->read());
         $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
     }
 

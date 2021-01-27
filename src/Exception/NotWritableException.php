@@ -36,7 +36,7 @@ class NotWritableException extends FileException
     public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $path = null)
     {
         if (!$message) {
-            $message = $path ? sprintf('Filename `%s` is not writable', (new Filesystem())->rtr($path)) : 'Filename is not writable';
+            $message = $path ? sprintf('Filename `%s` is not writable', Filesystem::instance()->rtr($path)) : 'Filename is not writable';
         }
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $path);
     }

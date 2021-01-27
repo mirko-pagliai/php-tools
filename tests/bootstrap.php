@@ -44,8 +44,7 @@ if (!function_exists('createSomeFiles')) {
         ];
 
         //Creates directories and files
-        $Filesystem = new Filesystem();
-        array_walk($files, [$Filesystem, 'createFile']);
+        array_walk($files, [Filesystem::instance(), 'createFile']);
         @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
 
         return $files;

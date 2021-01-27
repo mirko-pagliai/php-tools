@@ -18,7 +18,7 @@ parameters:
     ignoreErrors:
         - '#^Call to an undefined static method#'
         - '#^Static call to instance method#'
-        - '#^Ternary operator condition is always (true|false)\.$#'
+        - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
         -
             message: '#Function get_child_methods\(\) never returns null so it can be removed from the return typehint\.$#'
@@ -60,7 +60,3 @@ parameters:
         -
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: tests/TestCase/ExceptionistTest.php
-        -
-            message: '#^Negated boolean expression is always true\.$#'
-            path: tests/TestCase/FilesystemTest.php
-            count: 2

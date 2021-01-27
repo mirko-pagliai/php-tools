@@ -159,6 +159,6 @@ class FileArray
      */
     public function write()
     {
-        return (new Filesystem())->createFile($this->filename, serialize($this->data));
+        return Filesystem::instance()->createFile($this->filename, serialize($this->data));
     }
 }

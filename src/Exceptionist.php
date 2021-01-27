@@ -20,6 +20,7 @@ use Exception;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Filesystem;
@@ -115,7 +116,7 @@ class Exceptionist
      */
     public static function fileExists($filename, $message = '', $exception = FileNotExistsException::class)
     {
-        $message = $message ?: sprintf('File or directory `%s` does not exist', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` does not exist', Filesystem::instance()->rtr($filename));
         self::isTrue(file_exists($filename), $message, $exception);
 
         return $filename;
@@ -154,7 +155,7 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not readable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_readable($filename), $message, $exception);
 
         return $filename;
@@ -170,11 +171,11 @@ class Exceptionist
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      */
-    public static function isWritable($filename, $message = '', $exception = NotReadableException::class)
+    public static function isWritable($filename, $message = '', $exception = NotWritableException::class)
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not writable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_writable($filename), $message, $exception);
 
         return $filename;

@@ -163,7 +163,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, $filename, $message = '')
     {
-        self::assertContains((new Filesystem())->getExtension($filename), (array)$expectedExtension, $message);
+        self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
 
     /**
