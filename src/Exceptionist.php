@@ -89,7 +89,7 @@ class Exceptionist
      * Checks whether an array key exists.
      *
      * If you pass an array of keys, they will all be checked.
-     * @param mixed $key Key to check or an array of keys
+     * @param string|int|array<string|int> $key Key to check or an array of keys
      * @param array $array An array with keys to check
      * @param string|null $message The failure message that will be appended to
      *  the generated message
@@ -209,11 +209,11 @@ class Exceptionist
      * If the object owns the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
      * @param object $object The class name or an object of the class to test for
-     * @param string|array $property Name of the property or an array of names
+     * @param string|array<string> $property Name of the property or an array of names
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return mixed
+     * @return string|array<string>
      * @throws \Tools\Exception\PropertyNotExistsException
      */
     public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)

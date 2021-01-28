@@ -25,7 +25,7 @@ use Tools\TestSuite\TestCase;
 class ReflectionTraitTest extends TestCase
 {
     /**
-     * @var \App\ExampleClass|\PHPUnit\Framework\MockObject\MockObject
+     * @var \App\ExampleClass
      */
     protected $example;
 
@@ -64,8 +64,8 @@ class ReflectionTraitTest extends TestCase
         $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($this->example, ReflectionProperty::IS_STATIC));
 
         unset($expected['privateProperty']);
-        $this->example = $this->getMockBuilder(ExampleClass::class)->getMock();
-        $this->assertEquals($expected, $this->getProperties($this->example));
+        $example = $this->getMockBuilder(ExampleClass::class)->getMock();
+        $this->assertEquals($expected, $this->getProperties($example));
     }
 
     /**

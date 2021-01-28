@@ -104,13 +104,13 @@ class ExceptionistTest extends TestCase
      */
     public function testArrayKeysExists()
     {
-        $array = ['a' => 1, 'b' => 2, 'c' => 3];
+        $array = ['a' => 1, 'b' => 2, 'c' => 3, 4 => 4];
         $this->assertSame('a', Exceptionist::arrayKeyExists('a', $array));
-        $this->assertSame(['a', 'c'], Exceptionist::arrayKeyExists(['a', 'c'], $array));
+        $this->assertSame(['a', 4], Exceptionist::arrayKeyExists(['a', 4], $array));
 
         $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('Key `d` does not exist');
-        Exceptionist::fileExists(Exceptionist::arrayKeyExists(['d'], $array));
+        $this->expectExceptionMessage('Key `5` does not exist');
+        Exceptionist::fileExists(Exceptionist::arrayKeyExists([5], $array));
     }
 
     /**

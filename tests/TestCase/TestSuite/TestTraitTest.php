@@ -90,6 +90,8 @@ class TestTraitTest extends TestCase
             $this->assertArrayKeysEqual(['key1', 'key2'], $array);
         }
 
+        $this->assertArrayKeysEqual([0, 1, 2], ['first', 'second', 'third']);
+
         $this->expectException(AssertionFailedError::class);
         $this->assertArrayKeysEqual(['key2'], $array);
     }
