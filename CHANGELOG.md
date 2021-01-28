@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.4 branch
 ### 1.4.7
+* added `array_has_only_numeric_keys()` function;
 * added `Filesystem::instance()` static method;
 * `Exceptionist::isWritable()` now throws the `NotWritableException` correctly;
 * extensive improvement of function descriptions and tags.

@@ -43,6 +43,21 @@ if (!function_exists('array_clean')) {
     }
 }
 
+if (!function_exists('array_has_only_numeric_keys')) {
+    /**
+     * Returns `true` if the array has only numeric keys
+     * @param array $array Array
+     * @return bool
+     * @since 1.4.6
+     */
+    function array_has_only_numeric_keys(array $array): bool
+    {
+        $keys = array_keys($array);
+
+        return $keys === array_filter($keys, 'is_numeric');
+    }
+}
+
 if (!function_exists('array_key_first')) {
     /**
      * Returns the first key of an array.
