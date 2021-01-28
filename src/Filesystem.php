@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -91,10 +92,12 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @throws \RuntimeException
      */
     public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
-        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
+        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file', RuntimeException::class);
         $this->createFile($filename, $data);
 
         return $filename;
