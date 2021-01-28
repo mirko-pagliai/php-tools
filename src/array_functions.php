@@ -35,12 +35,11 @@ if (!function_exists('array_clean')) {
     function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
         $keys = array_keys($array);
-        $onlyNumKeys = $keys === array_filter($keys, 'is_numeric');
         $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
         $array = array_unique($array);
 
         //Performs `array_values()` only if all array keys are numeric
-        return $onlyNumKeys ? array_values($array) : $array;
+        return $keys === array_filter($keys, 'is_numeric') ? array_values($array) : $array;
     }
 }
 

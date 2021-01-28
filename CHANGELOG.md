@@ -2,7 +2,8 @@
 ## 1.4 branch
 ### 1.4.7
 * added `Filesystem::instance()` static method;
-* `Exceptionist::isWritable()` now throws the `NotWritableException` correctly.
+* `Exceptionist::isWritable()` now throws the `NotWritableException` correctly;
+* extensive improvement of function descriptions and tags.
 
 ### 1.4.6
 * added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;

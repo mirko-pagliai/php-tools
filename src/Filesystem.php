@@ -106,7 +106,7 @@ class Filesystem extends BaseFilesystem
      * @param string|array|bool $exceptions Either an array of filename or folder
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array Array of nested directories and files in each directory
+     * @return array<array> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
