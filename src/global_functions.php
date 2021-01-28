@@ -124,7 +124,7 @@ if (!function_exists('is_positive')) {
      */
     function is_positive($string): bool
     {
-        return is_numeric($string) && $string > 0 && $string == round($string);
+        return is_numeric($string) && $string > 0 && $string == round((float)$string);
     }
 }
 

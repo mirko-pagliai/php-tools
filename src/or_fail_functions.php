@@ -190,14 +190,14 @@ if (!function_exists('key_exists_or_fail')) {
      * If you pass an array of keys, they will all be checked.
      * @param mixed $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param \Throwable|string $message The failure message that will be appended to
+     * @param string $message The failure message that will be appended to
      *  the generated message
      * @param string $exception The exception class you want to set
      * @return mixed
      * @deprecated Use `Exceptionist::arrayKeyExists()` instead
      * @throws \Tools\Exception\KeyNotExistsException
      */
-    function key_exists_or_fail($key, array $array, $message = '', $exception = KeyNotExistsException::class)
+    function key_exists_or_fail($key, array $array, string $message = '', $exception = KeyNotExistsException::class)
     {
         deprecationWarning('Deprecated. Use `Exceptionist::arrayKeyExists()` instead.');
 
@@ -212,7 +212,7 @@ if (!function_exists('property_exists_or_fail')) {
      *
      * If the object has the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
-     * @param object|string $object The class name or an object of the class to test for
+     * @param object $object The class name or an object of the class to test for
      * @param string|array $property Name of the property or an array of names
      * @param string $message The failure message that will be appended to
      *  the generated message
@@ -222,7 +222,7 @@ if (!function_exists('property_exists_or_fail')) {
      * @since 1.1.14
      * @throws \Tools\Exception\PropertyNotExistsException
      */
-    function property_exists_or_fail($object, $property, $message = '', $exception = PropertyNotExistsException::class)
+    function property_exists_or_fail(object $object, $property, string $message = '', $exception = PropertyNotExistsException::class)
     {
         deprecationWarning('Deprecated. Use `Exceptionist::objectPropertyExists()` instead.');
 
