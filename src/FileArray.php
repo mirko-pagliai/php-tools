@@ -134,7 +134,7 @@ class FileArray
             return $this->data;
         }
 
-        return @unserialize(file_get_contents($this->filename)) ?: [];
+        return @unserialize(file_get_contents($this->filename) ?: '') ?: [];
     }
 
     /**

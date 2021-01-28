@@ -44,6 +44,18 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
+     * Test for `array_has_only_numeric_keys()` global function
+     * @test
+     */
+    public function testArrayHasOnlyNumericKeys()
+    {
+        $this->assertTrue(array_has_only_numeric_keys(['first', 'second']));
+        $this->assertTrue(array_has_only_numeric_keys([]));
+        $this->assertFalse(array_has_only_numeric_keys(['a' => 'first', 'b' => 'second']));
+        $this->assertFalse(array_has_only_numeric_keys(['first', 'b' => 'second']));
+    }
+
+    /**
      * Test for `array_key_first()` global function
      * @test
      */

@@ -16,6 +16,7 @@
 namespace Tools;
 
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Finder;
@@ -89,10 +90,12 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @throws \RuntimeException
      */
     public function createTmpFile($data = null, $dir = null, $prefix = 'tmp')
     {
-        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
+        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file', RuntimeException::class);
         $this->createFile($filename, $data);
 
         return $filename;
@@ -104,7 +107,7 @@ class Filesystem extends BaseFilesystem
      * @param string|array|bool $exceptions Either an array of filename or folder
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array Array of nested directories and files in each directory
+     * @return array<array> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     public function getDirTree($path, $exceptions = false, $ignoreErrors = false)

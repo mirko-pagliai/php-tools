@@ -73,7 +73,7 @@ class NetworkFunctionsTest extends TestCase
      */
     public function testGetHostnameFromUrl()
     {
-        $this->assertNull(get_hostname_from_url('page.html'));
+        $this->assertEmpty(get_hostname_from_url('page.html'));
 
         foreach (['http://127.0.0.1', 'http://127.0.0.1/'] as $url) {
             $this->assertEquals('127.0.0.1', get_hostname_from_url($url));

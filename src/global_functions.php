@@ -56,14 +56,14 @@ if (!function_exists('get_child_methods')) {
      * Gets the class methods' names, but unlike the `get_class_methods()`
      *  function, this function excludes the methods of the parent class
      * @param string $class Class name
-     * @return array|null
+     * @return array<string>|null
      * @since 1.0.1
      */
     function get_child_methods($class)
     {
         $methods = get_class_methods($class);
-        $parentClass = get_parent_class($class);
 
+        $parentClass = get_parent_class($class);
         if ($parentClass) {
             $methods = array_diff($methods, get_class_methods($parentClass));
         }
@@ -120,7 +120,7 @@ if (!function_exists('is_positive')) {
      */
     function is_positive($string)
     {
-        return is_numeric($string) && $string > 0 && $string == round($string);
+        return is_numeric($string) && $string > 0 && $string == round((float)$string);
     }
 }
 
@@ -140,8 +140,8 @@ if (!function_exists('is_stringable')) {
 if (!function_exists('objects_map')) {
     /**
      * Executes an object method for all objects of the given arrays
-     * @param array $objects An array of objects. Each object must have the
-     *  method to be called
+     * @param array<object> $objects An array of objects. Each object must have
+     *  the method to be called
      * @param string $method The method to be called for each object
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the
@@ -175,7 +175,7 @@ if (!function_exists('slug')) {
     function slug($string, $lowerCase = true)
     {
         $slug = preg_replace('~[^\pL\d]+~u', '-', $string);
-        $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
+        $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug) ?: $slug;
         $slug = preg_replace('~[^-\w]+~', '', $slug);
 
         return $lowerCase ? strtolower($slug) : $slug;

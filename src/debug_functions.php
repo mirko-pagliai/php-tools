@@ -28,7 +28,7 @@ VarDumper::setHandler(function ($var) {
             return key_exists('file', $current);
         }));
         $key = array_search(__FILE__, array_column($backtrace, 'file'));
-        $key = $key ? $key - 1 : count($backtrace) - 3;
+        $key = $key ? (int)$key - 1 : count($backtrace) - 3;
         $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'], $backtrace[$key]['line']);
         $dumper = new CliDumper();
         printf($template, $lineInfo, $dumper->dump($cloner->cloneVar($var), true));

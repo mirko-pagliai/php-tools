@@ -90,7 +90,7 @@ trait TestTrait
 
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
-     * @param array $expectedKeys Expected keys
+     * @param array<int, string|int> $expectedKeys Expected keys
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -113,7 +113,7 @@ trait TestTrait
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException(callable $function, $expectedException = Exception::class, $expectedMessage = null)
+    protected static function assertException(callable $function, $expectedException = Exception::class, $expectedMessage = '')
     {
         if ($expectedException !== Exception::class && !is_subclass_of($expectedException, Exception::class)) {
             self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
@@ -155,7 +155,7 @@ trait TestTrait
      * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
-     * @param string|array $expectedExtension Expected extension
+     * @param string|array<string> $expectedExtension Expected extension
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -171,7 +171,7 @@ trait TestTrait
      *
      * If `$expectedMime` is an array, asserts that the filename has at
      *  least one of those values.
-     * @param string|array $expectedMime MIME content type
+     * @param string|array<string> $expectedMime MIME content type
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -216,7 +216,7 @@ trait TestTrait
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param array $expectedProperties Expected properties
+     * @param array<string> $expectedProperties Expected properties
      * @param object $object Object you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -229,8 +229,8 @@ trait TestTrait
 
     /**
      * Asserts that `$firstClass` and `$secondClass` have the same methods
-     * @param mixed $firstClass First class as string or object
-     * @param mixed $secondClass Second class as string or object
+     * @param string|object $firstClass First class as string or object
+     * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
