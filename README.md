@@ -9,8 +9,6 @@
 *php-tools* adds some useful global functions, classes and methods, trait and exceptions.
 Refer to our [API](//mirko-pagliai.github.io/php-tools) to discover them all.
 
-Starting from the `1.3` branch, it requires at least PHP 7.1 and `phpunit` 7 or 8.
-
 Did you like this plugin? Its development requires a lot of time for me.
 Please consider the possibility of making [a donation](//paypal.me/mirkopagliai):
 even a coffee is enough! Thank you.
@@ -21,6 +19,15 @@ even a coffee is enough! Thank you.
 You can install the package via composer:
 
     $ composer require --prefer-dist mirko-pagliai/php-tools
+
+Starting from the `1.4` branch, it requires at least PHP 7.2.5 and `phpunit` 7.
+Instead, the [php5.6](//github.com/mirko-pagliai/php-tools/tree/php5.6)
+branch requires at least PHP 5.6 and `phpunit` 5.7.15.
+
+In this case, you can install the package as well:
+```bash
+$ composer require --prefer-dist mirko-pagliai/php-tools:php5.6
+```
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward
