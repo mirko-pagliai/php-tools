@@ -1,5 +1,13 @@
 # 1.x branch
 ## 1.4 branch
+### 1.4.7
+* added `array_has_only_numeric_keys()` function;
+* added `Filesystem::instance()` static method;
+* `get_hostname_from_url()` function returns an empty string instead of `null`;
+* `Filesystem::createTmpFile()` now throws a `RuntimeException` on failure;
+* `Exceptionist::isWritable()` now throws the `NotWritableException` correctly;
+* extensive improvement of function descriptions and tags.
+
 ### 1.4.6
 * added `Exceptionist::isInstanceOf()` method and the `ObjectWrongInstanceException`;
 * added `phpstan`, so fixed some code and descriptions.

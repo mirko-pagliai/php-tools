@@ -22,6 +22,7 @@ use Throwable;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Filesystem;
@@ -88,7 +89,7 @@ class Exceptionist
      * Checks whether an array key exists.
      *
      * If you pass an array of keys, they will all be checked.
-     * @param mixed $key Key to check or an array of keys
+     * @param string|int|array<string|int> $key Key to check or an array of keys
      * @param array $array An array with keys to check
      * @param string|null $message The failure message that will be appended to
      *  the generated message
@@ -117,7 +118,7 @@ class Exceptionist
      */
     public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
     {
-        $message = $message ?: sprintf('File or directory `%s` does not exist', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` does not exist', Filesystem::instance()->rtr($filename));
         self::isTrue(file_exists($filename), $message, $exception);
 
         return $filename;
@@ -156,7 +157,7 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not readable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_readable($filename), $message, $exception);
 
         return $filename;
@@ -172,11 +173,11 @@ class Exceptionist
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      */
-    public static function isWritable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
+    public static function isWritable(string $filename, ?string $message = '', $exception = NotWritableException::class): string
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not writable', (new Filesystem())->rtr($filename));
+        $message = $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename));
         self::isTrue(is_writable($filename), $message, $exception);
 
         return $filename;
@@ -208,11 +209,11 @@ class Exceptionist
      * If the object owns the `has()` method, it uses that method. Otherwise it
      *  use the `property_exists()` function.
      * @param object $object The class name or an object of the class to test for
-     * @param string|array $property Name of the property or an array of names
+     * @param string|array<string> $property Name of the property or an array of names
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Throwable|string $exception The exception class you want to set
-     * @return mixed
+     * @return string|array<string>
      * @throws \Tools\Exception\PropertyNotExistsException
      */
     public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)

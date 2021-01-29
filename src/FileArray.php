@@ -135,7 +135,7 @@ class FileArray
             return $this->data;
         }
 
-        return @unserialize(file_get_contents($this->filename)) ?: [];
+        return @unserialize(file_get_contents($this->filename) ?: '') ?: [];
     }
 
     /**
@@ -160,6 +160,6 @@ class FileArray
      */
     public function write(): bool
     {
-        return (new Filesystem())->createFile($this->filename, serialize($this->data));
+        return Filesystem::instance()->createFile($this->filename, serialize($this->data));
     }
 }

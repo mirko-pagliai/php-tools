@@ -89,6 +89,8 @@ class TestTraitTest extends TestCase
             $this->assertArrayKeysEqual(['key1', 'key2'], $array);
         }
 
+        $this->assertArrayKeysEqual([0, 1, 2], ['first', 'second', 'third']);
+
         $this->expectException(AssertionFailedError::class);
         $this->assertArrayKeysEqual(['key2'], $array);
     }
@@ -197,7 +199,7 @@ class TestTraitTest extends TestCase
      */
     public function testAssertFileMime()
     {
-        $file = (new Filesystem())->createTmpFile('string');
+        $file = Filesystem::instance()->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
         $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
@@ -210,7 +212,7 @@ class TestTraitTest extends TestCase
     public function testAssertFilePerms()
     {
         $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertFilePerms('0600', $file);
         $this->assertFilePerms(0600, $file);
         $this->assertFilePerms(['0600', '0666'], $file);

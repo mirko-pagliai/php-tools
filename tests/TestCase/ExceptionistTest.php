@@ -23,6 +23,7 @@ use PHPUnit\Framework\Error\Notice;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
+use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Exceptionist;
@@ -77,13 +78,13 @@ class ExceptionistTest extends TestCase
      */
     public function testArrayKeysExists()
     {
-        $array = ['a' => 1, 'b' => 2, 'c' => 3];
+        $array = ['a' => 1, 'b' => 2, 'c' => 3, 4 => 4];
         $this->assertSame('a', Exceptionist::arrayKeyExists('a', $array));
-        $this->assertSame(['a', 'c'], Exceptionist::arrayKeyExists(['a', 'c'], $array));
+        $this->assertSame(['a', 4], Exceptionist::arrayKeyExists(['a', 4], $array));
 
         $this->expectException(KeyNotExistsException::class);
-        $this->expectExceptionMessage('Key `d` does not exist');
-        Exceptionist::fileExists(Exceptionist::arrayKeyExists(['d'], $array));
+        $this->expectExceptionMessage('Key `5` does not exist');
+        Exceptionist::fileExists(Exceptionist::arrayKeyExists([5], $array));
     }
 
     /**
@@ -92,7 +93,7 @@ class ExceptionistTest extends TestCase
      */
     public function testFileExists()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::fileExists($file));
 
         $this->expectException(FileNotExistsException::class);
@@ -120,7 +121,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsReadable()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isReadable($file));
 
         $this->expectException(NotReadableException::class);
@@ -134,10 +135,10 @@ class ExceptionistTest extends TestCase
      */
     public function testIsWritable()
     {
-        $file = (new Filesystem())->createTmpFile();
+        $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isWritable($file));
 
-        $this->expectException(NotReadableException::class);
+        $this->expectException(NotWritableException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
         Exceptionist::isWritable(TMP . 'noExisting');
     }

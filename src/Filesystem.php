@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -91,10 +92,12 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @throws \RuntimeException
      */
     public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
-        $filename = @tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix);
+        $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
+        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file', RuntimeException::class);
         $this->createFile($filename, $data);
 
         return $filename;
@@ -106,7 +109,7 @@ class Filesystem extends BaseFilesystem
      * @param string|array|bool $exceptions Either an array of filename or folder
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array Array of nested directories and files in each directory
+     * @return array<array> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
@@ -201,34 +204,13 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Makes a relative path `$endPath` absolute, prepending `$startPath`
-     * @param string $endPath An end path to be made absolute
-     * @param string $startPath A start path to prepend
-     * @return string
-     * @since 1.4.5
-     * @throws \InvalidArgumentException
+     * Returns a new `Filesystem` instance
+     * @return self
+     * @since 1.4.7
      */
-    public function makePathAbsolute(string $endPath, string $startPath): string
+    public static function instance(): Filesystem
     {
-        if (!$this->isAbsolutePath($startPath)) {
-            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
-        }
-        if ($this->isAbsolutePath($endPath)) {
-            return $endPath;
-        }
-
-        return $this->concatenate($startPath, $endPath);
-    }
-
-    /**
-     * Normalizes the path, applying the right slash term
-     * @param string $path Path you want normalized
-     * @return string Normalized path
-     * @since 1.4.5
-     */
-    public function normalizePath(string $path): string
-    {
-        return str_replace(['/', '\\'], DS, $path);
+        return new Filesystem();
     }
 
     /**
@@ -275,6 +257,37 @@ class Filesystem extends BaseFilesystem
 
             return false;
         }
+    }
+
+    /**
+     * Makes a relative path `$endPath` absolute, prepending `$startPath`
+     * @param string $endPath An end path to be made absolute
+     * @param string $startPath A start path to prepend
+     * @return string
+     * @since 1.4.5
+     * @throws \InvalidArgumentException
+     */
+    public function makePathAbsolute(string $endPath, string $startPath): string
+    {
+        if (!$this->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
+        }
+        if ($this->isAbsolutePath($endPath)) {
+            return $endPath;
+        }
+
+        return $this->concatenate($startPath, $endPath);
+    }
+
+    /**
+     * Normalizes the path, applying the right slash term
+     * @param string $path Path you want normalized
+     * @return string Normalized path
+     * @since 1.4.5
+     */
+    public function normalizePath(string $path): string
+    {
+        return str_replace(['/', '\\'], DS, $path);
     }
 
     /**

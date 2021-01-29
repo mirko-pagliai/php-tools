@@ -34,7 +34,7 @@ class FileNotExistsException extends FileException
     public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
-            $message = $path ? sprintf('Filename `%s` does not exist', (new Filesystem())->rtr($path)) : 'Filename does not exist';
+            $message = $path ? sprintf('Filename `%s` does not exist', Filesystem::instance()->rtr($path)) : 'Filename does not exist';
         }
         parent::__construct($message, $code, $previous, $path);
     }

@@ -92,7 +92,7 @@ trait TestTrait
 
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
-     * @param array $expectedKeys Expected keys
+     * @param array<int, string|int> $expectedKeys Expected keys
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -111,11 +111,11 @@ trait TestTrait
      * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
      *  raise the expected exception
-     * @param string|null $expectedMessage The expected message or `null`
+     * @param string $expectedMessage The expected message
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException(string $expectedException, callable $function, ?string $expectedMessage = null): void
+    protected static function assertException(string $expectedException, callable $function, string $expectedMessage = ''): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
@@ -157,7 +157,7 @@ trait TestTrait
      * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
-     * @param string|array $expectedExtension Expected extension
+     * @param string|array<string> $expectedExtension Expected extension
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -165,7 +165,7 @@ trait TestTrait
      */
     protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
-        self::assertContains((new Filesystem())->getExtension($filename), (array)$expectedExtension, $message);
+        self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
 
     /**
@@ -173,7 +173,7 @@ trait TestTrait
      *
      * If `$expectedMime` is an array, asserts that the filename has at
      *  least one of those values.
-     * @param string|array $expectedMime MIME content type
+     * @param string|array<string> $expectedMime MIME content type
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -190,8 +190,8 @@ trait TestTrait
      *
      * If `$expectedPerms` is an array, asserts that the filename has at
      *  least one of those values
-     * @param string|int|array $expectedPerms Expected permission values as a
-     *  four-chars string or octal value
+     * @param string|int|array<string|int> $expectedPerms Expected permission
+     *  values as a four-chars string or octal value
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -252,7 +252,7 @@ trait TestTrait
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param array $expectedProperties Expected properties
+     * @param array<string> $expectedProperties Expected properties
      * @param object $object Object you want to check
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -265,8 +265,8 @@ trait TestTrait
 
     /**
      * Asserts that `$firstClass` and `$secondClass` have the same methods
-     * @param mixed $firstClass First class as string or object
-     * @param mixed $secondClass Second class as string or object
+     * @param string|object $firstClass First class as string or object
+     * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
