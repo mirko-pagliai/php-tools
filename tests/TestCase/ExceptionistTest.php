@@ -83,7 +83,7 @@ class ExceptionistTest extends TestCase
     public function testCallStaticMagicMethodWithErrorFromFunction()
     {
         $this->expectNotice();
-        $this->expectExceptionMessage('Error calling `in_array()`: in_array() expects at least 2 parameters, 1 given');
+        $this->expectExceptionMessageMatches('#^Error calling `in_array\(\)`: in_array\(\) expects at least 2 (arguments|parameters), 1 given$#');
         Exceptionist::inArray(['a']);
     }
 
