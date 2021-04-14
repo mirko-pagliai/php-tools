@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use ErrorException;
+use Exception;
 
 /**
  * "Property does not exist" exception.
@@ -39,7 +40,7 @@ class PropertyNotExistsException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $property Name of the property that do not exist
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, ?string $property = null)
+    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $property = null)
     {
         if (!$message) {
             $message = $property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist';

@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Test\Exception;
 
+use stdClass;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\TestSuite\TestCase;
 
@@ -29,7 +30,7 @@ class ObjectWrongInstanceExceptionTest extends TestCase
      */
     public function testException()
     {
-        $instance = new \stdClass();
+        $instance = new stdClass();
         try {
             throw new ObjectWrongInstanceException(null, 0, E_ERROR, '__FILE__', __LINE__, null, $instance);
         } catch (ObjectWrongInstanceException $e) {

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
+use Exception;
 use Tools\FileException;
 use Tools\Filesystem;
 
@@ -34,7 +35,7 @@ class NotWritableException extends FileException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, ?string $path = null)
+    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
     {
         if (!$message) {
             $message = $path ? sprintf('Filename `%s` is not writable', Filesystem::instance()->rtr($path)) : 'Filename is not writable';

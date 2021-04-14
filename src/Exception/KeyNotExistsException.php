@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use ErrorException;
+use Exception;
 
 /**
  * "Array key does not exist" exception.
@@ -39,7 +40,7 @@ class KeyNotExistsException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $key Name of the key that do not exist
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, ?string $key = null)
+    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $key = null)
     {
         if (!$message) {
             $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';

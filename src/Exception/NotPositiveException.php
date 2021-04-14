@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
+use Exception;
 use Tools\InvalidValueException;
 
 /**
@@ -33,7 +34,7 @@ class NotPositiveException extends InvalidValueException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, $value = null)
+    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
     {
         if (!$message) {
             $message = is_stringable($value) ? sprintf('Value `%s` is not a positive', (string)$value) : 'Value is not a positive';

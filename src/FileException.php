@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use ErrorException;
+use Exception;
 
 /**
  * Abstract exception for exceptions that are throwed by a file.
@@ -39,7 +40,7 @@ abstract class FileException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?\Exception $previous = null, ?string $path = null)
+    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
     {
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->path = $path;
