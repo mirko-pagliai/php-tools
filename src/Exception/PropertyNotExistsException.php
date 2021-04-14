@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use Exception;
+use Throwable;
 
 /**
  * "Property does not exist" exception.
@@ -36,7 +37,7 @@ class PropertyNotExistsException extends Exception
      * @param \Throwable|null $previous the previous exception
      * @param string|null $property Name of the property that do not exist
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $property = null)
+    public function __construct(?string $message = null, int $code = 0, ?Throwable $previous = null, ?string $property = null)
     {
         if (!$message) {
             $message = $property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist';

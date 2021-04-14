@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use Exception;
+use Throwable;
 
 /**
  * "Array key does not exist" exception.
@@ -36,7 +37,7 @@ class KeyNotExistsException extends Exception
      * @param \Throwable|null $previous the previous exception
      * @param string|null $key Name of the key that do not exist
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $key = null)
+    public function __construct(?string $message = null, int $code = 0, ?Throwable $previous = null, ?string $key = null)
     {
         if (!$message) {
             $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';

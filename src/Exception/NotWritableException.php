@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
+use Throwable;
 use Tools\FileException;
 use Tools\Filesystem;
 
@@ -31,7 +32,7 @@ class NotWritableException extends FileException
      * @param \Throwable|null $previous the previous exception
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?string $path = null)
+    public function __construct(?string $message = null, int $code = 0, ?Throwable $previous = null, ?string $path = null)
     {
         if (!$message) {
             $message = $path ? sprintf('Filename `%s` is not writable', Filesystem::instance()->rtr($path)) : 'Filename is not writable';
