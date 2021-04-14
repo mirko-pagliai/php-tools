@@ -43,9 +43,6 @@ parameters:
             message: '#^Parameter \#1 \$event of method Tools\\Event\\EventList::add\(\) expects Tools\\Event\\Event, object given\.$#'
             path: src/Event/EventDispatcher.php
         -
-            message: '#^Method Tools\\TestSuite\\TestCase::getProperties\(\) should return#'
-            path: src/ReflectionTrait.php
-        -
             message: '#^Trying to invoke string but it might not be a callable.$#'
             path: src/TestSuite/TestTrait.php
             count: 1
