@@ -21,14 +21,7 @@ parameters:
         - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
         - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
-        - '#^Parameter \#1 \$function of function call_user_func(_array)? expects callable\(\)#'
-        -
-            message: '#Function get_child_methods\(\) never returns null so it can be removed from the return typehint\.$#'
-            path: src/global_functions.php
-        -
-            message: '#Else branch is unreachable because ternary operator condition is always true\.$#'
-            path: src/global_functions.php
-            count: 1
+        - '#^Parameter \#1 \$(callback|function) of function call_user_func(_array)? expects callable\(\): mixed#'
         -
             message: '#^Left side of \&\& is always false\.$#'
             path: src/global_functions.php
@@ -37,7 +30,7 @@ parameters:
             message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
             path: src/BodyParser.php
         -
-            message: '#^Parameter \#2 \.\.\.\$args of function array_merge expects array, array\|string given\.$#'
+            message: '#^Parameter \#2 \.\.\.\$(args|arrays) of function array_merge expects array, array\|string given\.$#'
             path: src/Entity.php
         -
             message: '#^Parameter \#1 \$event of method Tools\\Event\\EventList::add\(\) expects Tools\\Event\\Event, object given\.$#'
@@ -61,5 +54,5 @@ parameters:
             path: tests/TestCase/TestSuite/TestTraitTest.php
             count: 1
         -
-            message: '#^Parameter \#1 \$im of function imagejpeg expects resource, resource\|false given\.$#'
+            message: '#^Parameter \#1 \$im of function imagejpeg expects (GdImage|resource), (GdImage|resource)\|false given\.$#'
             path: tests/TestCase/TestSuite/TestTraitTest.php
