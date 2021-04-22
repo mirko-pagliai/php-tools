@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use Exception;
+use Throwable;
 
 /**
  * "Object wrong instance" exception.
@@ -36,7 +37,7 @@ class ObjectWrongInstanceException extends Exception
      * @param \Throwable|null $previous the previous exception
      * @param object|null $object Object that is not a right instance
      */
-    public function __construct(?string $message = null, int $code = 0, ?\Throwable $previous = null, ?object $object = null)
+    public function __construct(?string $message = null, int $code = 0, ?Throwable $previous = null, ?object $object = null)
     {
         if (!$message) {
             $message = $object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance';

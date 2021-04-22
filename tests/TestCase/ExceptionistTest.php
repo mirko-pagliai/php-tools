@@ -20,6 +20,7 @@ use BadMethodCallException;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
+use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotReadableException;
@@ -57,7 +58,7 @@ class ExceptionistTest extends TestCase
     public function testCallStaticMagicMethodWithErrorFromFunction()
     {
         $this->expectNotice();
-        $this->expectExceptionMessage('Error calling `in_array()`: in_array() expects at least 2 parameters, 1 given');
+        $this->expectExceptionMessageMatches('#^Error calling `in_array\(\)`: in_array\(\) expects at least 2 (arguments|parameters), 1 given$#');
         Exceptionist::inArray(['a']);
     }
 
@@ -107,7 +108,7 @@ class ExceptionistTest extends TestCase
      */
     public function testInstanceOf()
     {
-        $instance = new \stdClass();
+        $instance = new stdClass();
         $this->assertSame($instance, Exceptionist::isInstanceOf($instance, \stdClass::class));
 
         $this->expectException(ObjectWrongInstanceException::class);
@@ -166,7 +167,7 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->name = 'My name';
         $object->surname = 'My surname';
         $this->assertSame('name', Exceptionist::objectPropertyExists($object, 'name'));
@@ -249,7 +250,7 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithInvalidExceptionClass()
     {
         $this->assertException(Notice::class, function () {
-            Exceptionist::isTrue(false, '', new \stdClass());
+            Exceptionist::isTrue(false, '', new stdClass());
         }, '`$exception` parameter must be an instance of `Throwable` or a string');
     }
 }

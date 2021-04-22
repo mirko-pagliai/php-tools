@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use Exception;
+use Throwable;
 
 /**
  * Abstract exception for exceptions that are throwed by an invalid value.
@@ -36,7 +37,7 @@ abstract class InvalidValueException extends Exception
      * @param \Throwable|null $previous the previous exception
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct(string $message = '', int $code = 0, ?\Throwable $previous = null, $value = null)
+    public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null, $value = null)
     {
         parent::__construct($message, $code, $previous);
         $this->value = $value;

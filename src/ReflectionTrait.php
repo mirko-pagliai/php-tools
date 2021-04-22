@@ -81,7 +81,7 @@ trait ReflectionTrait
             return $property->getValue($object);
         }, $properties);
 
-        return array_combine(objects_map($properties, 'getName'), $values);
+        return array_combine(objects_map($properties, 'getName'), $values) ?: [];
     }
 
     /**
