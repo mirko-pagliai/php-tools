@@ -14,7 +14,8 @@
 
 ## 1.4 branch
 ### 1.4.8
-* ready for PHP 8.
+* ready for PHP 8;
+* some little fixes.
 
 ### 1.4.7
 * added `array_has_only_numeric_keys()` function;
