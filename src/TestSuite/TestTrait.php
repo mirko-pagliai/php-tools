@@ -108,14 +108,14 @@ trait TestTrait
 
     /**
      * Asserts that a callable throws an exception
-     * @param string $expectedException Expected exception
      * @param callable $function A callable you want to test and that should
      *  raise the expected exception
+     * @param string $expectedException Expected exception
      * @param string $expectedMessage The expected message
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException(string $expectedException, callable $function, string $expectedMessage = ''): void
+    protected static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
@@ -183,40 +183,6 @@ trait TestTrait
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
-    }
-
-    /**
-     * Asserts that a filename has some file permissions.
-     *
-     * If `$expectedPerms` is an array, asserts that the filename has at
-     *  least one of those values
-     * @param string|int|array<string|int> $expectedPerms Expected permission
-     *  values as a four-chars string or octal value
-     * @param string $filename Filename
-     * @param string $message The failure message that will be appended to the
-     *  generated message
-     * @return void
-     * @deprecated Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`
-     * @since 1.0.9
-     */
-    protected static function assertFilePerms($expectedPerms, string $filename, string $message = ''): void
-    {
-        deprecationWarning('Deprecated. Use instead `assertFileIsReadable()`/`assertFileIsWritable()`/`assertDirectoryIsReadable()`/`assertDirectoryIsWritable()`');
-
-        $isWritable = false;
-        foreach ((array)$expectedPerms as $perms) {
-            if (string_starts_with(fileperms_to_string($perms), '07')) {
-                $isWritable = true;
-
-                break;
-            }
-        }
-
-        $method = $isWritable ? 'assertFileIsWritable' : 'assertFileIsReadable';
-        if (is_dir($filename)) {
-            $method = $isWritable ? 'assertDirectoryIsWritable' : 'assertDirectoryIsReadable';
-        }
-        call_user_func_array(['parent', $method], [$filename, $message]);
     }
 
     /**

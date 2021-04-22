@@ -50,9 +50,8 @@ parameters:
             path: tests/TestCase/ExceptionistTest.php
             count: 1
         -
-            message: '#^Method Tools\\TestSuite\\TestCase::assertIsJson\(\) invoked with 0 parameters#'
-            path: tests/TestCase/TestSuite/TestTraitTest.php
-            count: 1
+            message: '#^Variable \$\w+ might not be defined\.$#'
+            path: tests/TestCase/ExceptionistTest.php
         -
             message: '#^Parameter \#1 \$im of function imagejpeg expects (GdImage|resource), (GdImage|resource)\|false given\.$#'
             path: tests/TestCase/TestSuite/TestTraitTest.php

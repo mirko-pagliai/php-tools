@@ -30,7 +30,7 @@ class KeyNotExistsExceptionTest extends TestCase
     public function testException()
     {
         try {
-            throw new KeyNotExistsException(null, 0, null, 'a-key');
+            throw new KeyNotExistsException(null, 0, E_ERROR, '__FILE__', __LINE__, null, 'a-key');
         } catch (KeyNotExistsException $e) {
             $this->assertSame('Array key `a-key` does not exist', $e->getMessage());
             $this->assertSame('a-key', $e->getKeyName());
