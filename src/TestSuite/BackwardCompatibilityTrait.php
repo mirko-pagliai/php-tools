@@ -117,6 +117,7 @@ trait BackwardCompatibilityTrait
     public function expectExceptionMessageMatches(string $regularExpression): void
     {
         if (!method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
+            /* @phpstan-ignore-next-line */
             $this->expectExceptionMessageRegExp($regularExpression);
 
             return;

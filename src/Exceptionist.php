@@ -75,7 +75,7 @@ class Exceptionist
         //Calls the PHP function and gets the result
         try {
             $result = call_user_func_array($name, (array)$arguments);
-        } catch (Exception | ArgumentCountError $e) {
+        } catch (ArgumentCountError | Exception $e) {
             $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         }

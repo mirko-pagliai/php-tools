@@ -20,14 +20,19 @@ You can install the package via composer:
 
     $ composer require --prefer-dist mirko-pagliai/php-tools
 
-Starting from the `1.4` branch, it requires at least PHP 7.2.5 and `phpunit` 7.
-Instead, the [php5.6](//github.com/mirko-pagliai/php-tools/tree/php5.6)
-branch requires at least PHP 5.6 and `phpunit` 5.7.15.
+### Installation on older PHP versions
+Recent packages and the master branch require at least PHP 7.
+Instead, the [php5.6](//github.com/mirko-pagliai/php-tools/tree/php5.6) branch
+requires at least PHP 5.6.
 
 In this case, you can install the package as well:
 ```bash
-$ composer require --prefer-dist mirko-pagliai/php-tools:php5.6
+$ composer require --prefer-dist mirko-pagliai/php-tools:dev-php5.6
 ```
+
+Note that the `php5.6` branch will no longer be updated as of April 22, 2021,
+except for security patches, and it matches the
+[1.4.8](https://github.com/mirko-pagliai/php-tools/releases/tag/1.4.8) version.
 
 ## Versioning
 For transparency and insight into our release cycle and to maintain backward

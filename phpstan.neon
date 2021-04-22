@@ -21,7 +21,7 @@ parameters:
         - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
         - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
-        - '#^Parameter \#1 \$(callback|function) of function call_user_func(_array)? expects callable\(\)#'
+        - '#^Parameter \#1 \$(callback|function) of function call_user_func(_array)? expects callable\(\): mixed#'
         -
             message: '#^Left side of \&\& is always false\.$#'
             path: src/global_functions.php
