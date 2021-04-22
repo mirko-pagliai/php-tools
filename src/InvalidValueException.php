@@ -16,6 +16,7 @@
 namespace Tools;
 
 use ErrorException;
+use Exception;
 
 /**
  * Abstract exception for exceptions that are throwed by an invalid value.
@@ -38,7 +39,7 @@ abstract class InvalidValueException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $value = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, Exception $previous = null, $value = null)
     {
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
         $this->value = $value;

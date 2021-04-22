@@ -16,19 +16,11 @@ parameters:
         -  tests/test_app/
 
     ignoreErrors:
-        - '#^Cannot instantiate interface Throwable\.$#'
         - '#^Call to an undefined static method#'
         - '#^Static call to instance method#'
         - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         - '#^Access to an undefined property Tools\\Entity#'
-        - '#^Parameter \#1 \$function of function call_user_func(_array)? expects callable\(\)#'
-        -
-            message: '#Function get_child_methods\(\) never returns null so it can be removed from the return typehint\.$#'
-            path: src/global_functions.php
-        -
-            message: '#Else branch is unreachable because ternary operator condition is always true\.$#'
-            path: src/global_functions.php
-            count: 1
+        - '#^Parameter \#1 \$(callback|function) of function call_user_func(_array)? expects callable\(\): mixed#'
         -
             message: '#^Left side of \&\& is always false\.$#'
             path: src/global_functions.php
@@ -37,7 +29,7 @@ parameters:
             message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
             path: src/BodyParser.php
         -
-            message: '#^Parameter \#2 \.\.\.\$args of function array_merge expects array, array\|string given\.$#'
+            message: '#^Parameter \#2 \.\.\.\$(args|arrays) of function array_merge expects array, array\|string given\.$#'
             path: src/Entity.php
         -
             message: '#^Parameter \#1 \$event(Name)? (\([\w\|]+\) )?of method [\w\\]+::\w+\(\) expects [\w\\]+, [\w\|\\]+ given\.$#'
@@ -45,9 +37,6 @@ parameters:
         -
             message: '#^Parameter \#1 \$event(Name)? (\([\w\|]+\) )?of method [\w\\]+::\w+\(\) should be compatible with parameter \$event \(object\) of method [\w\\]+::\w+\(\)$#'
             path: src/Event/EventDispatcher.php
-        -
-            message: '#^Method Tools\\TestSuite\\TestCase::getProperties\(\) should return#'
-            path: src/TestSuite/ReflectionTrait.php
         -
             message: '#^Trying to invoke string but it might not be a callable.$#'
             path: src/TestSuite/TestTrait.php
@@ -69,5 +58,5 @@ parameters:
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: tests/TestCase/ExceptionistTest.php
         -
-            message: '#^Parameter \#1 \$im of function imagejpeg expects resource, resource\|false given\.$#'
+            message: '#^Parameter \#1 \$im of function imagejpeg expects (GdImage|resource), (GdImage|resource)\|false given\.$#'
             path: tests/TestCase/TestSuite/TestTraitTest.php

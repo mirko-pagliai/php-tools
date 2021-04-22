@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of php-tools.
  *
@@ -61,14 +62,17 @@ if (!function_exists('get_child_methods')) {
      */
     function get_child_methods($class)
     {
-        $methods = get_class_methods($class);
+        if (!class_exists($class)) {
+            return null;
+        }
 
+        $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
         if ($parentClass) {
             $methods = array_diff($methods, get_class_methods($parentClass));
         }
 
-        return is_array($methods) ? array_values($methods) : null;
+        return array_values($methods);
     }
 }
 
@@ -133,7 +137,7 @@ if (!function_exists('is_stringable')) {
      */
     function is_stringable($var)
     {
-        return method_exists($var, '__toString') || is_scalar($var);
+        return is_null($var) || is_array($var) ? false : is_scalar($var) || method_exists($var, '__toString');
     }
 }
 

@@ -16,6 +16,7 @@
 namespace Tools\Exception;
 
 use ErrorException;
+use Exception;
 
 /**
  * "Object wrong instance" exception.
@@ -38,7 +39,7 @@ class ObjectWrongInstanceException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param object|null $object Object that is not a right instance
      */
-    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $object = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, Exception $previous = null, $object = null)
     {
         if (!$message) {
             $message = $object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance';

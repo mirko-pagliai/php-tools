@@ -14,6 +14,7 @@
 
 namespace Tools;
 
+use ArgumentCountError;
 use BadMethodCallException;
 use ErrorException;
 use Exception;
@@ -72,6 +73,9 @@ class Exceptionist
         //Calls the PHP function and gets the result
         try {
             $result = call_user_func_array($name, (array)$arguments);
+        } catch (ArgumentCountError $e) {
+            $result = false;
+            trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
         } catch (Exception $e) {
             $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));

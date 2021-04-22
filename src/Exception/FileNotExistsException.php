@@ -15,6 +15,7 @@
 
 namespace Tools\Exception;
 
+use Exception;
 use Tools\FileException;
 use Tools\Filesystem;
 
@@ -33,7 +34,7 @@ class FileNotExistsException extends FileException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, \Exception $previous = null, $path = null)
+    public function __construct($message = '', $code = 0, $severity = E_ERROR, $filename = '__FILE__', $lineno = __LINE__, Exception $previous = null, $path = null)
     {
         if (!$message) {
             $message = $path ? sprintf('Filename `%s` does not exist', Filesystem::instance()->rtr($path)) : 'Filename does not exist';

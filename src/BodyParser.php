@@ -88,7 +88,7 @@ class BodyParser
             return [];
         }
 
-        $crawler = new Crawler($this->body);
+        $crawler = @new Crawler($this->body);
 
         foreach ($this->tags as $tag => $attribute) {
             foreach ($crawler->filterXPath('//' . $tag)->extract([$attribute]) as $link) {
