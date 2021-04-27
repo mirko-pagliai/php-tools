@@ -5,9 +5,6 @@
 
     <rule ref="./sniffer-ruleset.xml"/>
 
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
-        <exclude-pattern>/tests/test_app</exclude-pattern>
-    </rule>
     <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace.UseFromSameNamespace">
         <severity>0</severity>
     </rule>
