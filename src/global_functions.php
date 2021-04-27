@@ -17,6 +17,10 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
 use function Symfony\Component\String\u;
 
+if (!class_exists('Tools\ReflectionTrait')) {
+    class_alias('Tools\TestSuite\ReflectionTrait', 'Tools\ReflectionTrait');
+}
+
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }

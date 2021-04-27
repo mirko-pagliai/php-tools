@@ -10,6 +10,8 @@
 * the `ReflectionTrait` has been moved on `Tools\TestSuite` namespace;
 * changed the order of arguments for the `TestTrait::assertException()` method.
     The callable is now the first argument;
+* added alias for old 'Tools\ReflectionTrait' trait. This allows for a smooth
+    version upgrade;
 * all `_or_fail()` methods have been removed.
 
 ## 1.4 branch
