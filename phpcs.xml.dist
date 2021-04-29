@@ -4,8 +4,4 @@
     <file>.</file>
 
     <rule ref="./sniffer-ruleset.xml"/>
-
-    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedProperty">
-        <exclude-pattern>/tests/test_app</exclude-pattern>
-    </rule>
 </ruleset>
