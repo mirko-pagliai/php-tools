@@ -30,9 +30,9 @@ use Tools\Filesystem;
 
 /**
  * Exceptionist.
- * @method static array isArray(array $args, string $message = '', \Throwable|string $exception = Exception::class)
- * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = Exception::class)
- * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = Exception::class)
+ * @method static array isArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @since 1.4.1
  */
 class Exceptionist
@@ -65,20 +65,21 @@ class Exceptionist
     public static function __callStatic(string $name, array $arguments)
     {
         //Gets the PHP function name
-        $name = uncamelcase($name);
-        if (!function_exists($name)) {
-            trigger_error(sprintf('Function `%s()` does not exist', $name));
+        $phpName = uncamelcase($name);
+        if (!function_exists($phpName)) {
+            trigger_error(sprintf('Function `%s()` does not exist', $phpName));
         }
 
-        //Splits and orders arguments
-        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
         //Calls the PHP function and gets the result
+        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
         try {
-            $result = call_user_func_array($name, is_array($arguments) && $arguments ? $arguments : [$arguments]);
+            $result = call_user_func_array($phpName, is_array($arguments) && $arguments ? $arguments : [$arguments]);
         } catch (ArgumentCountError | Exception $e) {
             $result = false;
-            trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
+            trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
+
+        $message = $message ?: '`Exceptionist::' . $name . '()` returned `false`';
 
         //Calls the `isTrue()` method with that result and returns arguments
         forward_static_call([__CLASS__, 'isTrue'], $result, $message, $exception);

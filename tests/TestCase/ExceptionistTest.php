@@ -75,7 +75,7 @@ class ExceptionistTest extends TestCase
         foreach ([null, false, -1, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::inArray([$var, ['a', 'b', 'c']]);
-            }, Exception::class, '`false` is not equal to `true`');
+            }, Exception::class, '`Exceptionist::inArray()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -85,7 +85,7 @@ class ExceptionistTest extends TestCase
         foreach ([null, false, -1, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::isPositive($var);
-            }, Exception::class, '`false` is not equal to `true`');
+            }, Exception::class, '`Exceptionist::isPositive()` returned `false`');
         }
     }
 
