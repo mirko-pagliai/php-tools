@@ -72,9 +72,21 @@ class ExceptionistTest extends TestCase
         $this->assertSame($inArrayArgs, Exceptionist::inArray($inArrayArgs));
         $this->assertSame($inArrayArgs, Exceptionist::inArray($inArrayArgs, '`a` is not in array', \LogicException::class));
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('`false` is not equal to `true`');
-        Exceptionist::inArray(['d', ['a', 'b', 'c']]);
+        foreach ([null, false, -1, 'd', []] as $var) {
+            $this->assertException(function () use ($var) {
+                Exceptionist::inArray([$var, ['a', 'b', 'c']]);
+            }, Exception::class, '`false` is not equal to `true`');
+        }
+
+        foreach ([1, '1', 1.0] as $number) {
+            $this->assertSame($number, Exceptionist::isPositive($number));
+        }
+
+        foreach ([null, false, -1, 'd', []] as $var) {
+            $this->assertException(function () use ($var) {
+                Exceptionist::isPositive($var);
+            }, Exception::class, '`false` is not equal to `true`');
+        }
     }
 
     /**

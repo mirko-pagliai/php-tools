@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.1
+* fixed a bug when a "magic" method of the `Exceptionist` (`__callStatic()`)
+    was called with a value of `null` or` false`.
+
 ### 1.5.0
 * the `Exceptionist` can now set file and line that throwned the exception. All
     exception classes provided by `php-tools` now extend the `ErrorException`;
