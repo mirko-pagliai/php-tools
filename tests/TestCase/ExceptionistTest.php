@@ -41,7 +41,7 @@ class ExceptionistTest extends TestCase
      *  the correct file and line
      * @test
      */
-    public function testLineAndFile()
+    public function testLineAndFile(): void
     {
         try {
             $line = __LINE__ + 1;
@@ -66,7 +66,7 @@ class ExceptionistTest extends TestCase
      * Test for `__callStatic()` magic method
      * @test
      */
-    public function testCallStaticMagicMethod()
+    public function testCallStaticMagicMethod(): void
     {
         $inArrayArgs = ['a', ['a', 'b', 'c']];
         $this->assertSame($inArrayArgs, Exceptionist::inArray($inArrayArgs));
@@ -93,7 +93,7 @@ class ExceptionistTest extends TestCase
      * Test for `__callStatic()` magic method, with an error from the PHP function
      * @test
      */
-    public function testCallStaticMagicMethodWithErrorFromFunction()
+    public function testCallStaticMagicMethodWithErrorFromFunction(): void
     {
         $this->expectNotice();
         $this->expectExceptionMessageMatches('#^Error calling `in_array\(\)`: in_array\(\) expects at least 2 (arguments|parameters), 1 given$#');
@@ -104,7 +104,7 @@ class ExceptionistTest extends TestCase
      * Test for `__callStatic()` magic method, with a no existing PHP function
      * @test
      */
-    public function testCallStaticMagicMethodWithNoExistingFunction()
+    public function testCallStaticMagicMethodWithNoExistingFunction(): void
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Function `not_existing_method()` does not exist');
@@ -115,7 +115,7 @@ class ExceptionistTest extends TestCase
      * Test for `arrayKeyExists()` method
      * @test
      */
-    public function testArrayKeysExists()
+    public function testArrayKeysExists(): void
     {
         $array = ['a' => 1, 'b' => 2, 'c' => 3, 4 => 4];
         $this->assertSame('a', Exceptionist::arrayKeyExists('a', $array));
@@ -130,7 +130,7 @@ class ExceptionistTest extends TestCase
      * Test for `fileExists()` method
      * @test
      */
-    public function testFileExists()
+    public function testFileExists(): void
     {
         $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::fileExists($file));
@@ -144,7 +144,7 @@ class ExceptionistTest extends TestCase
      * Test for `isInstanceOf()` method
      * @test
      */
-    public function testInstanceOf()
+    public function testInstanceOf(): void
     {
         $instance = new stdClass();
         $this->assertSame($instance, Exceptionist::isInstanceOf($instance, \stdClass::class));
@@ -158,7 +158,7 @@ class ExceptionistTest extends TestCase
      * Test for `isReadable()` method
      * @test
      */
-    public function testIsReadable()
+    public function testIsReadable(): void
     {
         $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isReadable($file));
@@ -172,7 +172,7 @@ class ExceptionistTest extends TestCase
      * Test for `isWritable()` method
      * @test
      */
-    public function testIsWritable()
+    public function testIsWritable(): void
     {
         $file = Filesystem::instance()->createTmpFile();
         $this->assertSame($file, Exceptionist::isWritable($file));
@@ -186,7 +186,7 @@ class ExceptionistTest extends TestCase
      * Test for `methodExists()` method
      * @test
      */
-    public function testMethodExists()
+    public function testMethodExists(): void
     {
         foreach ([new ExampleClass(), ExampleClass::class] as $object) {
             $this->assertSame([ExampleClass::class, 'setProperty'], Exceptionist::methodExists($object, 'setProperty'));
@@ -201,7 +201,7 @@ class ExceptionistTest extends TestCase
      * Test for `objectPropertyExists()` method
      * @test
      */
-    public function testObjectPropertyExists()
+    public function testObjectPropertyExists(): void
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
@@ -231,7 +231,7 @@ class ExceptionistTest extends TestCase
      * Test for `isTrue()` method
      * @test
      */
-    public function testIsTrue()
+    public function testIsTrue(): void
     {
         $this->assertTrue(Exceptionist::isTrue(true));
         $this->assertSame('string', Exceptionist::isTrue('string'));
@@ -245,7 +245,7 @@ class ExceptionistTest extends TestCase
      * Test for `isTrue()` method, with some failure values
      * @test
      */
-    public function testIsTrueWithFailureValues()
+    public function testIsTrueWithFailureValues(): void
     {
         foreach ([
             [null, '`null` is not equal to `true`'],
@@ -264,7 +264,7 @@ class ExceptionistTest extends TestCase
      * Test for `isTrue()` method, with custom message and custom exception
      * @test
      */
-    public function testIsTrueFailureWithCustomMessageAndCustomException()
+    public function testIsTrueFailureWithCustomMessageAndCustomException(): void
     {
         $message = 'it\'s not `true`';
 
@@ -285,7 +285,7 @@ class ExceptionistTest extends TestCase
      * Test for `isTrue()` method, with an invalid exception class
      * @test
      */
-    public function testIsTrueFailureWithInvalidExceptionClass()
+    public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
         $this->assertException(function () {
             Exceptionist::isTrue(false, '', new \stdClass());

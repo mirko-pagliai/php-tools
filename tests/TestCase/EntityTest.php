@@ -45,7 +45,7 @@ class EntityTest extends TestCase
      * Test for `__debugInfo()` method
      * @test
      */
-    public function testDebugInfo()
+    public function testDebugInfo(): void
     {
         ob_start();
         $line = __LINE__ + 1;
@@ -69,7 +69,7 @@ class EntityTest extends TestCase
      * Test for `has()` method
      * @test
      */
-    public function testHas()
+    public function testHas(): void
     {
         $this->assertTrue($this->Entity->has('code'));
         $this->assertFalse($this->Entity->has('noExisting'));
@@ -79,7 +79,7 @@ class EntityTest extends TestCase
      * Test for `__get()` and `get()` methods
      * @test
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertSame(200, $this->Entity->code);
         $this->assertSame(200, $this->Entity->get('code'));
@@ -92,7 +92,7 @@ class EntityTest extends TestCase
      * Test for `set()` method
      * @test
      */
-    public function testSet()
+    public function testSet(): void
     {
         $result = $this->Entity->set('newKey', 'newValue');
         $this->assertInstanceOf(Entity::class, $result);
@@ -112,7 +112,7 @@ class EntityTest extends TestCase
      * Test for `toArray()` method
      * @test
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $expected = ['code' => 200, 'newKey' => 'newValue'];
         $result = $this->Entity->set('newKey', 'newValue')->toArray();
@@ -129,7 +129,7 @@ class EntityTest extends TestCase
      *  `offsetSet()` and `offsetUnset()` methods
      * @test
      */
-    public function testArrayAccess()
+    public function testArrayAccess(): void
     {
         $this->Entity['newKey'] = 'a key';
         $this->assertTrue(isset($this->Entity['newKey']));

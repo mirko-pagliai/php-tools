@@ -27,7 +27,7 @@ class BodyParserTest extends TestCase
      * Test for `extractLinks()` method
      * @test
      */
-    public function testExtractLinks()
+    public function testExtractLinks(): void
     {
         $extractLinksMethod = function ($html) {
             return (new BodyParser($html, 'http://localhost'))->extractLinks();

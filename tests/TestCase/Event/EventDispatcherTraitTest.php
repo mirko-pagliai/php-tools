@@ -30,7 +30,7 @@ class EventDispatcherTraitTest extends TestCase
      * Test for `getEventDispatcher()` and `setEventDispatcher()` methods
      * @test
      */
-    public function testGetAndSetEventDispatcher()
+    public function testGetAndSetEventDispatcher(): void
     {
         $this->assertInstanceOf(EventDispatcher::class, $this->getEventDispatcher());
         $newDispatcher = new EventDispatcher();
@@ -44,7 +44,7 @@ class EventDispatcherTraitTest extends TestCase
      * @test
      * @todo Remove the `error_reporting()` in a future release
      */
-    public function testDispatchEvent()
+    public function testDispatchEvent(): void
     {
         $errorLevel = error_reporting();
         error_reporting(E_ALL ^ E_DEPRECATED);

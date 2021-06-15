@@ -27,7 +27,7 @@ class DebugFunctionsTest extends TestCase
      * @requires OS Linux
      * @test
      */
-    public function testDebug()
+    public function testDebug(): void
     {
         $expected = '
 ' . __FILE__ . ' (line ' . (__LINE__ + 5) . ')

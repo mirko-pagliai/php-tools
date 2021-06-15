@@ -30,7 +30,7 @@ class FilesystemTest extends TestCase
      * Test for `addSlashTerm()` method
      * @test
      */
-    public function testAddSlashTerm()
+    public function testAddSlashTerm(): void
     {
         $expected = DS . 'tmp' . DS;
         $this->assertSame($expected, Filesystem::instance()->addSlashTerm(DS . 'tmp'));
@@ -41,7 +41,7 @@ class FilesystemTest extends TestCase
      * Test for `concatenate()` method
      * @test
      */
-    public function testConcatenate()
+    public function testConcatenate(): void
     {
         $this->assertSame('dir', Filesystem::instance()->concatenate('dir'));
         $this->assertSame('dir' . DS . 'subdir', Filesystem::instance()->concatenate('dir', 'subdir'));
@@ -53,7 +53,7 @@ class FilesystemTest extends TestCase
      * Test for `createFile()` method
      * @test
      */
-    public function testCreateFile()
+    public function testCreateFile(): void
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
         $this->assertTrue(Filesystem::instance()->createFile($filename));
@@ -77,7 +77,7 @@ class FilesystemTest extends TestCase
      * Test for `createTmpFile()` method
      * @test
      */
-    public function testCreateTmpFile()
+    public function testCreateTmpFile(): void
     {
         foreach (['', 'string'] as $string) {
             $filename = Filesystem::instance()->createTmpFile($string);
@@ -90,7 +90,7 @@ class FilesystemTest extends TestCase
      * Test for `getDirTree()` method
      * @test
      */
-    public function testGetDirTree()
+    public function testGetDirTree(): void
     {
         $expectedDirs = [
             TMP . 'exampleDir',
@@ -145,7 +145,7 @@ class FilesystemTest extends TestCase
      * Test for `getExtension()` method
      * @test
      */
-    public function testGetExtension()
+    public function testGetExtension(): void
     {
         $this->assertNull(Filesystem::instance()->getExtension(''));
 
@@ -191,7 +191,7 @@ class FilesystemTest extends TestCase
      * Test for `getRoot()` method
      * @test
      */
-    public function testGetRoot()
+    public function testGetRoot(): void
     {
         $this->assertSame(ROOT, Filesystem::instance()->getRoot());
 
@@ -204,7 +204,7 @@ class FilesystemTest extends TestCase
      * Test for `instance()` method
      * @test
      */
-    public function testInstance()
+    public function testInstance(): void
     {
         $this->assertInstanceOf(Filesystem::class, Filesystem::instance());
         $this->assertSame(ROOT . 'myDir', Filesystem::instance()->concatenate(ROOT, 'myDir'));
@@ -214,7 +214,7 @@ class FilesystemTest extends TestCase
      * Test for `isSlashTerm()` method
      * @test
      */
-    public function testIsSlashTerm()
+    public function testIsSlashTerm(): void
     {
         foreach ([
             'path/',
@@ -240,7 +240,7 @@ class FilesystemTest extends TestCase
      * Test for `isWritableResursive()` method
      * @test
      */
-    public function testIsWritableRecursive()
+    public function testIsWritableRecursive(): void
     {
         $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
 
@@ -260,7 +260,7 @@ class FilesystemTest extends TestCase
      * Test for `makePathAbsolute()` method
      * @test
      */
-    public function testMakePathAbsolute()
+    public function testMakePathAbsolute(): void
     {
         $this->assertSame(TMP . 'dir', Filesystem::instance()->makePathAbsolute(TMP . 'dir', TMP));
         $this->assertSame(TMP . 'dir', Filesystem::instance()->makePathAbsolute('dir', TMP));
@@ -274,7 +274,7 @@ class FilesystemTest extends TestCase
      * Test for `normalizePath()` method
      * @test
      */
-    public function testNormalizePath()
+    public function testNormalizePath(): void
     {
         foreach ([
             'path/to/normalize',
@@ -288,7 +288,7 @@ class FilesystemTest extends TestCase
      * Test for `rmdirRecursive()` method
      * @test
      */
-    public function testRmdirRecursive()
+    public function testRmdirRecursive(): void
     {
         createSomeFiles();
         $this->assertTrue(Filesystem::instance()->rmdirRecursive(TMP . 'exampleDir'));
@@ -304,7 +304,7 @@ class FilesystemTest extends TestCase
      * Test for `rtr()` method
      * @test
      */
-    public function testRtr()
+    public function testRtr(): void
     {
         $this->assertSame('my' . DS . 'folder', Filesystem::instance()->rtr(ROOT . 'my' . DS . 'folder'));
 
@@ -317,7 +317,7 @@ class FilesystemTest extends TestCase
      * Test for `unlinkResursive()` method
      * @test
      */
-    public function testUnlinkRecursive()
+    public function testUnlinkRecursive(): void
     {
         //Creates some files and some links
         $files = createSomeFiles();

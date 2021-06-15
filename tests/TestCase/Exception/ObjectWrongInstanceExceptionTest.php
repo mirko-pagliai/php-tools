@@ -28,7 +28,7 @@ class ObjectWrongInstanceExceptionTest extends TestCase
      * Test for the exception
      * @test
      */
-    public function testException()
+    public function testException(): void
     {
         $instance = new stdClass();
         try {

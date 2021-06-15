@@ -31,7 +31,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `deprecationWarning()` global function
      * @test
      */
-    public function testDeprecationWarning()
+    public function testDeprecationWarning(): void
     {
         $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         deprecationWarning('This method is deprecated');
@@ -47,7 +47,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `get_child_methods()` global function
      * @test
      */
-    public function testGetChildMethods()
+    public function testGetChildMethods(): void
     {
         $this->assertEquals(['throwMethod', 'childMethod', 'anotherChildMethod'], get_child_methods(ExampleChildClass::class));
 
@@ -62,7 +62,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `get_class_short_name()` global function
      * @test
      */
-    public function testGetClassShortName()
+    public function testGetClassShortName(): void
     {
         foreach (['\App\ExampleClass', 'App\ExampleClass', ExampleClass::class, new ExampleClass()] as $class) {
             $this->assertEquals('ExampleClass', get_class_short_name($class));
@@ -73,7 +73,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `is_html()` global function
      * @test
      */
-    public function testIsHtml()
+    public function testIsHtml(): void
     {
         $this->assertTrue(is_html('<b>string</b>'));
         $this->assertFalse(is_html('string'));
@@ -83,7 +83,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `is_json()` global function
      * @test
      */
-    public function testIsJson()
+    public function testIsJson(): void
     {
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
         $this->assertFalse(is_json('this is a no json string'));
@@ -93,7 +93,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `is_positive()` global function
      * @test
      */
-    public function testIsPositive()
+    public function testIsPositive(): void
     {
         $this->assertTrue(is_positive(1));
         $this->assertTrue(is_positive('1'));
@@ -107,7 +107,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `slug()` global function
      * @test
      */
-    public function testSlug()
+    public function testSlug(): void
     {
         foreach ([
             'This is a Slug',
@@ -126,7 +126,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `is_stringable()` global function
      * @test
      */
-    public function testIsStringable()
+    public function testIsStringable(): void
     {
         foreach (['1', 1, 1.1, -1, 0, true, false] as $value) {
             $this->assertTrue(is_stringable($value));
@@ -144,7 +144,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `objects_map()` global function
      * @test
      */
-    public function testObjectsMap()
+    public function testObjectsMap(): void
     {
         $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
 
@@ -165,7 +165,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `string_contains()` global function
      * @test
      */
-    public function testStringContains()
+    public function testStringContains(): void
     {
         foreach (['aaa', 'aaab', 'baaaa', 'baaac'] as $var) {
             $this->assertTrue(string_contains($var, 'aaa'));
@@ -178,7 +178,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `string_ends_with()` global function
      * @test
      */
-    public function testStringEndsWith()
+    public function testStringEndsWith(): void
     {
         $string = 'a test with some words';
         foreach (['', 's', 'some words', $string] as $var) {
@@ -193,7 +193,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `string_starts_with()` global function
      * @test
      */
-    public function testStringStartsWith()
+    public function testStringStartsWith(): void
     {
         $string = 'a test with some words';
         foreach (['', 'a', 'a test', $string] as $var) {
@@ -208,7 +208,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `uncamelcase()` global function
      * @test
      */
-    public function testUncamelcase()
+    public function testUncamelcase(): void
     {
         foreach (['ThisIsASlug', 'thisIsASlug'] as $string) {
             $this->assertSame('this_is_a_slug', uncamelcase($string));
@@ -219,7 +219,7 @@ class GlobalFunctionsTest extends TestCase
      * Test for `which()` global function
      * @test
      */
-    public function testWhich()
+    public function testWhich(): void
     {
         $expected = IS_WIN ? '"C:\Program Files\Git\usr\bin\cat.exe"' : '/bin/cat';
         $this->assertStringEndsWith($expected, which('cat') ?? '');

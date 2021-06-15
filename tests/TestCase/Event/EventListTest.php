@@ -43,7 +43,7 @@ class EventListTest extends TestCase
      * Test for all offset methods
      * @test
      */
-    public function testOffsetMethods()
+    public function testOffsetMethods(): void
     {
         $this->assertFalse($this->EventList->offsetExists(1));
         $this->assertNull($this->EventList->offsetGet(1));
@@ -58,7 +58,7 @@ class EventListTest extends TestCase
      * Test for `add()` method
      * @test
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $Event = new Event('myEvent');
         $this->EventList->add($Event);
@@ -69,7 +69,7 @@ class EventListTest extends TestCase
      * Test for `count()` method
      * @test
      */
-    public function testCount()
+    public function testCount(): void
     {
         $this->assertSame(0, $this->EventList->count());
         $this->EventList->add(new Event('myEvent'));
@@ -82,7 +82,7 @@ class EventListTest extends TestCase
      * Test for `flush()` method
      * @test
      */
-    public function testFlush()
+    public function testFlush(): void
     {
         $this->EventList->add(new Event('myEvent'));
         $this->EventList->flush();
@@ -93,7 +93,7 @@ class EventListTest extends TestCase
      * Test for `hasEvent()` method
      * @test
      */
-    public function testHasEvent()
+    public function testHasEvent(): void
     {
         $this->EventList->add(new Event('myEvent'));
         $this->assertTrue($this->EventList->hasEvent('myEvent'));
@@ -104,7 +104,7 @@ class EventListTest extends TestCase
      * Test for `toArray()` method
      * @test
      */
-    public function testToArray()
+    public function testToArray(): void
     {
         $this->assertSame([], $this->EventList->toArray());
 

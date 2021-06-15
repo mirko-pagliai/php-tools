@@ -24,7 +24,7 @@ class SkipTestCase extends TestCase
      *
      * @return void
      */
-    public function testSkipIfTrue()
+    public function testSkipIfTrue(): void
     {
         $this->skipIf(true);
     }
@@ -34,7 +34,7 @@ class SkipTestCase extends TestCase
      *
      * @return void
      */
-    public function testSkipIfFalse()
+    public function testSkipIfFalse(): void
     {
         $this->skipIf(false);
     }

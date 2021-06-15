@@ -43,9 +43,6 @@ parameters:
             message: '#^Access to protected property#'
             path: tests/TestCase
         -
-            message: '#^Method [\w\\]+Test::test\w+\(\) has no return typehint specified\.$#'
-            path: tests/TestCase
-        -
             message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
             path: tests/TestCase/ExceptionistTest.php
             count: 1

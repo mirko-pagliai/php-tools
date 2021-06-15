@@ -50,7 +50,7 @@ class FileArrayTest extends TestCase
      * Test for `__construct()` method
      * @test
      */
-    public function testConstruct()
+    public function testConstruct(): void
     {
         //With a no writable directory
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExistingDir` does not exist');
@@ -61,7 +61,7 @@ class FileArrayTest extends TestCase
      * Test for `append()` method
      * @test
      */
-    public function testAppend()
+    public function testAppend(): void
     {
         $result = $this->FileArray->append('last');
         $this->assertInstanceof(FileArray::class, $result);
@@ -72,7 +72,7 @@ class FileArrayTest extends TestCase
      * Test for `delete()` method
      * @test
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $result = $this->FileArray->delete(1)->delete(2);
         $this->assertInstanceof(FileArray::class, $result);
@@ -87,7 +87,7 @@ class FileArrayTest extends TestCase
      * Test for `exists()` method
      * @test
      */
-    public function testExists()
+    public function testExists(): void
     {
         $this->assertTrue($this->FileArray->exists(0));
         $this->assertFalse($this->FileArray->exists(100));
@@ -97,7 +97,7 @@ class FileArrayTest extends TestCase
      * Test for `get()` method
      * @test
      */
-    public function testGet()
+    public function testGet(): void
     {
         $this->assertEquals('first', $this->FileArray->get(0));
         $this->assertEquals('third', $this->FileArray->get(2));
@@ -111,7 +111,7 @@ class FileArrayTest extends TestCase
      * Test for `prepend()` method
      * @test
      */
-    public function testPrepend()
+    public function testPrepend(): void
     {
         $result = $this->FileArray->prepend('anotherFirst');
         $this->assertInstanceof(FileArray::class, $result);
@@ -122,7 +122,7 @@ class FileArrayTest extends TestCase
      * Test for `read()` method
      * @test
      */
-    public function testRead()
+    public function testRead(): void
     {
         $this->assertEquals($this->example, $this->FileArray->read());
 
@@ -144,7 +144,7 @@ class FileArrayTest extends TestCase
      * Test for `take()` method
      * @test
      */
-    public function testTake()
+    public function testTake(): void
     {
         $result = $this->FileArray->take(2);
         $this->assertInstanceof(FileArray::class, $result);
@@ -155,7 +155,7 @@ class FileArrayTest extends TestCase
      * Test for `take()` method, with `$from` argument
      * @test
      */
-    public function testTakeWithFromArg()
+    public function testTakeWithFromArg(): void
     {
         $result = $this->FileArray->take(2, 3);
         $this->assertInstanceof(FileArray::class, $result);
@@ -166,7 +166,7 @@ class FileArrayTest extends TestCase
      * Test for `write()` method
      * @test
      */
-    public function testWrite()
+    public function testWrite(): void
     {
         $this->assertTrue($this->FileArray->write());
         $this->assertEquals($this->example, $this->FileArray->read());

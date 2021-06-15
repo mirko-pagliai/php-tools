@@ -44,7 +44,7 @@ class EventTest extends TestCase
      * Test for `getName()` method
      * @test
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertSame('myEvent', $this->Event->getName());
     }
@@ -53,7 +53,7 @@ class EventTest extends TestCase
      * Test for `getArg()` method
      * @test
      */
-    public function testGetArg()
+    public function testGetArg(): void
     {
         $this->assertSame('arg1', $this->Event->getArg(0));
         $this->assertSame('arg2', $this->Event->getArg(1));
@@ -67,7 +67,7 @@ class EventTest extends TestCase
      * Test for `getArgs()` method
      * @test
      */
-    public function testGetArgs()
+    public function testGetArgs(): void
     {
         $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
