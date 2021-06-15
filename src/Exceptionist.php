@@ -30,9 +30,9 @@ use Tools\Filesystem;
 
 /**
  * Exceptionist.
- * @method array isArray(array $args, string $message, $exception)
- * @method string isDir(string $filename, string $message, $exception)
- * @method mixed isPositive($value, string $message, $exception)
+ * @method static array isArray(array $args, string $message = '', \Throwable|string $exception = Exception::class)
+ * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = Exception::class)
+ * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = Exception::class)
  * @since 1.4.1
  */
 class Exceptionist
