@@ -65,18 +65,16 @@ class Exceptionist
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        //Gets the PHP function name
-        $phpName = uncamelcase($name);
-        if (!function_exists($phpName)) {
-            trigger_error(sprintf('Function `%s()` does not exist', $phpName));
-        }
-
         //Calls the PHP function and gets the result
+        $phpName = uncamelcase($name);
+        $result = false;
         [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
         try {
+            if (!is_callable($phpName)) {
+                throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
+            }
             $result = call_user_func_array($phpName, is_array($arguments) && $arguments ? $arguments : [$arguments]);
         } catch (ArgumentCountError | Exception $e) {
-            $result = false;
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
 

@@ -52,8 +52,8 @@ class EntityTest extends TestCase
         debug($this->Entity);
         $dump = ob_get_clean() ?: '';
         $assertStringContainsString = function (string $first, string $second) {
-            if (method_exists($this, 'assertStringContainsString')) {
-                $method = 'self::assertStringContainsString';
+            if (is_callable([$this, 'assertStringContainsString'])) {
+                $method = [$this, 'assertStringContainsString'];
             }
             call_user_func($method ?? 'self::assertContains', $first, $second);
         };
@@ -81,8 +81,10 @@ class EntityTest extends TestCase
      */
     public function testGet(): void
     {
+        /** @phpstan-ignore-next-line */
         $this->assertSame(200, $this->Entity->code);
         $this->assertSame(200, $this->Entity->get('code'));
+        /** @phpstan-ignore-next-line */
         $this->assertNull($this->Entity->noExisting);
         $this->assertNull($this->Entity->get('noExisting'));
         $this->assertSame('default', $this->Entity->get('noExisting', 'default'));

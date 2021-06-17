@@ -211,9 +211,12 @@ class TestTraitTest extends TestCase
      */
     public function testAssertImageSize(): void
     {
-        $filename = TMP . 'pic.jpg';
-        imagejpeg(imagecreatetruecolor(120, 20), $filename);
-        $this->assertImageSize(120, 20, $filename);
+        $resource = imagecreatetruecolor(120, 20);
+        if (!is_resource($resource)) {
+            $this->fail('Unable to create a valid resource image');
+        }
+        imagejpeg($resource, TMP . 'pic.jpg');
+        $this->assertImageSize(120, 20, TMP . 'pic.jpg');
     }
 
     /**

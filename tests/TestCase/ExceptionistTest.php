@@ -108,6 +108,7 @@ class ExceptionistTest extends TestCase
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Function `not_existing_method()` does not exist');
+        /** @phpstan-ignore-next-line */
         Exceptionist::notExistingMethod(1);
     }
 
