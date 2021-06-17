@@ -23,7 +23,8 @@
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
-        "phpunit/phpunit": "^8.5.12|^9.0"
+        "phpunit/phpunit": "^8.5.12|^9.0",
+        "psr/http-message": "^1.0"
     },
     "autoload": {
         "psr-4": {

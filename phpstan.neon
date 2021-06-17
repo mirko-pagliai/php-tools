@@ -1,5 +1,5 @@
 parameters:
-    level: 7
+    level: 8
 
     paths:
         - src
@@ -27,25 +27,11 @@ parameters:
             path: src/global_functions.php
             count: 1
         -
-            message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
-            path: src/BodyParser.php
-        -
-            message: '#^Parameter \#2 \.\.\.\$(args|arrays) of function array_merge expects array, array\|string given\.$#'
-            path: src/Entity.php
-        -
             message: '#^Parameter \#1 \$event of method Tools\\Event\\EventList::add\(\) expects Tools\\Event\\Event, object given\.$#'
             path: src/Event/EventDispatcher.php
         -
-            message: '#^Trying to invoke string but it might not be a callable.$#'
-            path: src/TestSuite/TestTrait.php
-            count: 1
-        -
             message: '#^Access to protected property#'
             path: tests/TestCase
-        -
-            message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
-            path: tests/TestCase/ExceptionistTest.php
-            count: 1
         -
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: tests/TestCase/ExceptionistTest.php

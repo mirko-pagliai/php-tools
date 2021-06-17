@@ -288,6 +288,7 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
         $this->assertException(function () {
+            /** @phpstan-ignore-next-line */
             Exceptionist::isTrue(false, '', new \stdClass());
         }, Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
     }

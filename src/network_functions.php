@@ -25,10 +25,10 @@ if (!function_exists('clean_url')) {
      */
     function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
-        $url = preg_replace('/(\#.*)$/', '', $url);
+        $url = preg_replace('/(\#.*)$/', '', $url) ?: '';
 
         if ($removeWWW) {
-            $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url);
+            $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url) ?: '';
         }
 
         return $removeTrailingSlash ? rtrim($url, '/') : $url;

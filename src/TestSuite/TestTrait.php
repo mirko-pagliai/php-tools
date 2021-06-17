@@ -78,7 +78,7 @@ trait TestTrait
             }
 
             $function = sprintf('is_%s', strtolower(substr($name, 8)));
-            if (function_exists($function)) {
+            if (is_callable($function)) {
                 $var = array_shift($arguments);
                 $arguments = array_merge([$function($var)], $arguments);
                 call_user_func_array([__CLASS__, 'assertTrue'], $arguments);
