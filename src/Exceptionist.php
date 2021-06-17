@@ -237,13 +237,10 @@ class Exceptionist
      * @return mixed
      * @throws \Exception
      */
-    public static function isTrue($value, $message = '', $exception = ErrorException::class)
+    public static function isTrue($value, ?string $message = '', $exception = ErrorException::class)
     {
         if ($value) {
             return $value;
-        }
-        if ($message instanceof Throwable || (is_string($message) && class_exists($message))) {
-            [$exception, $message] = [$message, ''];
         }
         if (!$exception instanceof Throwable && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');

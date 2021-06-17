@@ -273,7 +273,7 @@ class ExceptionistTest extends TestCase
         }, Exception::class, $message);
 
         $this->assertException(function () use ($message) {
-            Exceptionist::isTrue(false, new ErrorException($message));
+            Exceptionist::isTrue(false, '', new ErrorException($message));
         }, ErrorException::class, $message);
 
         $this->assertException(function () use ($message) {
