@@ -44,7 +44,7 @@ class EventDispatcherTest extends TestCase
      * Test for `dispatch()` method
      * @test
      */
-    public function testDispatch()
+    public function testDispatch(): void
     {
         $event = new Event('myEvent');
         $result = $this->EventDispatcher->dispatch($event);
@@ -56,7 +56,7 @@ class EventDispatcherTest extends TestCase
      * Test for `getEventList()` method
      * @test
      */
-    public function testGetEventList()
+    public function testGetEventList(): void
     {
         $this->assertInstanceOf(EventList::class, $this->EventDispatcher->getEventList());
     }

@@ -23,7 +23,8 @@
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
-        "phpunit/phpunit": "^8.5.12|^9.0"
+        "phpunit/phpunit": "^8.5.12|^9.0",
+        "psr/http-message": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -53,7 +54,7 @@
         ],
         "cs-check": "phpcs --standard=phpcs.xml.dist",
         "cs-fix": "phpcbf --standard=phpcs.xml.dist",
-        "test": "phpunit",
+        "test": "rm -f -r /tmp/cake* && phpunit",
         "coverage": "XDEBUG_MODE=coverage phpunit --coverage-html=coverage",
         "phpstan": "phpstan.phar analyse",
         "psalm": "psalm.phar",

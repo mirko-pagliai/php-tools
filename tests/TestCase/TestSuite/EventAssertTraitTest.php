@@ -31,7 +31,7 @@ class EventAssertTraitTest extends TestCase
      * Test for `assertEventFired()` and `assertEventNotFired()` methods
      * @ŧest
      */
-    public function testAssertEventMethods()
+    public function testAssertEventMethods(): void
     {
         $EventDispatcher = new EventDispatcher();
         $EventDispatcher->dispatch(new Event('myEvent'));
@@ -43,7 +43,7 @@ class EventAssertTraitTest extends TestCase
      * Test for `assertEventFired()` method on failure
      * @ŧest
      */
-    public function testFailureAssertEventFired()
+    public function testFailureAssertEventFired(): void
     {
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('The `noExisting` event was not fired');
@@ -54,7 +54,7 @@ class EventAssertTraitTest extends TestCase
      * Test for `assertEventNotFired()` method on failure
      * @ŧest
      */
-    public function testFailureAssertEventNotFired()
+    public function testFailureAssertEventNotFired(): void
     {
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('The `myEvent` event was not expected to be fired, instead it has been fired');

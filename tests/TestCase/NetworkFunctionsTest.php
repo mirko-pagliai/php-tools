@@ -26,7 +26,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `clean_url()` global function
      * @test
      */
-    public function testCleanUrl()
+    public function testCleanUrl(): void
     {
         foreach ([
             'http://mysite.com',
@@ -73,7 +73,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `get_hostname_from_url()` global function
      * @test
      */
-    public function testGetHostnameFromUrl()
+    public function testGetHostnameFromUrl(): void
     {
         $this->assertEmpty(get_hostname_from_url('page.html'));
 
@@ -102,7 +102,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `is_external_url()` global function
      * @test
      */
-    public function testIsExternalUrl()
+    public function testIsExternalUrl(): void
     {
         foreach ([
             '//google.com',
@@ -133,7 +133,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `is_localhost()` global function
      * @test
      */
-    public function testIsLocalhost()
+    public function testIsLocalhost(): void
     {
         $_SERVER['REMOTE_ADDR'] = '8.8.8.8';
         $this->assertFalse(is_localhost());
@@ -149,7 +149,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `is_url()` global function
      * @test
      */
-    public function testIsUrl()
+    public function testIsUrl(): void
     {
         foreach ([
             'https://www.example.com',
@@ -183,7 +183,7 @@ class NetworkFunctionsTest extends TestCase
      * Test for `url_to_absolute()` global function
      * @test
      */
-    public function testUrlToAbsolute()
+    public function testUrlToAbsolute(): void
     {
         foreach (['http', 'https', 'ftp'] as $scheme) {
             $paths = [

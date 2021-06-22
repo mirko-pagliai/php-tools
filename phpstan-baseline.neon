@@ -1,0 +1,47 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Left side of && is always false\\.$#"
+			count: 1
+			path: src/global_functions.php
+
+		-
+			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, array\\(object, string\\) given\\.$#"
+			count: 1
+			path: src/global_functions.php
+
+		-
+			message: "#^Ternary operator condition is always false\\.$#"
+			count: 1
+			path: src/global_functions.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: tests/TestCase/Event/EventDispatcherTraitTest.php
+
+		-
+			message: "#^Ternary operator condition is always true\\.$#"
+			count: 1
+			path: tests/TestCase/Event/EventTest.php
+
+		-
+			message: "#^Negated boolean expression is always true\\.$#"
+			count: 2
+			path: tests/TestCase/FilesystemTest.php
+
+		-
+			message: "#^Ternary operator condition is always false\\.$#"
+			count: 1
+			path: tests/TestCase/GlobalFunctionsTest.php
+
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$firstProperty\\.$#"
+			count: 1
+			path: tests/TestCase/ReflectionTraitTest.php
+
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$secondProperty\\.$#"
+			count: 2
+			path: tests/TestCase/ReflectionTraitTest.php
+

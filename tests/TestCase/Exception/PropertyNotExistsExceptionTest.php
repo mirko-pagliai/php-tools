@@ -27,7 +27,7 @@ class PropertyNotExistsExceptionTest extends TestCase
      * Test for the exception
      * @test
      */
-    public function testException()
+    public function testException(): void
     {
         try {
             throw new PropertyNotExistsException(null, 0, E_ERROR, '__FILE__', __LINE__, null, 'a-key');

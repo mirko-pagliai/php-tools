@@ -1,5 +1,8 @@
+includes:
+    - phpstan-baseline.neon
+
 parameters:
-    level: 7
+    level: 8
 
     paths:
         - src
@@ -14,44 +17,3 @@ parameters:
 
     excludes_analyse:
         -  tests/test_app/
-
-    ignoreErrors:
-        - '#^Call to an undefined static method#'
-        - '#^Static call to instance method#'
-        - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
-        - '#^Access to an undefined property Tools\\Entity#'
-        - '#^Parameter \#2 \$message of static method Tools\\Exceptionist::isTrue\(\) expects string#'
-        - '#^Parameter \#1 \$(callback|function) of function call_user_func(_array)? expects callable\(\): mixed#'
-        -
-            message: '#^Left side of \&\& is always false\.$#'
-            path: src/global_functions.php
-            count: 1
-        -
-            message: '#has invalid typehint type Psr\\Http\\Message\\StreamInterface\.$#'
-            path: src/BodyParser.php
-        -
-            message: '#^Parameter \#2 \.\.\.\$(args|arrays) of function array_merge expects array, array\|string given\.$#'
-            path: src/Entity.php
-        -
-            message: '#^Parameter \#1 \$event of method Tools\\Event\\EventList::add\(\) expects Tools\\Event\\Event, object given\.$#'
-            path: src/Event/EventDispatcher.php
-        -
-            message: '#^Trying to invoke string but it might not be a callable.$#'
-            path: src/TestSuite/TestTrait.php
-            count: 1
-        -
-            message: '#^Access to protected property#'
-            path: tests/TestCase
-        -
-            message: '#^Method [\w\\]+Test::test\w+\(\) has no return typehint specified\.$#'
-            path: tests/TestCase
-        -
-            message: '#^Parameter \#3 \$exception of static method Tools\\Exceptionist::isTrue\(\) expects string\|Throwable#'
-            path: tests/TestCase/ExceptionistTest.php
-            count: 1
-        -
-            message: '#^Variable \$\w+ might not be defined\.$#'
-            path: tests/TestCase/ExceptionistTest.php
-        -
-            message: '#^Parameter \#1 \$im of function imagejpeg expects (GdImage|resource), (GdImage|resource)\|false given\.$#'
-            path: tests/TestCase/TestSuite/TestTraitTest.php

@@ -142,6 +142,7 @@ abstract class Entity implements ArrayAccess
         }
         Exceptionist::isArray([$property], 'Cannot set an empty property', InvalidArgumentException::class);
 
+        /** @phpstan-ignore-next-line */
         $this->properties = array_merge($this->properties, $property);
 
         return $this;

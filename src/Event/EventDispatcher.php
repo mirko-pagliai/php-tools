@@ -49,6 +49,7 @@ class EventDispatcher extends BaseEventDispatcher
      */
     public function dispatch(object $event, ?string $eventName = null): object
     {
+        /** @var \Tools\Event\Event $event */
         $this->getEventList()->add($event);
 
         return parent::dispatch($event, $eventName);

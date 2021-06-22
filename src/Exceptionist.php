@@ -30,9 +30,10 @@ use Tools\Filesystem;
 
 /**
  * Exceptionist.
- * @method array isArray(array $args, string $message, $exception)
- * @method string isDir(string $filename, string $message, $exception)
- * @method mixed isPositive($value, string $message, $exception)
+ * @method static array inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static array isArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @since 1.4.1
  */
 class Exceptionist
@@ -64,21 +65,20 @@ class Exceptionist
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        //Gets the PHP function name
-        $name = uncamelcase($name);
-        if (!function_exists($name)) {
-            trigger_error(sprintf('Function `%s()` does not exist', $name));
+        //Calls the PHP function and gets the result
+        $phpName = uncamelcase($name);
+        $result = false;
+        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
+        try {
+            if (!is_callable($phpName)) {
+                throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
+            }
+            $result = call_user_func_array($phpName, is_array($arguments) && $arguments ? $arguments : [$arguments]);
+        } catch (ArgumentCountError | Exception $e) {
+            trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
 
-        //Splits and orders arguments
-        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
-        //Calls the PHP function and gets the result
-        try {
-            $result = call_user_func_array($name, (array)$arguments);
-        } catch (ArgumentCountError | Exception $e) {
-            $result = false;
-            trigger_error(sprintf('Error calling `%s()`: %s', $name, $e->getMessage()));
-        }
+        $message = $message ?: '`Exceptionist::' . $name . '()` returned `false`';
 
         //Calls the `isTrue()` method with that result and returns arguments
         forward_static_call([__CLASS__, 'isTrue'], $result, $message, $exception);
@@ -236,13 +236,10 @@ class Exceptionist
      * @return mixed
      * @throws \Exception
      */
-    public static function isTrue($value, $message = '', $exception = ErrorException::class)
+    public static function isTrue($value, ?string $message = '', $exception = ErrorException::class)
     {
         if ($value) {
             return $value;
-        }
-        if ($message instanceof Throwable || (is_string($message) && class_exists($message))) {
-            [$exception, $message] = [$message, ''];
         }
         if (!$exception instanceof Throwable && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Throwable` or a string');

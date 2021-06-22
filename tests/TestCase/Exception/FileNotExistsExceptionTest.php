@@ -27,7 +27,7 @@ class FileNotExistsExceptionTest extends TestCase
      * Test for the exception
      * @test
      */
-    public function testException()
+    public function testException(): void
     {
         $file = ROOT . 'dir' . DS . 'noExistingFile';
         try {

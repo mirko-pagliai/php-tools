@@ -26,7 +26,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_clean()` global function
      * @test
      */
-    public function testArrayClean()
+    public function testArrayClean(): void
     {
         $filterMethod = function ($value) {
             return $value && $value != 'third';
@@ -48,7 +48,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_has_only_numeric_keys()` global function
      * @test
      */
-    public function testArrayHasOnlyNumericKeys()
+    public function testArrayHasOnlyNumericKeys(): void
     {
         $this->assertTrue(array_has_only_numeric_keys(['first', 'second']));
         $this->assertTrue(array_has_only_numeric_keys([]));
@@ -60,7 +60,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_key_first()` global function
      * @test
      */
-    public function testArrayKeyFirst()
+    public function testArrayKeyFirst(): void
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals(0, array_key_first($array));
@@ -72,7 +72,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_key_last()` global function
      * @test
      */
-    public function testArrayKeyLast()
+    public function testArrayKeyLast(): void
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals(2, array_key_last($array));
@@ -84,7 +84,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_unique_recursive()` global function
      * @test
      */
-    public function testArrayUniqueRecursive()
+    public function testArrayUniqueRecursive(): void
     {
         $array = [
             ['first', 'second'],
@@ -99,7 +99,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_value_first()` global function
      * @test
      */
-    public function testArrayValueFirst()
+    public function testArrayValueFirst(): void
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals('first', array_value_first($array));
@@ -111,7 +111,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_value_first_recursive()` global function
      * @test
      */
-    public function testArrayValueFirstRecursive()
+    public function testArrayValueFirstRecursive(): void
     {
         $this->assertEquals(null, array_value_first_recursive([]));
         foreach ([
@@ -128,7 +128,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_value_last()` global function
      * @test
      */
-    public function testArrayValueLast()
+    public function testArrayValueLast(): void
     {
         $array = ['first', 'second', 'third'];
         $this->assertEquals('third', array_value_last($array));
@@ -140,7 +140,7 @@ class ArrayFunctionsTest extends TestCase
      * Test for `array_value_last_recursive()` global function
      * @test
      */
-    public function testArrayValueLastRecursive()
+    public function testArrayValueLastRecursive(): void
     {
         $this->assertEquals(null, array_value_last_recursive([]));
         foreach ([

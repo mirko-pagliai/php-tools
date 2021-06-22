@@ -23,19 +23,19 @@ use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
- * @method void assertIsArray($var, $message = '') Asserts that `$var` is an array
- * @method void assertIsBool($var, $message = '') Asserts that `$var` is a boolean
- * @method void assertIsCallable($var, $message = '') Asserts that `$var` is a callable
- * @method void assertIsFloat($var, $message = '') Asserts that `$var` is a float
- * @method void assertIsHtml($var, $message = '') Asserts that `$var` is an html string
- * @method void assertIsInt($var, $message = '') Asserts that `$var` is an int
- * @method void assertIsIterable($var, $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
- * @method void assertIsJson($var, $message = '') Asserts that `$var` is a json string
- * @method void assertIsObject($var, $message = '') Asserts that `$var` is an object
- * @method void assertIsPositive($var, $message = '') Asserts that `$var` is a positive number
- * @method void assertIsResource($var, $message = '') Asserts that `$var` is a resource
- * @method void assertIsString($var, $message = '') Asserts that `$var` is a string
- * @method void assertIsUrl($var, $message = '') Asserts that `$var` is an url
+ * @method static void assertIsArray($var, ?string $message = '') Asserts that `$var` is an array
+ * @method static void assertIsBool($var, ?string $message = '') Asserts that `$var` is a boolean
+ * @method static void assertIsCallable($var, ?string $message = '') Asserts that `$var` is a callable
+ * @method static void assertIsFloat($var, ?string $message = '') Asserts that `$var` is a float
+ * @method static void assertIsHtml($var, ?string $message = '') Asserts that `$var` is an html string
+ * @method static void assertIsInt($var, ?string $message = '') Asserts that `$var` is an int
+ * @method static void assertIsIterable($var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
+ * @method static void assertIsJson($var, ?string $message = '') Asserts that `$var` is a json string
+ * @method static void assertIsObject($var, ?string $message = '') Asserts that `$var` is an object
+ * @method static void assertIsPositive($var, ?string $message = '') Asserts that `$var` is a positive number
+ * @method static void assertIsResource($var, ?string $message = '') Asserts that `$var` is a resource
+ * @method static void assertIsString($var, ?string $message = '') Asserts that `$var` is a string
+ * @method static void assertIsUrl($var, ?string $message = '') Asserts that `$var` is an url
  */
 trait TestTrait
 {
@@ -78,7 +78,7 @@ trait TestTrait
             }
 
             $function = sprintf('is_%s', strtolower(substr($name, 8)));
-            if (function_exists($function)) {
+            if (is_callable($function)) {
                 $var = array_shift($arguments);
                 $arguments = array_merge([$function($var)], $arguments);
                 call_user_func_array([__CLASS__, 'assertTrue'], $arguments);

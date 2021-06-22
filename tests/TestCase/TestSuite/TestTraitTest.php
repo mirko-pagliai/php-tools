@@ -36,7 +36,7 @@ class TestTraitTest extends TestCase
      * Test for `__call()` and `__callStatic()` magic methods
      * @ŧest
      */
-    public function testMagicCallAndCallStatic()
+    public function testMagicCallAndCallStatic(): void
     {
         $function = function () {
         };
@@ -79,7 +79,7 @@ class TestTraitTest extends TestCase
      * Tests for `assertArrayKeysEqual()` method
      * @test
      */
-    public function testAssertArrayKeysEqual()
+    public function testAssertArrayKeysEqual(): void
     {
         $this->assertArrayKeysEqual([], []);
 
@@ -100,7 +100,7 @@ class TestTraitTest extends TestCase
      * Tests for `assertException()` method
      * @test
      */
-    public function testAssertException()
+    public function testAssertException(): void
     {
         $this->assertException(function () {
             throw new Exception();
@@ -187,7 +187,7 @@ class TestTraitTest extends TestCase
      * Test for `assertFileExtension()` method
      * @ŧest
      */
-    public function testAssertFileExtension()
+    public function testAssertFileExtension(): void
     {
         $this->assertFileExtension('jpg', 'file.jpg');
         $this->assertFileExtension('jpeg', 'FILE.JPEG');
@@ -198,7 +198,7 @@ class TestTraitTest extends TestCase
      * Test for `assertFileMime()` method
      * @ŧest
      */
-    public function testAssertFileMime()
+    public function testAssertFileMime(): void
     {
         $file = Filesystem::instance()->createTmpFile('string');
         $this->assertFileMime('text/plain', $file);
@@ -209,18 +209,21 @@ class TestTraitTest extends TestCase
      * Test for `assertImageSize()` method
      * @ŧest
      */
-    public function testAssertImageSize()
+    public function testAssertImageSize(): void
     {
-        $filename = TMP . 'pic.jpg';
-        imagejpeg(imagecreatetruecolor(120, 20), $filename);
-        $this->assertImageSize(120, 20, $filename);
+        $resource = imagecreatetruecolor(120, 20);
+        if (!is_resource($resource)) {
+            $this->fail('Unable to create a valid resource image');
+        }
+        imagejpeg($resource, TMP . 'pic.jpg');
+        $this->assertImageSize(120, 20, TMP . 'pic.jpg');
     }
 
     /**
      * Tests for `assertIsArrayNotEmpty()` method
      * @test
      */
-    public function testAssertIsArrayNotEmpty()
+    public function testAssertIsArrayNotEmpty(): void
     {
         $this->assertIsArrayNotEmpty(['value']);
 
@@ -241,7 +244,7 @@ class TestTraitTest extends TestCase
      * Tests for `assertObjectPropertiesEqual()` method
      * @test
      */
-    public function testAssertObjectPropertiesEqual()
+    public function testAssertObjectPropertiesEqual(): void
     {
         $object = new stdClass();
         $object->first = 'first value';
@@ -257,7 +260,7 @@ class TestTraitTest extends TestCase
      * Test for `assertSameMethods()` method
      * @ŧest
      */
-    public function testAssertSameMethods()
+    public function testAssertSameMethods(): void
     {
         $exampleClass = new ExampleClass();
         $this->assertSameMethods($exampleClass, ExampleClass::class);
@@ -276,7 +279,7 @@ class TestTraitTest extends TestCase
      * Test for `skipIf()` method
      * @ŧest
      */
-    public function testSkipIf()
+    public function testSkipIf(): void
     {
         $result = (new SkipTestCase('testSkipIfTrue'))->run();
         $this->assertSame(1, $result->skippedCount());
