@@ -21,8 +21,5 @@ parameters:
     ignoreErrors:
         - '#^(Ternary operator condition|Negated boolean expression) is always (true|false)\.$#'
         -
-            message: '#^Access to protected property#'
-            path: tests/TestCase
-        -
             message: '#^Variable \$\w+ might not be defined\.$#'
             path: tests/TestCase/ExceptionistTest.php

@@ -10,3 +10,13 @@ parameters:
 			count: 1
 			path: src/global_functions.php
 
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$firstProperty\\.$#"
+			count: 1
+			path: tests/TestCase/ReflectionTraitTest.php
+
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$secondProperty\\.$#"
+			count: 2
+			path: tests/TestCase/ReflectionTraitTest.php
+
