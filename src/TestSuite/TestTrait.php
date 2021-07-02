@@ -18,6 +18,8 @@ namespace Tools\TestSuite;
 
 use BadMethodCallException;
 use Exception;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\MockObject\MockObject;
 use Throwable;
 use Tools\Filesystem;
 
@@ -217,6 +219,20 @@ trait TestTrait
     }
 
     /**
+     * Asserts that an object is a mock (instance of `MockObject`)
+     * @param object $object Object
+     * @param string $message The failure message that will be appended to the
+     *  generated message
+     * @return void
+     * @since 1.5.2
+     */
+    protected static function assertIsMock(object $object, string $message = ''): void
+    {
+        $message = $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock';
+        self::assertInstanceOf(MockObject::class, $object, $message);
+    }
+
+    /**
      * Asserts that the object properties are equal to `$expectedProperties`
      * @param array<string> $expectedProperties Expected properties
      * @param object $object Object you want to check
@@ -243,6 +259,23 @@ trait TestTrait
         sort($firstClassMethods);
         sort($secondClassMethods);
         self::assertEquals($firstClassMethods, $secondClassMethods, $message);
+    }
+
+    /**
+     * Expects the next assertion to fail. Optionally it can verify that the
+     *  exception message is also the same.
+     *
+     * Convenient wrapper for `expectException()` and `expectExceptionMessage()`
+     * @param string $withMessage
+     * @return void
+     * @since 1.5.2
+     */
+    public function expectAssertionFailed(string $withMessage = ''): void
+    {
+        $this->expectException(AssertionFailedError::class);
+        if ($withMessage) {
+            $this->expectExceptionMessage($withMessage);
+        }
     }
 
     /**
