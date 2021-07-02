@@ -266,7 +266,7 @@ trait TestTrait
      *  exception message is also the same.
      *
      * Convenient wrapper for `expectException()` and `expectExceptionMessage()`
-     * @param string $withMessage
+     * @param string $withMessage Optional expected message to check
      * @return void
      * @since 1.5.2
      */
