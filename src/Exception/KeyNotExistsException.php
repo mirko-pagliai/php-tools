@@ -32,7 +32,7 @@ class KeyNotExistsException extends ErrorException
 
     /**
      * Constructor
-     * @param string|null $message The string of the error message
+     * @param string $message The string of the error message
      * @param int $code The exception code
      * @param int $severity The severity level of the exception
      * @param string $filename The filename where the exception is thrown
@@ -40,7 +40,7 @@ class KeyNotExistsException extends ErrorException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $key Name of the key that do not exist
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $key = null)
+    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $key = null)
     {
         if (!$message) {
             $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';

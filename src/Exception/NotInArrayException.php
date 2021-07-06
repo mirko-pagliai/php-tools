@@ -26,7 +26,7 @@ class NotInArrayException extends InvalidValueException
 {
     /**
      * Constructor
-     * @param string|null $message The string of the error message
+     * @param string $message The string of the error message
      * @param int $code The exception code
      * @param int $severity The severity level of the exception
      * @param string $filename The filename where the exception is thrown
@@ -34,7 +34,7 @@ class NotInArrayException extends InvalidValueException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param mixed $value The value that throwed the exception
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
+    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
     {
         if (!$message) {
             $message = is_stringable($value) ? sprintf('Value `%s` is not in the array', (string)$value) : 'Value is not in the array';

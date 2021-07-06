@@ -27,7 +27,7 @@ class NotWritableException extends FileException
 {
     /**
      * Constructor
-     * @param string|null $message The string of the error message
+     * @param string $message The string of the error message
      * @param int $code The exception code
      * @param int $severity The severity level of the exception
      * @param string $filename The filename where the exception is thrown
@@ -35,7 +35,7 @@ class NotWritableException extends FileException
      * @param \Exception|null $previous The previous exception used for the exception chaining
      * @param string|null $path Path of the file that throwed the exception
      */
-    public function __construct(?string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
+    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
     {
         if (!$message) {
             $message = $path ? sprintf('Filename `%s` is not writable', Filesystem::instance()->rtr($path)) : 'Filename is not writable';
