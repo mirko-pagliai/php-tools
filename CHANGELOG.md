@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.2
-* added `TestTrait::assertIsMock()` and `TestTrait::expectAssertionFailed()`.
+* added `TestTrait::assertIsMock()` and `TestTrait::expectAssertionFailed()`;
+* some little fixes.
 
 ### 1.5.1
 * fixed a bug when a "magic" method of the `Exceptionist` (`__callStatic()`)
