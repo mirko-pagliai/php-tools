@@ -140,10 +140,8 @@ abstract class Entity implements ArrayAccess
         if (is_string($property) && $value !== '') {
             $property = [$property => $value];
         }
-        Exceptionist::isArray([$property], 'Cannot set an empty property', InvalidArgumentException::class);
-
-        /** @phpstan-ignore-next-line */
-        $this->properties = array_merge($this->properties, $property);
+        Exceptionist::isArray($property, 'Cannot set an empty property', InvalidArgumentException::class);
+        $this->properties = array_merge($this->properties, (array)$property);
 
         return $this;
     }
