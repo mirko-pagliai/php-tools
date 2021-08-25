@@ -31,10 +31,12 @@ use Tools\Filesystem;
 /**
  * Exceptionist.
  * @method static array inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static array isArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isString($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isUrl($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @since 1.4.1
  */
 class Exceptionist
@@ -74,7 +76,12 @@ class Exceptionist
             if (!is_callable($phpName)) {
                 throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
             }
-            $result = call_user_func_array($phpName, is_array($arguments) && $arguments ? $arguments : [$arguments]);
+            $rFunction = new \ReflectionFunction($phpName);
+            if ($rFunction->getNumberOfParameters() === 1) {
+                $result = call_user_func_array($phpName, [$arguments]);
+            } else {
+                $result = call_user_func_array($phpName, $arguments);
+            }
         } catch (ArgumentCountError | Exception $e) {
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }

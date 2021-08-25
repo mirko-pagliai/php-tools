@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.3
+* improved `Exceptionist::__callStatic()` magic method when a php function is
+    called and it expects a single argument.
+
 ### 1.5.2
 * added `TestTrait::assertIsMock()` and `TestTrait::expectAssertionFailed()`;
 * some little fixes.
