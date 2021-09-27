@@ -23,6 +23,7 @@ use App\ExampleOfTraversable;
 use App\SkipTestCase;
 use BadMethodCallException;
 use Exception;
+use GdImage;
 use PHPUnit\Framework\AssertionFailedError;
 use stdClass;
 use Tools\Filesystem;
@@ -213,7 +214,7 @@ class TestTraitTest extends TestCase
     public function testAssertImageSize(): void
     {
         $resource = imagecreatetruecolor(120, 20);
-        if (!is_resource($resource)) {
+        if (!$resource instanceof GdImage && !is_resource($resource)) {
             $this->fail('Unable to create a valid resource image');
         }
         imagejpeg($resource, TMP . 'pic.jpg');
