@@ -79,7 +79,7 @@ jobs:
               ${{ runner.os }}-php-
 
         - name: Composer install
-          run: composer stan-setup
+          run: composer update && composer stan-setup
 
         - name: Run PHP CodeSniffer
           run: vendor/bin/phpcs --standard=phpcs.xml.dist | cs2pr
