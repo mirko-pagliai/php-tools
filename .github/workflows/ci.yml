@@ -89,7 +89,7 @@ jobs:
           run: composer update && composer stan-setup
 
         - name: Run PHP CodeSniffer
-          run: vendor/bin/phpcs -n --report=checkstyle --standard=phpcs.xml.dist | cs2pr
+          run: vendor/bin/phpcs --standard=phpcs.xml.dist -n --report=checkstyle | cs2pr
 
         - name: Run psalm
           if: success() || failure()
