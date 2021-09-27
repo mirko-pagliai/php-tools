@@ -98,3 +98,37 @@ jobs:
         - name: Run phpstan
           if: success() || failure()
           run: vendor/bin/phpstan.phar analyse --error-format=github
+
+
+  testsuite-windows:
+    runs-on: windows-2019
+    name: Windows - PHP 8.0
+
+    env:
+      EXTENSIONS: mbstring, intl, apcu, memcached, redis, wincache, pdo_sqlsrv
+      PHP_VERSION: '8.0'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ env.PHP_VERSION }}
+        ini-values: apc.enable_cli = 1, extension = php_fileinfo.dll
+        coverage: none
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Composer install
+      run: composer update
+
+    - name: Run PHPUnit
+      run: vendor/bin/phpunit --verbose
