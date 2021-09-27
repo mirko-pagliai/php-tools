@@ -102,11 +102,11 @@ jobs:
 
   testsuite-windows:
     runs-on: windows-2019
-    name: Windows - PHP 8.0
+    name: Windows - PHP 7.4
 
     env:
-      EXTENSIONS: mbstring, intl, apcu, memcached, redis, wincache, pdo_sqlsrv
-      PHP_VERSION: '8.0'
+      EXTENSIONS: mbstring, intl, gd2
+      PHP_VERSION: '7.4'
 
     steps:
     - uses: actions/checkout@v2
@@ -115,6 +115,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
+        extensions: ${{ env.EXTENSIONS }}
         ini-values: apc.enable_cli = 1, extension = php_fileinfo.dll
         coverage: none
 
