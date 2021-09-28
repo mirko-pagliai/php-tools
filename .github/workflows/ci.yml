@@ -105,7 +105,7 @@ jobs:
     name: Windows - PHP 8.0
 
     env:
-      EXTENSIONS: mbstring, intl, gd2
+      EXTENSIONS: mbstring, intl, gd
       PHP_VERSION: '8.0'
 
     steps:
@@ -115,9 +115,8 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
-        extensions: gd, gd2
-      env:
-        GD_CONFIGURE_OPTS: --with-external-gd --with-jpeg
+        extensions: ${{ env.EXTENSIONS }}
+        coverage: none
 
     - name: Cache Composer packages
       id: composer-cache
