@@ -1,10 +1,10 @@
 # php-tools
 
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
-[![Build Status](https://api.travis-ci.org/mirko-pagliai/php-tools.svg?branch=master)](https://travis-ci.org/mirko-pagliai/php-tools)
-[![Build status](https://ci.appveyor.com/api/projects/status/dexhrwff7w814wt3?svg=true)](https://ci.appveyor.com/project/mirko-pagliai/php-tools)
+[![CI](https://github.com/mirko-pagliai/php-tools/actions/workflows/ci.yml/badge.svg)](https://github.com/mirko-pagliai/php-tools/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/mirko-pagliai/php-tools/branch/master/graph/badge.svg)](https://codecov.io/gh/mirko-pagliai/php-tools)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d39ca5f3a31c4f619afd8efabaddf2c2)](https://www.codacy.com/manual/mirko.pagliai/php-tools?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mirko-pagliai/php-tools&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/mirko-pagliai/php-tools/badge)](https://www.codefactor.io/repository/github/mirko-pagliai/php-tools)
 
 *php-tools* adds some useful global functions, classes and methods, trait and exceptions.
 Refer to our [API](//mirko-pagliai.github.io/php-tools) to discover them all.
