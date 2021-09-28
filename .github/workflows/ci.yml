@@ -115,9 +115,7 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ env.PHP_VERSION }}
-        extensions: gd-php/php-src@PHP-${{ matrix.php }}
-        ini-values: apc.enable_cli = 1, extension = php_fileinfo.dll
-        coverage: none
+        extensions: gd, gd2
       env:
         GD_CONFIGURE_OPTS: --with-external-gd --with-jpeg
 
