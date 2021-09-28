@@ -33,6 +33,11 @@ parameters:
 		-
 			message: "#^Ternary operator condition is always false\\.$#"
 			count: 1
+			path: tests/TestCase/FilesystemTest.php
+
+		-
+			message: "#^Ternary operator condition is always false\\.$#"
+			count: 1
 			path: tests/TestCase/GlobalFunctionsTest.php
 
 		-
