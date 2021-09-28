@@ -81,7 +81,8 @@ class FilesystemTest extends TestCase
     {
         foreach (['', 'string'] as $string) {
             $filename = Filesystem::instance()->createTmpFile($string);
-            $this->assertMatchesRegularExpression(sprintf('/^%s[\w\d\.]+$/', preg_quote(TMP, '/')), $filename);
+            $pattern = IS_WIN ? '/tmp[\w\d]\.tmp$/' : sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/'));
+            $this->assertMatchesRegularExpression($pattern, $filename);
             $this->assertStringEqualsFile($filename, $string);
         }
     }
