@@ -116,10 +116,10 @@ jobs:
       with:
         php-version: ${{ env.PHP_VERSION }}
         extensions: gd-php/php-src@PHP-${{ matrix.php }}
-        env:
-          GD_CONFIGURE_OPTS: --with-external-gd --with-jpeg
         ini-values: apc.enable_cli = 1, extension = php_fileinfo.dll
         coverage: none
+      env:
+        GD_CONFIGURE_OPTS: --with-external-gd --with-jpeg
 
     - name: Cache Composer packages
       id: composer-cache
