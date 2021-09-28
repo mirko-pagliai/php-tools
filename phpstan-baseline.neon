@@ -33,6 +33,11 @@ parameters:
 		-
 			message: "#^Ternary operator condition is always false\\.$#"
 			count: 1
+			path: tests/TestCase/FilesystemTest.php
+
+		-
+			message: "#^Ternary operator condition is always false\\.$#"
+			count: 1
 			path: tests/TestCase/GlobalFunctionsTest.php
 
 		-
@@ -44,4 +49,14 @@ parameters:
 			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$secondProperty\\.$#"
 			count: 2
 			path: tests/TestCase/ReflectionTraitTest.php
+
+		-
+			message: "#^Class GdImage not found\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Instanceof between resource\\|false and GdImage will always evaluate to false\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
 

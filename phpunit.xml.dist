@@ -4,6 +4,7 @@
     processIsolation="false"
     stopOnFailure="false"
     bootstrap="./tests/bootstrap.php"
+    convertDeprecationsToExceptions="true"
 >
 
     <testsuites>
