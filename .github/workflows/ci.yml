@@ -102,11 +102,11 @@ jobs:
 
   testsuite-windows:
     runs-on: windows-2019
-    name: Windows - PHP 8.0
+    name: Windows - PHP 7.4
 
     env:
       EXTENSIONS: mbstring, intl, gd
-      PHP_VERSION: '8.0'
+      PHP_VERSION: '7.4'
 
     steps:
     - uses: actions/checkout@v2
