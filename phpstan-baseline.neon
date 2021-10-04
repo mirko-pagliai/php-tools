@@ -32,7 +32,7 @@ parameters:
 
 		-
 			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
+			count: 2
 			path: tests/TestCase/GlobalFunctionsTest.php
 
 		-
