@@ -263,7 +263,7 @@ if (!function_exists('which')) {
         $whichName = IS_WIN ? 'where' : 'which';
         $process = new Process([$whichName, $command]);
         $process->run();
-        Exceptionist::isTrue($process->isSuccessful(), $process->getErrorOutput() ?: sprintf('Unable to execute `' . $whichName . '` for the `' . $command . '` command'));
+        Exceptionist::isTrue($process->isSuccessful(), sprintf('Unable to execute `' . $whichName . '` for the `' . $command . '` command'));
 
         return array_value_first(explode(PHP_EOL, $process->getOutput()));
     }
