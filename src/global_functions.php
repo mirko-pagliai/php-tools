@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Symfony\Component\Process\Process;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
 use function Symfony\Component\String\u;
@@ -254,13 +255,16 @@ if (!function_exists('which')) {
     /**
      * Executes the `which` command and shows the full path of (shell) commands
      * @param string $command Command
-     * @return string|null
+     * @return string
+     * @throws \Exception
      */
-    function which(string $command): ?string
+    function which(string $command): string
     {
-        exec(sprintf('%s %s 2>&1', IS_WIN ? 'where' : 'which', $command), $path, $exitCode);
-        $path = IS_WIN && !empty($path) ? array_map('escapeshellarg', $path) : $path;
+        $whichName = IS_WIN ? 'where' : 'which';
+        $process = new Process([$whichName, $command]);
+        $process->run();
+        Exceptionist::isTrue($process->isSuccessful(), $process->getErrorOutput() ?: sprintf('Unable to execute `' . $whichName . '` for the `' . $command . '` command'));
 
-        return $exitCode === 0 && !empty($path[0]) ? $path[0] : null;
+        return array_value_first(explode(PHP_EOL, $process->getOutput()));
     }
 }

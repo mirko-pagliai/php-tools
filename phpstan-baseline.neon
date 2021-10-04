@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Left side of && is always false\\.$#"
-			count: 1
-			path: src/global_functions.php
-
-		-
 			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, array\\(object, string\\) given\\.$#"
 			count: 1
 			path: src/global_functions.php
