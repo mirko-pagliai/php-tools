@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.6
+* `which()` now uses `ExecutableFinder`, however provided by `symfony/process`.
+
 ### 1.5.5
 * `which()` now uses `symfony/process` and throws an exception if the binary
     cannot be found.
