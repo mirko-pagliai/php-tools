@@ -221,10 +221,10 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testWhich(): void
     {
-        $expected = IS_WIN ? 'C:\Program Files\Git\usr\bin\cat.exe' : '/bin/cat';
+        $expected = IS_WIN ? 'C:\Program Files\Git\usr\bin\cat.EXE' : '/bin/cat';
         $this->assertStringEndsWith($expected, which('cat') ?? '');
 
-        $this->expectExceptionMessage('Unable to execute `' . (IS_WIN ? 'where' : 'which') . '` for the `noExistingBin` command');
+        $this->expectExceptionMessage('Unable to find the executable for the `noExistingBin` command');
         which('noExistingBin');
     }
 }

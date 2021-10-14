@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
 use function Symfony\Component\String\u;
@@ -253,18 +253,13 @@ if (!function_exists('uncamelcase')) {
 
 if (!function_exists('which')) {
     /**
-     * Executes the `which` command and shows the full path of (shell) commands
+     * Finds the executable of a command, like `which` on Unix systems
      * @param string $command Command
      * @return string
      * @throws \Exception
      */
     function which(string $command): string
     {
-        $whichName = IS_WIN ? 'where' : 'which';
-        $process = new Process([$whichName, $command]);
-        $process->run();
-        Exceptionist::isTrue($process->isSuccessful(), sprintf('Unable to execute `' . $whichName . '` for the `' . $command . '` command'));
-
-        return array_value_first(explode(PHP_EOL, $process->getOutput()));
+        return Exceptionist::isTrue((new ExecutableFinder())->find($command), sprintf('Unable to find the executable for the `' . $command . '` command'));
     }
 }
