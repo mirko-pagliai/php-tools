@@ -51,3 +51,5 @@ if (!function_exists('createSomeFiles')) {
         return $files;
     }
 }
+
+require_once ROOT . 'src' . DS . 'deprecation_functions.php';
