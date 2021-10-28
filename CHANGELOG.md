@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.7
+* `deprecationWarning()` global function has been moved to `src/deprecation_functions.php`.
+  This file is not loaded automatically by composer, to avoid conflicts with other
+    packages that declare the same function (eg CakePHP).
+
 ### 1.5.6
 * `which()` now uses `ExecutableFinder`, however provided by `symfony/process`.
 

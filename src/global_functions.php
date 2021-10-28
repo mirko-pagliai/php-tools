@@ -26,40 +26,6 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
-if (!function_exists('deprecationWarning')) {
-    /**
-     * Helper method for outputting deprecation warnings
-     * @param string $message The message to output as a deprecation warning
-     * @param int $stackFrame The stack frame to include in the error. Defaults to 1
-     *   as that should point to application/plugin code
-     * @return void
-     * @since 1.1.7
-     */
-    function deprecationWarning(string $message, int $stackFrame = 0): void
-    {
-        if (!(error_reporting() & E_USER_DEPRECATED)) {
-            return;
-        }
-
-        $trace = debug_backtrace();
-        if (isset($trace[$stackFrame])) {
-            $frame = $trace[$stackFrame];
-            $frame += ['file' => '[internal]', 'line' => '??'];
-
-            $message = sprintf(
-                '%s - %s, line: %s' . "\n" .
-                ' You can disable deprecation warnings by setting `error_reporting()` to' .
-                ' `E_ALL & ~E_USER_DEPRECATED`.',
-                $message,
-                $frame['file'],
-                $frame['line']
-            );
-        }
-
-        trigger_error($message, E_USER_DEPRECATED);
-    }
-}
-
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
