@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use App\EntityExample;
-use InvalidArgumentException;
 use Tools\Entity;
 use Tools\TestSuite\TestCase;
 
@@ -74,8 +73,25 @@ class EntityTest extends TestCase
         $this->assertTrue($this->Entity->has('code'));
         $this->assertFalse($this->Entity->has('noExisting'));
 
+        //`has()` method with empty, `null` and `false` values return `true`
         $this->assertTrue($this->Entity->set('keyWithNull', null)->has('keyWithNull'));
         $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->has('keyWithEmptyValue'));
+        $this->assertTrue($this->Entity->set('keyWithFalse', false)->has('keyWithFalse'));
+    }
+
+    /**
+     * Test for `hasValue()` method
+     * @test
+     */
+    public function testHasValue(): void
+    {
+        $this->assertTrue($this->Entity->hasValue('code'));
+        $this->assertFalse($this->Entity->hasValue('noExisting'));
+
+        //`hasValue()` method with empty, `null` and `false` values return `false`
+        $this->assertFalse($this->Entity->set('keyWithNull', null)->hasValue('keyWithNull'));
+        $this->assertFalse($this->Entity->set('keyWithEmptyValue', '')->hasValue('keyWithEmptyValue'));
+        $this->assertFalse($this->Entity->set('keyWithFalse', false)->hasValue('keyWithFalse'));
     }
 
     /**
@@ -91,6 +107,21 @@ class EntityTest extends TestCase
         $this->assertNull($this->Entity->noExisting);
         $this->assertNull($this->Entity->get('noExisting'));
         $this->assertSame('default', $this->Entity->get('noExisting', 'default'));
+    }
+
+    /**
+     * Test for `isEmpty()` method
+     * @test
+     */
+    public function testIsEmpty(): void
+    {
+        $this->assertFalse($this->Entity->isEmpty('code'));
+        $this->assertTrue($this->Entity->isEmpty('noExisting'));
+
+        //`isEmpty()` method with empty, `null` and `false` values return `true`
+        $this->assertTrue($this->Entity->set('keyWithNull', null)->isEmpty('keyWithNull'));
+        $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->isEmpty('keyWithEmptyValue'));
+        $this->assertTrue($this->Entity->set('keyWithFalse', false)->isEmpty('keyWithFalse'));
     }
 
     /**

@@ -63,13 +63,27 @@ abstract class Entity implements ArrayAccess
     }
 
     /**
-     * Checks if a property exists
+     * Checks if a property exists.
+     *
+     * This method also returns `true` for properties with empty, `false` or
+     *  `null` value. Instead, use `hasValue()` to check the value as well.
      * @param string $property Property name
      * @return bool
      */
     public function has(string $property): bool
     {
         return array_key_exists($property, $this->properties);
+    }
+
+    /**
+     * Checks if a property exists and has a value
+     * @param string $property Property name
+     * @return bool
+     * @since 1.5.8
+     */
+    public function hasValue(string $property): bool
+    {
+        return (bool)$this->get($property);
     }
 
     /**
@@ -82,6 +96,17 @@ abstract class Entity implements ArrayAccess
     public function get(string $property, $default = null)
     {
         return $this->has($property) ? $this->properties[$property] : $default;
+    }
+
+    /**
+     * Checks if a property does not exist or is empty
+     * @param string $property Property name
+     * @return bool
+     * @since 1.5.8
+     */
+    public function isEmpty(string $property): bool
+    {
+        return empty($this->get($property));
     }
 
     /**
