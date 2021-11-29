@@ -46,22 +46,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `deprecationWarning()` global function
-     * @test
-     */
-    public function testDeprecationWarning(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        deprecationWarning('This method is deprecated');
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^This method is deprecated/');
-        $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
-        deprecationWarning('This method is deprecated');
-    }
-
-    /**
      * Test for `get_child_methods()` global function
      * @test
      */
