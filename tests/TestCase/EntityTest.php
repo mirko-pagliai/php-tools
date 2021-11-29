@@ -73,6 +73,9 @@ class EntityTest extends TestCase
     {
         $this->assertTrue($this->Entity->has('code'));
         $this->assertFalse($this->Entity->has('noExisting'));
+
+        $this->assertTrue($this->Entity->set('keyWithNull', null)->has('keyWithNull'));
+        $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->has('keyWithEmptyValue'));
     }
 
     /**
@@ -104,10 +107,8 @@ class EntityTest extends TestCase
         $this->assertSame('first', $this->Entity->get('alfa'));
         $this->assertSame('second', $this->Entity->get('beta'));
 
-        $this->assertNull($this->Entity->set('newKey', null)->get('newKey'));
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->Entity->set('newKey', '');
+        $this->assertNull($this->Entity->set('keyWithNull', null)->get('keyWithNull'));
+        $this->assertSame('', $this->Entity->set('keyWithEmptyValue', '')->get('keyWithEmptyValue'));
     }
 
     /**

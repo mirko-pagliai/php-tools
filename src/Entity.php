@@ -17,8 +17,6 @@ declare(strict_types=1);
 namespace Tools;
 
 use ArrayAccess;
-use InvalidArgumentException;
-use Tools\Exceptionist;
 
 /**
  * An Entity class.
@@ -133,14 +131,12 @@ abstract class Entity implements ArrayAccess
      *  properties with their respective values
      * @param mixed $value The value to set to the property
      * @return $this
-     * @throws \InvalidArgumentException
      */
     public function set($property, $value = null)
     {
-        if (is_string($property) && $value !== '') {
+        if (is_string($property)) {
             $property = [$property => $value];
         }
-        Exceptionist::isArray($property, 'Cannot set an empty property', InvalidArgumentException::class);
         $this->properties = array_merge($this->properties, (array)$property);
 
         return $this;
