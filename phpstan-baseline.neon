@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$function of function call_user_func_array expects callable\\(\\)\\: mixed, array\\(object, string\\) given\\.$#"
+			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\(object, string\\) given\\.$#"
 			count: 1
 			path: src/global_functions.php
 
@@ -41,12 +41,7 @@ parameters:
 			path: tests/TestCase/ReflectionTraitTest.php
 
 		-
-			message: "#^Class GdImage not found\\.$#"
-			count: 1
-			path: tests/TestCase/TestSuite/TestTraitTest.php
-
-		-
-			message: "#^Instanceof between resource\\|false and GdImage will always evaluate to false\\.$#"
+			message: "#^Call to function is_resource\\(\\) with false will always evaluate to false\\.$#"
 			count: 1
 			path: tests/TestCase/TestSuite/TestTraitTest.php
 
