@@ -39,7 +39,7 @@ if (!function_exists('array_to_string')) {
     function array_to_string(array $array): string
     {
         return '[' . implode(', ', array_map(function ($v): string {
-            if (!is_stringable($v) || is_bool($v)) {
+            if (is_array($v) || is_bool($v) || !is_stringable($v)) {
                 throw new LogicException('Cannot convert array to string, some values are not stringable');
             }
 
@@ -126,14 +126,25 @@ if (!function_exists('is_positive')) {
 
 if (!function_exists('is_stringable')) {
     /**
-     * Checks is a value can be converted to string
+     * Checks is a value can be converted to string.
+     *
+     * Arrays that can be converted to strings with `array_to_string ()` are
+     *  stringable.
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
      */
     function is_stringable($var): bool
     {
-        return is_null($var) || is_array($var) ? false : is_scalar($var) || method_exists($var, '__toString');
+        if (is_array($var)) {
+            try {
+                return (bool)array_to_string($var);
+            } catch (LogicException $e) {
+                return false;
+            }
+        }
+
+        return is_null($var) ? false : is_scalar($var) || method_exists($var, '__toString');
     }
 }
 

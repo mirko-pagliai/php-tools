@@ -40,9 +40,11 @@ class GlobalFunctionsTest extends TestCase
         //This class implements the `__toString()` method
         $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
 
-        $this->expectException(LogicException::class);
-        $this->expectErrorMessage('Cannot convert array to string, some values are not stringable');
-        array_to_string(['a', true]);
+        foreach ([['a', true], ['a', ['b', 'c']]] as $array) {
+            $this->assertException(function () use ($array) {
+                array_to_string($array);
+            }, LogicException::class, 'Cannot convert array to string, some values are not stringable');
+        }
     }
 
     /**
@@ -134,11 +136,14 @@ class GlobalFunctionsTest extends TestCase
             $this->assertTrue(is_stringable($value));
         }
 
-        foreach ([null, [], new stdClass()] as $value) {
+        foreach ([null, new stdClass()] as $value) {
             $this->assertFalse(is_stringable($value));
         }
 
-        //This class implements the `__toString()` method
+        $this->assertTrue(is_stringable([]));
+        $this->assertTrue(is_stringable(['a', 1, 0.5, 'c']));
+        $this->assertFalse(is_stringable(['a', true]));
+        $this->assertFalse(is_stringable(['a', ['b', ['c']]]));
         $this->assertTrue(is_stringable(new ExampleOfStringable()));
     }
 
