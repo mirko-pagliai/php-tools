@@ -26,6 +26,28 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('array_to_string')) {
+    /**
+     * Convers an array to a string.
+     *
+     * For example, from `['a', 1, 0.5, 'c']` to `['a', '1', '0.5', 'c']`.
+     * @param array $array Array you want to convert
+     * @return string
+     * @throws \LogicException In case the array contains non-stringable values
+     * @since 1.5.8
+     */
+    function array_to_string(array $array): string
+    {
+        return '[' . implode(', ', array_map(function ($v): string {
+            if (!is_stringable($v) || is_bool($v)) {
+                throw new LogicException('Cannot convert array to string, some values are not stringable');
+            }
+
+            return '\'' . $v . '\'';
+        }, $array)) . ']';
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`

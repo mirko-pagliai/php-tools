@@ -19,6 +19,7 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
+use LogicException;
 use stdClass;
 use Tools\TestSuite\TestCase;
 
@@ -27,6 +28,23 @@ use Tools\TestSuite\TestCase;
  */
 class GlobalFunctionsTest extends TestCase
 {
+    /**
+     * Test for `array_to_string()` global function
+     * @test
+     */
+    public function testArrayToString(): void
+    {
+        $this->assertSame('[\'a\', \'1\', \'0.5\', \'c\']', array_to_string(['a', 1, 0.5, 'c']));
+        $this->assertSame('[]', array_to_string([]));
+
+        //This class implements the `__toString()` method
+        $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
+
+        $this->expectException(LogicException::class);
+        $this->expectErrorMessage('Cannot convert array to string, some values are not stringable');
+        array_to_string(['a', true]);
+    }
+
     /**
      * Test for `deprecationWarning()` global function
      * @test

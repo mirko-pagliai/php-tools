@@ -4,7 +4,8 @@
 * `Entity::set()` can set null or empty values and no longer throws an exception.
     This means that `Entity :: has ()` returns `true` even for properties with
     empty or null value;
-* added `Entity::hasValue()` and `Entity::isEmpty()` methods.
+* added `Entity::hasValue()` and `Entity::isEmpty()` methods;
+* added `array_to_string()` global function.
 
 ### 1.5.7
 * `deprecationWarning()` global function has been moved to `src/deprecation_functions.php`.
