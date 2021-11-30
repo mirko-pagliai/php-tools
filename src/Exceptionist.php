@@ -145,22 +145,8 @@ class Exceptionist
      * @since 1.5.8
      * @throws \Tools\Exception\NotInArrayException
      */
-    public static function inArray(mixed $needle, $haystack = [], ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray(mixed $needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
     {
-        /**
-         * Backward compatibility with the previous method, provided by `__call ()`:
-         * ```
-         * inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
-         * ```
-         * @todo Remove in a later major version
-         */
-        if (is_array($needle) && (empty($haystack) || !is_array($haystack))) {
-            $exception = $message ?: $exception;
-            $message = is_string($haystack) ? $haystack : $message;
-            [$needle, $haystack] = $needle + [1 => []];
-        }
-        self::isTrue($haystack, 'The second parameter `$haystack` is missing', \BadMethodCallException::class);
-
         if (!$message) {
             $message = 'The value';
             if (is_stringable($needle)) {
