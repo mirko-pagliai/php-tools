@@ -97,7 +97,7 @@ class ExceptionistTest extends TestCase
     public function testCallStaticMagicMethodWithErrorFromFunction(): void
     {
         $this->expectNotice();
-        $this->expectExceptionMessage('Error calling `array_combine()`: array_combine(): Argument #1 ($keys) must be of type array, string given');
+        $this->expectExceptionMessageMatches('#^Error calling `array_combine\(\)`\:#');
         /** @phpstan-ignore-next-line */
         Exceptionist::arrayCombine(['a', 'b']);
     }

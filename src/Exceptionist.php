@@ -145,7 +145,7 @@ class Exceptionist
      * @since 1.5.8
      * @throws \Tools\Exception\NotInArrayException
      */
-    public static function inArray(mixed $needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
     {
         if (!$message) {
             $message = 'The value';
