@@ -156,7 +156,7 @@ class Exceptionist
          */
         if (is_array($needle) && (empty($haystack) || !is_array($haystack))) {
             $exception = $message ?: $exception;
-            $message = $haystack ?: $message;
+            $message = is_string($haystack) ? $haystack : $message;
             [$needle, $haystack] = $needle + [1 => []];
         }
         self::isTrue($haystack, 'The second parameter `$haystack` is missing', \BadMethodCallException::class);

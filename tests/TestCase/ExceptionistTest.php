@@ -98,6 +98,7 @@ class ExceptionistTest extends TestCase
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Error calling `array_combine()`: array_combine(): Argument #1 ($keys) must be of type array, string given');
+        /** @phpstan-ignore-next-line */
         Exceptionist::arrayCombine(['a', 'b']);
     }
 
@@ -182,6 +183,7 @@ class ExceptionistTest extends TestCase
         }, NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
 
         $this->assertException(function () {
+            /** @phpstan-ignore-next-line */
             Exceptionist::inArray(['a', ['b', 'c']], '`a` is not in array', ErrorException::class);
         }, ErrorException::class, '`a` is not in array');
 
