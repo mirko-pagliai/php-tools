@@ -46,7 +46,7 @@ class NotInArrayExceptionTest extends TestCase
         try {
             throw new NotInArrayException('', 0, E_ERROR, '__FILE__', __LINE__, null, ['no-stringable']);
         } catch (NotInArrayException $e) {
-            $this->assertSame('Value is not in the array', $e->getMessage());
+            $this->assertSame('Value `[\'no-stringable\']` is not in the array', $e->getMessage());
             $this->assertSame(['no-stringable'], $e->getValue());
         }
     }

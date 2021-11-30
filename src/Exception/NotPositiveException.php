@@ -37,7 +37,7 @@ class NotPositiveException extends InvalidValueException
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
     {
         if (!$message) {
-            $message = is_stringable($value) ? sprintf('Value `%s` is not a positive', (string)$value) : 'Value is not a positive';
+            $message = is_stringable($value) ? 'Value `' . (is_array($value) ? array_to_string($value) : $value) . '` is not a positive' : 'Value is not a positive';
         }
         parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $value);
     }
