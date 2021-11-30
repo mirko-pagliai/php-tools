@@ -23,6 +23,7 @@ use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
@@ -69,14 +70,13 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
-        $inArrayArgs = ['a', ['a', 'b', 'c']];
-        $this->assertSame($inArrayArgs, Exceptionist::inArray($inArrayArgs));
-        $this->assertSame($inArrayArgs, Exceptionist::inArray($inArrayArgs, '`a` is not in array', \LogicException::class));
+        $this->assertSame(1, Exceptionist::isInt(1));
+        $this->assertSame(1, Exceptionist::isInt(1, 'That\'s not an int', \LogicException::class));
 
-        foreach ([null, false, -1, 'd', []] as $var) {
+        foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
-                Exceptionist::inArray([$var, ['a', 'b', 'c']]);
-            }, Exception::class, '`Exceptionist::inArray()` returned `false`');
+                Exceptionist::isInt($var);
+            }, Exception::class, '`Exceptionist::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -97,8 +97,9 @@ class ExceptionistTest extends TestCase
     public function testCallStaticMagicMethodWithErrorFromFunction(): void
     {
         $this->expectNotice();
-        $this->expectExceptionMessageMatches('#^Error calling `in_array\(\)`: in_array\(\) expects at least 2 (arguments|parameters), 1 given$#');
-        Exceptionist::inArray(['a']);
+        $this->expectExceptionMessageMatches('#^Error calling `array_combine\(\)`\:#');
+        /** @phpstan-ignore-next-line */
+        Exceptionist::arrayCombine(['a', 'b']);
     }
 
     /**
@@ -140,6 +141,55 @@ class ExceptionistTest extends TestCase
         $this->expectException(FileNotExistsException::class);
         $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
         Exceptionist::fileExists(TMP . 'noExisting');
+    }
+
+    /**
+     * Test for `inArray()` method
+     * @test
+     */
+    public function testInArray(): void
+    {
+        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b', 'c']));
+
+        $this->assertException(function () {
+            Exceptionist::inArray('a', ['b', 'c']);
+        }, NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
+
+        //With a no-stringable array
+        $this->assertException(function () {
+            Exceptionist::inArray('a', ['b', true]);
+        }, NotInArrayException::class, 'The value `a` does not exist in array');
+
+        $this->assertException(function () {
+            Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class);
+        }, ErrorException::class, '`a` is not in array');
+
+        $this->assertException(function () {
+            Exceptionist::inArray('a');
+        }, BadMethodCallException::class, 'The second parameter `$haystack` is missing');
+
+        /**
+         * Backward compatibility with the previous method, provided by `__call ()`:
+         * ```
+         * inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+         * ```
+         * @todo Remove in a later major version
+         */
+        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b']));
+        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b'], '`a` is not in array', ErrorException::class));
+
+        $this->assertException(function () {
+            Exceptionist::inArray(['a', ['b', 'c']]);
+        }, NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
+
+        $this->assertException(function () {
+            /** @phpstan-ignore-next-line */
+            Exceptionist::inArray(['a', ['b', 'c']], '`a` is not in array', ErrorException::class);
+        }, ErrorException::class, '`a` is not in array');
+
+        $this->assertException(function () {
+            Exceptionist::inArray(['a']);
+        }, BadMethodCallException::class, 'The second parameter `$haystack` is missing');
     }
 
     /**

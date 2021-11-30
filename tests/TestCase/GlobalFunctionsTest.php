@@ -19,6 +19,7 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
+use LogicException;
 use stdClass;
 use Tools\TestSuite\TestCase;
 
@@ -28,19 +29,22 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `deprecationWarning()` global function
+     * Test for `array_to_string()` global function
      * @test
      */
-    public function testDeprecationWarning(): void
+    public function testArrayToString(): void
     {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        deprecationWarning('This method is deprecated');
-        error_reporting($current);
+        $this->assertSame('[\'a\', \'1\', \'0.5\', \'c\']', array_to_string(['a', 1, 0.5, 'c']));
+        $this->assertSame('[]', array_to_string([]));
 
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^This method is deprecated/');
-        $this->expectExceptionMessageMatches('/You can disable deprecation warnings by setting `error_reporting\(\)` to `E_ALL & ~E_USER_DEPRECATED`\.$/');
-        deprecationWarning('This method is deprecated');
+        //This class implements the `__toString()` method
+        $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
+
+        foreach ([['a', true], ['a', ['b', 'c']]] as $array) {
+            $this->assertException(function () use ($array) {
+                array_to_string($array);
+            }, LogicException::class, 'Cannot convert array to string, some values are not stringable');
+        }
     }
 
     /**
@@ -132,11 +136,14 @@ class GlobalFunctionsTest extends TestCase
             $this->assertTrue(is_stringable($value));
         }
 
-        foreach ([null, [], new stdClass()] as $value) {
+        foreach ([null, new stdClass()] as $value) {
             $this->assertFalse(is_stringable($value));
         }
 
-        //This class implements the `__toString()` method
+        $this->assertTrue(is_stringable([]));
+        $this->assertTrue(is_stringable(['a', 1, 0.5, 'c']));
+        $this->assertFalse(is_stringable(['a', true]));
+        $this->assertFalse(is_stringable(['a', ['b', ['c']]]));
         $this->assertTrue(is_stringable(new ExampleOfStringable()));
     }
 

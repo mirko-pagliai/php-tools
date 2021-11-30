@@ -1,5 +1,15 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.8
+* `Entity::set()` can set null or empty values and no longer throws an exception.
+    This means that `Entity :: has ()` returns `true` even for properties with
+    empty or null value;
+* added `Exceptionist::inArray()` method;
+* added `Entity::hasValue()` and `Entity::isEmpty()` methods;
+* added `array_to_string()` global function;
+* `is_stringable()` function now returns `true` for arrays that can be converted
+    to strings with `array_to_string ()`.
+
 ### 1.5.7
 * `deprecationWarning()` global function has been moved to `src/deprecation_functions.php`.
   This file is not loaded automatically by composer, to avoid conflicts with other

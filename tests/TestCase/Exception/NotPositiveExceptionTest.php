@@ -46,7 +46,7 @@ class NotPositiveExceptionTest extends TestCase
         try {
             throw new NotPositiveException('', 0, E_ERROR, '__FILE__', __LINE__, null, ['no-stringable']);
         } catch (NotPositiveException $e) {
-            $this->assertSame('Value is not a positive', $e->getMessage());
+            $this->assertSame('Value `[\'no-stringable\']` is not a positive', $e->getMessage());
             $this->assertSame(['no-stringable'], $e->getValue());
         }
     }

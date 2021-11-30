@@ -26,6 +26,28 @@ if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
 }
 
+if (!function_exists('array_to_string')) {
+    /**
+     * Convers an array to a string.
+     *
+     * For example, from `['a', 1, 0.5, 'c']` to `['a', '1', '0.5', 'c']`.
+     * @param array $array Array you want to convert
+     * @return string
+     * @throws \LogicException In case the array contains non-stringable values
+     * @since 1.5.8
+     */
+    function array_to_string(array $array): string
+    {
+        return '[' . implode(', ', array_map(function ($v): string {
+            if (is_array($v) || is_bool($v) || !is_stringable($v)) {
+                throw new LogicException('Cannot convert array to string, some values are not stringable');
+            }
+
+            return '\'' . $v . '\'';
+        }, $array)) . ']';
+    }
+}
+
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
@@ -104,14 +126,25 @@ if (!function_exists('is_positive')) {
 
 if (!function_exists('is_stringable')) {
     /**
-     * Checks is a value can be converted to string
+     * Checks is a value can be converted to string.
+     *
+     * Arrays that can be converted to strings with `array_to_string ()` are
+     *  stringable.
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
      */
     function is_stringable($var): bool
     {
-        return is_null($var) || is_array($var) ? false : is_scalar($var) || method_exists($var, '__toString');
+        if (is_array($var)) {
+            try {
+                return (bool)array_to_string($var);
+            } catch (LogicException $e) {
+                return false;
+            }
+        }
+
+        return is_null($var) ? false : is_scalar($var) || method_exists($var, '__toString');
     }
 }
 

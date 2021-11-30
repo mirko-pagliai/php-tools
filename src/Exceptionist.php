@@ -22,15 +22,16 @@ use Exception;
 use Throwable;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
 use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Filesystem;
+use TypeError;
 
 /**
  * Exceptionist.
- * @method static array inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
@@ -82,7 +83,7 @@ class Exceptionist
             } else {
                 $result = call_user_func_array($phpName, $arguments);
             }
-        } catch (ArgumentCountError | Exception $e) {
+        } catch (ArgumentCountError | Exception | TypeError $e) {
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
 
@@ -131,6 +132,49 @@ class Exceptionist
         self::isTrue(file_exists($filename), $message, $exception);
 
         return $filename;
+    }
+
+    /**
+     * Checks if a value exists in an array
+     * @param mixed $needle The searched value
+     * @param array $haystack The array
+     * @param string|null $message The failure message that will be appended to
+     *  the generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return mixed
+     * @since 1.5.8
+     * @throws \Tools\Exception\NotInArrayException
+     */
+    public static function inArray($needle, $haystack = [], ?string $message = '', $exception = NotInArrayException::class)
+    {
+        /**
+         * Backward compatibility with the previous method, provided by `__call ()`:
+         * ```
+         * inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
+         * ```
+         * @todo Remove in a later major version
+         */
+        if (is_array($needle) && (empty($haystack) || !is_array($haystack))) {
+            $exception = $message ?: $exception;
+            $message = is_string($haystack) ? $haystack : $message;
+            [$needle, $haystack] = $needle + [1 => []];
+        }
+        self::isTrue($haystack, 'The second parameter `$haystack` is missing', \BadMethodCallException::class);
+
+        if (!$message) {
+            $message = 'The value';
+            if (is_stringable($needle)) {
+                $message .= ' `' . (string)$needle . '`';
+            }
+            $message .= ' does not exist in array';
+            if (is_stringable($haystack)) {
+                $message .= ' `' . array_to_string($haystack) . '`';
+            }
+        }
+
+        self::isTrue(in_array($needle, $haystack, true), $message, $exception);
+
+        return $needle;
     }
 
     /**
