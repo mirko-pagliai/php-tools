@@ -174,8 +174,8 @@ class ExceptionistTest extends TestCase
          * ```
          * @todo Remove in a later major version
          */
-        $this->assertSame(['a', ['a', 'b']], Exceptionist::inArray($inArrayArgs));
-        $this->assertSame(['a', ['a', 'b']], Exceptionist::inArray($inArrayArgs, '`a` is not in array', ErrorException::class));
+        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b']));
+        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b'], '`a` is not in array', ErrorException::class));
 
         $this->assertException(function () {
             Exceptionist::inArray(['a', ['b', 'c']]);

@@ -4,6 +4,7 @@
 * `Entity::set()` can set null or empty values and no longer throws an exception.
     This means that `Entity :: has ()` returns `true` even for properties with
     empty or null value;
+* added `Exceptionist::inArray()` method;
 * added `Entity::hasValue()` and `Entity::isEmpty()` methods;
 * added `array_to_string()` global function;
 * `is_stringable()` function now returns `true` for arrays that can be converted
