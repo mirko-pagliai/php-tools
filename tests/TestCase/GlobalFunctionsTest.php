@@ -169,49 +169,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `string_contains()` global function
-     * @test
-     */
-    public function testStringContains(): void
-    {
-        foreach (['aaa', 'aaab', 'baaaa', 'baaac'] as $var) {
-            $this->assertTrue(string_contains($var, 'aaa'));
-        }
-
-        $this->assertFalse(string_contains('abcd', 'e'));
-    }
-
-    /**
-     * Test for `string_ends_with()` global function
-     * @test
-     */
-    public function testStringEndsWith(): void
-    {
-        $string = 'a test with some words';
-        foreach (['', 's', 'some words', $string] as $var) {
-            $this->assertTrue(string_ends_with($string, $var));
-        }
-        foreach ([' ', 'b', 'a test'] as $var) {
-            $this->assertFalse(string_ends_with($string, $var));
-        }
-    }
-
-    /**
-     * Test for `string_starts_with()` global function
-     * @test
-     */
-    public function testStringStartsWith(): void
-    {
-        $string = 'a test with some words';
-        foreach (['', 'a', 'a test', $string] as $var) {
-            $this->assertTrue(string_starts_with($string, $var));
-        }
-        foreach ([' ', 'some words', 'test'] as $var) {
-            $this->assertFalse(string_starts_with($string, $var));
-        }
-    }
-
-    /**
      * Test for `uncamelcase()` global function
      * @test
      */

@@ -191,50 +191,6 @@ if (!function_exists('slug')) {
     }
 }
 
-if (!function_exists('string_ends_with')) {
-    /**
-     * Checks if a string ends with a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.12
-     */
-    function string_ends_with(string $haystack, string $needle): bool
-    {
-        $length = strlen($needle);
-
-        return !$length ?: substr($haystack, -$length) === $needle;
-    }
-}
-
-if (!function_exists('string_contains')) {
-    /**
-     * Checks if a string contains a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.4.0
-     */
-    function string_contains(string $haystack, string $needle): bool
-    {
-        return strpos($haystack, $needle) !== false;
-    }
-}
-
-if (!function_exists('string_starts_with')) {
-    /**
-     * Checks if a string starts with a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.12
-     */
-    function string_starts_with(string $haystack, string $needle): bool
-    {
-         return substr($haystack, 0, strlen($needle)) === $needle;
-    }
-}
-
 if (!function_exists('uncamelcase')) {
     /**
      * Gets an "uncamelcase" string.

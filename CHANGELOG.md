@@ -1,10 +1,17 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.0
+* `string_ends_with()`, `string_contains()` and `string_starts_with()` have been
+    removed;
 * removed the backward compatibility with the previous `Exceptionist::inArray()`
     method, provided by `__call()`.
 
 ## 1.5 branch
+### 1.5.9
+* `string_ends_with()`, `string_contains()` and `string_starts_with()` are now
+    deprecated. Use instead `str_ends_with()`, `str_contains()` and `str_starts_with()`;
+* updated for Symfony `6.0` components.
+
 ### 1.5.8
 * `Entity::set()` can set null or empty values and no longer throws an exception.
     This means that `Entity :: has ()` returns `true` even for properties with

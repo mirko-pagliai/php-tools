@@ -15,6 +15,12 @@
     </projectFiles>
 
     <issueHandlers>
+        <MethodSignatureMismatch>
+            <errorLevel type="suppress">
+                <file name="src/Event/EventDispatcher.php" />
+            </errorLevel>
+        </MethodSignatureMismatch>
+
         <MissingPropertyType errorLevel="suppress" />
 
         <InvalidThrow>
