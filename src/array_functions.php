@@ -58,38 +58,6 @@ if (!function_exists('array_has_only_numeric_keys')) {
     }
 }
 
-if (!function_exists('array_key_first')) {
-    /**
-     * Returns the first key of an array.
-     *
-     * This function exists in PHP >= 7.3.
-     * @param array $array Array
-     * @return string|int Key
-     * @link http://php.net/manual/en/function.array-key-first.php
-     * @since 1.1.12
-     */
-    function array_key_first(array $array)
-    {
-        return array_value_first(array_keys($array));
-    }
-}
-
-if (!function_exists('array_key_last')) {
-    /**
-     * Returns the last key of an array.
-     *
-     * This function exists in PHP >= 7.3.
-     * @param array $array Array
-     * @return string|int Key
-     * @link http://php.net/manual/en/function.array-key-last.php
-     * @since 1.1.12
-     */
-    function array_key_last(array $array)
-    {
-        return array_value_last(array_keys($array));
-    }
-}
-
 if (!function_exists('array_unique_recursive')) {
     /**
      * `array_unique()` for multidimensional arrays.
