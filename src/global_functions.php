@@ -198,12 +198,13 @@ if (!function_exists('string_ends_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.12
+     * @deprecated Use instead `str_ends_with()`
      */
     function string_ends_with(string $haystack, string $needle): bool
     {
-        $length = strlen($needle);
+        deprecationWarning('`string_ends_with()` is deprecated. Use instead `str_ends_with()`');
 
-        return !$length ?: substr($haystack, -$length) === $needle;
+        return str_ends_with($haystack, $needle);
     }
 }
 
@@ -214,10 +215,13 @@ if (!function_exists('string_contains')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.4.0
+     * @deprecated Use instead `str_contains()`
      */
     function string_contains(string $haystack, string $needle): bool
     {
-        return strpos($haystack, $needle) !== false;
+        deprecationWarning('`string_contains()` is deprecated. Use instead `str_contains()`');
+
+        return str_contains($haystack, $needle);
     }
 }
 
@@ -228,10 +232,13 @@ if (!function_exists('string_starts_with')) {
      * @param string $needle The searched value
      * @return bool
      * @since 1.1.12
+     * @deprecated Use instead `str_starts_with()`
      */
     function string_starts_with(string $haystack, string $needle): bool
     {
-         return substr($haystack, 0, strlen($needle)) === $needle;
+        deprecationWarning('`string_starts_with()` is deprecated. Use instead `str_starts_with()`');
+
+        return str_starts_with($haystack, $needle);
     }
 }
 

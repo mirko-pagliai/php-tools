@@ -320,7 +320,7 @@ class Filesystem extends BaseFilesystem
     public function rtr(string $path): string
     {
         $root = $this->getRoot();
-        if ($this->isAbsolutePath($path) && string_starts_with($path, $root)) {
+        if ($this->isAbsolutePath($path) && str_starts_with($path, $root)) {
             $path = $this->normalizePath($this->makePathRelative($path, $root));
         }
 

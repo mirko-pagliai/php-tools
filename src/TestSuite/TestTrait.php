@@ -68,7 +68,7 @@ trait TestTrait
      */
     public static function __callStatic(string $name, array $arguments): void
     {
-        if (string_starts_with($name, 'assertIs')) {
+        if (str_starts_with($name, 'assertIs')) {
             $count = count($arguments);
             if (!$count || $count > 2) {
                 throw new BadMethodCallException(sprintf(
