@@ -57,30 +57,6 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_key_first()` global function
-     * @test
-     */
-    public function testArrayKeyFirst(): void
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(0, array_key_first($array));
-        $this->assertEquals('a', array_key_first(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_key_first([]));
-    }
-
-    /**
-     * Test for `array_key_last()` global function
-     * @test
-     */
-    public function testArrayKeyLast(): void
-    {
-        $array = ['first', 'second', 'third'];
-        $this->assertEquals(2, array_key_last($array));
-        $this->assertEquals('c', array_key_last(array_combine(['a', 'b', 'c'], $array)));
-        $this->assertEquals(null, array_key_last([]));
-    }
-
-    /**
      * Test for `array_unique_recursive()` global function
      * @test
      */

@@ -10,6 +10,7 @@
 ### 1.5.9
 * `string_ends_with()`, `string_contains()` and `string_starts_with()` are now
     deprecated. Use instead `str_ends_with()`, `str_contains()` and `str_starts_with()`;
+* `array_key_first()` and `array_key_last()` are now provided by `symfony/polyfill-php73`;
 * updated for Symfony `6.0` components.
 
 ### 1.5.8

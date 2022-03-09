@@ -21,6 +21,7 @@
         "symfony/string": "^5.0|^6.0",
         "symfony/var-dumper": "^5.0|^6.0",
         "symfony/translation-contracts": "^2.1",
+        "symfony/polyfill-php73": "^1.25",
         "symfony/polyfill-php80": "^1.25"
     },
     "require-dev": {
