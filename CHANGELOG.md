@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.9
+* updated for Symfony `6.0` components.
+
 ### 1.5.8
 * `Entity::set()` can set null or empty values and no longer throws an exception.
     This means that `Entity :: has ()` returns `true` even for properties with
