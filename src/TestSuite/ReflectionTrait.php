@@ -72,7 +72,7 @@ trait ReflectionTrait
 
         //Removes properties added by PHPUnit, if the object is a mock
         $properties = array_filter($properties, function ($property) {
-            return !string_starts_with($property->getName(), '__phpunit');
+            return !str_starts_with($property->getName(), '__phpunit');
         });
 
         $values = array_map(function (ReflectionProperty $property) use ($object) {

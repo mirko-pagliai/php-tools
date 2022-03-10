@@ -174,11 +174,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testStringContains(): void
     {
-        foreach (['aaa', 'aaab', 'baaaa', 'baaac'] as $var) {
-            $this->assertTrue(string_contains($var, 'aaa'));
-        }
-
-        $this->assertFalse(string_contains('abcd', 'e'));
+        $this->expectDeprecation();
+        $this->expectExceptionMessageMatches('/^`string_contains\(\)` is deprecated. Use instead `str_contains\(\)`/');
+        $this->assertTrue(string_contains('baaaa', 'aaa'));
     }
 
     /**
@@ -187,13 +185,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testStringEndsWith(): void
     {
-        $string = 'a test with some words';
-        foreach (['', 's', 'some words', $string] as $var) {
-            $this->assertTrue(string_ends_with($string, $var));
-        }
-        foreach ([' ', 'b', 'a test'] as $var) {
-            $this->assertFalse(string_ends_with($string, $var));
-        }
+        $this->expectDeprecation();
+        $this->expectExceptionMessageMatches('/^`string_ends_with\(\)` is deprecated. Use instead `str_ends_with\(\)`/');
+        $this->assertTrue(string_ends_with('a test with some words', 'some words'));
     }
 
     /**
@@ -202,13 +196,9 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testStringStartsWith(): void
     {
-        $string = 'a test with some words';
-        foreach (['', 'a', 'a test', $string] as $var) {
-            $this->assertTrue(string_starts_with($string, $var));
-        }
-        foreach ([' ', 'some words', 'test'] as $var) {
-            $this->assertFalse(string_starts_with($string, $var));
-        }
+        $this->expectDeprecation();
+        $this->expectExceptionMessageMatches('/^`string_starts_with\(\)` is deprecated. Use instead `str_starts_with\(\)`/');
+        $this->assertTrue(string_starts_with('a test with some words', 'a test'));
     }
 
     /**
