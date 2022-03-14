@@ -70,13 +70,23 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
+        $function = function () {
+        };
+        $stream = stream_context_create();
+
+        $this->assertSame(true, Exceptionist::isBool(true));
+        $this->assertSame($function, Exceptionist::isCallable($function));
+        $this->assertSame(1.4, Exceptionist::isFloat(1.4));
         $this->assertSame(1, Exceptionist::isInt(1));
-        $this->assertSame(1, Exceptionist::isInt(1, 'That\'s not an int', \LogicException::class));
+        $this->assertSame([1], Exceptionist::isIterable([1]));
+        $this->assertSame(null, Exceptionist::isNull(null));
+        $this->assertSame($stream, Exceptionist::isResource($stream));
+        $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::isInt($var);
-            }, Exception::class, '`Exceptionist::isInt()` returned `false`');
+            }, Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -86,7 +96,7 @@ class ExceptionistTest extends TestCase
         foreach ([null, false, -1, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::isPositive($var);
-            }, Exception::class, '`Exceptionist::isPositive()` returned `false`');
+            }, Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
         }
     }
 
@@ -100,6 +110,19 @@ class ExceptionistTest extends TestCase
         $this->expectExceptionMessageMatches('#^Error calling `array_combine\(\)`\:#');
         /** @phpstan-ignore-next-line */
         Exceptionist::arrayCombine(['a', 'b']);
+    }
+
+    /**
+     * Test for `__callStatic()` magic method, functions with "isNot" word
+     * @test
+     */
+    public function testCallStaticMagicMethodWithIsNotWord(): void
+    {
+        $this->assertSame('string', Exceptionist::isNotArray('string'));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('`' . Exceptionist::class . '::isNotPositive()` returned `false`');
+        Exceptionist::isNotPositive(1);
     }
 
     /**
@@ -177,6 +200,20 @@ class ExceptionistTest extends TestCase
         $this->expectException(ObjectWrongInstanceException::class);
         $this->expectExceptionMessage('`stdClass` is not an instance of `App\ExampleClass`');
         Exceptionist::isInstanceOf($instance, ExampleClass::class);
+    }
+
+    /**
+     * Test for `isFalse()` method
+     * @test
+     */
+    public function testIsFalse(): void
+    {
+        $this->assertSame(false, Exceptionist::isFalse(false));
+        $this->assertSame(0, Exceptionist::isFalse(0));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('`false` is not equal to `true`');
+        Exceptionist::fileExists(Exceptionist::isFalse(true));
     }
 
     /**
