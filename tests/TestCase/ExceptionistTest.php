@@ -70,9 +70,16 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
-        $this->assertSame(null, Exceptionist::isNull(null));
+        $stream = stream_context_create();
+
+        $this->assertSame(true, Exceptionist::isBool(true));
+        $this->assertEquals(function () {}, Exceptionist::isCallable(function () {}));
+        $this->assertSame(1.4, Exceptionist::isFloat(1.4));
         $this->assertSame(1, Exceptionist::isInt(1));
-        $this->assertSame(1, Exceptionist::isInt(1, 'That\'s not an int', \LogicException::class));
+        $this->assertSame([1], Exceptionist::isIterable([1]));
+        $this->assertSame(null, Exceptionist::isNull(null));
+        $this->assertSame($stream, Exceptionist::isResource($stream));
+        $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(function () use ($var) {

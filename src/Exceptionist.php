@@ -33,10 +33,16 @@ use TypeError;
 /**
  * Exceptionist.
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isBool($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isCallable($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isFloat($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isIterable($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isNull($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isObject($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isResource($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isString($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isUrl($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @since 1.4.1
@@ -79,7 +85,7 @@ class Exceptionist
                 throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
             }
             $rFunction = new \ReflectionFunction($phpName);
-            if ($rFunction->getNumberOfParameters() === 1) {
+            if ($rFunction->getNumberOfParameters() === 1 || !is_array($arguments)) {
                 $result = call_user_func_array($phpName, [$arguments]);
             } else {
                 $result = call_user_func_array($phpName, $arguments);

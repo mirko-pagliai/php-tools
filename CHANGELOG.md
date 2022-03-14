@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.10
-* added `Exceptionist::isFalse()` method.
+* added `Exceptionist::isFalse()` method;
+* many methods already supported by `Exceptionist` have been documented.
 
 ### 1.5.9
 * `string_ends_with()`, `string_contains()` and `string_starts_with()` are now
