@@ -113,16 +113,21 @@ class ExceptionistTest extends TestCase
     }
 
     /**
-     * Test for `__callStatic()` magic method, functions with "isNot" word
+     * Test for `__callStatic()` magic method, containing with the "Not" word
      * @test
      */
-    public function testCallStaticMagicMethodWithIsNotWord(): void
+    public function testCallStaticMagicMethodWithNotWord(): void
     {
+        $this->assertSame(TMP . 'noExisting', Exceptionist::fileNotExists(TMP . 'noExisting'));
         $this->assertSame('string', Exceptionist::isNotArray('string'));
 
-        $this->expectException(Exception::class);
-        $this->expectExceptionMessage('`Exceptionist::isNotPositive()` returned `false`');
-        Exceptionist::isNotPositive(1);
+        $this->assertException(function () {
+            Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: '');
+        }, Exception::class, '`Exceptionist::fileNotExists()` returned `false`');
+
+        $this->assertException(function () {
+            Exceptionist::isNotPositive(1);
+        }, Exception::class, '`Exceptionist::isNotPositive()` returned `false`');
     }
 
     /**
