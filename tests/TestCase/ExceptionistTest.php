@@ -70,6 +70,7 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
+        $this->assertSame(null, Exceptionist::isNull(null));
         $this->assertSame(1, Exceptionist::isInt(1));
         $this->assertSame(1, Exceptionist::isInt(1, 'That\'s not an int', \LogicException::class));
 

@@ -34,6 +34,7 @@ use TypeError;
  * Exceptionist.
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNull($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isString($value, string $message = '', \Throwable|string $exception = \Exception::class)
