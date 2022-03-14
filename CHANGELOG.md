@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.10
+* `Exceptionist::__callStatic()` now handles calls starting with "isNot";
 * added `Exceptionist::isFalse()` method;
 * many methods already supported by `Exceptionist` have been documented.
 

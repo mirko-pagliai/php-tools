@@ -113,6 +113,19 @@ class ExceptionistTest extends TestCase
     }
 
     /**
+     * Test for `__callStatic()` magic method, functions with "isNot" word
+     * @test
+     */
+    public function testCallStaticMagicMethodWithIsNotWord(): void
+    {
+        $this->assertSame('string', Exceptionist::isNotArray('string'));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('`Exceptionist::isNotPositive()` returned `false`');
+        Exceptionist::isNotPositive(1);
+    }
+
+    /**
      * Test for `__callStatic()` magic method, with a no existing PHP function
      * @test
      */

@@ -39,6 +39,8 @@ use TypeError;
  * @method static mixed isFloat($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isIterable($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNotArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNotPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isNull($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isObject($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
@@ -76,6 +78,13 @@ class Exceptionist
      */
     public static function __callStatic(string $name, array $arguments)
     {
+        //Handles calls starting with "isNot"
+        $negative = false;
+        if (str_starts_with($name, 'isNot')) {
+            $negative = true;
+            $name = 'is' . substr($name, 5);
+        }
+
         //Calls the PHP function and gets the result
         $phpName = uncamelcase($name);
         $result = false;
@@ -90,10 +99,13 @@ class Exceptionist
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
 
-        $message = $message ?: '`Exceptionist::' . $name . '()` returned `false`';
-
-        //Calls the `isTrue()` method with that result and returns arguments
-        forward_static_call([__CLASS__, 'isTrue'], $result, $message, $exception);
+        //Calls `isFalse()` or `isTrue()` method, with that result and returns arguments
+        if (!$message) {
+            $message = '`Exceptionist::' . ($negative ? 'isNot' . substr($name, 2) : $name) . '()` returned `false`';
+        }
+        /** @var callable $callback */
+        $callback = [__CLASS__, $negative ? 'isFalse' : 'isTrue'];
+        forward_static_call($callback, $result, $message, $exception);
 
         return $arguments;
     }
