@@ -32,6 +32,7 @@ use TypeError;
 
 /**
  * Exceptionist.
+ * @method static mixed fileNotExists(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isBool($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isCallable($value, string $message = '', \Throwable|string $exception = \Exception::class)
@@ -78,16 +79,16 @@ class Exceptionist
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        //Handles calls starting with "isNot"
-        $negative = false;
-        if (str_starts_with($name, 'isNot')) {
+        $negative = $result = false;
+        $phpName = uncamelcase($name);
+
+        //Handles calls containing with the "Not" word (e.g. `isNotArray()` or `fileNotExists()`)
+        if (preg_match('/^(\w+)Not([A-Z]\w*)$/', $name, $matches)) {
             $negative = true;
-            $name = 'is' . substr($name, 5);
+            $phpName = uncamelcase($matches[1] . $matches[2]);
         }
 
         //Calls the PHP function and gets the result
-        $phpName = uncamelcase($name);
-        $result = false;
         [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
         try {
             if (!is_callable($phpName)) {
@@ -101,7 +102,7 @@ class Exceptionist
 
         //Calls `isFalse()` or `isTrue()` method, with that result and returns arguments
         if (!$message) {
-            $message = sprintf('`%s::%s()` returned `false`', __CLASS__, $negative ? 'isNot' . substr($name, 2) : $name);
+            $message = sprintf('`%s::%s()` returned `false`', __CLASS__, $name);
         }
         /** @var callable $callback */
         $callback = [__CLASS__, $negative ? 'isFalse' : 'isTrue'];
