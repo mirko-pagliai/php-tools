@@ -178,6 +178,23 @@ class Exceptionist
     }
 
     /**
+     * Checks whether a value is `false`
+     * @param mixed $value The value you want to check
+     * @param string|null $message The failure message that will be appended to the
+     *  generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return mixed
+     * @since 1.5.10
+     * @throws \Exception
+     */
+    public static function isFalse($value, ?string $message = '', $exception = ErrorException::class)
+    {
+        self::isTrue(!$value, $message, $exception);
+
+        return $value;
+    }
+
+    /**
      * Checks whether an object is an instance of `$class`
      * @param object $object The object you want to check
      * @param string $class The class that the object should be an instance of

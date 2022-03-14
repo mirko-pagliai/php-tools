@@ -207,6 +207,20 @@ class ExceptionistTest extends TestCase
     }
 
     /**
+     * Test for `isFalse()` method
+     * @test
+     */
+    public function testIsFalse(): void
+    {
+        $this->assertSame(false, Exceptionist::isFalse(false));
+        $this->assertSame(0, Exceptionist::isFalse(0));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('`false` is not equal to `true`');
+        Exceptionist::fileExists(Exceptionist::isFalse(true));
+    }
+
+    /**
      * Test for `isReadable()` method
      * @test
      */
