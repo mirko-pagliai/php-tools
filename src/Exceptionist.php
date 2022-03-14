@@ -85,11 +85,7 @@ class Exceptionist
                 throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
             }
             $rFunction = new \ReflectionFunction($phpName);
-            if ($rFunction->getNumberOfParameters() === 1 || !is_array($arguments)) {
-                $result = call_user_func_array($phpName, [$arguments]);
-            } else {
-                $result = call_user_func_array($phpName, $arguments);
-            }
+            $result = call_user_func_array($phpName, $rFunction->getNumberOfParameters() > 1 && is_array($arguments) ? $arguments : [$arguments]);
         } catch (ArgumentCountError | Exception | TypeError $e) {
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
