@@ -5,6 +5,7 @@
     word (e.g. `isNotArray()` or `fileNotExists()`);
 * added `EventAssertTrait::assertEventFiredWithArgs()` method;
 * added `Exceptionist::isFalse()` method;
+* fixed little bug for `Filesystem::rtr()`;
 * many methods already supported by `Exceptionist` have been documented.
 
 ### 1.5.9

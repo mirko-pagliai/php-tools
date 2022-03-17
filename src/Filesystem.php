@@ -319,9 +319,11 @@ class Filesystem extends BaseFilesystem
      */
     public function rtr(string $path): string
     {
-        $root = $this->getRoot();
-        if ($this->isAbsolutePath($path) && str_starts_with($path, $root)) {
-            $path = $this->normalizePath($this->makePathRelative($path, $root));
+        if ($this->isAbsolutePath($path)) {
+            $root = $this->getRoot();
+            if (str_starts_with($path, $root)) {
+                $path = $this->normalizePath($this->makePathRelative($path, $root));
+            }
         }
 
         return rtrim($path, DS);
