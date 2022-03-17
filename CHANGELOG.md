@@ -3,6 +3,7 @@
 ### 1.5.10
 * `Exceptionist::__callStatic()` now handles calls containing with the "Not"
     word (e.g. `isNotArray()` or `fileNotExists()`);
+* added `EventAssertTrait::assertEventFiredWithArgs()` method;
 * added `Exceptionist::isFalse()` method;
 * many methods already supported by `Exceptionist` have been documented.
 
