@@ -54,7 +54,12 @@ trait EventAssertTrait
                 $matching = true;
             }
         }
-        $message = $message ?: sprintf('The `%s` event was not fired with the specified arguments', $eventName);
+        if (!$message) {
+            $message = 'The `' . $eventName . '` event was not fired with the specified arguments';
+            if (count($eventArgs) === 1 && is_string(array_value_first($eventArgs))) {
+                $message .= ' `' . array_value_first($eventArgs) . '`';
+            }
+        }
         $this->assertTrue($matching, $message);
     }
 

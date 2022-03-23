@@ -6,6 +6,7 @@
 * added `EventAssertTrait::assertEventFiredWithArgs()` method;
 * added `Exceptionist::isFalse()` method;
 * fixed little bug for `Filesystem::rtr()`;
+* improved `EventAssertTrait::assertEventFiredWithArgs()` method;
 * many methods already supported by `Exceptionist` have been documented.
 
 ### 1.5.9

@@ -64,7 +64,7 @@ class EventAssertTraitTest extends TestCase
         $EventDispatcher->dispatch(new Event('anotherEvent', ['arg1', 'arg2']));
 
         $this->expectException(ExpectationFailedException::class);
-        $this->expectExceptionMessage('The `anotherEvent` event was not fired with the specified argument');
+        $this->expectExceptionMessage('The `anotherEvent` event was not fired with the specified arguments `arg3`');
         $this->assertEventFiredWithArgs('anotherEvent', ['arg3'], $EventDispatcher);
     }
 
