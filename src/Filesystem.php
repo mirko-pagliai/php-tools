@@ -280,6 +280,18 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
+     * Given an existing path, convert it to a path relative to a given starting path
+     * @param string $endPath Absolute path of target
+     * @param string $startPath Absolute path where traversal begins
+     * @return string Path of target relative to starting path
+     * @since 1.5.10
+     */
+    public function makePathRelative(string $endPath, string $startPath): string
+    {
+        return rtrim(parent::makePathRelative($endPath, $startPath), DS);
+    }
+
+    /**
      * Normalizes the path, applying the right slash term
      * @param string $path Path you want normalized
      * @return string Normalized path
