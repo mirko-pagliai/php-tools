@@ -277,15 +277,15 @@ class FilesystemTest extends TestCase
      */
     public function testMakePathRelative(): void
     {
-        $endPath = DS . 'a' . DS . 'b' . DS . 'c' . DS . 'd';
-        $startPath = DS . 'a' . DS . 'b';
-        $expected = 'c' . DS . 'd';
+        $endPath = '/a/b/c/d';
+        $startPath = 'a/b';
+        $expected = 'c/d';
 
         $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath, $startPath));
-        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . DS, $startPath . DS));
-        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath, $startPath . DS));
-        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . DS, $startPath));
-        $this->assertSame($expected . DS . 'file.php', Filesystem::instance()->makePathRelative($startPath . DS . 'c' . DS . 'd' . DS . 'file.php', $startPath));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . '/', $startPath . '/'));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath, $startPath . '/'));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . '/', $startPath));
+        $this->assertSame($expected . '/file.php', Filesystem::instance()->makePathRelative($startPath . '/c/d/file.php', $startPath));
     }
 
     /**
