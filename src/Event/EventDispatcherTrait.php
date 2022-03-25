@@ -58,8 +58,8 @@ trait EventDispatcherTrait
     /**
      * Dispatches an event
      * @param string $name Name of the event
-     * @param array|\ArrayAccess|null $args Any event argument you wish to be
-     *  transported with this event to it can be read by listeners
+     * @param mixed $args Any event argument you wish to be transported with
+     *  this event to it can be read by listeners
      * @return \Tools\Event\Event
      */
     public function dispatchEvent(string $name, $args = null): Event

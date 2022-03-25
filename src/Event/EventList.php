@@ -27,8 +27,7 @@ class EventList implements ArrayAccess
 {
     /**
      * Events list
-     *
-     * @var array
+     * @var array<\Tools\Event\Event>
      */
     protected $_events = [];
 
@@ -127,7 +126,7 @@ class EventList implements ArrayAccess
 
     /**
      * Returns the `EventList` as array
-     * @return array
+     * @return array<\Tools\Event\Event>
      * @since 1.4.1
      */
     public function toArray(): array

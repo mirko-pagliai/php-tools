@@ -28,7 +28,8 @@ class EventAssertTraitTest extends TestCase
     use EventAssertTrait;
 
     /**
-     * Test for `assertEventFired()` and `assertEventNotFired()` methods
+     * Test for `assertEventFired()`, `assertEventFiredWithArgs()` and
+     *  `assertEventNotFired()` methods
      * @ŧest
      */
     public function testAssertEventMethods(): void
@@ -37,6 +38,9 @@ class EventAssertTraitTest extends TestCase
         $EventDispatcher->dispatch(new Event('myEvent'));
         $this->assertEventFired('myEvent', $EventDispatcher);
         $this->assertEventNotFired('noExisting', $EventDispatcher);
+
+        $EventDispatcher->dispatch(new Event('anotherEvent', ['arg1', 'arg2']));
+        $this->assertEventFiredWithArgs('anotherEvent', ['arg1', 'arg2'], $EventDispatcher);
     }
 
     /**
@@ -48,6 +52,20 @@ class EventAssertTraitTest extends TestCase
         $this->expectException(ExpectationFailedException::class);
         $this->expectExceptionMessage('The `noExisting` event was not fired');
         $this->assertEventFired('noExisting', new EventDispatcher());
+    }
+
+    /**
+     * Test for `assertEventFiredWithArgs()` method on failure
+     * @ŧest
+     */
+    public function testFailureAssertEventFiredWithArgs(): void
+    {
+        $EventDispatcher = new EventDispatcher();
+        $EventDispatcher->dispatch(new Event('anotherEvent', ['arg1', 'arg2']));
+
+        $this->expectException(ExpectationFailedException::class);
+        $this->expectExceptionMessage('The `anotherEvent` event was not fired with the specified arguments `arg3`');
+        $this->assertEventFiredWithArgs('anotherEvent', ['arg3'], $EventDispatcher);
     }
 
     /**
