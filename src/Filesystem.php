@@ -288,7 +288,7 @@ class Filesystem extends BaseFilesystem
      */
     public function makePathRelative(string $endPath, string $startPath): string
     {
-        return rtrim(parent::makePathRelative($endPath, $startPath), ['/', '\\']);
+        return rtrim(parent::makePathRelative($endPath, $startPath), '/\\');
     }
 
     /**
