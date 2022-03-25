@@ -70,8 +70,18 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
+        $function = function () {
+        };
+        $stream = stream_context_create();
+
+        $this->assertSame(true, Exceptionist::isBool(true));
+        $this->assertSame($function, Exceptionist::isCallable($function));
+        $this->assertSame(1.4, Exceptionist::isFloat(1.4));
         $this->assertSame(1, Exceptionist::isInt(1));
-        $this->assertSame(1, Exceptionist::isInt(1, 'That\'s not an int', \LogicException::class));
+        $this->assertSame([1], Exceptionist::isIterable([1]));
+        $this->assertSame(null, Exceptionist::isNull(null));
+        $this->assertSame($stream, Exceptionist::isResource($stream));
+        $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
@@ -100,6 +110,24 @@ class ExceptionistTest extends TestCase
         $this->expectExceptionMessageMatches('#^Error calling `array_combine\(\)`\:#');
         /** @phpstan-ignore-next-line */
         Exceptionist::arrayCombine(['a', 'b']);
+    }
+
+    /**
+     * Test for `__callStatic()` magic method, containing with the "Not" word
+     * @test
+     */
+    public function testCallStaticMagicMethodWithNotWord(): void
+    {
+        $this->assertSame(TMP . 'noExisting', Exceptionist::fileNotExists(TMP . 'noExisting'));
+        $this->assertSame('string', Exceptionist::isNotArray('string'));
+
+        $this->assertException(function () {
+            Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: '');
+        }, Exception::class, '`Exceptionist::fileNotExists()` returned `false`');
+
+        $this->assertException(function () {
+            Exceptionist::isNotPositive(1);
+        }, Exception::class, '`Exceptionist::isNotPositive()` returned `false`');
     }
 
     /**
@@ -204,6 +232,20 @@ class ExceptionistTest extends TestCase
         $this->expectException(ObjectWrongInstanceException::class);
         $this->expectExceptionMessage('`stdClass` is not an instance of `App\ExampleClass`');
         Exceptionist::isInstanceOf($instance, ExampleClass::class);
+    }
+
+    /**
+     * Test for `isFalse()` method
+     * @test
+     */
+    public function testIsFalse(): void
+    {
+        $this->assertSame(false, Exceptionist::isFalse(false));
+        $this->assertSame(0, Exceptionist::isFalse(0));
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('`false` is not equal to `true`');
+        Exceptionist::fileExists(Exceptionist::isFalse(true));
     }
 
     /**

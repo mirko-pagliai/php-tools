@@ -32,10 +32,20 @@ use TypeError;
 
 /**
  * Exceptionist.
+ * @method static mixed fileNotExists(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isBool($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isCallable($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isFloat($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isIterable($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNotArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNotPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isNull($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isObject($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed isResource($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isString($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isUrl($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @since 1.4.1
@@ -69,28 +79,34 @@ class Exceptionist
      */
     public static function __callStatic(string $name, array $arguments)
     {
-        //Calls the PHP function and gets the result
+        $negative = $result = false;
         $phpName = uncamelcase($name);
-        $result = false;
+
+        //Handles calls containing with the "Not" word (e.g. `isNotArray()` or `fileNotExists()`)
+        if (preg_match('/^(\w+)Not([A-Z]\w*)$/', $name, $matches)) {
+            $negative = true;
+            $phpName = uncamelcase($matches[1] . $matches[2]);
+        }
+
+        //Calls the PHP function and gets the result
         [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
         try {
             if (!is_callable($phpName)) {
                 throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
             }
             $rFunction = new \ReflectionFunction($phpName);
-            if ($rFunction->getNumberOfParameters() === 1) {
-                $result = call_user_func_array($phpName, [$arguments]);
-            } else {
-                $result = call_user_func_array($phpName, $arguments);
-            }
+            $result = call_user_func_array($phpName, $rFunction->getNumberOfParameters() > 1 && is_array($arguments) ? $arguments : [$arguments]);
         } catch (ArgumentCountError | Exception | TypeError $e) {
             trigger_error(sprintf('Error calling `%s()`: %s', $phpName, $e->getMessage()));
         }
 
-        $message = $message ?: '`Exceptionist::' . $name . '()` returned `false`';
-
-        //Calls the `isTrue()` method with that result and returns arguments
-        forward_static_call([__CLASS__, 'isTrue'], $result, $message, $exception);
+        //Calls `isFalse()` or `isTrue()` method, with that result and returns arguments
+        if (!$message) {
+            $message = '`Exceptionist::' . $name . '()` returned `false`';
+        }
+        /** @var callable $callback */
+        $callback = [__CLASS__, $negative ? 'isFalse' : 'isTrue'];
+        forward_static_call($callback, $result, $message, $exception);
 
         return $arguments;
     }
@@ -175,6 +191,23 @@ class Exceptionist
         self::isTrue(in_array($needle, $haystack, true), $message, $exception);
 
         return $needle;
+    }
+
+    /**
+     * Checks whether a value is `false`
+     * @param mixed $value The value you want to check
+     * @param string|null $message The failure message that will be appended to the
+     *  generated message
+     * @param \Throwable|string $exception The exception class you want to set
+     * @return mixed
+     * @since 1.5.10
+     * @throws \Exception
+     */
+    public static function isFalse($value, ?string $message = '', $exception = ErrorException::class)
+    {
+        self::isTrue(!$value, $message, $exception);
+
+        return $value;
     }
 
     /**

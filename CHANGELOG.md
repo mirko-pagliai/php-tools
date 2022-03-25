@@ -1,5 +1,14 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.10
+* `Exceptionist::__callStatic()` now handles calls containing with the "Not"
+    word (e.g. `isNotArray()` or `fileNotExists()`);
+* added `EventAssertTrait::assertEventFiredWithArgs()` method;
+* added `Filesystem::makePathRelative()` method;
+* added `Exceptionist::isFalse()` method;
+* fixed little bug for `Filesystem::rtr()`;
+* many methods already supported by `Exceptionist` have been documented.
+
 ### 1.5.9
 * `string_ends_with()`, `string_contains()` and `string_starts_with()` are now
     deprecated. Use instead `str_ends_with()`, `str_contains()` and `str_starts_with()`;

@@ -272,6 +272,23 @@ class FilesystemTest extends TestCase
     }
 
     /**
+     * Test for `makePathRelative()` method
+     * @test
+     */
+    public function testMakePathRelative(): void
+    {
+        $endPath = '/a/b/c/d';
+        $startPath = '/a/b';
+        $expected = 'c/d';
+
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath, $startPath));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . '/', $startPath . '/'));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath, $startPath . '/'));
+        $this->assertSame($expected, Filesystem::instance()->makePathRelative($endPath . '/', $startPath));
+        $this->assertSame($expected . '/file.php', Filesystem::instance()->makePathRelative($startPath . '/c/d/file.php', $startPath));
+    }
+
+    /**
      * Test for `normalizePath()` method
      * @test
      */
