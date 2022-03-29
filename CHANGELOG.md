@@ -1,4 +1,11 @@
 # 1.x branch
+## 1.6 branch
+### 1.6.0
+* `string_ends_with()`, `string_contains()` and `string_starts_with()` have been
+    removed;
+* removed the backward compatibility with the previous `Exceptionist::inArray()`
+    method, provided by `__call()`.
+
 ## 1.5 branch
 ### 1.5.10
 * `Exceptionist::__callStatic()` now handles calls containing with the "Not"

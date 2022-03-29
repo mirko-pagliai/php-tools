@@ -191,57 +191,6 @@ if (!function_exists('slug')) {
     }
 }
 
-if (!function_exists('string_ends_with')) {
-    /**
-     * Checks if a string ends with a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.12
-     * @deprecated Use instead `str_ends_with()`
-     */
-    function string_ends_with(string $haystack, string $needle): bool
-    {
-        deprecationWarning('`string_ends_with()` is deprecated. Use instead `str_ends_with()`');
-
-        return str_ends_with($haystack, $needle);
-    }
-}
-
-if (!function_exists('string_contains')) {
-    /**
-     * Checks if a string contains a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.4.0
-     * @deprecated Use instead `str_contains()`
-     */
-    function string_contains(string $haystack, string $needle): bool
-    {
-        deprecationWarning('`string_contains()` is deprecated. Use instead `str_contains()`');
-
-        return str_contains($haystack, $needle);
-    }
-}
-
-if (!function_exists('string_starts_with')) {
-    /**
-     * Checks if a string starts with a string
-     * @param string $haystack The string
-     * @param string $needle The searched value
-     * @return bool
-     * @since 1.1.12
-     * @deprecated Use instead `str_starts_with()`
-     */
-    function string_starts_with(string $haystack, string $needle): bool
-    {
-        deprecationWarning('`string_starts_with()` is deprecated. Use instead `str_starts_with()`');
-
-        return str_starts_with($haystack, $needle);
-    }
-}
-
 if (!function_exists('uncamelcase')) {
     /**
      * Gets an "uncamelcase" string.

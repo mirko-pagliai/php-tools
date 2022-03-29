@@ -86,7 +86,7 @@ class ExceptionistTest extends TestCase
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::isInt($var);
-            }, Exception::class, '`Exceptionist::isInt()` returned `false`');
+            }, Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -96,7 +96,7 @@ class ExceptionistTest extends TestCase
         foreach ([null, false, -1, 'd', []] as $var) {
             $this->assertException(function () use ($var) {
                 Exceptionist::isPositive($var);
-            }, Exception::class, '`Exceptionist::isPositive()` returned `false`');
+            }, Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
         }
     }
 
@@ -123,11 +123,11 @@ class ExceptionistTest extends TestCase
 
         $this->assertException(function () {
             Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: '');
-        }, Exception::class, '`Exceptionist::fileNotExists()` returned `false`');
+        }, Exception::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
 
         $this->assertException(function () {
             Exceptionist::isNotPositive(1);
-        }, Exception::class, '`Exceptionist::isNotPositive()` returned `false`');
+        }, Exception::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
     }
 
     /**
@@ -191,33 +191,6 @@ class ExceptionistTest extends TestCase
         $this->assertException(function () {
             Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class);
         }, ErrorException::class, '`a` is not in array');
-
-        $this->assertException(function () {
-            Exceptionist::inArray('a');
-        }, BadMethodCallException::class, 'The second parameter `$haystack` is missing');
-
-        /**
-         * Backward compatibility with the previous method, provided by `__call ()`:
-         * ```
-         * inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
-         * ```
-         * @todo Remove in a later major version
-         */
-        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b']));
-        $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b'], '`a` is not in array', ErrorException::class));
-
-        $this->assertException(function () {
-            Exceptionist::inArray(['a', ['b', 'c']]);
-        }, NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
-
-        $this->assertException(function () {
-            /** @phpstan-ignore-next-line */
-            Exceptionist::inArray(['a', ['b', 'c']], '`a` is not in array', ErrorException::class);
-        }, ErrorException::class, '`a` is not in array');
-
-        $this->assertException(function () {
-            Exceptionist::inArray(['a']);
-        }, BadMethodCallException::class, 'The second parameter `$haystack` is missing');
     }
 
     /**
