@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.11
+* fixed little bug for `Filesystem::makePathAbsolute()` method.
+
 ### 1.5.10
 * `Exceptionist::__callStatic()` now handles calls containing with the "Not"
     word (e.g. `isNotArray()` or `fileNotExists()`);
