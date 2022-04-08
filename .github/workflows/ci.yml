@@ -52,14 +52,14 @@ jobs:
 
         - name: Run PHPUnit
           run: |
-            if [[ ${{ matrix.php-version }} == '8.0' ]]; then
+            if [[ ${{ matrix.php-version }} == '7.2' ]]; then
              export XDEBUG_MODE=coverage && vendor/bin/phpunit --verbose --coverage-clover=coverage.xml
             else
               vendor/bin/phpunit
             fi
 
         - name: Submit code coverage
-          if: matrix.php-version == '8.0'
+          if: matrix.php-version == '7.2'
           uses: codecov/codecov-action@v2
 
   cs-stan:
