@@ -109,19 +109,26 @@ class EventList implements ArrayAccess
     }
 
     /**
+     * Extracts events by name
+     * @param string $name Event name
+     * @return array<\Tools\Event\Event>
+     * @since 1.5.12
+     */
+    public function extract(string $name): array
+    {
+        return array_values(array_filter($this->_events, function (Event $event) use ($name): bool {
+            return $event->getName() === $name;
+        }));
+    }
+
+    /**
      * Checks if an event is in the list
      * @param string $name Event name
      * @return bool
      */
     public function hasEvent(string $name): bool
     {
-        foreach ($this->_events as $event) {
-            if ($event->getName() === $name) {
-                return true;
-            }
-        }
-
-        return false;
+        return !empty($this->extract($name));
     }
 
     /**
