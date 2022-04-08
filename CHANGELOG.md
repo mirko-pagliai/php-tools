@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.5 branch
 ### 1.5.12
-* added `EventList::extract()` method.
+* added `EventList::extract()` method;
+* added tests for PHP 8.1.
 
 ### 1.5.11
 * fixed little bug for `Filesystem::makePathAbsolute()` method.
