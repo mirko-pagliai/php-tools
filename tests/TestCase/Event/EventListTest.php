@@ -106,11 +106,12 @@ class EventListTest extends TestCase
      */
     public function testToArray(): void
     {
-        $this->assertSame([], $this->EventList->toArray());
+        $this->assertEmpty($this->EventList->toArray());
 
         $this->EventList->add(new Event('myEvent'));
+        $this->EventList->add(new Event('anotherEvent'));
         $result = $this->EventList->toArray();
-        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
         $this->assertContainsOnlyInstancesOf(Event::class, $result);
     }
 }
