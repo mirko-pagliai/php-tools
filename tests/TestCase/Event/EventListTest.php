@@ -101,6 +101,25 @@ class EventListTest extends TestCase
     }
 
     /**
+     * Test for `extract()` method
+     * @test
+     */
+    public function testExtract(): void
+    {
+        $this->assertEmpty($this->EventList->extract('myEvent'));
+
+        $this->EventList->add(new Event('myEvent'));
+        $this->EventList->add(new Event('anotherEvent'));
+        $this->EventList->add(new Event('myEvent'));
+        $result = $this->EventList->extract('myEvent');
+        $this->assertCount(2, $result);
+        $result = $this->EventList->extract('anotherEvent');
+        $this->assertCount(1, $result);
+        $result = $this->EventList->extract('noExistingEvent');
+        $this->assertCount(0, $result);
+    }
+
+    /**
      * Test for `toArray()` method
      * @test
      */
