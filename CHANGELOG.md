@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.5 branch
+### 1.5.13
+* added `CommandTester` class. This class overrides the one provided by the
+    Symfony console component, offering additional methods.
+
 ### 1.5.12
 * added `EventList::extract()` method;
 * added tests for PHP 8.1.
