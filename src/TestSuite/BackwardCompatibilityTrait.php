@@ -15,8 +15,6 @@ declare(strict_types=1);
  */
 namespace Tools\TestSuite;
 
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 
 /**
@@ -77,52 +75,5 @@ trait BackwardCompatibilityTrait
         }
 
         parent::assertMatchesRegularExpression($pattern, $string, $message);
-    }
-
-    /**
-     * Expects a notice
-     * @return void
-     */
-    public function expectNotice(): void
-    {
-        if (!method_exists(PHPUnitTestCase::class, 'expectNotice')) {
-            $this->expectException(Notice::class);
-
-            return;
-        }
-
-        parent::expectNotice();
-    }
-
-    /**
-     * Expects a deprecation
-     * @return void
-     */
-    public function expectDeprecation(): void
-    {
-        if (!method_exists(PHPUnitTestCase::class, 'expectDeprecation')) {
-            $this->expectException(Deprecated::class);
-
-            return;
-        }
-
-        parent::expectDeprecation();
-    }
-
-    /**
-     * Expectes thath the exception message matches `$regularExpression`.
-     * @param string $regularExpression A regular expression
-     * @return void
-     */
-    public function expectExceptionMessageMatches(string $regularExpression): void
-    {
-        if (!method_exists(PHPUnitTestCase::class, 'expectExceptionMessageMatches')) {
-            /* @phpstan-ignore-next-line */
-            $this->expectExceptionMessageRegExp($regularExpression);
-
-            return;
-        }
-
-        parent::expectExceptionMessageMatches($regularExpression);
     }
 }

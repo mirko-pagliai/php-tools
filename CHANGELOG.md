@@ -6,6 +6,7 @@
     removed;
 * removed the backward compatibility with the previous `Exceptionist::inArray()`
     method, provided by `__call()`;
+* removed useless methods from `BackwardCompatibilityTrait`;
 * requires at least PHP 7.4.
 
 ## 1.5 branch
