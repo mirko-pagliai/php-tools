@@ -16,11 +16,6 @@ parameters:
 			path: tests/TestCase/Event/EventTest.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: tests/TestCase/FileArrayTest.php
-
-		-
 			message: "#^Negated boolean expression is always true\\.$#"
 			count: 2
 			path: tests/TestCase/FilesystemTest.php
