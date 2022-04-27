@@ -17,6 +17,7 @@ namespace App;
 
 use ArrayIterator;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * An example of `Traversable`
@@ -30,7 +31,7 @@ class ExampleOfTraversable implements IteratorAggregate
         $this->items = $items;
     }
 
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
