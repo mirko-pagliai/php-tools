@@ -29,7 +29,7 @@ class EventList implements ArrayAccess
      * Events list
      * @var array<\Tools\Event\Event>
      */
-    protected $_events = [];
+    protected array $_events = [];
 
     /**
      * Empties the list of dispatched events
@@ -69,11 +69,7 @@ class EventList implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        if ($this->offsetExists($offset)) {
-            return $this->_events[$offset];
-        }
-
-        return null;
+        return $this->offsetExists($offset) ? $this->_events[$offset] : null;
     }
 
     /**
@@ -116,9 +112,7 @@ class EventList implements ArrayAccess
      */
     public function extract(string $name): array
     {
-        return array_values(array_filter($this->_events, function (Event $event) use ($name): bool {
-            return $event->getName() === $name;
-        }));
+        return array_values(array_filter($this->_events, fn($event) => $event->getName() === $name));
     }
 
     /**

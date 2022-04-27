@@ -28,7 +28,7 @@ class PropertyNotExistsException extends ErrorException
      * Property name
      * @var string|null
      */
-    protected $property;
+    protected ?string $property;
 
     /**
      * Constructor

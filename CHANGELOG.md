@@ -7,7 +7,8 @@
 * removed the backward compatibility with the previous `Exceptionist::inArray()`
     method, provided by `__call()`;
 * `BackwardCompatibilityTrait` has been removed;
-* requires at least PHP 7.4 and PHPUnit 9.1.
+* requires at least PHP 7.4 and PHPUnit 9.1. Updated the code with the new
+    features introduced by php 7.4.
 
 ## 1.5 branch
 ### 1.5.14
