@@ -5,7 +5,8 @@
 * `string_ends_with()`, `string_contains()` and `string_starts_with()` have been
     removed;
 * removed the backward compatibility with the previous `Exceptionist::inArray()`
-    method, provided by `__call()`.
+    method, provided by `__call()`;
+* requires at least PHP 7.4.
 
 ## 1.5 branch
 ### 1.5.14
