@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\NotWritableException;
 use Tools\FileArray;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
@@ -43,7 +44,11 @@ class FileArrayTest extends TestCase
     {
         parent::setUp();
 
-        $this->FileArray = new FileArray(Filesystem::instance()->createTmpFile(), $this->example);
+        if (!$this->FileArray) {
+            $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+            $this->FileArray = new FileArray(Filesystem::instance()->createTmpFile(), $this->example);
+            error_reporting($current);
+        }
     }
 
     /**
@@ -53,8 +58,22 @@ class FileArrayTest extends TestCase
     public function testConstruct(): void
     {
         //With a no writable directory
-        $this->expectExceptionMessage('File or directory `' . TMP . 'noExistingDir` does not exist');
-        new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertException(function () {
+            new FileArray(TMP . 'noExistingDir' . DS . 'noExistingFile');
+        }, NotWritableException::class, 'File or directory `' . TMP . 'noExistingDir` does not exist');
+        error_reporting($current);
+    }
+
+    /**
+     * Test for `__construct()` method, `FileArray` is deprecated
+     * @test
+     */
+    public function testConstructIsDeprecated(): void
+    {
+        $this->expectDeprecation();
+        $this->expectExceptionMessage('`FileArray` is deprecated will be removed in a future version');
+        new FileArray(Filesystem::instance()->createTmpFile(), $this->example);
     }
 
     /**
@@ -124,6 +143,8 @@ class FileArrayTest extends TestCase
      */
     public function testRead(): void
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
         $this->assertEquals($this->example, $this->FileArray->read());
 
         $file = Filesystem::instance()->createTmpFile();
@@ -138,6 +159,8 @@ class FileArrayTest extends TestCase
         //With invalid array or no existing file, in any case returns a empty array
         $this->assertEquals([], (new FileArray(Filesystem::instance()->createTmpFile('a string')))->read());
         $this->assertEquals([], (new FileArray(TMP . 'noExisting'))->read());
+
+        error_reporting($current);
     }
 
     /**
