@@ -21,6 +21,7 @@ use Tools\Filesystem;
 
 /**
  * This class allows you to read and write arrays using text files
+ * @deprecated 1.5.14 Deprecated. It will be removed in a future version
  */
 class FileArray
 {
@@ -49,6 +50,8 @@ class FileArray
      */
     public function __construct(string $filename, array $data = [])
     {
+        deprecationWarning('`FileArray` is deprecated will be removed in a future version');
+
         Exceptionist::isWritable(is_file($filename) ? $filename : dirname($filename));
 
         $this->filename = $filename;

@@ -7,6 +7,9 @@
     method, provided by `__call()`.
 
 ## 1.5 branch
+### 1.5.14
+* `FileArray` is deprecated will be removed in a future version.
+
 ### 1.5.13
 * added `CommandTester` class. This class overrides the one provided by the
     Symfony console component, offering additional methods.
