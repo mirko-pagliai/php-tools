@@ -7,6 +7,14 @@
     method, provided by `__call()`.
 
 ## 1.5 branch
+### 1.5.13
+* added `CommandTester` class. This class overrides the one provided by the
+    Symfony console component, offering additional methods.
+
+### 1.5.12
+* added `EventList::extract()` method;
+* added tests for PHP 8.1.
+
 ### 1.5.11
 * fixed little bug for `Filesystem::makePathAbsolute()` method.
 

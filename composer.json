@@ -27,7 +27,8 @@
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^8.5.14|^9.0|^9.5",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "symfony/console": "^5.1|^6.0"
     },
     "autoload": {
         "psr-4": {
