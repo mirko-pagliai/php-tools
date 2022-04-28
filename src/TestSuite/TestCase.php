@@ -18,7 +18,6 @@ namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\Filesystem;
-use Tools\TestSuite\BackwardCompatibilityTrait;
 use Tools\TestSuite\ReflectionTrait;
 
 /**
@@ -26,7 +25,6 @@ use Tools\TestSuite\ReflectionTrait;
  */
 abstract class TestCase extends PHPUnitTestCase
 {
-    use BackwardCompatibilityTrait;
     use ReflectionTrait;
     use TestTrait;
 

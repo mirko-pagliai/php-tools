@@ -169,51 +169,6 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `string_contains()` global function
-     * @test
-     */
-    public function testStringContains(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(string_contains('baaaa', 'aaa'));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^`string_contains\(\)` is deprecated. Use instead `str_contains\(\)`/');
-        string_contains('baaaa', 'aaa');
-    }
-
-    /**
-     * Test for `string_ends_with()` global function
-     * @test
-     */
-    public function testStringEndsWith(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(string_ends_with('a test with some words', 'some words'));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^`string_ends_with\(\)` is deprecated. Use instead `str_ends_with\(\)`/');
-        string_ends_with('a test with some words', 'some words');
-    }
-
-    /**
-     * Test for `string_starts_with()` global function
-     * @test
-     */
-    public function testStringStartsWith(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(string_starts_with('a test with some words', 'a test'));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectExceptionMessageMatches('/^`string_starts_with\(\)` is deprecated. Use instead `str_starts_with\(\)`/');
-        string_starts_with('a test with some words', 'a test');
-    }
-
-    /**
      * Test for `uncamelcase()` global function
      * @test
      */

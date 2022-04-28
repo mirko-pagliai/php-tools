@@ -28,7 +28,7 @@ trait EventDispatcherTrait
     /**
      * @var \Tools\Event\EventDispatcher
      */
-    protected $EventDispatcher;
+    protected EventDispatcher $EventDispatcher;
 
     /**
      * Gets the `EventDispatcher`
@@ -36,9 +36,7 @@ trait EventDispatcherTrait
      */
     public function getEventDispatcher(): EventDispatcher
     {
-        if (!$this->EventDispatcher) {
-            $this->EventDispatcher = new EventDispatcher();
-        }
+        $this->EventDispatcher ??= new EventDispatcher();
 
         return $this->EventDispatcher;
     }

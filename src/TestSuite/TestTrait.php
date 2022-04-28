@@ -228,8 +228,7 @@ trait TestTrait
      */
     protected static function assertIsMock(object $object, string $message = ''): void
     {
-        $message = $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock';
-        self::assertInstanceOf(MockObject::class, $object, $message);
+        self::assertInstanceOf(MockObject::class, $object, $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock');
     }
 
     /**

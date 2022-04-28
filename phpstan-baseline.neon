@@ -6,19 +6,9 @@ parameters:
 			path: src/global_functions.php
 
 		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: tests/TestCase/Event/EventDispatcherTraitTest.php
-
-		-
 			message: "#^Ternary operator condition is always true\\.$#"
 			count: 1
 			path: tests/TestCase/Event/EventTest.php
-
-		-
-			message: "#^Negated boolean expression is always false\\.$#"
-			count: 1
-			path: tests/TestCase/FileArrayTest.php
 
 		-
 			message: "#^Negated boolean expression is always true\\.$#"

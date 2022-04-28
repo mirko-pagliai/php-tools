@@ -28,7 +28,7 @@ abstract class FileException extends ErrorException
      * Path
      * @var string|null
      */
-    protected $path;
+    protected ?string $path;
 
     /**
      * Constructor

@@ -28,7 +28,7 @@ class KeyNotExistsException extends ErrorException
      * Key name
      * @var string|null
      */
-    protected $key;
+    protected ?string $key;
 
     /**
      * Constructor
