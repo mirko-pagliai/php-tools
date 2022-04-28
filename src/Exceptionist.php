@@ -102,7 +102,7 @@ class Exceptionist
 
         //Calls `isFalse()` or `isTrue()` method, with that result and returns arguments
         if (!$message) {
-            $message = '`Exceptionist::' . $name . '()` returned `false`';
+            $message = sprintf('`%s::%s()` returned `false`', __CLASS__, $name);
         }
         /** @var callable $callback */
         $callback = [__CLASS__, $negative ? 'isFalse' : 'isTrue'];
@@ -161,22 +161,8 @@ class Exceptionist
      * @since 1.5.8
      * @throws \Tools\Exception\NotInArrayException
      */
-    public static function inArray($needle, $haystack = [], ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
     {
-        /**
-         * Backward compatibility with the previous method, provided by `__call ()`:
-         * ```
-         * inArray(array $args, string $message = '', \Throwable|string $exception = \Exception::class)
-         * ```
-         * @todo Remove in a later major version
-         */
-        if (is_array($needle) && (empty($haystack) || !is_array($haystack))) {
-            $exception = $message ?: $exception;
-            $message = is_string($haystack) ? $haystack : $message;
-            [$needle, $haystack] = $needle + [1 => []];
-        }
-        self::isTrue($haystack, 'The second parameter `$haystack` is missing', \BadMethodCallException::class);
-
         if (!$message) {
             $message = 'The value';
             if (is_stringable($needle)) {

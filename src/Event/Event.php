@@ -27,13 +27,13 @@ class Event extends BaseEvent
      * Custom data for the method that receives the event
      * @var array
      */
-    protected $args;
+    protected array $args;
 
     /**
      * Name of the event
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Construct

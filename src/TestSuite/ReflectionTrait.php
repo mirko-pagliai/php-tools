@@ -90,7 +90,6 @@ trait ReflectionTrait
      *  or class name
      * @param string $name Property name
      * @return mixed Property value
-     * @uses _getPropertyInstance()
      */
     protected function getProperty($object, string $name)
     {
@@ -106,7 +105,6 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @param array $parameters Array of parameters to pass into method
      * @return mixed Method return
-     * @uses _getMethodInstance()
      */
     protected function invokeMethod($object, string $methodName, array $parameters = [])
     {
@@ -121,7 +119,6 @@ trait ReflectionTrait
      * @param string $name Property name
      * @param mixed $value Value you want to set
      * @return mixed Old property value
-     * @uses _getPropertyInstance()
      */
     protected function setProperty(object &$object, string $name, $value)
     {
