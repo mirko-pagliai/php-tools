@@ -29,14 +29,14 @@ class BodyParser
      * Body
      * @var string
      */
-    protected $body;
+    protected string $body;
 
     /**
      * Extracted links. This property works as a cache of values. A `null` value
      *  indicates that the links have not yet been extracted
      * @var array
      */
-    protected $extractedLinks = [];
+    protected array $extractedLinks = [];
 
     /**
      * HTML tags that may contain links and therefore need to be scanned.
@@ -44,7 +44,7 @@ class BodyParser
      * Array with tag names as keys and attribute names as values.
      * @var array
      */
-    protected $tags = [
+    protected array $tags = [
         'a' => 'href',
         'area' => 'href',
         'audio' => 'src',
@@ -63,7 +63,7 @@ class BodyParser
      * Reference url. Used to determine the relative links
      * @var string
      */
-    protected $url;
+    protected string $url;
 
     /**
      * Constructor

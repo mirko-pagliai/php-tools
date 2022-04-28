@@ -29,7 +29,7 @@ class EventDispatcher extends BaseEventDispatcher
     /**
      * @var \Tools\Event\EventList
      */
-    protected $EventList;
+    protected EventList $EventList;
 
     /**
      * Constructor

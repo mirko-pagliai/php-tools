@@ -29,7 +29,7 @@ abstract class Entity implements ArrayAccess
      * Properties
      * @var array
      */
-    protected $properties;
+    protected array $properties;
 
     /**
      * Initializes the internal properties
@@ -44,7 +44,6 @@ abstract class Entity implements ArrayAccess
      * Called by `var_dump()` when dumping the object to get the properties that
      *  should be shown
      * @return array
-     * @uses toArray()
      */
     public function __debugInfo(): array
     {
@@ -55,7 +54,6 @@ abstract class Entity implements ArrayAccess
      * Magic method for reading data from inaccessible properties
      * @param string $property Property name
      * @return mixed Property value
-     * @uses get()
      */
     public function __get(string $property)
     {
@@ -91,7 +89,6 @@ abstract class Entity implements ArrayAccess
      * @param string $property Property name
      * @param mixed $default Default value if the property does not exist
      * @return mixed Property value
-     * @uses has()
      */
     public function get(string $property, $default = null)
     {

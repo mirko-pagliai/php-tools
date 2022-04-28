@@ -28,7 +28,7 @@ class ObjectWrongInstanceException extends ErrorException
      * Object instance
      * @var object|null
      */
-    protected $object;
+    protected ?object $object;
 
     /**
      * Constructor
