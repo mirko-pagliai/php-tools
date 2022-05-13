@@ -26,9 +26,7 @@ VarDumper::setHandler(function ($var) {
     $cloner = new VarCloner();
     if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
         $backtrace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
-        $backtrace = array_values(array_filter($backtrace, function ($current) {
-            return key_exists('file', $current);
-        }));
+        $backtrace = array_values(array_filter($backtrace, fn($current): bool => key_exists('file', $current)));
         $key = array_search(__FILE__, array_column($backtrace, 'file'));
         $key = $key ? (int)$key - 1 : count($backtrace) - 3;
         $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'], $backtrace[$key]['line']);
