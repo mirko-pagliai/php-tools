@@ -2,6 +2,8 @@
 ## 1.6 branch
 ### 1.6.1
 * `Filesystem::createFile()` returns now the filename as string;
+* `get_child_methods()` global function throws an exception if the class does
+    not exist and returns only array;
 * updated the code with the new features introduced by php 7.4.
 
 ### 1.6.0

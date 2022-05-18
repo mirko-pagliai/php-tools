@@ -55,8 +55,9 @@ class GlobalFunctionsTest extends TestCase
         //This class has no parent, so the result is similar to the `get_class_methods()` method
         $this->assertEquals(get_class_methods(ExampleClass::class), get_child_methods(ExampleClass::class));
 
-        //No existing class
-        $this->assertNull(get_child_methods('\NoExistingClass'));
+        $this->expectExceptionMessage('Class `\NoExistingClass` does not exist');
+        /** @phpstan-ignore-next-line */
+        get_child_methods('\NoExistingClass');
     }
 
     /**

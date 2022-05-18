@@ -48,15 +48,16 @@ if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names, but unlike the `get_class_methods()`
      *  function, this function excludes the methods of the parent class
-     * @param string $class Class name
-     * @return array<string>|null
+     * @param class-string $class Class name
+     * @return array<class-string>
      * @since 1.0.1
+     * @throws \LogicException
      * @todo exception if the class does not exist
      */
-    function get_child_methods(string $class): ?array
+    function get_child_methods(string $class): array
     {
         if (!class_exists($class)) {
-            return null;
+            throw new LogicException('Class `' . $class . '` does not exist');
         }
 
         $methods = get_class_methods($class);
