@@ -40,8 +40,7 @@ class TestTraitTest extends TestCase
      */
     public function testMagicCallAndCallStatic(): void
     {
-        $function = function () {
-        };
+        $function = fn() => '';
         //Methods that use the `assertInternalType()` method
         foreach ([
             'assertIsArray' => ['array'],
@@ -71,9 +70,7 @@ class TestTraitTest extends TestCase
 
         //Calling a no existing method or a no existing "assertIs" method
         foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
-            $this->assertException(function () use ($method) {
-                $this->$method('string');
-            }, BadMethodCallException::class, 'Method ' . get_parent_class($this) . '::' . $method . '() does not exist');
+            $this->assertException(fn() => $this->$method('string'), BadMethodCallException::class, 'Method ' . get_parent_class($this) . '::' . $method . '() does not exist');
         }
     }
 
@@ -236,9 +233,7 @@ class TestTraitTest extends TestCase
             [null],
             [''],
         ] as $array) {
-            $this->assertException(function () use ($array) {
-                $this->assertIsArrayNotEmpty($array);
-            }, AssertionFailedError::class);
+            $this->assertException(fn() => $this->assertIsArrayNotEmpty($array), AssertionFailedError::class);
         }
     }
 

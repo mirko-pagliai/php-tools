@@ -42,10 +42,7 @@ class PropertyNotExistsException extends ErrorException
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $property = null)
     {
-        if (!$message) {
-            $message = $property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist';
-        }
-        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+        parent::__construct($message ?: ($property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist'), $code, $severity, $filename, $lineno, $previous);
         $this->property = $property;
     }
 

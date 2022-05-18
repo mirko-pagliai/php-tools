@@ -36,9 +36,7 @@ trait EventDispatcherTrait
      */
     public function getEventDispatcher(): EventDispatcher
     {
-        $this->EventDispatcher ??= new EventDispatcher();
-
-        return $this->EventDispatcher;
+        return $this->EventDispatcher ??= new EventDispatcher();
     }
 
     /**

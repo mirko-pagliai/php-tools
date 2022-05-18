@@ -15,25 +15,17 @@
     </projectFiles>
 
     <issueHandlers>
-        <MethodSignatureMismatch>
+        <DuplicateArrayKey>
+            <errorLevel type="suppress">
+                <file name="src/TestSuite/TestTrait.php" />
+            </errorLevel>
+        </DuplicateArrayKey>
+
+        <MoreSpecificImplementedParamType>
             <errorLevel type="suppress">
                 <file name="src/Event/EventDispatcher.php" />
             </errorLevel>
-        </MethodSignatureMismatch>
-
-        <MissingPropertyType errorLevel="suppress" />
-
-        <InvalidThrow>
-            <errorLevel type="suppress">
-                <file name="src/Exceptionist.php" />
-            </errorLevel>
-        </InvalidThrow>
-
-        <UndefinedDocblockClass>
-            <errorLevel type="suppress">
-                <file name="src/BodyParser.php" />
-            </errorLevel>
-        </UndefinedDocblockClass>
+        </MoreSpecificImplementedParamType>
 
         <UndefinedFunction>
             <errorLevel type="suppress">

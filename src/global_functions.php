@@ -18,6 +18,9 @@ use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
 use function Symfony\Component\String\u;
 
+/**
+ * @todo remove in a later version
+ */
 if (!class_exists('Tools\ReflectionTrait')) {
     class_alias('Tools\TestSuite\ReflectionTrait', 'Tools\ReflectionTrait');
 }
@@ -55,6 +58,7 @@ if (!function_exists('get_child_methods')) {
      * @param string $class Class name
      * @return array<string>|null
      * @since 1.0.1
+     * @todo exception if the class does not exist
      */
     function get_child_methods(string $class): ?array
     {

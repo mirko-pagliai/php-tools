@@ -36,8 +36,7 @@ class CommandTester extends BaseCommandTester
      */
     public function assertOutputContains(string $needle, string $message = ''): void
     {
-        $message = $message ?: 'The output does not contain the string `' . $needle . '`';
-        Assert::assertStringContainsString($needle, $this->getDisplay(), $message);
+        Assert::assertStringContainsString($needle, $this->getDisplay(), $message ?: 'The output does not contain the string `' . $needle . '`');
     }
 
     /**
@@ -49,8 +48,7 @@ class CommandTester extends BaseCommandTester
      */
     public function assertOutputNotContains(string $needle, string $message = ''): void
     {
-        $message = $message ?: 'The output contains the string `' . $needle . '`';
-        Assert::assertStringNotContainsString($needle, $this->getDisplay(), $message);
+        Assert::assertStringNotContainsString($needle, $this->getDisplay(), $message ?: 'The output contains the string `' . $needle . '`');
     }
 
     /**
@@ -61,7 +59,6 @@ class CommandTester extends BaseCommandTester
      */
     public function assertCommandIsFailure(string $message = ''): void
     {
-        $message = $message ?: 'The command did not fail';
-        Assert::assertSame(Command::FAILURE, $this->getStatusCode(), $message);
+        Assert::assertSame(Command::FAILURE, $this->getStatusCode(), $message ?: 'The command did not fail');
     }
 }

@@ -27,7 +27,7 @@ class ReflectionTraitTest extends TestCase
     /**
      * @var \App\ExampleClass
      */
-    protected $example;
+    protected ExampleClass $example;
 
     /**
      * Called before every test method

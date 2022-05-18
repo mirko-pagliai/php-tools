@@ -42,10 +42,7 @@ class KeyNotExistsException extends ErrorException
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $key = null)
     {
-        if (!$message) {
-            $message = $key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist';
-        }
-        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+        parent::__construct($message ?: ($key ? sprintf('Array key `%s` does not exist', $key) : 'Array key does not exist'), $code, $severity, $filename, $lineno, $previous);
         $this->key = $key;
     }
 

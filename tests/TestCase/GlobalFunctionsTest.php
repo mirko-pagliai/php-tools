@@ -20,7 +20,6 @@ use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
 use LogicException;
-use stdClass;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -41,9 +40,7 @@ class GlobalFunctionsTest extends TestCase
         $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
 
         foreach ([['a', true], ['a', ['b', 'c']]] as $array) {
-            $this->assertException(function () use ($array) {
-                array_to_string($array);
-            }, LogicException::class, 'Cannot convert array to string, some values are not stringable');
+            $this->assertException(fn() => array_to_string($array), LogicException::class, 'Cannot convert array to string, some values are not stringable');
         }
     }
 
@@ -136,7 +133,7 @@ class GlobalFunctionsTest extends TestCase
             $this->assertTrue(is_stringable($value));
         }
 
-        foreach ([null, new stdClass()] as $value) {
+        foreach ([null, new \stdClass()] as $value) {
             $this->assertFalse(is_stringable($value));
         }
 

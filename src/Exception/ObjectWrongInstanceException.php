@@ -42,10 +42,7 @@ class ObjectWrongInstanceException extends ErrorException
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?object $object = null)
     {
-        if (!$message) {
-            $message = $object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance';
-        }
-        parent::__construct($message, $code, $severity, $filename, $lineno, $previous);
+        parent::__construct($message ?: ($object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance'), $code, $severity, $filename, $lineno, $previous);
         $this->object = $object;
     }
 

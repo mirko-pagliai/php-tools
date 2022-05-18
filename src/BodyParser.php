@@ -32,9 +32,8 @@ class BodyParser
     protected string $body;
 
     /**
-     * Extracted links. This property works as a cache of values. A `null` value
-     *  indicates that the links have not yet been extracted
-     * @var array
+     * Extracted links. This property works as a cache of values
+     * @var array<string>
      */
     protected array $extractedLinks = [];
 
@@ -44,7 +43,7 @@ class BodyParser
      * Array with tag names as keys and attribute names as values.
      * @var array
      */
-    protected array $tags = [
+    protected const TAGS = [
         'a' => 'href',
         'area' => 'href',
         'audio' => 'src',
@@ -92,7 +91,7 @@ class BodyParser
 
         $crawler = @new Crawler($this->body);
 
-        foreach ($this->tags as $tag => $attribute) {
+        foreach (self::TAGS as $tag => $attribute) {
             foreach ($crawler->filterXPath('//' . $tag)->extract([$attribute]) as $link) {
                 if ($link) {
                     $links[] = clean_url(url_to_absolute($this->url, $link), true, true);

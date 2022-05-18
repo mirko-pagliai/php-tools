@@ -36,9 +36,6 @@ class NotInArrayException extends InvalidValueException
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
     {
-        if (!$message) {
-            $message = is_stringable($value) ? 'Value `' . (is_array($value) ? array_to_string($value) : $value) . '` is not in the array' : 'Value is not in the array';
-        }
-        parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $value);
+        parent::__construct($message ?: (is_stringable($value) ? 'Value `' . (is_array($value) ? array_to_string($value) : $value) . '` is not in the array' : 'Value is not in the array'), $code, $severity, $filename, $lineno, $previous, $value);
     }
 }

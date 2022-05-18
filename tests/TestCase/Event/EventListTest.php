@@ -26,7 +26,7 @@ class EventListTest extends TestCase
     /**
      * @var \Tools\Event\EventList
      */
-    protected $EventList;
+    protected EventList $EventList;
 
     /**
      * Called before every test method

@@ -63,6 +63,7 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Filesystem\Exception\IOException
+     * @todo might return the filename
      */
     public function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): bool
     {
@@ -81,7 +82,7 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Creates a tenporary file. Alias for `tempnam()` and `file_put_contents()`.
+     * Creates a temporary file. Alias for `tempnam()` and `file_put_contents()`.
      *
      * You can pass a directory where to create the file. If `null`, the file
      *  will be created in `TMP`, if the constant is defined, otherwise in the
@@ -109,7 +110,7 @@ class Filesystem extends BaseFilesystem
      * @param string|array|bool $exceptions Either an array of filename or folder
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array<array> Array of nested directories and files in each directory
+     * @return array<array<string>> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
@@ -136,9 +137,7 @@ class Filesystem extends BaseFilesystem
 
             $finder->files()->in($path);
             if ($exceptions) {
-                $exceptions = array_map(function ($exception) {
-                    return preg_quote($exception, '/');
-                }, $exceptions);
+                $exceptions = array_map(fn($exception): string => preg_quote($exception, '/'), $exceptions);
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
             }
             $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
@@ -349,8 +348,8 @@ class Filesystem extends BaseFilesystem
      * To remove the directory itself and all its contents, use the
      *  `rmdirRecursive()` method instead.
      * @param string $dirname The directory path
-     * @param array|bool|string $exceptions Either an array of files to exclude
-     *  or boolean true to not grab dot files
+     * @param array<string>|bool|string $exceptions Either an array of files to
+     *  exclude or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @see \Tools\Filesystem::rmdirRecursive()

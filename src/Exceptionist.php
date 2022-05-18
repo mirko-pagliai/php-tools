@@ -32,22 +32,22 @@ use TypeError;
 
 /**
  * Exceptionist.
- * @method static mixed fileNotExists(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isBool($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isCallable($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static string isDir(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isFloat($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isInt($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isIterable($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isNotArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isNotPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isNull($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isObject($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isPositive($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isResource($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isString($value, string $message = '', \Throwable|string $exception = \Exception::class)
- * @method static mixed isUrl($value, string $message = '', \Throwable|string $exception = \Exception::class)
+ * @method static mixed fileNotExists(string $filename, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static array isArray($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isBool($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isCallable($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static string isDir(string $filename, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isFloat($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isInt($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isIterable($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isNotArray($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isNotPositive($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isNull($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isObject($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isPositive($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isResource($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isString($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
+ * @method static mixed isUrl($value, string $message = '', \Throwable|class-string<\Throwable> $exception = \Exception::class)
  * @since 1.4.1
  */
 class Exceptionist
@@ -119,15 +119,14 @@ class Exceptionist
      * @param array $array An array with keys to check
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return mixed
      * @throws \Tools\Exception\KeyNotExistsException
      */
     public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
-            $result = array_key_exists($name, $array);
-            self::isTrue($result, $message ?: sprintf('Key `%s` does not exist', $name), $exception);
+            self::isTrue(array_key_exists($name, $array), $message ?: 'Key `' . $name . '` does not exist', $exception);
         }
 
         return $key;
@@ -138,14 +137,13 @@ class Exceptionist
      * @param string $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
      */
     public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
     {
-        $message = $message ?: sprintf('File or directory `%s` does not exist', Filesystem::instance()->rtr($filename));
-        self::isTrue(file_exists($filename), $message, $exception);
+        self::isTrue(file_exists($filename), $message ?: sprintf('File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist'), $exception);
 
         return $filename;
     }
@@ -156,12 +154,12 @@ class Exceptionist
      * @param array $haystack The array
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return mixed
      * @since 1.5.8
      * @throws \Tools\Exception\NotInArrayException
      */
-    public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray(mixed $needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
     {
         if (!$message) {
             $message = 'The value';
@@ -184,7 +182,7 @@ class Exceptionist
      * @param mixed $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return mixed
      * @since 1.5.10
      * @throws \Exception
@@ -202,15 +200,14 @@ class Exceptionist
      * @param string $class The class that the object should be an instance of
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return object
      * @since 1.4.7
      * @throws \Tools\Exception\ObjectWrongInstanceException
      */
     public static function isInstanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
-        $message = $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class);
-        self::isTrue($object instanceof $class, $message, $exception);
+        self::isTrue($object instanceof $class, $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class), $exception);
 
         return $object;
     }
@@ -220,7 +217,7 @@ class Exceptionist
      * @param string $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
@@ -229,8 +226,7 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename));
-        self::isTrue(is_readable($filename), $message, $exception);
+        self::isTrue(is_readable($filename), $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename)), $exception);
 
         return $filename;
     }
@@ -240,7 +236,7 @@ class Exceptionist
      * @param string $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return string
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
@@ -249,28 +245,26 @@ class Exceptionist
     {
         self::fileExists($filename, $message, $exception);
 
-        $message = $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename));
-        self::isTrue(is_writable($filename), $message, $exception);
+        self::isTrue(is_writable($filename), $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename)), $exception);
 
         return $filename;
     }
 
     /**
      * Checks whether a class method exists
-     * @param string|object $object An object instance or a class name
+     * @param class-string|object $object An object instance or a class name
      * @param string $methodName The method name
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
-     * @return array Array with class name and method name
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
+     * @return array<string> Array with class name and method name
      * @since 1.4.3
      * @throws \BadMethodCallException
      */
     public static function methodExists($object, string $methodName, ?string $message = '', $exception = BadMethodCallException::class): array
     {
         $object = is_string($object) ? $object : get_class($object);
-        $message = $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName);
-        self::isTrue(method_exists($object, $methodName), $message, $exception);
+        self::isTrue(method_exists($object, $methodName), $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName), $exception);
 
         return [$object, $methodName];
     }
@@ -284,7 +278,7 @@ class Exceptionist
      * @param string|array<string> $property Name of the property or an array of names
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return string|array<string>
      * @throws \Tools\Exception\PropertyNotExistsException
      */
@@ -303,7 +297,7 @@ class Exceptionist
      * @param mixed $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
-     * @param \Throwable|string $exception The exception class you want to set
+     * @param \Throwable|class-string<\Throwable> $exception The exception class you want to set
      * @return mixed
      * @throws \Exception
      */

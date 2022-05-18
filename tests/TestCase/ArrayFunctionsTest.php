@@ -28,9 +28,7 @@ class ArrayFunctionsTest extends TestCase
      */
     public function testArrayClean(): void
     {
-        $filterMethod = function ($value) {
-            return $value && $value != 'third';
-        };
+        $filterMethod = fn($value): bool => $value && $value != 'third';
 
         $array = ['first', 'second', false, 0, 'second', 'third', null, '', 'fourth'];
         $this->assertSame(['first', 'second', 'third', 'fourth'], array_clean($array));

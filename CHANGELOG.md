@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.1
+* updated the code with the new features introduced by php 7.4.
+
 ### 1.6.0
 * `FileArray` has been removed;
 * `string_ends_with()`, `string_contains()` and `string_starts_with()` have been
