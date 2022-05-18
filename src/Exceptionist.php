@@ -161,17 +161,7 @@ class Exceptionist
      */
     public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
     {
-        if (!$message) {
-            $message = 'The value';
-            if (is_stringable($needle)) {
-                $message .= ' `' . (string)$needle . '`';
-            }
-            $message .= ' does not exist in array';
-            if (is_stringable($haystack)) {
-                $message .= ' `' . array_to_string($haystack) . '`';
-            }
-        }
-
+        $message = $message ?: 'The value' . (is_stringable($needle) ? ' `' . (string)$needle . '`' : '') . ' does not exist in array' . (is_stringable($haystack) ? ' `' . array_to_string($haystack) . '`' : '');
         self::isTrue(in_array($needle, $haystack, true), $message, $exception);
 
         return $needle;
