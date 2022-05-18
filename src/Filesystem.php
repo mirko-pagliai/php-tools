@@ -61,23 +61,22 @@ class Filesystem extends BaseFilesystem
      *  a stream resource
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return bool
+     * @return string
      * @throws \Symfony\Component\Filesystem\Exception\IOException
-     * @todo might return the filename
      */
-    public function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): bool
+    public function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
     {
         try {
             $this->mkdir(dirname($filename), $dirMode);
             $this->dumpFile($filename, $data);
 
-            return true;
+            return $filename;
         } catch (IOException $e) {
             if (!$ignoreErrors) {
                 throw $e;
             }
 
-            return false;
+            return '';
         }
     }
 
@@ -99,9 +98,8 @@ class Filesystem extends BaseFilesystem
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         Exceptionist::isTrue($filename, 'It is not possible to create a temporary file', RuntimeException::class);
-        $this->createFile($filename, $data);
 
-        return $filename;
+        return $this->createFile($filename, $data);
     }
 
     /**

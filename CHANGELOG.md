@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.1
+* `Filesystem::createFile()` returns now the filename as string;
 * updated the code with the new features introduced by php 7.4.
 
 ### 1.6.0
