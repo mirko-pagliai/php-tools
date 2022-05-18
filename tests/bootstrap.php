@@ -28,12 +28,14 @@ define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 if (!function_exists('createSomeFiles')) {
     /**
      * Function to create some files for tests
-     * @param array $files Files
-     * @return array
+     * @param array<string> $files Files
+     * @return array<string>
      */
     function createSomeFiles(array $files = []): array
     {
-        $files = $files ?: [
+        @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
+
+        return array_map([Filesystem::instance(), 'createFile'], $files ?: [
             TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
             TMP . 'exampleDir' . DS . '.hiddenFile',
             TMP . 'exampleDir' . DS . 'file1',
@@ -42,13 +44,7 @@ if (!function_exists('createSomeFiles')) {
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
             TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-        ];
-
-        //Creates directories and files
-        array_walk($files, [Filesystem::instance(), 'createFile']);
-        @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
-
-        return $files;
+        ]);
     }
 }
 

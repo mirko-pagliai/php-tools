@@ -29,9 +29,7 @@ class BodyParserTest extends TestCase
      */
     public function testExtractLinks(): void
     {
-        $extractLinksMethod = function ($html) {
-            return (new BodyParser($html, 'http://localhost'))->extractLinks();
-        };
+        $extractLinksMethod = fn(string $html): array => (new BodyParser($html, 'http://localhost'))->extractLinks();
 
         $expected = [
             'http://localhost/page.html',

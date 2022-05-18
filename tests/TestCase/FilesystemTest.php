@@ -56,17 +56,17 @@ class FilesystemTest extends TestCase
     public function testCreateFile(): void
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
-        $this->assertTrue(Filesystem::instance()->createFile($filename));
+        $this->assertSame($filename, Filesystem::instance()->createFile($filename));
         $this->assertStringEqualsFile($filename, '');
 
         unlink($filename);
-        $this->assertTrue(Filesystem::instance()->createFile($filename, 'string'));
+        $this->assertSame($filename, Filesystem::instance()->createFile($filename, 'string'));
         $this->assertStringEqualsFile($filename, 'string');
 
         $this->skipIf(IS_WIN);
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(Filesystem::instance()->createFile(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
+        $this->assertEmpty(Filesystem::instance()->createFile(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
 
         //Using a no existing directory
         $this->expectException(IOException::class);
@@ -81,7 +81,7 @@ class FilesystemTest extends TestCase
     {
         foreach (['', 'string'] as $string) {
             $filename = Filesystem::instance()->createTmpFile($string);
-            $pattern = IS_WIN ? '/tmp[\w\d]+\.tmp$/' : sprintf('/^%s[\w\d]+$/', preg_quote(TMP, '/'));
+            $pattern = IS_WIN ? '/tmp[\w\d]+\.tmp$/' : '/^' . preg_quote(TMP, '/') . '[\w\d]+$/';
             $this->assertMatchesRegularExpression($pattern, $filename);
             $this->assertStringEqualsFile($filename, $string);
         }
@@ -113,9 +113,7 @@ class FilesystemTest extends TestCase
             ['.hiddenFile'],
             ['.hiddenFile', 'file2', 'file3'],
         ] as $exceptions) {
-            $currentExpectedFiles = array_clean($expectedFiles, function ($value) use ($exceptions) {
-                return !in_array(basename($value), $exceptions);
-            });
+            $currentExpectedFiles = array_clean($expectedFiles, fn(string $value): bool => !in_array(basename($value), $exceptions));
             $this->assertEquals([$expectedDirs, $currentExpectedFiles], Filesystem::instance()->getDirTree(TMP . 'exampleDir', $exceptions));
         }
 

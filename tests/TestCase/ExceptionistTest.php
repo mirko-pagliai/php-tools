@@ -20,7 +20,6 @@ use BadMethodCallException;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
-use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotInArrayException;
@@ -70,8 +69,7 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethod(): void
     {
-        $function = function () {
-        };
+        $function = fn() => '';
         $stream = stream_context_create();
 
         $this->assertSame(true, Exceptionist::isBool(true));
@@ -81,12 +79,10 @@ class ExceptionistTest extends TestCase
         $this->assertSame([1], Exceptionist::isIterable([1]));
         $this->assertSame(null, Exceptionist::isNull(null));
         $this->assertSame($stream, Exceptionist::isResource($stream));
-        $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
+        $this->assertEquals(new \stdClass(), Exceptionist::isObject(new \stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
-            $this->assertException(function () use ($var) {
-                Exceptionist::isInt($var);
-            }, Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isInt($var), Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -94,9 +90,7 @@ class ExceptionistTest extends TestCase
         }
 
         foreach ([null, false, -1, 'd', []] as $var) {
-            $this->assertException(function () use ($var) {
-                Exceptionist::isPositive($var);
-            }, Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isPositive($var), Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
         }
     }
 
@@ -121,13 +115,9 @@ class ExceptionistTest extends TestCase
         $this->assertSame(TMP . 'noExisting', Exceptionist::fileNotExists(TMP . 'noExisting'));
         $this->assertSame('string', Exceptionist::isNotArray('string'));
 
-        $this->assertException(function () {
-            Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: '');
-        }, Exception::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
+        $this->assertException(fn() => Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: ''), Exception::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
 
-        $this->assertException(function () {
-            Exceptionist::isNotPositive(1);
-        }, Exception::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
+        $this->assertException(fn() => Exceptionist::isNotPositive(1), Exception::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
     }
 
     /**
@@ -179,18 +169,12 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b', 'c']));
 
-        $this->assertException(function () {
-            Exceptionist::inArray('a', ['b', 'c']);
-        }, NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
+        $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c']), NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
 
         //With a no-stringable array
-        $this->assertException(function () {
-            Exceptionist::inArray('a', ['b', true]);
-        }, NotInArrayException::class, 'The value `a` does not exist in array');
+        $this->assertException(fn() => Exceptionist::inArray('a', ['b', true]), NotInArrayException::class, 'The value `a` does not exist in array');
 
-        $this->assertException(function () {
-            Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class);
-        }, ErrorException::class, '`a` is not in array');
+        $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class), ErrorException::class, '`a` is not in array');
     }
 
     /**
@@ -199,7 +183,7 @@ class ExceptionistTest extends TestCase
      */
     public function testInstanceOf(): void
     {
-        $instance = new stdClass();
+        $instance = new \stdClass();
         $this->assertSame($instance, Exceptionist::isInstanceOf($instance, \stdClass::class));
 
         $this->expectException(ObjectWrongInstanceException::class);
@@ -272,22 +256,19 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
-        $object = new stdClass();
+        $object = new \stdClass();
         $object->name = 'My name';
         $object->surname = 'My surname';
         $this->assertSame('name', Exceptionist::objectPropertyExists($object, 'name'));
         $this->assertSame(['name', 'surname'], Exceptionist::objectPropertyExists($object, ['name', 'surname']));
 
-        $object = $this->getMockBuilder(ExampleClass::class)
-            ->setMethods(['has'])
-            ->getMock();
-
-        $object->expects($this->once())
+        $Mock = $this->createMock(ExampleClass::class);
+        $Mock->expects($this->once())
             ->method('has')
             ->with('publicProperty')
             ->willReturn(true);
 
-        $this->assertSame('publicProperty', Exceptionist::objectPropertyExists($object, 'publicProperty'));
+        $this->assertSame('publicProperty', Exceptionist::objectPropertyExists($Mock, 'publicProperty'));
 
         $this->expectException(PropertyNotExistsException::class);
         $this->expectExceptionMessage('Property `' . ExampleClass::class . '::$noExisting` does not exist');
@@ -321,9 +302,7 @@ class ExceptionistTest extends TestCase
             [0, 'Value `0` is not equal to `true`'],
         ] as $exception) {
             [$value, $expectedMessage] = $exception;
-            $this->assertException(function () use ($value) {
-                Exceptionist::isTrue($value);
-            }, Exception::class, $expectedMessage);
+            $this->assertException(fn() => Exceptionist::isTrue($value), Exception::class, $expectedMessage);
         }
     }
 
@@ -335,17 +314,9 @@ class ExceptionistTest extends TestCase
     {
         $message = 'it\'s not `true`';
 
-        $this->assertException(function () use ($message) {
-            Exceptionist::isTrue(false, $message);
-        }, Exception::class, $message);
-
-        $this->assertException(function () use ($message) {
-            Exceptionist::isTrue(false, '', new ErrorException($message));
-        }, ErrorException::class, $message);
-
-        $this->assertException(function () use ($message) {
-            Exceptionist::isTrue(false, $message, ErrorException::class);
-        }, ErrorException::class, $message);
+        $this->assertException(fn() => Exceptionist::isTrue(false, $message), Exception::class, $message);
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
+        $this->assertException(fn() => Exceptionist::isTrue(false, $message, ErrorException::class), ErrorException::class, $message);
     }
 
     /**
@@ -354,9 +325,7 @@ class ExceptionistTest extends TestCase
      */
     public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
-        $this->assertException(function () {
-            /** @phpstan-ignore-next-line */
-            Exceptionist::isTrue(false, '', new \stdClass());
-        }, Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
+        /** @phpstan-ignore-next-line */
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', new \stdClass()), Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
     }
 }

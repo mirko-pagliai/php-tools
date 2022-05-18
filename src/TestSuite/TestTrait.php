@@ -71,19 +71,14 @@ trait TestTrait
         if (str_starts_with($name, 'assertIs')) {
             $count = count($arguments);
             if (!$count || $count > 2) {
-                throw new BadMethodCallException(sprintf(
-                    'Method %s::%s() expects at least 1 argument, maximum 2, %d passed',
-                    __CLASS__,
-                    $name,
-                    $count
-                ));
+                throw new BadMethodCallException(sprintf('Method %s::%s() expects at least 1 argument, maximum 2, %d passed', __CLASS__, $name, $count));
             }
 
-            $function = sprintf('is_%s', strtolower(substr($name, 8)));
+            /** @var callable $function */
+            $function = 'is_' . strtolower(substr($name, 8));
             if (is_callable($function)) {
                 $var = array_shift($arguments);
-                $arguments = array_merge([$function($var)], $arguments);
-                call_user_func_array([__CLASS__, 'assertTrue'], $arguments);
+                call_user_func_array([__CLASS__, 'assertTrue'], [$function($var), ...$arguments]);
 
                 return;
             }
@@ -126,27 +121,16 @@ trait TestTrait
         try {
             call_user_func($function);
         } catch (Exception $e) {
-            parent::assertInstanceof(
-                $expectedException,
-                $e,
-                sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e))
-            );
+            parent::assertInstanceof($expectedException, $e, sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
 
             if ($expectedMessage) {
-                parent::assertNotEmpty(
-                    $e->getMessage(),
-                    sprintf('Expected message exception `%s`, but no message for the exception', $expectedMessage)
-                );
-                parent::assertEquals($expectedMessage, $e->getMessage(), sprintf(
-                    'Expected message exception `%s`, unexpected message `%s`',
-                    $expectedMessage,
-                    $e->getMessage()
-                ));
+                parent::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
+                parent::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
             }
         }
 
         if (!isset($e)) {
-            self::fail(sprintf('Expected exception `%s`, but no exception throw', $expectedException));
+            self::fail('Expected exception `' . $expectedException . '`, but no exception throw');
         }
     }
 
@@ -159,7 +143,8 @@ trait TestTrait
      * It is not necessary it actually exists.
      * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
      *  extension is `jpg`).
-     * @param string|array<string> $expectedExtension Expected extension
+     * @param string|array<string> $expectedExtension Expected extension or an
+     *  array of extensions
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -175,7 +160,8 @@ trait TestTrait
      *
      * If `$expectedMime` is an array, asserts that the filename has at
      *  least one of those values.
-     * @param string|array<string> $expectedMime MIME content type
+     * @param string|array<string> $expectedMime MIME content type or an array
+     *  of types
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the
      *  generated message
@@ -233,8 +219,9 @@ trait TestTrait
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param array<string> $expectedProperties Expected properties
-     * @param object $object Object you want to check
+     * @param array<string> $expectedProperties Expected properties or an array
+     *  of properties
+     * @param object|array $object Object you want to check or an array of objects
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void
@@ -246,8 +233,8 @@ trait TestTrait
 
     /**
      * Asserts that `$firstClass` and `$secondClass` have the same methods
-     * @param string|object $firstClass First class as string or object
-     * @param string|object $secondClass Second class as string or object
+     * @param class-string|object $firstClass First class as string or object
+     * @param class-string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the
      *  generated message
      * @return void

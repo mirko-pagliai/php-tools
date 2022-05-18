@@ -37,9 +37,6 @@ class NotDirectoryException extends FileException
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
     {
-        if (!$message) {
-            $message = $path ? sprintf('Filename `%s` is not a directory', Filesystem::instance()->rtr($path)) : 'Filename is not a directory';
-        }
-        parent::__construct($message, $code, $severity, $filename, $lineno, $previous, $path);
+        parent::__construct($message ?: ($path ? sprintf('Filename `%s` is not a directory', Filesystem::instance()->rtr($path)) : 'Filename is not a directory'), $code, $severity, $filename, $lineno, $previous, $path);
     }
 }

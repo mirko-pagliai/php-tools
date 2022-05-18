@@ -47,21 +47,15 @@ class EntityTest extends TestCase
     public function testDebugInfo(): void
     {
         ob_start();
-        $line = __LINE__ + 1;
+        $expectedLine = __LINE__ + 1;
         debug($this->Entity);
         $dump = ob_get_clean() ?: '';
-        $assertStringContainsString = function (string $first, string $second) {
-            if (is_callable([$this, 'assertStringContainsString'])) {
-                $method = [$this, 'assertStringContainsString'];
-            }
-            call_user_func($method ?? 'self::assertContains', $first, $second);
-        };
-        $assertStringContainsString(EntityExample::class, $dump);
+        $this->assertStringContainsString(EntityExample::class, $dump);
 
         $this->skipIf(IS_WIN);
-        $assertStringContainsString(__FILE__ . ' (line ' . $line . ')', $dump);
-        $assertStringContainsString('########## DEBUG ##########', $dump);
-        $assertStringContainsString('App\EntityExample {', $dump);
+        $this->assertStringContainsString(__FILE__ . ' (line ' . $expectedLine . ')', $dump);
+        $this->assertStringContainsString('########## DEBUG ##########', $dump);
+        $this->assertStringContainsString('App\EntityExample {', $dump);
     }
 
     /**

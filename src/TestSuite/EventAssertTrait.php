@@ -31,7 +31,7 @@ trait EventAssertTrait
      */
     public function assertEventFired(string $eventName, EventDispatcher $EventDispatcher, string $message = ''): void
     {
-        $this->assertTrue($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: sprintf('The `%s` event was not fired', $eventName));
+        $this->assertTrue($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: 'The `' . $eventName . '` event was not fired');
     }
 
     /**
@@ -71,6 +71,6 @@ trait EventAssertTrait
      */
     public function assertEventNotFired(string $eventName, EventDispatcher $EventDispatcher, string $message = ''): void
     {
-        $this->assertFalse($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: sprintf('The `%s` event was not expected to be fired, instead it has been fired', $eventName));
+        $this->assertFalse($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: 'The `' . $eventName . '` event was not expected to be fired, instead it has been fired');
     }
 }

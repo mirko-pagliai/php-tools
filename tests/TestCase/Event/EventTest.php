@@ -27,7 +27,7 @@ class EventTest extends TestCase
     /**
      * @var \Tools\Event\Event
      */
-    protected $Event;
+    protected Event $Event;
 
     /**
      * Called before every test method
@@ -37,7 +37,7 @@ class EventTest extends TestCase
     {
         parent::setUp();
 
-        $this->Event = $this->Event ?: new Event('myEvent', ['arg1', 'arg2']);
+        $this->Event ??= new Event('myEvent', ['arg1', 'arg2']);
     }
 
     /**
@@ -72,8 +72,8 @@ class EventTest extends TestCase
         $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
         //With `ArrayAccess` as event argument
-        $stub = $this->getMockForAbstractClass(Entity::class);
-        $Event = new Event('myEvent', $stub);
+        $Mock = $this->getMockForAbstractClass(Entity::class);
+        $Event = new Event('myEvent', $Mock);
         $this->assertIsArray($Event->getArgs());
         $this->assertNotEmpty($Event->getArgs());
     }

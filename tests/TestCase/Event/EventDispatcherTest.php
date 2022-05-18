@@ -27,7 +27,7 @@ class EventDispatcherTest extends TestCase
     /**
      * @var \Tools\Event\EventDispatcher
      */
-    protected $EventDispatcher;
+    protected EventDispatcher $EventDispatcher;
 
     /**
      * Called before every test method
