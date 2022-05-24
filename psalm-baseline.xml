@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="src/Event/EventDispatcher.php">
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$event</code>
+    </MoreSpecificImplementedParamType>
+  </file>
+  <file src="src/TestSuite/TestTrait.php">
+    <DuplicateArrayKey occurrences="1">
+      <code>$arguments</code>
+    </DuplicateArrayKey>
+  </file>
+  <file src="src/global_functions.php">
+    <UndefinedFunction occurrences="1">
+      <code>u($string)</code>
+    </UndefinedFunction>
+  </file>
+</files>
