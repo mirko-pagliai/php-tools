@@ -322,7 +322,7 @@ class Exceptionist
         //Tries to set file and line that throwned the exception
         if ($exception == ErrorException::class || is_subclass_of($exception, ErrorException::class)) {
             foreach (debug_backtrace() as $backtrace) {
-                if (array_key_exists('file', $backtrace) && $backtrace['file'] != __FILE__) {
+                if (array_key_exists('file', $backtrace) && array_key_exists('line', $backtrace) && $backtrace['file'] != __FILE__) {
                     throw new $exception($message, 0, E_ERROR, $backtrace['file'], $backtrace['line']);
                 }
             }

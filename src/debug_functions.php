@@ -29,7 +29,7 @@ VarDumper::setHandler(function ($var) {
         $backtrace = array_values(array_filter($backtrace, fn($current): bool => key_exists('file', $current)));
         $key = array_search(__FILE__, array_column($backtrace, 'file'));
         $key = $key ? (int)$key - 1 : count($backtrace) - 3;
-        $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'], $backtrace[$key]['line']);
+        $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'] ?? '', $backtrace[$key]['line'] ?? 0);
         $dumper = new CliDumper();
         printf($template, $lineInfo, $dumper->dump($cloner->cloneVar($var), true));
     } else {

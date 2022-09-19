@@ -1,7 +1,7 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.2
-* fixed a little issue for `Exceptionist`;
+* fixed a little issue for `Exceptionist` and `debug_functions.php`;
 * little fixes for `phpstan`, `psalm` and for the `composer.json` file.
 
 ### 1.6.1
