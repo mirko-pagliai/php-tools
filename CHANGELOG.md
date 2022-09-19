@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.2
+* fixed a little issue for `Exceptionist` and `debug_functions.php`;
+* little fixes for `phpstan`, `psalm` and for the `composer.json` file.
+
 ### 1.6.1
 * `Filesystem::createFile()` returns now the filename as string;
 * `get_child_methods()` global function throws an exception if the class does

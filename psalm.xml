@@ -6,6 +6,7 @@
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
     autoloader="tests/bootstrap.php"
+    errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
         <directory name="src" />
@@ -13,24 +14,4 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-
-    <issueHandlers>
-        <DuplicateArrayKey>
-            <errorLevel type="suppress">
-                <file name="src/TestSuite/TestTrait.php" />
-            </errorLevel>
-        </DuplicateArrayKey>
-
-        <MoreSpecificImplementedParamType>
-            <errorLevel type="suppress">
-                <file name="src/Event/EventDispatcher.php" />
-            </errorLevel>
-        </MoreSpecificImplementedParamType>
-
-        <UndefinedFunction>
-            <errorLevel type="suppress">
-                <file name="src/global_functions.php" />
-            </errorLevel>
-        </UndefinedFunction>
-    </issueHandlers>
 </psalm>
