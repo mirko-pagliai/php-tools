@@ -185,7 +185,7 @@ trait TestTrait
     protected static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
-        [$actualWidth, $actualHeight] = getimagesize($filename);
+        [$actualWidth, $actualHeight] = getimagesize($filename) ?: [];
         self::assertEquals($actualWidth, $expectedWidth, $message);
         self::assertEquals($actualHeight, $expectedHeight, $message);
     }

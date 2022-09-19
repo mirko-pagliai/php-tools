@@ -161,7 +161,7 @@ if (!function_exists('objects_map')) {
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function (object $object) use ($method, $args) {
-            Exceptionist::isTrue(method_exists($object, '__call') || method_exists($object, $method), sprintf(
+            Exceptionist::isTrue(method_exists($object, '__call') || is_callable([$object, $method]), sprintf(
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
