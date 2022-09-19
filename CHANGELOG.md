@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.2
+* fixed a little issue for `Exceptionist`.
+
 ### 1.6.1
 * `Filesystem::createFile()` returns now the filename as string;
 * `get_child_methods()` global function throws an exception if the class does
