@@ -143,7 +143,7 @@ class Exceptionist
      */
     public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
     {
-        self::isTrue(file_exists($filename), $message ?: sprintf('File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist'), $exception);
+        self::isTrue(file_exists($filename), $message ?: 'File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist', $exception);
 
         return $filename;
     }
