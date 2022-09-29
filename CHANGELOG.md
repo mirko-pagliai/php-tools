@@ -1,4 +1,8 @@
 # 1.x branch
+## 1.7 branch
+### 1.7.0
+* `Filesystem::isWritableResursive()` has been removed.
+
 ## 1.6 branch
 ### 1.6.3
 * added `Filesystem::isWritableRecursive()` method, which replaces 
