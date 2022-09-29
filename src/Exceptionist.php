@@ -32,6 +32,7 @@ use TypeError;
 
 /**
  * Exceptionist.
+ * @method static string classExists(string $className, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed fileNotExists(string $filename, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Throwable|string $exception = \Exception::class)
  * @method static mixed isBool($value, string $message = '', \Throwable|string $exception = \Exception::class)
