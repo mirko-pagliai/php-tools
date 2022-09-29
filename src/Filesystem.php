@@ -228,7 +228,6 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
-     * @todo Fix the (wrong) name
      */
     public function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
