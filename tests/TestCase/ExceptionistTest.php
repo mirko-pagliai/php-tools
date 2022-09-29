@@ -317,10 +317,8 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithCustomMessageAndCustomException(): void
     {
         $message = 'it\'s not `true`';
-
         $this->assertException(fn() => Exceptionist::isTrue(false, $message), Exception::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
-        $this->assertException(fn() => Exceptionist::isTrue(false, $message, ErrorException::class), ErrorException::class, $message);
     }
 
     /**
