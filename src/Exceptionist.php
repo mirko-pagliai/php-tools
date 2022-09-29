@@ -311,7 +311,7 @@ class Exceptionist
             } elseif ($value === '') {
                 $message = 'An empty string is not equal to `true`';
             } elseif (is_stringable($value)) {
-                $message = 'Value `' . (string)$value . '` is not equal to `true`';
+                $message = 'Value `' . $value . '` is not equal to `true`';
             }
         }
 
