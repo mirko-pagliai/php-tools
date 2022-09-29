@@ -163,18 +163,22 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `inArray()` method
+     * @uses \Tools\Exceptionist::inArray()
      * @test
      */
     public function testInArray(): void
     {
         $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b', 'c']));
-
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c']), NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
 
         //With a no-stringable array
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', true]), NotInArrayException::class, 'The value `a` does not exist in array');
-
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class), ErrorException::class, '`a` is not in array');
+
+        //With `null` value
+        $this->assertSame(null, Exceptionist::inArray(null, ['string', null]));
+        $this->assertException(fn() => Exceptionist::inArray(null, ['b', 'c']), NotInArrayException::class, 'The value does not exist in array `[\'b\', \'c\']`');
+
     }
 
     /**
