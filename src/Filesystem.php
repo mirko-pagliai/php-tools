@@ -110,7 +110,6 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array<array<string>> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @todo Check the `$skipHidden` var
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
@@ -118,10 +117,8 @@ class Filesystem extends BaseFilesystem
         $finder = new Finder();
         $exceptions = (array)(is_bool($exceptions) ? ($exceptions ? ['.'] : []) : $exceptions);
 
-        $skipHidden = false;
         $finder->ignoreDotFiles(false);
         if (in_array('.', $exceptions)) {
-            $skipHidden = true;
             unset($exceptions[array_search('.', $exceptions)]);
             $finder->ignoreDotFiles(true);
         }
