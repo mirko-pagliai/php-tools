@@ -178,7 +178,6 @@ class ExceptionistTest extends TestCase
         //With `null` value
         $this->assertSame(null, Exceptionist::inArray(null, ['string', null]));
         $this->assertException(fn() => Exceptionist::inArray(null, ['b', 'c']), NotInArrayException::class, 'The value does not exist in array `[\'b\', \'c\']`');
-
     }
 
     /**
