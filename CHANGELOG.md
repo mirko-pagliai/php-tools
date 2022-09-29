@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.3
+* added `Filesystem::isWritableRecursive()` method, which replaces 
+    `isWritableResursive()` (which had a serious typo). The previous method 
+    will be kept (as deprecated) and will be removed in a later version.
+
 ### 1.6.2
 * fixed a little issue for `Exceptionist` and `debug_functions.php`;
 * little fixes for `phpstan`, `psalm` and for the `composer.json` file.

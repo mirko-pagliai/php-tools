@@ -236,23 +236,40 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `isWritableResursive()` method
+     * Test for `isWritableRecursive()` method
+     * @uses \Tools\Filesystem::isWritableRecursive()
      * @test
      */
     public function testIsWritableRecursive(): void
     {
-        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
+        $this->assertTrue(Filesystem::instance()->isWritableRecursive(TMP));
 
         if (!IS_WIN) {
-            $this->assertFalse(Filesystem::instance()->isWritableResursive(DS . 'bin'));
+            $this->assertFalse(Filesystem::instance()->isWritableRecursive(DS . 'bin'));
         }
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(Filesystem::instance()->isWritableResursive(TMP . 'noExisting', true, true));
+        $this->assertFalse(Filesystem::instance()->isWritableRecursive(TMP . 'noExisting', true, true));
 
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
-        $this->assertFalse(Filesystem::instance()->isWritableResursive(TMP . 'noExisting'));
+        $this->assertFalse(Filesystem::instance()->isWritableRecursive(TMP . 'noExisting'));
+    }
+
+    /**
+     * Test for `isWritableResursive()`
+     * @uses \Tools\Filesystem::isWritableResursive()
+     * @test
+     */
+    public function testIsWritableResursive()
+    {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('Deprecated. Use instead `isWritableRecursive()`');
+        Filesystem::instance()->isWritableResursive(TMP);
     }
 
     /**
