@@ -230,7 +230,7 @@ class Filesystem extends BaseFilesystem
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
      * @todo Fix the (wrong) name
      */
-    public function isWritableResursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
+    public function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
         try {
             [$directories, $files] = $this->getDirTree($dirname);
@@ -254,6 +254,24 @@ class Filesystem extends BaseFilesystem
 
             return false;
         }
+    }
+
+    /**
+     * Tells whether a directory and its subdirectories are writable.
+     *
+     * It can also check that all the files are writable.
+     * @param string $dirname Path to the directory
+     * @param bool $checkOnlyDir If `true`, also checks for all files
+     * @param bool $ignoreErrors With `true`, errors will be ignored
+     * @return bool
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @deprecated Use instead `isWritableRecursive()`
+     */
+    public function isWritableResursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
+    {
+        deprecationWarning('Deprecated. Use instead `isWritableRecursive()`');
+
+        return $this->isWritableRecursive($dirname, $checkOnlyDir, $ignoreErrors);
     }
 
     /**
