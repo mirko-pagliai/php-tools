@@ -261,7 +261,7 @@ class FilesystemTest extends TestCase
      * @uses \Tools\Filesystem::isWritableResursive()
      * @test
      */
-    public function testIsWritableResursive()
+    public function testIsWritableResursive(): void
     {
         $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
