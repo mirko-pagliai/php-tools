@@ -6,19 +6,14 @@ parameters:
 			path: src/global_functions.php
 
 		-
-			message: "#^Negated boolean expression is always true\\.$#"
-			count: 2
-			path: tests/TestCase/FilesystemTest.php
+			message: "#^Call to an undefined static method Tools\\\\Exceptionist\\:\\:arrayCombine\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/ExceptionistTest.php
 
 		-
-			message: "#^Ternary operator condition is always false\\.$#"
+			message: "#^Call to an undefined static method Tools\\\\Exceptionist\\:\\:notExistingMethod\\(\\)\\.$#"
 			count: 1
-			path: tests/TestCase/FilesystemTest.php
-
-		-
-			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
-			path: tests/TestCase/GlobalFunctionsTest.php
+			path: tests/TestCase/ExceptionistTest.php
 
 		-
 			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$firstProperty\\.$#"

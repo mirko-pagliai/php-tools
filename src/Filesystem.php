@@ -22,7 +22,6 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
-use Tools\Exceptionist;
 
 /**
  * Provides basic utility to manipulate the file system.
@@ -41,7 +40,7 @@ class Filesystem extends BaseFilesystem
 
     /**
      * Concatenates various paths together, adding the right slash term
-     * @param string $paths Various paths to be concatenated
+     * @param string ...$paths Various paths to be concatenated
      * @return string The path concatenated
      * @since 1.4.5
      */
@@ -92,7 +91,7 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
-     * @throws \RuntimeException
+     * @throws \RuntimeException|\Throwable
      */
     public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
@@ -109,7 +108,7 @@ class Filesystem extends BaseFilesystem
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array<array<string>> Array of nested directories and files in each directory
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
@@ -174,7 +173,7 @@ class Filesystem extends BaseFilesystem
             $filename = substr($filename, $pos + 1);
         }
 
-        //Finds the occurrence of the first point. The offset is 1, so as to
+        //Finds the occurrence of the first point. The offset is 1 to
         //  preserve the hidden files
         $pos = strpos($filename, '.', 1);
 
@@ -187,7 +186,7 @@ class Filesystem extends BaseFilesystem
      * The root path must be set with the `ROOT` environment variable (using the
      *  `putenv()` function) or the `ROOT` constant.
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     public function getRoot(): string
     {
@@ -228,7 +227,8 @@ class Filesystem extends BaseFilesystem
      * @param bool $checkOnlyDir If `true`, also checks for all files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
+     * @todo Fix the (wrong) name
      */
     public function isWritableResursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
@@ -303,7 +303,7 @@ class Filesystem extends BaseFilesystem
      * Removes the directory itself and all its contents, including
      *  subdirectories and files.
      *
-     * To remove only files contained in a directory and its sub-directories,
+     * To remove only files contained in a directory and its subdirectories,
      *  leaving the directories unaltered, use the `unlinkRecursive()`
      *  method instead.
      * @param string $dirname Path to the directory
@@ -325,6 +325,7 @@ class Filesystem extends BaseFilesystem
      * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
+     * @throws \Throwable
      */
     public function rtr(string $path): string
     {
@@ -340,7 +341,7 @@ class Filesystem extends BaseFilesystem
 
     /**
      * Recursively removes all the files contained in a directory and within its
-     *  sub-directories. This function only removes the files, leaving the
+     *  subdirectories. This function only removes the files, leaving the
      *  directories unaltered.
      *
      * To remove the directory itself and all its contents, use the
@@ -350,9 +351,10 @@ class Filesystem extends BaseFilesystem
      *  exclude or boolean true to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
-     * @see \Tools\Filesystem::rmdirRecursive()
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Throwable
+     * @see \Tools\Filesystem::rmdirRecursive()
      */
     public function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
     {

@@ -76,7 +76,7 @@ class BodyParser
     }
 
     /**
-     * Extracs links from body
+     * Extracts links from body
      * @return array<string> Array of links
      */
     public function extractLinks(): array

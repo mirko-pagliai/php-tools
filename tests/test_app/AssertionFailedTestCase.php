@@ -17,6 +17,10 @@ namespace App;
 
 use Tools\TestSuite\TestCase;
 
+/**
+ * @noinspection PhpUnitAssertCanBeReplacedWithFailInspection
+ * @noinspection PhpUnitAssertTrueWithIncompatibleTypeArgumentInspection
+ */
 class AssertionFailedTestCase extends TestCase
 {
     /**

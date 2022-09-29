@@ -20,7 +20,7 @@ use ErrorException;
 use Exception;
 
 /**
- * Abstract exception for exceptions that are throwed by a file.
+ * Abstract exception for exceptions that are thrown by a file.
  */
 abstract class FileException extends ErrorException
 {
@@ -38,7 +38,7 @@ abstract class FileException extends ErrorException
      * @param string $filename The filename where the exception is thrown
      * @param int $lineno The line number where the exception is thrown
      * @param \Exception|null $previous The previous exception used for the exception chaining
-     * @param string|null $path Path of the file that throwed the exception
+     * @param string|null $path Path of the file that thrown the exception
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $path = null)
     {
@@ -47,7 +47,7 @@ abstract class FileException extends ErrorException
     }
 
     /**
-     * Gets the path of the file that throwed the exception
+     * Gets the path of the file that thrown the exception
      * @return string|null
      */
     public function getFilePath(): ?string
