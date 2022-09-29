@@ -89,6 +89,7 @@ class FilesystemTest extends TestCase
 
     /**
      * Test for `getDirTree()` method
+     * @uses \Tools\Filesystem::getDirTree()
      * @test
      */
     public function testGetDirTree(): void
