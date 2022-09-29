@@ -109,6 +109,7 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array<array<string>> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
+     * @todo Check the `$skipHidden` var
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
@@ -263,8 +264,9 @@ class Filesystem extends BaseFilesystem
      * @param bool $checkOnlyDir If `true`, also checks for all files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
      * @deprecated Use instead `isWritableRecursive()`
+     * @noinspection SpellCheckingInspection
      */
     public function isWritableResursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
