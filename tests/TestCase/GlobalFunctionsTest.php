@@ -20,6 +20,7 @@ use App\ExampleClass;
 use App\ExampleOfStringable;
 use BadMethodCallException;
 use LogicException;
+use stdClass;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -108,6 +109,7 @@ class GlobalFunctionsTest extends TestCase
     /**
      * Test for `slug()` global function
      * @test
+     * @noinspection SpellCheckingInspection
      */
     public function testSlug(): void
     {
@@ -134,7 +136,7 @@ class GlobalFunctionsTest extends TestCase
             $this->assertTrue(is_stringable($value));
         }
 
-        foreach ([null, new \stdClass()] as $value) {
+        foreach ([null, new stdClass()] as $value) {
             $this->assertFalse(is_stringable($value));
         }
 

@@ -3,7 +3,9 @@
 ### 1.6.3
 * added `Filesystem::isWritableRecursive()` method, which replaces 
     `isWritableResursive()` (which had a serious typo). The previous method 
-    will be kept (as deprecated) and will be removed in a later version.
+    will be kept (as deprecated) and will be removed in a later version;
+* small and numerous improvements of descriptions, tags and code suggested 
+    by PhpStorm.
 
 ### 1.6.2
 * fixed a little issue for `Exceptionist` and `debug_functions.php`;
@@ -84,7 +86,7 @@
 
 ### 1.5.3
 * improved `Exceptionist::__callStatic()` magic method when a php function is
-    called and it expects a single argument.
+    called and expects a single argument.
 
 ### 1.5.2
 * added `TestTrait::assertIsMock()` and `TestTrait::expectAssertionFailed()`;
@@ -100,7 +102,7 @@
     has been raised.
 
 ### 1.5.0
-* the `Exceptionist` can now set file and line that throwned the exception. All
+* the `Exceptionist` can now set file and line that throws the exception. All
     exception classes provided by `php-tools` now extend the `ErrorException`;
 * all filesystem global function have been removed, use `Filesystem` class instead;
 * `TestTrait::assertFilePerms()` has been removed. Use instead
@@ -184,7 +186,7 @@
 * some functions have been moved to `network_functions.php` file.
 
 ### 1.3.2
-* fixed bug for `Entity::set()` method. It can thrown an exception for empty
+* fixed bug for `Entity::set()` method. It can throw an exception for empty
     property.
 
 ### 1.3.1
@@ -244,7 +246,7 @@
 
 ### 1.2.8
 * `can_be_string()` renamed as `is_stringable()`. `can_be_string()` is
-    deprecated and it will be removed in a later release;
+    deprecated and will be removed in a later release;
 * added `is_absolute()` global function;
 * uses `symfony/dom-crawler` for `BodyParser` class;
 * uses `symfony/filesystem` and `symfony/finder` for some global functions.
@@ -360,7 +362,7 @@
     now returns the old value or `null`;
 * `TestCaseTrait` is now deprecated and will be removed in a later version. Use
     `TestTrait` instead. The `createSomeFiles()` method has been removed and now
-    it is a global function only for tests;
+    is a global function only for tests;
 * fixed bug for `assertArrayKeysEqual()` and `assertSameMethods()` assert methods,
     the values are sorted alphabetically before being compared;
 * fixed bug for `assertFilePerms()`. Now it works correctly and take permission

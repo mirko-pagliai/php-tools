@@ -32,7 +32,7 @@ class NotInArrayException extends InvalidValueException
      * @param string $filename The filename where the exception is thrown
      * @param int $lineno The line number where the exception is thrown
      * @param \Exception|null $previous The previous exception used for the exception chaining
-     * @param mixed $value The value that throwed the exception
+     * @param mixed $value The value that thrown the exception
      */
     public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
     {

@@ -35,7 +35,7 @@ class BodyParserTest extends TestCase
             'http://localhost/page.html',
             'http://localhost/area.htm',
             'http://localhost/file.mp3',
-            'http://localhost/helloworld.swf',
+            'http://localhost/embed-video.mp4',
             'http://localhost/frame1.html',
             'http://localhost/frame2.html',
             'http://localhost/pic.jpg',
@@ -45,13 +45,16 @@ class BodyParserTest extends TestCase
             'http://localhost/subtitles_en.vtt',
             'http://localhost/movie.mp4',
         ];
-        $html = '<a href="/page.html#fragment">Link</a>
-<map name="example"><area href="area.htm"></map>
+        $html = '
+<!--suppress HtmlUnknownTarget -->
+<a href="/page.html#fragment">Link</a>
+<map name="example"><area alt="area" href="area.htm"></map>
 <audio src="/file.mp3"></audio>
-<embed src="helloworld.swf">
+<embed src="embed-video.mp4">
+<!--suppress HtmlDeprecatedAttribute, HtmlDeprecatedTag, HtmlExtraClosingTag -->
 <frame src="frame1.html"></frame>
 <iframe src="frame2.html"></iframe>
-<img src="pic.jpg" />
+<img alt="pic.jpg" src="pic.jpg" />
 <link rel="stylesheet" type="text/css" href="style.css">
 <script type="text/javascript" src="script.js" />
 <audio><source src="file2.mp3" type="audio/mpeg"></audio>
@@ -59,7 +62,7 @@ class BodyParserTest extends TestCase
 <video src="//localhost/movie.mp4"></video>';
         $this->assertEquals($expected, $extractLinksMethod($html));
 
-        $html = '<html><body>' . $html . '</body></html>';
+        $html = '<html lang="en"><body>' . $html . '</body></html>';
         $this->assertEquals($expected, $extractLinksMethod($html));
 
         $html = '<b>No links here!</b>';

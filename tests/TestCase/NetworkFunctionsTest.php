@@ -51,21 +51,21 @@ class NetworkFunctionsTest extends TestCase
         }
 
         foreach ([
-            'www.mysite.com',
-            'http://www.mysite.com',
-            'https://www.mysite.com',
-            'ftp://www.mysite.com',
+            'www.my-site.com',
+            'http://www.my-site.com',
+            'https://www.my-site.com',
+            'ftp://www.my-site.com',
         ] as $url) {
-            $this->assertMatchesRegularExpression('/^((https?|ftp):\/\/)?mysite\.com$/', clean_url($url, true));
+            $this->assertMatchesRegularExpression('/^((https?|ftp):\/\/)?my-site\.com$/', clean_url($url, true));
         }
 
         foreach ([
-            'http://mysite.com',
-            'http://mysite.com/',
-            'http://www.mysite.com',
-            'http://www.mysite.com/',
+            'http://my-site.com',
+            'http://my-site.com/',
+            'http://www.my-site.com',
+            'http://www.my-site.com/',
         ] as $url) {
-            $this->assertEquals('http://mysite.com', clean_url($url, true, true));
+            $this->assertEquals('http://my-site.com', clean_url($url, true, true));
         }
     }
 
@@ -187,19 +187,19 @@ class NetworkFunctionsTest extends TestCase
     {
         foreach (['http', 'https', 'ftp'] as $scheme) {
             $paths = [
-                $scheme . '://localhost/mysite/subdir/anothersubdir',
-                $scheme . '://localhost/mysite/subdir/anothersubdir/a_file.html',
+                $scheme . '://localhost/my-site/sub-dir/another-sub-dir',
+                $scheme . '://localhost/my-site/sub-dir/another-sub-dir/a_file.html',
             ];
 
             foreach ($paths as $path) {
                 foreach ([
-                    'http://localhost/mysite' => 'http://localhost/mysite',
-                    'http://localhost/mysite/page.html' => 'http://localhost/mysite/page.html',
-                    '//localhost/mysite' => $scheme . '://localhost/mysite',
-                    'page2.html' => $scheme . '://localhost/mysite/subdir/anothersubdir/page2.html',
+                    'http://localhost/my-site' => 'http://localhost/my-site',
+                    'http://localhost/my-site/page.html' => 'http://localhost/my-site/page.html',
+                    '//localhost/my-site' => $scheme . '://localhost/my-site',
+                    'page2.html' => $scheme . '://localhost/my-site/sub-dir/another-sub-dir/page2.html',
                     '/page3.html' => $scheme . '://localhost/page3.html',
-                    '../page4.html' => $scheme . '://localhost/mysite/subdir/page4.html',
-                    '../../page5.html' => $scheme . '://localhost/mysite/page5.html',
+                    '../page4.html' => $scheme . '://localhost/my-site/sub-dir/page4.html',
+                    '../../page5.html' => $scheme . '://localhost/my-site/page5.html',
                     'http://external.com' => 'http://external.com',
                 ] as $url => $expected) {
                     $this->assertSame($expected, url_to_absolute($path, $url));

@@ -36,7 +36,7 @@ class TestTraitTest extends TestCase
 {
     /**
      * Test for `__call()` and `__callStatic()` magic methods
-     * @ŧest
+     * @test
      */
     public function testMagicCallAndCallStatic(): void
     {
@@ -184,7 +184,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `assertFileExtension()` method
-     * @ŧest
+     * @test
      */
     public function testAssertFileExtension(): void
     {
@@ -195,7 +195,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `assertFileMime()` method
-     * @ŧest
+     * @test
      */
     public function testAssertFileMime(): void
     {
@@ -206,7 +206,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `assertImageSize()` method
-     * @ŧest
+     * @test
      */
     public function testAssertImageSize(): void
     {
@@ -243,11 +243,11 @@ class TestTraitTest extends TestCase
      */
     public function testAssertIsMock(): void
     {
-        $mock = $this->getMockBuilder(\stdClass::class)->getMock();
+        $mock = $this->getMockBuilder(stdClass::class)->getMock();
         $this->assertIsMock($mock);
 
         $this->expectAssertionFailed('Failed asserting that a `stdClass` object is a mock');
-        $this->assertIsMock(new \stdClass());
+        $this->assertIsMock(new stdClass());
     }
 
     /**
@@ -268,7 +268,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `assertSameMethods()` method
-     * @ŧest
+     * @test
      */
     public function testAssertSameMethods(): void
     {
@@ -287,7 +287,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `expectAssertionFailed()` method
-     * @ŧest
+     * @test
      */
     public function testExpectAssertionFailed(): void
     {
@@ -312,7 +312,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Test for `skipIf()` method
-     * @ŧest
+     * @test
      */
     public function testSkipIf(): void
     {
