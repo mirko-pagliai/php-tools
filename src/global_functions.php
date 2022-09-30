@@ -24,7 +24,7 @@ if (!defined('IS_WIN')) {
 
 if (!function_exists('array_to_string')) {
     /**
-     * Convers an array to a string.
+     * Converts an array to a string.
      *
      * For example, from `['a', 1, 0.5, 'c']` to `['a', '1', '0.5', 'c']`.
      * @param array $array Array you want to convert
@@ -51,22 +51,15 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return array<class-string>
      * @since 1.0.1
-     * @throws \LogicException
-     * @todo exception if the class does not exist
+     * @throws \LogicException|\Throwable
      */
     function get_child_methods(string $class): array
     {
-        if (!class_exists($class)) {
-            throw new LogicException('Class `' . $class . '` does not exist');
-        }
-
+        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist', LogicException::class);
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
-        if ($parentClass) {
-            $methods = array_diff($methods, get_class_methods($parentClass));
-        }
 
-        return array_values($methods);
+        return array_values($parentClass ? array_diff($methods, get_class_methods($parentClass)) : $methods);
     }
 }
 
@@ -75,6 +68,7 @@ if (!function_exists('get_class_short_name')) {
      * Gets class short name (the part without the namespace)
      * @param mixed $class Classname or object
      * @return string
+     * @throws \ReflectionException
      * @since 1.0.2
      */
     function get_class_short_name($class): string
@@ -142,7 +136,7 @@ if (!function_exists('is_stringable')) {
             }
         }
 
-        return is_null($var) ? false : is_scalar($var) || method_exists($var, '__toString');
+        return !is_null($var) && (is_scalar($var) || method_exists($var, '__toString'));
     }
 }
 
@@ -155,8 +149,8 @@ if (!function_exists('objects_map')) {
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
+     * @throws \BadMethodCallException|\Throwable
      * @since 1.1.11
-     * @throws \BadMethodCallException
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
@@ -165,7 +159,7 @@ if (!function_exists('objects_map')) {
                 'Class `%s` does not have a method `%s`',
                 get_class($object),
                 $method
-            ), \BadMethodCallException::class);
+            ), BadMethodCallException::class);
 
             return call_user_func_array([$object, $method], $args);
         }, $objects);
@@ -209,7 +203,7 @@ if (!function_exists('which')) {
      * Finds the executable of a command, like `which` on Unix systems
      * @param string $command Command
      * @return string
-     * @throws \Exception
+     * @throws \Throwable
      */
     function which(string $command): string
     {

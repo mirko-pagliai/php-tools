@@ -15,5 +15,11 @@ parameters:
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
 
+    ignoreErrors:
+        -
+            message: '#^(Access|Call) to (protected|an undefined) ((static )?method|property)#'
+            path: tests/TestCase/
+
+
     excludePaths:
         -  tests/test_app/

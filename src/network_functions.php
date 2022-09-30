@@ -25,7 +25,7 @@ if (!function_exists('clean_url')) {
      */
     function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
-        $url = preg_replace('/(\#.*)$/', '', $url) ?: '';
+        $url = preg_replace('/(#.*)$/', '', $url) ?: '';
 
         if ($removeWWW) {
             $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url) ?: '';
@@ -89,7 +89,7 @@ if (!function_exists('is_url')) {
      */
     function is_url(string $string): bool
     {
-        return (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;\(\)]*[-a-z0-9+&@#\/%=~_|\(\)]$/i", $string);
+        return (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;()]*[-a-z0-9+&@#\/%=~_|()]$/i", $string);
     }
 }
 
@@ -104,8 +104,8 @@ if (!function_exists('url_to_absolute')) {
     function url_to_absolute(string $path, string $relative): string
     {
         $path = clean_url($path, false, true);
-        $path = preg_match('/^(\w+:\/\/.+)\/[^\.\/]+\.[^\.\/]+$/', $path, $matches) ? $matches[1] : $path;
+        $path = preg_match('/^(\w+:\/\/.+)\/[^.\/]+\.[^.\/]+$/', $path, $matches) ? $matches[1] : $path;
 
-        return \phpUri::parse($path . '/')->join($relative);
+        return phpUri::parse($path . '/')->join($relative);
     }
 }

@@ -15,9 +15,6 @@ declare(strict_types=1);
  */
 namespace Tools\Event;
 
-use Tools\Event\Event;
-use Tools\Event\EventDispatcher;
-
 /**
  * EventDispatcherTrait.
  *

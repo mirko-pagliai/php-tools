@@ -12,6 +12,8 @@
     ],
     "require": {
         "php": ">=7.4",
+        "ext-fileinfo": "*",
+        "ext-json": "*",
         "pguardiario/phpuri": "^1",
         "symfony/dom-crawler": "^5.1.4|^6.0",
         "symfony/event-dispatcher": "^5.0|^6.0",
@@ -24,6 +26,7 @@
         "symfony/polyfill-php80": "^1.25"
     },
     "require-dev": {
+        "ext-gd": "*",
         "cakephp/cakephp-codesniffer": "^4.0",
         "phpunit/phpunit": "^9.1|^9.5",
         "phpstan/phpstan": "^1.7",

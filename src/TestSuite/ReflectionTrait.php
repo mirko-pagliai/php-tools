@@ -29,8 +29,9 @@ trait ReflectionTrait
      * @param object $object Instantiated object that we will run method on
      * @param string $name Method name
      * @return \ReflectionMethod
+     * @throws \ReflectionException
      */
-    protected function _getMethodInstance(object &$object, string $name): ReflectionMethod
+    protected function _getMethodInstance(object $object, string $name): ReflectionMethod
     {
         $method = new ReflectionMethod(get_class($object), $name);
         $method->setAccessible(true);
@@ -43,8 +44,9 @@ trait ReflectionTrait
      * @param object $object Instantiated object that has the property
      * @param string $name Property name
      * @return \ReflectionProperty
+     * @throws \ReflectionException
      */
-    protected function _getPropertyInstance(object &$object, string $name): ReflectionProperty
+    protected function _getPropertyInstance(object $object, string $name): ReflectionProperty
     {
         $property = new ReflectionProperty(get_class($object), $name);
         $property->setAccessible(true);
@@ -62,6 +64,7 @@ trait ReflectionTrait
      *  types. It's configured using `ReflectionProperty` constants, and
      *  default is public, protected and private properties
      * @return array<string, string> Property names as keys and property values as values
+     * @throws \Throwable
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      * @since 1.1.4
      */
@@ -90,6 +93,7 @@ trait ReflectionTrait
      *  or class name
      * @param string $name Property name
      * @return mixed Property value
+     * @throws \ReflectionException
      */
     protected function getProperty($object, string $name)
     {
@@ -105,6 +109,7 @@ trait ReflectionTrait
      * @param string $methodName Method name
      * @param array $parameters Array of parameters to pass into method
      * @return mixed Method return
+     * @throws \ReflectionException
      */
     protected function invokeMethod($object, string $methodName, array $parameters = [])
     {
@@ -119,8 +124,9 @@ trait ReflectionTrait
      * @param string $name Property name
      * @param mixed $value Value you want to set
      * @return mixed Old property value
+     * @throws \ReflectionException
      */
-    protected function setProperty(object &$object, string $name, $value)
+    protected function setProperty(object $object, string $name, $value)
     {
         $property = $this->_getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);

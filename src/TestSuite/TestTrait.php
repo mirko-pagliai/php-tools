@@ -29,7 +29,7 @@ use Tools\Filesystem;
  * @method static void assertIsBool($var, ?string $message = '') Asserts that `$var` is a boolean
  * @method static void assertIsCallable($var, ?string $message = '') Asserts that `$var` is a callable
  * @method static void assertIsFloat($var, ?string $message = '') Asserts that `$var` is a float
- * @method static void assertIsHtml($var, ?string $message = '') Asserts that `$var` is an html string
+ * @method static void assertIsHtml($var, ?string $message = '') Asserts that `$var` is a html string
  * @method static void assertIsInt($var, ?string $message = '') Asserts that `$var` is an int
  * @method static void assertIsIterable($var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
  * @method static void assertIsJson($var, ?string $message = '') Asserts that `$var` is a json string
@@ -266,7 +266,7 @@ trait TestTrait
 
     /**
      * Skips the test if the condition is `true`
-     * @param bool $shouldSkip Whether or not the test should be skipped
+     * @param bool $shouldSkip Whether the test should be skipped
      * @param string $message The message to display
      * @return bool
      */
