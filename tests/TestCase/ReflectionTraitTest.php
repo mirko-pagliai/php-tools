@@ -95,6 +95,7 @@ class ReflectionTraitTest extends TestCase
     /**
      * Tests for `setProperty()` method
      * @test
+     * @noinspection Annotator
      */
     public function testSetProperty(): void
     {

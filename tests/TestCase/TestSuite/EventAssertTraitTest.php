@@ -30,7 +30,7 @@ class EventAssertTraitTest extends TestCase
     /**
      * Test for `assertEventFired()`, `assertEventFiredWithArgs()` and
      *  `assertEventNotFired()` methods
-     * @ŧest
+     * @test
      */
     public function testAssertEventMethods(): void
     {
@@ -45,7 +45,7 @@ class EventAssertTraitTest extends TestCase
 
     /**
      * Test for `assertEventFired()` method on failure
-     * @ŧest
+     * @test
      */
     public function testFailureAssertEventFired(): void
     {
@@ -56,7 +56,7 @@ class EventAssertTraitTest extends TestCase
 
     /**
      * Test for `assertEventFiredWithArgs()` method on failure
-     * @ŧest
+     * @test
      */
     public function testFailureAssertEventFiredWithArgs(): void
     {
@@ -70,7 +70,7 @@ class EventAssertTraitTest extends TestCase
 
     /**
      * Test for `assertEventNotFired()` method on failure
-     * @ŧest
+     * @test
      */
     public function testFailureAssertEventNotFired(): void
     {

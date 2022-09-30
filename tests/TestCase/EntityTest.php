@@ -89,13 +89,13 @@ class EntityTest extends TestCase
     /**
      * Test for `__get()` and `get()` methods
      * @test
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function testGet(): void
     {
-        /** @phpstan-ignore-next-line */
         $this->assertSame(200, $this->Entity->code);
         $this->assertSame(200, $this->Entity->get('code'));
-        /** @phpstan-ignore-next-line */
+
         $this->assertNull($this->Entity->noExisting);
         $this->assertNull($this->Entity->get('noExisting'));
         $this->assertSame('default', $this->Entity->get('noExisting', 'default'));

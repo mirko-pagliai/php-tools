@@ -109,6 +109,7 @@ class GlobalFunctionsTest extends TestCase
     /**
      * Test for `slug()` global function
      * @test
+     * @noinspection SpellCheckingInspection
      */
     public function testSlug(): void
     {
