@@ -3,7 +3,9 @@
 ### 1.6.3
 * added `Filesystem::isWritableRecursive()` method, which replaces 
     `isWritableResursive()` (which had a serious typo). The previous method 
-    will be kept (as deprecated) and will be removed in a later version.
+    will be kept (as deprecated) and will be removed in a later version;
+* small and numerous improvements of descriptions, tags and code suggested 
+    by PhpStorm.
 
 ### 1.6.2
 * fixed a little issue for `Exceptionist` and `debug_functions.php`;
