@@ -34,7 +34,7 @@ abstract class TestCase extends PHPUnitTestCase
      * @return void
      * @throws \Throwable
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
