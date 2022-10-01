@@ -68,7 +68,6 @@ class EntityTest extends TestCase
         $this->assertFalse($this->Entity->has('noExisting'));
 
         //`has()` method with empty, `null` and `false` values return `true`
-        $this->assertTrue($this->Entity->set('keyWithNull', null)->has('keyWithNull'));
         $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->has('keyWithEmptyValue'));
         $this->assertTrue($this->Entity->set('keyWithFalse', false)->has('keyWithFalse'));
     }
@@ -83,7 +82,6 @@ class EntityTest extends TestCase
         $this->assertFalse($this->Entity->hasValue('noExisting'));
 
         //`hasValue()` method with empty, `null` and `false` values return `false`
-        $this->assertFalse($this->Entity->set('keyWithNull', null)->hasValue('keyWithNull'));
         $this->assertFalse($this->Entity->set('keyWithEmptyValue', '')->hasValue('keyWithEmptyValue'));
         $this->assertFalse($this->Entity->set('keyWithFalse', false)->hasValue('keyWithFalse'));
     }
@@ -91,13 +89,13 @@ class EntityTest extends TestCase
     /**
      * Test for `__get()` and `get()` methods
      * @test
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function testGet(): void
     {
-        /** @phpstan-ignore-next-line */
         $this->assertSame(200, $this->Entity->code);
         $this->assertSame(200, $this->Entity->get('code'));
-        /** @phpstan-ignore-next-line */
+
         $this->assertNull($this->Entity->noExisting);
         $this->assertNull($this->Entity->get('noExisting'));
         $this->assertSame('default', $this->Entity->get('noExisting', 'default'));
@@ -113,7 +111,6 @@ class EntityTest extends TestCase
         $this->assertTrue($this->Entity->isEmpty('noExisting'));
 
         //`isEmpty()` method with empty, `null` and `false` values return `true`
-        $this->assertTrue($this->Entity->set('keyWithNull', null)->isEmpty('keyWithNull'));
         $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->isEmpty('keyWithEmptyValue'));
         $this->assertTrue($this->Entity->set('keyWithFalse', false)->isEmpty('keyWithFalse'));
     }
@@ -128,11 +125,10 @@ class EntityTest extends TestCase
         $this->assertInstanceOf(Entity::class, $result);
         $this->assertSame('newValue', $this->Entity->get('newKey'));
 
-        $result = $this->Entity->set(['alfa' => 'first', 'beta' => 'second']);
+        $this->Entity->set(['alfa' => 'first', 'beta' => 'second']);
         $this->assertSame('first', $this->Entity->get('alfa'));
         $this->assertSame('second', $this->Entity->get('beta'));
 
-        $this->assertNull($this->Entity->set('keyWithNull', null)->get('keyWithNull'));
         $this->assertSame('', $this->Entity->set('keyWithEmptyValue', '')->get('keyWithEmptyValue'));
     }
 

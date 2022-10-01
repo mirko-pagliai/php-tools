@@ -44,9 +44,9 @@ class FilesystemTest extends TestCase
     public function testConcatenate(): void
     {
         $this->assertSame('dir', Filesystem::instance()->concatenate('dir'));
-        $this->assertSame('dir' . DS . 'subdir', Filesystem::instance()->concatenate('dir', 'subdir'));
-        $this->assertSame('dir' . DS . 'subdir', Filesystem::instance()->concatenate('dir' . DS, 'subdir'));
-        $this->assertSame('dir' . DS . 'subdir' . DS . 'subsubdir', Filesystem::instance()->concatenate('dir', 'subdir', 'subsubdir'));
+        $this->assertSame('dir' . DS . 'sub-dir', Filesystem::instance()->concatenate('dir', 'sub-dir'));
+        $this->assertSame('dir' . DS . 'sub-dir', Filesystem::instance()->concatenate('dir' . DS, 'sub-dir'));
+        $this->assertSame('dir' . DS . 'sub-dir' . DS . 'sub-sub-dir', Filesystem::instance()->concatenate('dir', 'sub-dir', 'sub-sub-dir'));
     }
 
     /**
@@ -89,6 +89,7 @@ class FilesystemTest extends TestCase
 
     /**
      * Test for `getDirTree()` method
+     * @uses \Tools\Filesystem::getDirTree()
      * @test
      */
     public function testGetDirTree(): void
@@ -170,7 +171,7 @@ class FilesystemTest extends TestCase
             ROOT . 'backup.sql.gz',
             '/withDot./backup.sql.gz',
             'C:\backup.sql.gz',
-            'C:\subdir\backup.sql.gz',
+            'C:\sub-dir\backup.sql.gz',
             'C:\withDot.\backup.sql.gz',
         ] as $filename) {
             $this->assertEquals('sql.gz', Filesystem::instance()->getExtension($filename));
@@ -236,23 +237,40 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `isWritableResursive()` method
+     * Test for `isWritableRecursive()` method
+     * @uses \Tools\Filesystem::isWritableRecursive()
      * @test
      */
     public function testIsWritableRecursive(): void
     {
-        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
+        $this->assertTrue(Filesystem::instance()->isWritableRecursive(TMP));
 
         if (!IS_WIN) {
-            $this->assertFalse(Filesystem::instance()->isWritableResursive(DS . 'bin'));
+            $this->assertFalse(Filesystem::instance()->isWritableRecursive(DS . 'bin'));
         }
 
         //Using a no existing directory, but ignoring errors
-        $this->assertFalse(Filesystem::instance()->isWritableResursive(TMP . 'noExisting', true, true));
+        $this->assertFalse(Filesystem::instance()->isWritableRecursive(TMP . 'noExisting', true, true));
 
         //Using a no existing directory
         $this->expectException(DirectoryNotFoundException::class);
-        $this->assertFalse(Filesystem::instance()->isWritableResursive(TMP . 'noExisting'));
+        $this->assertFalse(Filesystem::instance()->isWritableRecursive(TMP . 'noExisting'));
+    }
+
+    /**
+     * Test for `isWritableResursive()`
+     * @uses \Tools\Filesystem::isWritableResursive()
+     * @test
+     */
+    public function testIsWritableResursive(): void
+    {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        $this->expectDeprecationMessage('Deprecated. Use instead `isWritableRecursive()`');
+        Filesystem::instance()->isWritableResursive(TMP);
     }
 
     /**

@@ -51,7 +51,7 @@ class Event extends BaseEvent
      * Gets the argument with the specified index of this event
      * @param int $index Index
      * @return mixed
-     * @throws \Tools\Exception\KeyNotExistsException
+     * @throws \Tools\Exception\KeyNotExistsException|\Throwable
      */
     public function getArg(int $index)
     {

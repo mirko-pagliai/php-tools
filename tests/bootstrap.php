@@ -23,7 +23,9 @@ if (!defined('DS')) {
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
 
-@mkdir(TMP, 0777, true);
+if (!file_exists(TMP)) {
+    mkdir(TMP, 0777, true);
+}
 
 if (!function_exists('createSomeFiles')) {
     /**
@@ -33,18 +35,23 @@ if (!function_exists('createSomeFiles')) {
      */
     function createSomeFiles(array $files = []): array
     {
-        @mkdir(TMP . 'exampleDir' . DS . 'emptyDir', 0777, true);
+        $dir = TMP . 'exampleDir' . DS;
+        if (!file_exists($dir)) {
+            mkdir($dir . 'emptyDir', 0777, true);
+        }
 
-        return array_map([Filesystem::instance(), 'createFile'], $files ?: [
-            TMP . 'exampleDir' . DS . '.hiddenDir' . DS . 'file7',
-            TMP . 'exampleDir' . DS . '.hiddenFile',
-            TMP . 'exampleDir' . DS . 'file1',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file2',
-            TMP . 'exampleDir' . DS . 'subDir1' . DS . 'file3',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file4',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'file5',
-            TMP . 'exampleDir' . DS . 'subDir2' . DS . 'subDir3' . DS . 'file6',
-        ]);
+        $files = $files ?: [
+            $dir . '.hiddenDir' . DS . 'file7',
+            $dir . '.hiddenFile',
+            $dir . 'file1',
+            $dir . 'subDir1' . DS . 'file2',
+            $dir . 'subDir1' . DS . 'file3',
+            $dir . 'subDir2' . DS . 'file4',
+            $dir . 'subDir2' . DS . 'file5',
+            $dir . 'subDir2' . DS . 'subDir3' . DS . 'file6',
+        ];
+
+        return array_map([Filesystem::instance(), 'createFile'], $files);
     }
 }
 

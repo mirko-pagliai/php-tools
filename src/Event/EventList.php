@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Tools\Event;
 
 use ArrayAccess;
-use Tools\Event\Event;
 
 /**
  * EventList.
@@ -51,7 +50,7 @@ class EventList implements ArrayAccess
     }
 
     /**
-     * Whether a offset exists
+     * Whether an offset exists
      * @link https://secure.php.net/manual/en/arrayaccess.offsetexists.php
      * @param mixed $offset An offset to check for
      * @return bool True on success or false on failure

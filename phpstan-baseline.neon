@@ -6,31 +6,6 @@ parameters:
 			path: src/global_functions.php
 
 		-
-			message: "#^Negated boolean expression is always true\\.$#"
-			count: 2
-			path: tests/TestCase/FilesystemTest.php
-
-		-
-			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
-			path: tests/TestCase/FilesystemTest.php
-
-		-
-			message: "#^Ternary operator condition is always false\\.$#"
-			count: 1
-			path: tests/TestCase/GlobalFunctionsTest.php
-
-		-
-			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$firstProperty\\.$#"
-			count: 1
-			path: tests/TestCase/ReflectionTraitTest.php
-
-		-
-			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$secondProperty\\.$#"
-			count: 2
-			path: tests/TestCase/ReflectionTraitTest.php
-
-		-
 			message: "#^Call to function is_resource\\(\\) with false will always evaluate to false\\.$#"
 			count: 1
 			path: tests/TestCase/TestSuite/TestTraitTest.php

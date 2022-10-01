@@ -76,7 +76,7 @@ class BodyParser
     }
 
     /**
-     * Extracs links from body
+     * Extracts links from body
      * @return array<string> Array of links
      */
     public function extractLinks(): array
@@ -89,7 +89,7 @@ class BodyParser
             return [];
         }
 
-        $crawler = @new Crawler($this->body);
+        $crawler = new Crawler($this->body);
 
         foreach (self::TAGS as $tag => $attribute) {
             foreach ($crawler->filterXPath('//' . $tag)->extract([$attribute]) as $link) {

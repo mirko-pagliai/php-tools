@@ -20,6 +20,7 @@ use BadMethodCallException;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
+use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
 use Tools\Exception\NotInArrayException;
@@ -79,7 +80,7 @@ class ExceptionistTest extends TestCase
         $this->assertSame([1], Exceptionist::isIterable([1]));
         $this->assertSame(null, Exceptionist::isNull(null));
         $this->assertSame($stream, Exceptionist::isResource($stream));
-        $this->assertEquals(new \stdClass(), Exceptionist::isObject(new \stdClass()));
+        $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
             $this->assertException(fn() => Exceptionist::isInt($var), Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
@@ -102,7 +103,7 @@ class ExceptionistTest extends TestCase
     {
         $this->expectNotice();
         $this->expectExceptionMessageMatches('#^Error calling `array_combine\(\)`\:#');
-        /** @phpstan-ignore-next-line */
+        /** @noinspection PhpUndefinedMethodInspection */
         Exceptionist::arrayCombine(['a', 'b']);
     }
 
@@ -128,7 +129,7 @@ class ExceptionistTest extends TestCase
     {
         $this->expectNotice();
         $this->expectExceptionMessage('Function `not_existing_method()` does not exist');
-        /** @phpstan-ignore-next-line */
+        /** @noinspection PhpUndefinedMethodInspection */
         Exceptionist::notExistingMethod(1);
     }
 
@@ -144,7 +145,7 @@ class ExceptionistTest extends TestCase
 
         $this->expectException(KeyNotExistsException::class);
         $this->expectExceptionMessage('Key `5` does not exist');
-        Exceptionist::fileExists(Exceptionist::arrayKeyExists([5], $array));
+        Exceptionist::arrayKeyExists([5], $array);
     }
 
     /**
@@ -163,18 +164,21 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `inArray()` method
+     * @uses \Tools\Exceptionist::inArray()
      * @test
      */
     public function testInArray(): void
     {
         $this->assertSame('a', Exceptionist::inArray('a', ['a', 'b', 'c']));
-
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c']), NotInArrayException::class, 'The value `a` does not exist in array `[\'b\', \'c\']`');
 
         //With a no-stringable array
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', true]), NotInArrayException::class, 'The value `a` does not exist in array');
-
         $this->assertException(fn() => Exceptionist::inArray('a', ['b', 'c'], '`a` is not in array', ErrorException::class), ErrorException::class, '`a` is not in array');
+
+        //With `null` value
+        $this->assertSame(null, Exceptionist::inArray(null, ['string', null]));
+        $this->assertException(fn() => Exceptionist::inArray(null, ['b', 'c']), NotInArrayException::class, 'The value does not exist in array `[\'b\', \'c\']`');
     }
 
     /**
@@ -183,8 +187,8 @@ class ExceptionistTest extends TestCase
      */
     public function testInstanceOf(): void
     {
-        $instance = new \stdClass();
-        $this->assertSame($instance, Exceptionist::isInstanceOf($instance, \stdClass::class));
+        $instance = new stdClass();
+        $this->assertSame($instance, Exceptionist::isInstanceOf($instance, stdClass::class));
 
         $this->expectException(ObjectWrongInstanceException::class);
         $this->expectExceptionMessage('`stdClass` is not an instance of `App\ExampleClass`');
@@ -256,7 +260,7 @@ class ExceptionistTest extends TestCase
     {
         $this->assertSame('publicProperty', Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty'));
 
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->name = 'My name';
         $object->surname = 'My surname';
         $this->assertSame('name', Exceptionist::objectPropertyExists($object, 'name'));
@@ -313,10 +317,8 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithCustomMessageAndCustomException(): void
     {
         $message = 'it\'s not `true`';
-
         $this->assertException(fn() => Exceptionist::isTrue(false, $message), Exception::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
-        $this->assertException(fn() => Exceptionist::isTrue(false, $message, ErrorException::class), ErrorException::class, $message);
     }
 
     /**
@@ -326,6 +328,6 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
         /** @phpstan-ignore-next-line */
-        $this->assertException(fn() => Exceptionist::isTrue(false, '', new \stdClass()), Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
     }
 }

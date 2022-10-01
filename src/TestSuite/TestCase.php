@@ -18,7 +18,6 @@ namespace Tools\TestSuite;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\Filesystem;
-use Tools\TestSuite\ReflectionTrait;
 
 /**
  * TestCase class.
@@ -31,10 +30,11 @@ abstract class TestCase extends PHPUnitTestCase
     /**
      * Teardown any static object changes and restore them.
      *
-     * It empties the temporary files directory.
+     * It empties the temporary file directory.
      * @return void
+     * @throws \Throwable
      */
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
