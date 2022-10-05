@@ -23,6 +23,9 @@
     <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceAfterDeclare">
         <severity>0</severity>
     </rule>
+    <rule ref="Squiz.ControlStructures.ForLoopDeclaration.SpacingBeforeSecond">
+        <severity>0</severity>
+    </rule>
 
     <exclude-pattern>*.min.css</exclude-pattern>
     <exclude-pattern>*.min.js</exclude-pattern>
