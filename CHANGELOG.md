@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.4
+* added many `@template` tags to the `Exceptionist`;
 * improved the `array_clean()` global function.
 
 ### 1.6.3
