@@ -24,34 +24,4 @@ use Exception;
  */
 class ObjectWrongInstanceException extends ErrorException
 {
-    /**
-     * Object instance
-     * @var object|null
-     */
-    protected ?object $object;
-
-    /**
-     * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The exception code
-     * @param int $severity The severity level of the exception
-     * @param string $filename The filename where the exception is thrown
-     * @param int $lineno The line number where the exception is thrown
-     * @param \Exception|null $previous The previous exception used for the exception chaining
-     * @param object|null $object Object that is not a right instance
-     */
-    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?object $object = null)
-    {
-        parent::__construct($message ?: ($object ? sprintf('Object `%s` is not a right instance', get_class($object)) : 'Object is not a right instance'), $code, $severity, $filename, $lineno, $previous);
-        $this->object = $object;
-    }
-
-    /**
-     * Gets the object that is a wrong instance
-     * @return object|null
-     */
-    public function getObject(): ?object
-    {
-        return $this->object;
-    }
 }

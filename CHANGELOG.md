@@ -1,4 +1,10 @@
 # 1.x branch
+## 1.7 branch
+### 1.7.0
+* all the exceptions offered by php-tools have been simplified by removing
+  extra constructor parameters, properties and methods. Related tests have
+  been deleted.
+
 ## 1.6 branch
 ### 1.6.4
 * `object_map()` global function throws the new
