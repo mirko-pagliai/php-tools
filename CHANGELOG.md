@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.4
+* `object_map()` global function throws the new
+  `Tools\Exception\MethodNotExistsException`;
 * `\Tools\Exceptionist::methodExists()` throws the new
     `Tools\Exception\MethodNotExistsException`;
 * improved the description of many `Exceptionist` magic methods;

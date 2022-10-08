@@ -149,17 +149,13 @@ if (!function_exists('objects_map')) {
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
-     * @throws \BadMethodCallException|\Throwable
+     * @throws \Tools\Exception\MethodNotExistsException|\Throwable
      * @since 1.1.11
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function (object $object) use ($method, $args) {
-            Exceptionist::isTrue(method_exists($object, '__call') || is_callable([$object, $method]), sprintf(
-                'Class `%s` does not have a method `%s`',
-                get_class($object),
-                $method
-            ), BadMethodCallException::class);
+            Exceptionist::methodExists($object, $method);
 
             return call_user_func_array([$object, $method], $args);
         }, $objects);

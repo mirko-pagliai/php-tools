@@ -18,9 +18,9 @@ namespace Tools\Test;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
-use BadMethodCallException;
 use LogicException;
 use stdClass;
+use Tools\Exception\MethodNotExistsException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -163,8 +163,8 @@ class GlobalFunctionsTest extends TestCase
         }
 
         //With a no existing method
-        $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage('Class `' . ExampleClass::class . '` does not have a method `noExistingMethod`');
+        $this->expectException(MethodNotExistsException::class);
+        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` does not exist');
         objects_map([new ExampleClass()], 'noExistingMethod');
     }
 
