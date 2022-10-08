@@ -51,11 +51,11 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return array<class-string>
      * @since 1.0.1
-     * @throws \LogicException|\Throwable
+     * @throws \ErrorException|\Throwable
      */
     function get_child_methods(string $class): array
     {
-        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist', LogicException::class);
+        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist');
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
 

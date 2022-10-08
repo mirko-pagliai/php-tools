@@ -90,7 +90,7 @@ class Exceptionist
         }
 
         //Calls the PHP function and gets the result
-        [$arguments, $message, $exception] = $arguments + [[], '', Exception::class];
+        [$arguments, $message, $exception] = $arguments + [[], '', ErrorException::class];
         try {
             if (!is_callable($phpName)) {
                 throw new Exception(sprintf('Function `%s()` does not exist', $phpName));
@@ -308,6 +308,7 @@ class Exceptionist
         if ($value) {
             return $value;
         }
+
         if (!$exception instanceof Exception && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Exception` or a class string');
         }
