@@ -16,13 +16,13 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use App\ExampleClass;
-use BadMethodCallException;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\MethodNotExistsException;
 use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -253,7 +253,7 @@ class ExceptionistTest extends TestCase
             $this->assertSame([ExampleClass::class, 'setProperty'], Exceptionist::methodExists($object, 'setProperty'));
         }
 
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(MethodNotExistsException::class);
         $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExisting()` does not exist');
         Exceptionist::methodExists($object, 'noExisting');
     }

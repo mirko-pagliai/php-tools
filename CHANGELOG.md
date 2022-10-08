@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.4
+* `\Tools\Exceptionist::methodExists()` throws the new
+    `Tools\Exception\MethodNotExistsException`;
 * `\Tools\TestSuite\TestTrait::assertException()` correctly ignores the 
   deprecations in determining the exception;
 * added many `@template` tags to the `Exceptionist`, that now always refers

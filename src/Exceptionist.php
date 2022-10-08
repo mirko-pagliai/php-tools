@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace Tools;
 
 use ArgumentCountError;
-use BadMethodCallException;
 use ErrorException;
 use Exception;
 use ReflectionFunction;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\MethodNotExistsException;
 use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -251,17 +251,17 @@ class Exceptionist
     /**
      * Checks whether a class method exists
      * @template ExistingMethod of string
-     * @template RelativeClass as object
-     * @param class-string<RelativeClass>|RelativeClass $object An object instance or a class name
+     * @template RelativeObject as object
+     * @param class-string<RelativeObject>|RelativeObject $object An object instance or a class name
      * @param ExistingMethod $methodName The method name
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param E|class-string<E> $exception The exception class you want to set
-     * @return array{class-string<RelativeClass>, ExistingMethod} Array with class name and method name
-     * @throws \BadMethodCallException|\Exception
+     * @return array{class-string<RelativeObject>, ExistingMethod} Array with class name and method name
+     * @throws \Tools\Exception\MethodNotExistsException|\Exception
      * @since 1.4.3
      */
-    public static function methodExists($object, string $methodName, ?string $message = '', $exception = BadMethodCallException::class): array
+    public static function methodExists($object, string $methodName, ?string $message = '', $exception = MethodNotExistsException::class): array
     {
         $object = is_string($object) ? $object : get_class($object);
         self::isTrue(method_exists($object, $methodName), $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName), $exception);
