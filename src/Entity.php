@@ -156,10 +156,7 @@ abstract class Entity implements ArrayAccess
      */
     public function set($property, $value = null)
     {
-        if (is_string($property)) {
-            $property = [$property => $value];
-        }
-        $this->properties = array_merge($this->properties, (array)$property);
+        $this->properties = array_merge($this->properties, is_array($property) ? $property : [$property => $value]);
 
         return $this;
     }

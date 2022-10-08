@@ -42,6 +42,7 @@ class EntityTest extends TestCase
 
     /**
      * Test for `__debugInfo()` method
+     * @uses \Tools\Entity::__debugInfo()
      * @test
      */
     public function testDebugInfo(): void
@@ -60,6 +61,7 @@ class EntityTest extends TestCase
 
     /**
      * Test for `has()` method
+     * @uses \Tools\Entity::has()
      * @test
      */
     public function testHas(): void
@@ -67,13 +69,14 @@ class EntityTest extends TestCase
         $this->assertTrue($this->Entity->has('code'));
         $this->assertFalse($this->Entity->has('noExisting'));
 
-        //`has()` method with empty, `null` and `false` values return `true`
+        //`has()` method with empty, `null` and `false` values returns `true`
         $this->assertTrue($this->Entity->set('keyWithEmptyValue', '')->has('keyWithEmptyValue'));
         $this->assertTrue($this->Entity->set('keyWithFalse', false)->has('keyWithFalse'));
     }
 
     /**
      * Test for `hasValue()` method
+     * @uses \Tools\Entity::hasValue()
      * @test
      */
     public function testHasValue(): void
@@ -88,6 +91,8 @@ class EntityTest extends TestCase
 
     /**
      * Test for `__get()` and `get()` methods
+     * @uses \Tools\Entity::__get()
+     * @uses \Tools\Entity::get()
      * @test
      * @noinspection PhpUndefinedFieldInspection
      */
@@ -103,6 +108,7 @@ class EntityTest extends TestCase
 
     /**
      * Test for `isEmpty()` method
+     * @uses \Tools\Entity::isEmpty()
      * @test
      */
     public function testIsEmpty(): void
@@ -117,6 +123,7 @@ class EntityTest extends TestCase
 
     /**
      * Test for `set()` method
+     * @uses \Tools\Entity::set()
      * @test
      */
     public function testSet(): void
@@ -134,6 +141,7 @@ class EntityTest extends TestCase
 
     /**
      * Test for `toArray()` method
+     * @uses \Tools\Entity::toArray()
      * @test
      */
     public function testToArray(): void
@@ -149,8 +157,11 @@ class EntityTest extends TestCase
     }
 
     /**
-     * Test for `ArrayAccess` interface, so for `offsetExists()`, `offsetGet()`,
-     *  `offsetSet()` and `offsetUnset()` methods
+     * Test for the `ArrayAccess` interface methods
+     * @uses \Tools\Entity::offsetExists()
+     * @uses \Tools\Entity::offsetGet()
+     * @uses \Tools\Entity::offsetSet()
+     * @uses \Tools\Entity::offsetUnset()
      * @test
      */
     public function testArrayAccess(): void
