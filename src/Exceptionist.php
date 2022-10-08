@@ -299,7 +299,7 @@ class Exceptionist
      * @param TrueValue $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
-     * @param E|class-string<E> $exception The exception class you want to set
+     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
      * @return TrueValue
      * @throws \Exception
      */

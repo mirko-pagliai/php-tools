@@ -49,6 +49,9 @@ class ExceptionistTest extends TestCase
             Exceptionist::isTrue(false);
         } catch (ErrorException $e) {
         } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
             $this->assertSame(__FILE__, $e->getFile());
             $this->assertSame($line, $e->getLine());
             unset($e);
@@ -59,6 +62,9 @@ class ExceptionistTest extends TestCase
             Exceptionist::isReadable(DS . 'noExisting');
         } catch (ErrorException $e) {
         } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
             $this->assertSame(__FILE__, $e->getFile());
             $this->assertSame($line, $e->getLine());
         }
