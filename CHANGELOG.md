@@ -3,6 +3,7 @@
 ### 1.6.4
 * `\Tools\Exceptionist::methodExists()` throws the new
     `Tools\Exception\MethodNotExistsException`;
+* improved the description of many `Exceptionist` magic methods;
 * `\Tools\TestSuite\TestTrait::assertException()` correctly ignores the 
   deprecations in determining the exception;
 * added many `@template` tags to the `Exceptionist`, that now always refers
