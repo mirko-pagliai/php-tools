@@ -19,6 +19,7 @@ namespace Tools\TestSuite;
 use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\MockObject\MockObject;
 use Throwable;
 use Tools\Filesystem;
@@ -120,6 +121,8 @@ trait TestTrait
 
         try {
             call_user_func($function);
+        } catch (Deprecated $e) {
+            //Do nothing
         } catch (Exception $e) {
             parent::assertInstanceof($expectedException, $e, sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
 

@@ -22,6 +22,7 @@ use App\ExampleClass;
 use App\ExampleOfTraversable;
 use App\SkipTestCase;
 use BadMethodCallException;
+use ErrorException;
 use Exception;
 use GdImage;
 use PHPUnit\Framework\AssertionFailedError;
@@ -97,6 +98,7 @@ class TestTraitTest extends TestCase
 
     /**
      * Tests for `assertException()` method
+     * @uses \Tools\TestSuite\TestTrait::assertException()
      * @test
      */
     public function testAssertException(): void
@@ -106,10 +108,13 @@ class TestTraitTest extends TestCase
         });
         $this->assertException(function () {
             throw new Exception('right exception message');
-        });
-        $this->assertException(function () {
-            throw new Exception('right exception message');
         }, Exception::class, 'right exception message');
+
+        //It correctly ignores the deprecations
+        $this->assertException(function () {
+            deprecationWarning('This is a deprecation!');
+            throw new ErrorException('This is an error exception');
+        }, ErrorException::class, 'This is an error exception');
 
         //No exception throw
         try {
