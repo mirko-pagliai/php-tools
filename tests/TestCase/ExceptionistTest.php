@@ -44,7 +44,6 @@ class ExceptionistTest extends TestCase
      */
     public function testLineAndFile(): void
     {
-        $e = new ErrorException();
         try {
             $line = __LINE__ + 1;
             Exceptionist::isTrue(false);
@@ -52,6 +51,7 @@ class ExceptionistTest extends TestCase
         } finally {
             $this->assertSame(__FILE__, $e->getFile());
             $this->assertSame($line, $e->getLine());
+            unset($e);
         }
 
         try {
