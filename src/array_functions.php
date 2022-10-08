@@ -15,17 +15,17 @@ declare(strict_types=1);
 
 if (!function_exists('array_clean')) {
     /**
-     * Cleans an array. It filters elements, removes duplicate values and
-     *  reorders the keys.
+     * Cleans an array, filtering elements, removing duplicate values and
+     *  reordering the keys.
      *
-     * Elements will be filtered with the `array_filter()` function. If`$callback`
-     *  is `null`, all entries of array equal to `FALSE`  will be removed.
+     * Elements will be filtered with the `array_filter()` function. If `$callback`
+     *  is `null`, all entries of array equal to `false` will be removed.
      *
-     * The keys will be re-ordered with the `array_values() function only if all
+     * The keys will be re-ordered with the `array_values()` function only if all
      *  the keys in the original array are numeric.
      * @param array $array Array you want to clean
      * @param callable|null $callback The callback function to filter. If no
-     *  callback is supplied, all entries of array equal to `FALSE`  will be
+     *  callback is supplied, all entries of array equal to `false` will be
      *  removed
      * @param int $flag Flag determining what arguments are sent to callback
      * @return array
@@ -34,9 +34,8 @@ if (!function_exists('array_clean')) {
      */
     function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
+        $array = array_unique(array_filter($array, $callback, $flag));
         $keys = array_keys($array);
-        $array = is_callable($callback) ? array_filter($array, $callback, $flag) : array_filter($array);
-        $array = array_unique($array);
 
         //Performs `array_values()` only if all array keys are numeric
         return $keys === array_filter($keys, 'is_numeric') ? array_values($array) : $array;

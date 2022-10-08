@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.4
+* improved the `array_clean()` global function.
+
 ### 1.6.3
 * added `Filesystem::isWritableRecursive()` method, which replaces 
     `isWritableResursive()` (which had a serious typo). The previous method 

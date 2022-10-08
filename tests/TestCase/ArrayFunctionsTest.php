@@ -24,6 +24,7 @@ class ArrayFunctionsTest extends TestCase
 {
     /**
      * Test for `array_clean()` global function
+     * @uses \array_clean()
      * @test
      */
     public function testArrayClean(): void
@@ -33,6 +34,10 @@ class ArrayFunctionsTest extends TestCase
         $array = ['first', 'second', false, 0, 'second', 'third', null, '', 'fourth'];
         $this->assertSame(['first', 'second', 'third', 'fourth'], array_clean($array));
         $this->assertSame(['first', 'second', 'fourth'], array_clean($array, $filterMethod));
+
+        //With a string as `$callback`
+        $array = ['string', 1];
+        $this->assertSame(['string'], array_clean($array, 'is_string'));
 
         $array = ['a' => 'first', 0 => 'second', false, 'c' => 'third', 'd' => 'second'];
         $this->assertSame(['a' => 'first', 0 => 'second', 'c' => 'third'], array_clean($array));
