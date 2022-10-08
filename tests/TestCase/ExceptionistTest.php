@@ -281,6 +281,7 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrue(): void
@@ -295,6 +296,7 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method, with some failure values
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueWithFailureValues(): void
@@ -312,6 +314,7 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method, with custom message and custom exception
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueFailureWithCustomMessageAndCustomException(): void
@@ -323,11 +326,12 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method, with an invalid exception class
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
         /** @phpstan-ignore-next-line */
-        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Exception` or a class string');
     }
 }
