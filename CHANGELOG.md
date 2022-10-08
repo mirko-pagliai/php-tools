@@ -1,8 +1,8 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.4
-* the `Exceptionist` now always refers to `Exception` and no longer to
-  `Throwable`;
+* added many `@template` tags to the `Exceptionist`, that now always refers
+  to `Exception` and no longer to `Throwable`;
 * improved the `array_clean()` global function.
 
 ### 1.6.3

@@ -31,6 +31,7 @@ use TypeError;
 
 /**
  * The `Exceptionist`.
+ * @template E of class-string<\Exception>|\Exception
  * @method static string classExists(string $className, string $message = '', \Exception|string $exception = \Exception::class)
  * @method static mixed fileNotExists(string $filename, string $message = '', \Exception|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Exception|string $exception = \Exception::class)
@@ -115,13 +116,13 @@ class Exceptionist
      * Checks whether an array key exists.
      *
      * If you pass an array of keys, they will all be checked.
-     * @template T of array-key|array-key[]
-     * @param T $key Key to check or an array of keys
+     * @template Keys of array-key|array-key[]
+     * @param Keys $key Key to check or an array of keys
      * @param array $array An array with keys to check
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return T
+     * @param E $exception The exception class you want to set
+     * @return Keys
      * @throws \Tools\Exception\KeyNotExistsException|\Exception
      */
     public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
@@ -135,11 +136,12 @@ class Exceptionist
 
     /**
      * Checks whether a file or directory exists
-     * @param string $filename Path to the file or directory
+     * @template ExistingFilename as string
+     * @param ExistingFilename $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return string
+     * @param E $exception The exception class you want to set
+     * @return ExistingFilename
      * @throws \Tools\Exception\FileNotExistsException|\Exception
      */
     public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
@@ -151,12 +153,13 @@ class Exceptionist
 
     /**
      * Checks if a value exists in an array
-     * @param mixed $needle The searched value
+     * @template Needle
+     * @param Needle $needle The searched value
      * @param array $haystack The array
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return mixed
+     * @param E $exception The exception class you want to set
+     * @return Needle
      * @throws \Tools\Exception\NotInArrayException|\Exception
      * @since 1.5.8
      */
@@ -170,11 +173,12 @@ class Exceptionist
 
     /**
      * Checks whether a value is `false`
-     * @param mixed $value The value you want to check
+     * @template NoFalseValue
+     * @param NoFalseValue $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return mixed
+     * @param E $exception The exception class you want to set
+     * @return NoFalseValue
      * @throws \Exception
      * @since 1.5.10
      */
@@ -187,12 +191,13 @@ class Exceptionist
 
     /**
      * Checks whether an object is an instance of `$class`
-     * @param object $object The object you want to check
+     * @template InstancedObject as object
+     * @param InstancedObject $object The object you want to check
      * @param string $class The class that the object should be an instance of
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return object
+     * @param E $exception The exception class you want to set
+     * @return InstancedObject
      * @throws \Tools\Exception\ObjectWrongInstanceException|\Exception
      * @since 1.4.7
      */
@@ -205,11 +210,12 @@ class Exceptionist
 
     /**
      * Checks whether a file or directory exists and is readable
-     * @param string $filename Path to the file or directory
+     * @template ReadableFilename as string
+     * @param ReadableFilename $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return string
+     * @param E $exception The exception class you want to set
+     * @return ReadableFilename
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
      * @throws \Exception
@@ -224,11 +230,12 @@ class Exceptionist
 
     /**
      * Checks whether a file or directory exists and is writable
-     * @param string $filename Path to the file or directory
+     * @template WritableFilename as string
+     * @param WritableFilename $filename Path to the file or directory
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return string
+     * @param E $exception The exception class you want to set
+     * @return WritableFilename
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      * @throws \Exception
@@ -243,12 +250,14 @@ class Exceptionist
 
     /**
      * Checks whether a class method exists
-     * @param class-string|object $object An object instance or a class name
-     * @param string $methodName The method name
+     * @template ExistingMethod of string
+     * @template RelativeClass as object
+     * @param class-string<RelativeClass>|RelativeClass $object An object instance or a class name
+     * @param ExistingMethod $methodName The method name
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return array{class-string, string} Array with class name and method name
+     * @param E $exception The exception class you want to set
+     * @return array{class-string<RelativeClass>, ExistingMethod} Array with class name and method name
      * @throws \BadMethodCallException|\Exception
      * @since 1.4.3
      */
@@ -265,12 +274,13 @@ class Exceptionist
      *
      * If the object owns the `has()` method, it uses that method. Otherwise, it
      *  uses the `property_exists()` function.
+     * @template ExistingProperty of string|string[]
      * @param object $object The class name or an object of the class to test for
-     * @param string|array<string> $property Name of the property or an array of names
+     * @param ExistingProperty $property Name of the property or an array of names
      * @param string|null $message The failure message that will be appended to
      *  the generated message
-     * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return string|array<string>
+     * @param E $exception The exception class you want to set
+     * @return ExistingProperty
      * @throws \Tools\Exception\PropertyNotExistsException|\Exception
      */
     public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)
@@ -285,11 +295,12 @@ class Exceptionist
 
     /**
      * Checks whether a value is `true`
-     * @param mixed $value The value you want to check
+     * @template TrueValue
+     * @param TrueValue $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return mixed
+     * @return TrueValue
      * @throws \Exception
      */
     public static function isTrue($value, ?string $message = '', $exception = ErrorException::class)

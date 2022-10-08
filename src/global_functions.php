@@ -207,6 +207,6 @@ if (!function_exists('which')) {
      */
     function which(string $command): string
     {
-        return Exceptionist::isTrue((new ExecutableFinder())->find($command), 'Unable to find the executable for the `' . $command . '` command');
+        return Exceptionist::isTrue((new ExecutableFinder())->find($command) ?: '', 'Unable to find the executable for the `' . $command . '` command');
     }
 }

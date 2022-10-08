@@ -206,7 +206,7 @@ class ExceptionistTest extends TestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('`false` is not equal to `true`');
-        Exceptionist::fileExists(Exceptionist::isFalse(true));
+        Exceptionist::isFalse(true);
     }
 
     /**
