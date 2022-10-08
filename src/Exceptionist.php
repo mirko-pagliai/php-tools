@@ -173,12 +173,12 @@ class Exceptionist
 
     /**
      * Checks whether a value is `false`
-     * @template NoFalseValue
-     * @param NoFalseValue $value The value you want to check
+     * @template FalseValue
+     * @param FalseValue $value The value you want to check
      * @param string|null $message The failure message that will be appended to the
      *  generated message
      * @param E|class-string<E> $exception The exception class you want to set
-     * @return NoFalseValue
+     * @return FalseValue
      * @throws \Exception
      * @since 1.5.10
      */
