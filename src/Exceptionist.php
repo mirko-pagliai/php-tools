@@ -30,7 +30,7 @@ use Tools\Exception\PropertyNotExistsException;
 use TypeError;
 
 /**
- * Exceptionist.
+ * The `Exceptionist`.
  * @method static string classExists(string $className, string $message = '', \Exception|string $exception = \Exception::class)
  * @method static mixed fileNotExists(string $filename, string $message = '', \Exception|string $exception = \Exception::class)
  * @method static array isArray($value, string $message = '', \Exception|string $exception = \Exception::class)
@@ -115,12 +115,13 @@ class Exceptionist
      * Checks whether an array key exists.
      *
      * If you pass an array of keys, they will all be checked.
-     * @param string|int|array<string|int> $key Key to check or an array of keys
+     * @template T of array-key|array-key[]
+     * @param T $key Key to check or an array of keys
      * @param array $array An array with keys to check
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return string|int|array<string|int>
+     * @return T
      * @throws \Tools\Exception\KeyNotExistsException|\Exception
      */
     public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
@@ -247,7 +248,7 @@ class Exceptionist
      * @param string|null $message The failure message that will be appended to
      *  the generated message
      * @param \Exception|class-string<\Exception> $exception The exception class you want to set
-     * @return array<string> Array with class name and method name
+     * @return array{class-string, string} Array with class name and method name
      * @throws \BadMethodCallException|\Exception
      * @since 1.4.3
      */
