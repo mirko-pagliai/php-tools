@@ -116,7 +116,7 @@ trait TestTrait
     protected static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
-            self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
+            self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
 
         try {

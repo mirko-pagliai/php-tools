@@ -150,7 +150,7 @@ class TestTraitTest extends TestCase
                     throw new Exception();
                 }, $class);
             } catch (AssertionFailedError $e) {
-                $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an exception', $e->getMessage());
+                $this->assertStringStartsWith('Class `' . $class . '` is not a throwable or does not exist', $e->getMessage());
             } finally {
                 if (!isset($e)) {
                     self::fail();
