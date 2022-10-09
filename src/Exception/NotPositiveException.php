@@ -16,12 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\InvalidValueException;
+use ErrorException;
 
 /**
  * "Not positive value" exception.
  */
-class NotPositiveException extends InvalidValueException
+class NotPositiveException extends ErrorException
 {
 }

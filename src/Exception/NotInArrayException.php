@@ -16,12 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\InvalidValueException;
+use ErrorException;
 
 /**
  * "Not in array" exception.
  */
-class NotInArrayException extends InvalidValueException
+class NotInArrayException extends ErrorException
 {
 }

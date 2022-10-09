@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use ErrorException;
-use Exception;
 
 /**
  * "Method not exists" exception.

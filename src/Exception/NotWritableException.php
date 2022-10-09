@@ -16,13 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\FileException;
-use Tools\Filesystem;
+use ErrorException;
 
 /**
  * "File or directory is not writable" exception.
  */
-class NotWritableException extends FileException
+class NotWritableException extends ErrorException
 {
 }

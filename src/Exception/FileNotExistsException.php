@@ -16,13 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\FileException;
-use Tools\Filesystem;
+use ErrorException;
 
 /**
  * "File or directory does not exist" exception.
  */
-class FileNotExistsException extends FileException
+class FileNotExistsException extends ErrorException
 {
 }

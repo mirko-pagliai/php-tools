@@ -16,13 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\FileException;
-use Tools\Filesystem;
+use ErrorException;
 
 /**
  * "Filename is not a directory" exception.
  */
-class NotDirectoryException extends FileException
+class NotDirectoryException extends ErrorException
 {
 }

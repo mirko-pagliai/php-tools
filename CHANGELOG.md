@@ -4,7 +4,7 @@
 * added `NewExceptionist`. It will replace `Exceptionist`;
 * all the exceptions offered by php-tools have been simplified by removing
   extra constructor parameters, properties and methods. Related tests have
-  been deleted.
+  been deleted. Abstract `FileException` and `InvalidValueException` no longer exist.
 
 ## 1.6 branch
 ### 1.6.4
