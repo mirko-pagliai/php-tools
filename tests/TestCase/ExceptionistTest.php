@@ -89,7 +89,7 @@ class ExceptionistTest extends TestCase
         $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
-            $this->assertException(fn() => Exceptionist::isInt($var), Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isInt($var), ErrorException::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -97,7 +97,7 @@ class ExceptionistTest extends TestCase
         }
 
         foreach ([null, false, -1, 'd', []] as $var) {
-            $this->assertException(fn() => Exceptionist::isPositive($var), Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isPositive($var), ErrorException::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
         }
     }
 
@@ -122,9 +122,9 @@ class ExceptionistTest extends TestCase
         $this->assertSame(TMP . 'noExisting', Exceptionist::fileNotExists(TMP . 'noExisting'));
         $this->assertSame('string', Exceptionist::isNotArray('string'));
 
-        $this->assertException(fn() => Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: ''), Exception::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
+        $this->assertException(fn() => Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: ''), ErrorException::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
 
-        $this->assertException(fn() => Exceptionist::isNotPositive(1), Exception::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
+        $this->assertException(fn() => Exceptionist::isNotPositive(1), ErrorException::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
     }
 
     /**
@@ -314,7 +314,7 @@ class ExceptionistTest extends TestCase
             [0, 'Value `0` is not equal to `true`'],
         ] as $exception) {
             [$value, $expectedMessage] = $exception;
-            $this->assertException(fn() => Exceptionist::isTrue($value), Exception::class, $expectedMessage);
+            $this->assertException(fn() => Exceptionist::isTrue($value), ErrorException::class, $expectedMessage);
         }
     }
 
@@ -326,7 +326,7 @@ class ExceptionistTest extends TestCase
     public function testIsTrueFailureWithCustomMessageAndCustomException(): void
     {
         $message = 'it\'s not `true`';
-        $this->assertException(fn() => Exceptionist::isTrue(false, $message), Exception::class, $message);
+        $this->assertException(fn() => Exceptionist::isTrue(false, $message), ErrorException::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
     }
 

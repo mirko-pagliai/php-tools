@@ -124,7 +124,7 @@ trait TestTrait
         } catch (Deprecated $e) {
             //Do nothing
         } catch (Exception $e) {
-            parent::assertInstanceof($expectedException, $e, sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
+            parent::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
 
             if ($expectedMessage) {
                 parent::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
