@@ -48,7 +48,6 @@ use TypeError;
  * @method static resource isResource($value, string $message = '', string $exception = \ErrorException::class)
  * @method static string isString($value, string $message = '', string $exception = \ErrorException::class)
  * @method static string isUrl(string $value, string $message = '', string $exception = \ErrorException::class)
- * @todo write that it does not accept exceptions already instantiated, but only as class-name
  */
 class NewExceptionist
 {
