@@ -125,7 +125,7 @@ class Exceptionist
      * @return Keys
      * @throws \Tools\Exception\KeyNotExistsException|\Exception
      */
-    public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
+    public static function arrayKeyExists($key, array $array, string $message = '', $exception = KeyNotExistsException::class)
     {
         foreach ((array)$key as $name) {
             self::isTrue(array_key_exists($name, $array), $message ?: 'Key `' . $name . '` does not exist', $exception);
@@ -144,7 +144,7 @@ class Exceptionist
      * @return ExistingFilename
      * @throws \Tools\Exception\FileNotExistsException|\Exception
      */
-    public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
+    public static function fileExists(string $filename, string $message = '', $exception = FileNotExistsException::class): string
     {
         self::isTrue(file_exists($filename), $message ?: 'File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist', $exception);
 
@@ -163,7 +163,7 @@ class Exceptionist
      * @throws \Tools\Exception\NotInArrayException|\Exception
      * @since 1.5.8
      */
-    public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray($needle, array $haystack, string $message = '', $exception = NotInArrayException::class)
     {
         $message = $message ?: 'The value' . (is_stringable($needle) ? ' `' . $needle . '`' : '') . ' does not exist in array' . (is_stringable($haystack) ? ' `' . array_to_string($haystack) . '`' : '');
         self::isTrue(in_array($needle, $haystack, true), $message, $exception);
@@ -182,7 +182,7 @@ class Exceptionist
      * @throws \Exception
      * @since 1.5.10
      */
-    public static function isFalse($value, ?string $message = '', $exception = ErrorException::class)
+    public static function isFalse($value, string $message = '', $exception = ErrorException::class)
     {
         self::isTrue(!$value, $message, $exception);
 
@@ -194,14 +194,13 @@ class Exceptionist
      * @template InstancedObject as object
      * @param InstancedObject $object The object you want to check
      * @param string $class The class that the object should be an instance of
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return InstancedObject
      * @throws \Tools\Exception\ObjectWrongInstanceException|\Exception
      * @since 1.4.7
      */
-    public static function isInstanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
+    public static function isInstanceOf(object $object, string $class, string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
         self::isTrue($object instanceof $class, $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class), $exception);
 
@@ -220,7 +219,7 @@ class Exceptionist
      * @throws \Tools\Exception\NotReadableException
      * @throws \Exception
      */
-    public static function isReadable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
+    public static function isReadable(string $filename, string $message = '', $exception = NotReadableException::class): string
     {
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_readable($filename), $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename)), $exception);
@@ -240,7 +239,7 @@ class Exceptionist
      * @throws \Tools\Exception\NotWritableException
      * @throws \Exception
      */
-    public static function isWritable(string $filename, ?string $message = '', $exception = NotWritableException::class): string
+    public static function isWritable(string $filename, string $message = '', $exception = NotWritableException::class): string
     {
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_writable($filename), $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename)), $exception);
@@ -261,7 +260,7 @@ class Exceptionist
      * @throws \Tools\Exception\MethodNotExistsException|\Exception
      * @since 1.4.3
      */
-    public static function methodExists($object, string $methodName, ?string $message = '', $exception = MethodNotExistsException::class): array
+    public static function methodExists($object, string $methodName, string $message = '', $exception = MethodNotExistsException::class): array
     {
         $object = is_string($object) ? $object : get_class($object);
         self::isTrue(method_exists($object, $methodName), $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName), $exception);
@@ -283,7 +282,7 @@ class Exceptionist
      * @return ExistingProperty
      * @throws \Tools\Exception\PropertyNotExistsException|\Exception
      */
-    public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)
+    public static function objectPropertyExists(object $object, $property, string $message = '', $exception = PropertyNotExistsException::class)
     {
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
@@ -304,7 +303,7 @@ class Exceptionist
      * @throws \Exception
      * @noinspection PhpConditionAlreadyCheckedInspection
      */
-    public static function isTrue($value, ?string $message = '', $exception = ErrorException::class)
+    public static function isTrue($value, string $message = '', $exception = ErrorException::class)
     {
         if ($value) {
             return $value;
