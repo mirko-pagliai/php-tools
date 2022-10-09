@@ -5,10 +5,12 @@
 * `\Tools\Exceptionist::methodExists()` throws the new `Tools\Exception\MethodNotExistsException`;
 * by default, the `\Tools\Exceptionist::____callStatic()` magic method now throws an `ErrorException`;
 * improved the description of many `Exceptionist` magic methods;
+* the `$exception` parameter is deprecated for all methods of `\Tools\Exceptionist` (except `isFalse()`,
+  `isTrue()` and consequently `__callStatic()`). Use the default exceptions;
+* all methods of `\Tools\Exceptionist` no longer accept a value of `null` as `$message` parameter;
 * `\Tools\TestSuite\TestTrait::assertException()` new performs a strict comparison and does not
   consider parent classes (`ErrorException` != `Exception`). It correctly ignores the  deprecations
   in determining the exception;
-* all methods of `\Tools\Exceptionist` no longer accept a value of `null` as `$message` parameter;
 * added many `@template` tags to the `Exceptionist`, that now always refers to `Exception` and no
   longer to `Throwable`;
 * improved the `array_clean()` global function.

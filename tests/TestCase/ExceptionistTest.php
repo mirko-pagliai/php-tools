@@ -18,6 +18,7 @@ namespace Tools\Test;
 use App\ExampleClass;
 use ErrorException;
 use Exception;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
@@ -37,6 +38,59 @@ use Tools\TestSuite\TestCase;
  */
 class ExceptionistTest extends TestCase
 {
+    /**
+     * @var int
+     */
+    protected static int $initialErrorReporting;
+
+    /**
+     * This method is called before the first test of this test class is run.
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$initialErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * This method is called after the last test of this test class is run.
+     */
+    public static function tearDownAfterClass(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+    }
+
+    /**
+     * Test to check that the `$exception` parameter is deprecated for all methods (except `isFalse()`, 'isTrue()` and `__callStatic()`)
+     * @test
+     */
+    public function testExceptionParameterIsDeprecated(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+
+        foreach ([
+            fn() => Exceptionist::arrayKeyExists(1, ['a', 'b'], '', KeyNotExistsException::class),
+            fn() => Exceptionist::fileExists(TMP, '', FileNotExistsException::class),
+            fn() => Exceptionist::inArray('a', ['a', 'b'], '', NotInArrayException::class),
+            fn() => Exceptionist::isInstanceOf(new stdClass(), stdClass::class, '', ObjectWrongInstanceException::class),
+            fn() => Exceptionist::isReadable(TMP, '', NotReadableException::class),
+            fn() => Exceptionist::isWritable(TMP, '', NotWritableException::class),
+            fn() => Exceptionist::methodExists(ExampleClass::class, 'setProperty', '', MethodNotExistsException::class),
+            fn() => Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty', '', PropertyNotExistsException::class),
+        ] as $callback) {
+            try {
+                $callback();
+            } catch (Deprecated $e) {
+                $this->assertStringStartsWith('The `$exception` parameter is deprecated and will be removed in a later release', $e->getMessage());
+            } finally {
+                if (!isset($e)) {
+                    $this->fail();
+                }
+            }
+        }
+
+        error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
     /**
      * Test to verify that the exceptions thrown by the `Exceptionist` report
      *  the correct file and line

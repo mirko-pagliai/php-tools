@@ -126,6 +126,9 @@ class Exceptionist
      */
     public static function arrayKeyExists($key, array $array, string $message = '', $exception = KeyNotExistsException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         foreach ((array)$key as $name) {
             self::isTrue(array_key_exists($name, $array), $message ?: 'Key `' . $name . '` does not exist', $exception);
         }
@@ -144,6 +147,9 @@ class Exceptionist
      */
     public static function fileExists(string $filename, string $message = '', $exception = FileNotExistsException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::isTrue(file_exists($filename), $message ?: 'File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist', $exception);
 
         return $filename;
@@ -162,6 +168,9 @@ class Exceptionist
      */
     public static function inArray($needle, array $haystack, string $message = '', $exception = NotInArrayException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         $message = $message ?: 'The value' . (is_stringable($needle) ? ' `' . $needle . '`' : '') . ' does not exist in array' . (is_stringable($haystack) ? ' `' . array_to_string($haystack) . '`' : '');
         self::isTrue(in_array($needle, $haystack, true), $message, $exception);
 
@@ -198,6 +207,9 @@ class Exceptionist
      */
     public static function isInstanceOf(object $object, string $class, string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::isTrue($object instanceof $class, $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class), $exception);
 
         return $object;
@@ -216,6 +228,9 @@ class Exceptionist
      */
     public static function isReadable(string $filename, string $message = '', $exception = NotReadableException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_readable($filename), $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename)), $exception);
 
@@ -235,6 +250,9 @@ class Exceptionist
      */
     public static function isWritable(string $filename, string $message = '', $exception = NotWritableException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_writable($filename), $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename)), $exception);
 
@@ -255,6 +273,9 @@ class Exceptionist
      */
     public static function methodExists($object, string $methodName, string $message = '', $exception = MethodNotExistsException::class): array
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         $object = is_string($object) ? $object : get_class($object);
         self::isTrue(method_exists($object, $methodName), $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName), $exception);
 
@@ -276,6 +297,9 @@ class Exceptionist
      */
     public static function objectPropertyExists(object $object, $property, string $message = '', $exception = PropertyNotExistsException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
             self::isTrue($result, $message ?: sprintf('Property `%s::$%s` does not exist', get_class($object), $name), $exception);
