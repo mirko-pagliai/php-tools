@@ -258,22 +258,6 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `isWritableResursive()`
-     * @uses \Tools\Filesystem::isWritableResursive()
-     * @test
-     */
-    public function testIsWritableResursive(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('Deprecated. Use instead `isWritableRecursive()`');
-        Filesystem::instance()->isWritableResursive(TMP);
-    }
-
-    /**
      * Test for `makePathAbsolute()` method
      * @test
      */
