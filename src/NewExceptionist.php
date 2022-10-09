@@ -51,7 +51,6 @@ use TypeError;
  * @todo write that it does not accept exceptions already instantiated, but only as class-name
  * @todo write that messages are not nullable
  * @todo do something because methods (except `isFalse()` and `isTrue()`) no longer accept an exception as a parameter, but use the default
- * @todo it should not use `Filesystem`, or any other class or method that may throw other exceptions
  */
 class NewExceptionist
 {
@@ -181,7 +180,7 @@ class NewExceptionist
         }
 
         /** @var \Tools\Exception\FileNotExistsException $e */
-        $e = self::buildException($message ?: 'File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist', FileNotExistsException::class);
+        $e = self::buildException($message ?: 'File or directory `' . $filename . '` does not exist', FileNotExistsException::class);
         throw $e;
     }
 
@@ -260,10 +259,8 @@ class NewExceptionist
             return $filename;
         }
 
-        $message = $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename));
-
         /** @var \Tools\Exception\NotReadableException $e */
-        $e = self::buildException($message, NotReadableException::class);
+        $e = self::buildException($message ?: 'File or directory `' . $filename . '` is not readable', NotReadableException::class);
         throw $e;
     }
 
@@ -316,10 +313,8 @@ class NewExceptionist
             return $filename;
         }
 
-        $message = $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename));
-
         /** @var \Tools\Exception\NotWritableException $e */
-        $e = self::buildException($message, NotWritableException::class);
+        $e = self::buildException($message ?: 'File or directory `' . $filename . '` is not writable', NotWritableException::class);
         throw $e;
     }
 
