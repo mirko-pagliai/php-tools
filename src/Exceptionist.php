@@ -324,6 +324,10 @@ class Exceptionist
             return $value;
         }
 
+        if (is_object($exception)) {
+            deprecationWarning('Using an already instantiated exception is deprecated. Use only the exception class');
+        }
+
         if (!$exception instanceof Exception && !is_string($exception)) {
             trigger_error('`$exception` parameter must be an instance of `Exception` or a class string');
         }

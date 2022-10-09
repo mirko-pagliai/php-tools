@@ -6,7 +6,8 @@
 * by default, the `\Tools\Exceptionist::____callStatic()` magic method now throws an `ErrorException`;
 * improved the description of many `Exceptionist` magic methods;
 * the `$exception` parameter is deprecated for all methods of `\Tools\Exceptionist` (except `isFalse()`,
-  `isTrue()` and consequently `__callStatic()`). Use the default exceptions;
+  `isTrue()` and consequently `__callStatic()`). Use the default exceptions. Furthermore, using an
+   already instantiated exception is also deprecated;
 * all methods of `\Tools\Exceptionist` no longer accept a value of `null` as `$message` parameter;
 * `\Tools\TestSuite\TestTrait::assertException()` new performs a strict comparison and does not
   consider parent classes (`ErrorException` != `Exception`). It correctly ignores the  deprecations

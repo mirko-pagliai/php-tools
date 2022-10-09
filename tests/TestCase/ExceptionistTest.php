@@ -60,6 +60,27 @@ class ExceptionistTest extends TestCase
     }
 
     /**
+     * Test to check that using an already instantiated exception is deprecated
+     * @test
+     */
+    public function testInstantiatedExceptionIsDeprecated(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+
+        try {
+            Exceptionist::isTrue(false, '', new ErrorException());
+        } catch (Deprecated $e) {
+            $this->assertStringStartsWith('Using an already instantiated exception is deprecated. Use only the exception class', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+        }
+
+        error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
      * Test to check that the `$exception` parameter is deprecated for all methods (except `isFalse()`, 'isTrue()` and `__callStatic()`)
      * @test
      */
@@ -85,6 +106,7 @@ class ExceptionistTest extends TestCase
                 if (!isset($e)) {
                     $this->fail();
                 }
+                unset($e);
             }
         }
 
