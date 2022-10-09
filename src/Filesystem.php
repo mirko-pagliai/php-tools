@@ -184,7 +184,6 @@ class Filesystem extends BaseFilesystem
      * The root path must be set with the `ROOT` environment variable (using the
      *  `putenv()` function) or the `ROOT` constant.
      * @return string
-     * @throws \Throwable
      */
     public function getRoot(): string
     {
@@ -341,7 +340,6 @@ class Filesystem extends BaseFilesystem
      * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \Throwable
      */
     public function rtr(string $path): string
     {
