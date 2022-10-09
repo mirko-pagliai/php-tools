@@ -5,6 +5,12 @@
       <code>$event</code>
     </MoreSpecificImplementedParamType>
   </file>
+  <file src="src/NewExceptionist.php">
+    <UndefinedDocblockClass occurrences="2">
+      <code>FalseException</code>
+      <code>TrueException</code>
+    </UndefinedDocblockClass>
+  </file>
   <file src="src/TestSuite/TestTrait.php">
     <DuplicateArrayKey occurrences="1">
       <code>$arguments</code>

@@ -1,4 +1,8 @@
 # 1.x branch
+## 1.7 branch
+### 1.7.0
+* added `NewExceptionist`. It will replace `Exceptionist`.
+
 ## 1.6 branch
 ### 1.6.4
 * `object_map()` global function throws the new
