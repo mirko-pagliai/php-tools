@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.7 branch
 ### 1.7.0
-* added `NewExceptionist`. It will replace `Exceptionist`;
+* `\Tools\Exceptionist` has been completely rewritten and made more functional, simpler and better
+  documented. We tried to keep compatibility with the old class as much as possible;
 * all the exceptions offered by php-tools have been simplified by removing
   extra constructor parameters, properties and methods. Related tests have
   been deleted. Abstract `FileException` and `InvalidValueException` no longer exist;
