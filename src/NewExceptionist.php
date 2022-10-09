@@ -49,7 +49,6 @@ use TypeError;
  * @method static string isString($value, string $message = '', string $exception = \ErrorException::class)
  * @method static string isUrl(string $value, string $message = '', string $exception = \ErrorException::class)
  * @todo write that it does not accept exceptions already instantiated, but only as class-name
- * @todo write that messages are not nullable
  * @todo do something because methods (except `isFalse()` and `isTrue()`) no longer accept an exception as a parameter, but use the default
  */
 class NewExceptionist
