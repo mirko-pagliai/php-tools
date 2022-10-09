@@ -51,7 +51,7 @@ class BodyParserTest extends TestCase
 <map name="example"><area alt="area" href="area.htm"></map>
 <audio src="/file.mp3"></audio>
 <embed src="embed-video.mp4">
-<!--suppress HtmlDeprecatedAttribute, HtmlDeprecatedTag, HtmlExtraClosingTag -->
+<!--suppress HtmlDeprecatedAttribute, HtmlDeprecatedTag, HtmlExtraClosingTag, XmlDeprecatedElement -->
 <frame src="frame1.html"></frame>
 <iframe src="frame2.html"></iframe>
 <img alt="pic.jpg" src="pic.jpg" />

@@ -51,11 +51,11 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return array<class-string>
      * @since 1.0.1
-     * @throws \LogicException|\Throwable
+     * @throws \Throwable
      */
     function get_child_methods(string $class): array
     {
-        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist', LogicException::class);
+        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist');
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
 
@@ -149,17 +149,13 @@ if (!function_exists('objects_map')) {
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
-     * @throws \BadMethodCallException|\Throwable
+     * @throws \Tools\Exception\MethodNotExistsException|\Throwable
      * @since 1.1.11
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
         return array_map(function (object $object) use ($method, $args) {
-            Exceptionist::isTrue(method_exists($object, '__call') || is_callable([$object, $method]), sprintf(
-                'Class `%s` does not have a method `%s`',
-                get_class($object),
-                $method
-            ), BadMethodCallException::class);
+            Exceptionist::methodExists($object, $method);
 
             return call_user_func_array([$object, $method], $args);
         }, $objects);
@@ -207,6 +203,6 @@ if (!function_exists('which')) {
      */
     function which(string $command): string
     {
-        return Exceptionist::isTrue((new ExecutableFinder())->find($command), 'Unable to find the executable for the `' . $command . '` command');
+        return Exceptionist::isTrue((new ExecutableFinder())->find($command) ?: '', 'Unable to find the executable for the `' . $command . '` command');
     }
 }

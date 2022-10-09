@@ -1,4 +1,6 @@
 <?php
+/** @noinspection PhpUnitAssertTrueWithIncompatibleTypeArgumentInspection */
+/** @noinspection PhpUnitAssertCanBeReplacedWithFailInspection */
 declare(strict_types=1);
 
 /**

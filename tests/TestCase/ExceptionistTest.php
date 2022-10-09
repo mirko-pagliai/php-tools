@@ -16,13 +16,14 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use App\ExampleClass;
-use BadMethodCallException;
 use ErrorException;
 use Exception;
+use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
+use Tools\Exception\MethodNotExistsException;
 use Tools\Exception\NotInArrayException;
 use Tools\Exception\NotReadableException;
 use Tools\Exception\NotWritableException;
@@ -38,29 +39,111 @@ use Tools\TestSuite\TestCase;
 class ExceptionistTest extends TestCase
 {
     /**
+     * @var int
+     */
+    protected static int $initialErrorReporting;
+
+    /**
+     * This method is called before the first test of this test class is run.
+     */
+    public static function setUpBeforeClass(): void
+    {
+        self::$initialErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * This method is called after the last test of this test class is run.
+     */
+    public static function tearDownAfterClass(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+    }
+
+    /**
+     * Test to check that using an already instantiated exception is deprecated
+     * @test
+     */
+    public function testInstantiatedExceptionIsDeprecated(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+
+        try {
+            Exceptionist::isTrue(false, '', new ErrorException());
+        } catch (Deprecated $e) {
+            $this->assertStringStartsWith('Using an already instantiated exception is deprecated. Use only the exception class', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+        }
+
+        error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * Test to check that the `$exception` parameter is deprecated for all methods (except `isFalse()`, 'isTrue()` and `__callStatic()`)
+     * @test
+     */
+    public function testExceptionParameterIsDeprecated(): void
+    {
+        error_reporting(self::$initialErrorReporting);
+
+        foreach ([
+            fn() => Exceptionist::arrayKeyExists(1, ['a', 'b'], '', KeyNotExistsException::class),
+            fn() => Exceptionist::fileExists(TMP, '', FileNotExistsException::class),
+            fn() => Exceptionist::inArray('a', ['a', 'b'], '', NotInArrayException::class),
+            fn() => Exceptionist::isInstanceOf(new stdClass(), stdClass::class, '', ObjectWrongInstanceException::class),
+            fn() => Exceptionist::isReadable(TMP, '', NotReadableException::class),
+            fn() => Exceptionist::isWritable(TMP, '', NotWritableException::class),
+            fn() => Exceptionist::methodExists(ExampleClass::class, 'setProperty', '', MethodNotExistsException::class),
+            fn() => Exceptionist::objectPropertyExists(new ExampleClass(), 'publicProperty', '', PropertyNotExistsException::class),
+        ] as $callback) {
+            try {
+                $callback();
+            } catch (Deprecated $e) {
+                $this->assertStringStartsWith('The `$exception` parameter is deprecated and will be removed in a later release', $e->getMessage());
+            } finally {
+                if (!isset($e)) {
+                    $this->fail();
+                }
+                unset($e);
+            }
+        }
+
+        error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
      * Test to verify that the exceptions thrown by the `Exceptionist` report
      *  the correct file and line
      * @test
+     * @noinspection PhpConditionAlreadyCheckedInspection
      */
     public function testLineAndFile(): void
     {
-        $e = new ErrorException();
         try {
             $line = __LINE__ + 1;
             Exceptionist::isTrue(false);
         } catch (ErrorException $e) {
-        } finally {
             $this->assertSame(__FILE__, $e->getFile());
             $this->assertSame($line, $e->getLine());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+            unset($e);
         }
 
         try {
             $line = __LINE__ + 1;
             Exceptionist::isReadable(DS . 'noExisting');
         } catch (ErrorException $e) {
-        } finally {
             $this->assertSame(__FILE__, $e->getFile());
             $this->assertSame($line, $e->getLine());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
         }
     }
 
@@ -83,7 +166,7 @@ class ExceptionistTest extends TestCase
         $this->assertEquals(new stdClass(), Exceptionist::isObject(new stdClass()));
 
         foreach ([null, false, true, 1.2, 'd', []] as $var) {
-            $this->assertException(fn() => Exceptionist::isInt($var), Exception::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isInt($var), ErrorException::class, '`' . Exceptionist::class . '::isInt()` returned `false`');
         }
 
         foreach ([1, '1', 1.0] as $number) {
@@ -91,7 +174,7 @@ class ExceptionistTest extends TestCase
         }
 
         foreach ([null, false, -1, 'd', []] as $var) {
-            $this->assertException(fn() => Exceptionist::isPositive($var), Exception::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
+            $this->assertException(fn() => Exceptionist::isPositive($var), ErrorException::class, '`' . Exceptionist::class . '::isPositive()` returned `false`');
         }
     }
 
@@ -116,9 +199,9 @@ class ExceptionistTest extends TestCase
         $this->assertSame(TMP . 'noExisting', Exceptionist::fileNotExists(TMP . 'noExisting'));
         $this->assertSame('string', Exceptionist::isNotArray('string'));
 
-        $this->assertException(fn() => Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: ''), Exception::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
+        $this->assertException(fn() => Exceptionist::fileNotExists(tempnam(TMP, 'tmp') ?: ''), ErrorException::class, '`' . Exceptionist::class . '::fileNotExists()` returned `false`');
 
-        $this->assertException(fn() => Exceptionist::isNotPositive(1), Exception::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
+        $this->assertException(fn() => Exceptionist::isNotPositive(1), ErrorException::class, '`' . Exceptionist::class . '::isNotPositive()` returned `false`');
     }
 
     /**
@@ -206,7 +289,7 @@ class ExceptionistTest extends TestCase
 
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('`false` is not equal to `true`');
-        Exceptionist::fileExists(Exceptionist::isFalse(true));
+        Exceptionist::isFalse(true);
     }
 
     /**
@@ -247,7 +330,7 @@ class ExceptionistTest extends TestCase
             $this->assertSame([ExampleClass::class, 'setProperty'], Exceptionist::methodExists($object, 'setProperty'));
         }
 
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(MethodNotExistsException::class);
         $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExisting()` does not exist');
         Exceptionist::methodExists($object, 'noExisting');
     }
@@ -281,6 +364,7 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrue(): void
@@ -295,6 +379,7 @@ class ExceptionistTest extends TestCase
 
     /**
      * Test for `isTrue()` method, with some failure values
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueWithFailureValues(): void
@@ -306,28 +391,30 @@ class ExceptionistTest extends TestCase
             [0, 'Value `0` is not equal to `true`'],
         ] as $exception) {
             [$value, $expectedMessage] = $exception;
-            $this->assertException(fn() => Exceptionist::isTrue($value), Exception::class, $expectedMessage);
+            $this->assertException(fn() => Exceptionist::isTrue($value), ErrorException::class, $expectedMessage);
         }
     }
 
     /**
      * Test for `isTrue()` method, with custom message and custom exception
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueFailureWithCustomMessageAndCustomException(): void
     {
         $message = 'it\'s not `true`';
-        $this->assertException(fn() => Exceptionist::isTrue(false, $message), Exception::class, $message);
+        $this->assertException(fn() => Exceptionist::isTrue(false, $message), ErrorException::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
     }
 
     /**
      * Test for `isTrue()` method, with an invalid exception class
+     * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
     public function testIsTrueFailureWithInvalidExceptionClass(): void
     {
         /** @phpstan-ignore-next-line */
-        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Throwable` or a string');
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Exception` or a class string');
     }
 }

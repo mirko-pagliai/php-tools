@@ -36,7 +36,7 @@ class ExampleOfTraversable implements IteratorAggregate
         return new ArrayIterator($this->items);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
