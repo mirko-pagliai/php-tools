@@ -119,14 +119,16 @@ class Exceptionist
      * @template Keys of array-key|array-key[]
      * @param Keys $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return Keys
      * @throws \Tools\Exception\KeyNotExistsException|\Exception
      */
-    public static function arrayKeyExists($key, array $array, ?string $message = '', $exception = KeyNotExistsException::class)
+    public static function arrayKeyExists($key, array $array, string $message = '', $exception = KeyNotExistsException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         foreach ((array)$key as $name) {
             self::isTrue(array_key_exists($name, $array), $message ?: 'Key `' . $name . '` does not exist', $exception);
         }
@@ -138,14 +140,16 @@ class Exceptionist
      * Checks whether a file or directory exists
      * @template ExistingFilename as string
      * @param ExistingFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ExistingFilename
      * @throws \Tools\Exception\FileNotExistsException|\Exception
      */
-    public static function fileExists(string $filename, ?string $message = '', $exception = FileNotExistsException::class): string
+    public static function fileExists(string $filename, string $message = '', $exception = FileNotExistsException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::isTrue(file_exists($filename), $message ?: 'File or directory `' . Filesystem::instance()->rtr($filename) . '` does not exist', $exception);
 
         return $filename;
@@ -156,15 +160,17 @@ class Exceptionist
      * @template Needle
      * @param Needle $needle The searched value
      * @param array $haystack The array
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return Needle
      * @throws \Tools\Exception\NotInArrayException|\Exception
      * @since 1.5.8
      */
-    public static function inArray($needle, array $haystack, ?string $message = '', $exception = NotInArrayException::class)
+    public static function inArray($needle, array $haystack, string $message = '', $exception = NotInArrayException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         $message = $message ?: 'The value' . (is_stringable($needle) ? ' `' . $needle . '`' : '') . ' does not exist in array' . (is_stringable($haystack) ? ' `' . array_to_string($haystack) . '`' : '');
         self::isTrue(in_array($needle, $haystack, true), $message, $exception);
 
@@ -173,16 +179,15 @@ class Exceptionist
 
     /**
      * Checks whether a value is `false`
-     * @template NoFalseValue
-     * @param NoFalseValue $value The value you want to check
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @template FalseValue
+     * @param FalseValue $value The value you want to check
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
-     * @return NoFalseValue
+     * @return FalseValue
      * @throws \Exception
      * @since 1.5.10
      */
-    public static function isFalse($value, ?string $message = '', $exception = ErrorException::class)
+    public static function isFalse($value, string $message = '', $exception = ErrorException::class)
     {
         self::isTrue(!$value, $message, $exception);
 
@@ -194,15 +199,17 @@ class Exceptionist
      * @template InstancedObject as object
      * @param InstancedObject $object The object you want to check
      * @param string $class The class that the object should be an instance of
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return InstancedObject
      * @throws \Tools\Exception\ObjectWrongInstanceException|\Exception
      * @since 1.4.7
      */
-    public static function isInstanceOf(object $object, string $class, ?string $message = '', $exception = ObjectWrongInstanceException::class): object
+    public static function isInstanceOf(object $object, string $class, string $message = '', $exception = ObjectWrongInstanceException::class): object
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::isTrue($object instanceof $class, $message ?: sprintf('Object `%s` is not an instance of `%s`', get_class($object), $class), $exception);
 
         return $object;
@@ -212,16 +219,18 @@ class Exceptionist
      * Checks whether a file or directory exists and is readable
      * @template ReadableFilename as string
      * @param ReadableFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ReadableFilename
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotReadableException
      * @throws \Exception
      */
-    public static function isReadable(string $filename, ?string $message = '', $exception = NotReadableException::class): string
+    public static function isReadable(string $filename, string $message = '', $exception = NotReadableException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_readable($filename), $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename)), $exception);
 
@@ -232,16 +241,18 @@ class Exceptionist
      * Checks whether a file or directory exists and is writable
      * @template WritableFilename as string
      * @param WritableFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return WritableFilename
      * @throws \Tools\Exception\FileNotExistsException
      * @throws \Tools\Exception\NotWritableException
      * @throws \Exception
      */
-    public static function isWritable(string $filename, ?string $message = '', $exception = NotWritableException::class): string
+    public static function isWritable(string $filename, string $message = '', $exception = NotWritableException::class): string
     {
+        if (func_num_args() > 2) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         self::fileExists($filename, $message, $exception);
         self::isTrue(is_writable($filename), $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename)), $exception);
 
@@ -254,15 +265,17 @@ class Exceptionist
      * @template RelativeObject as object
      * @param class-string<RelativeObject>|RelativeObject $object An object instance or a class name
      * @param ExistingMethod $methodName The method name
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return array{class-string<RelativeObject>, ExistingMethod} Array with class name and method name
      * @throws \Tools\Exception\MethodNotExistsException|\Exception
      * @since 1.4.3
      */
-    public static function methodExists($object, string $methodName, ?string $message = '', $exception = MethodNotExistsException::class): array
+    public static function methodExists($object, string $methodName, string $message = '', $exception = MethodNotExistsException::class): array
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         $object = is_string($object) ? $object : get_class($object);
         self::isTrue(method_exists($object, $methodName), $message ?: sprintf('Method `%s::%s()` does not exist', $object, $methodName), $exception);
 
@@ -277,14 +290,16 @@ class Exceptionist
      * @template ExistingProperty of string|string[]
      * @param object $object The class name or an object of the class to test for
      * @param ExistingProperty $property Name of the property or an array of names
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ExistingProperty
      * @throws \Tools\Exception\PropertyNotExistsException|\Exception
      */
-    public static function objectPropertyExists(object $object, $property, ?string $message = '', $exception = PropertyNotExistsException::class)
+    public static function objectPropertyExists(object $object, $property, string $message = '', $exception = PropertyNotExistsException::class)
     {
+        if (func_num_args() > 3) {
+            deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
+        }
         foreach ((array)$property as $name) {
             $result = method_exists($object, 'has') ? $object->has($name) : property_exists($object, $name);
             self::isTrue($result, $message ?: sprintf('Property `%s::$%s` does not exist', get_class($object), $name), $exception);
@@ -297,16 +312,20 @@ class Exceptionist
      * Checks whether a value is `true`
      * @template TrueValue
      * @param TrueValue $value The value you want to check
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param \Exception|class-string<\Exception> $exception The exception class you want to set
      * @return TrueValue
      * @throws \Exception
+     * @noinspection PhpConditionAlreadyCheckedInspection
      */
-    public static function isTrue($value, ?string $message = '', $exception = ErrorException::class)
+    public static function isTrue($value, string $message = '', $exception = ErrorException::class)
     {
         if ($value) {
             return $value;
+        }
+
+        if (is_object($exception)) {
+            deprecationWarning('Using an already instantiated exception is deprecated. Use only the exception class');
         }
 
         if (!$exception instanceof Exception && !is_string($exception)) {

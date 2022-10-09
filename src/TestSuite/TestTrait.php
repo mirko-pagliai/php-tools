@@ -116,7 +116,10 @@ trait TestTrait
     protected static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
-            self::fail(sprintf('Class `%s` does not exist or is not an exception', $expectedException));
+            self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
+        }
+        if ($expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
+            trigger_error('You cannot use `' . __METHOD__ . '()` for deprecations');
         }
 
         try {
@@ -124,7 +127,7 @@ trait TestTrait
         } catch (Deprecated $e) {
             //Do nothing
         } catch (Exception $e) {
-            parent::assertInstanceof($expectedException, $e, sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
+            parent::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
 
             if ($expectedMessage) {
                 parent::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');

@@ -8,17 +8,18 @@
 
 ## 1.6 branch
 ### 1.6.4
-* `object_map()` global function throws the new
+* `object_map()` global function and `\Tools\Exceptionist::methodExists()` method throw the new 
   `\Tools\Exception\MethodNotExistsException`;
-* `\Tools\Exceptionist::methodExists()` throws the new
-    `Tools\Exception\MethodNotExistsException`;
-* by default, the `\Tools\Exceptionist::____callStatic()` magic method
-    now throws an `ErrorException`;
-* improved the description of many `Exceptionist` magic methods;
-* `\Tools\TestSuite\TestTrait::assertException()` correctly ignores the 
-  deprecations in determining the exception;
-* added many `@template` tags to the `Exceptionist`, that now always refers
-  to `Exception` and no longer to `Throwable`;
+* by default, the `\Tools\Exceptionist::____callStatic()` magic method now throws an `ErrorException`;
+* the `$exception` parameter is deprecated for all methods of `\Tools\Exceptionist` (except `isFalse()`,
+  `isTrue()` and consequently `__callStatic()`). Use the default exceptions. Furthermore, using an
+   already instantiated exception is also deprecated;
+* all methods of `\Tools\Exceptionist` no longer accept a value of `null` as `$message` parameter;
+* improved the description of many `\Tools\Exceptionist` magic methods, added many `@template` tags
+  and now always refers to `Exception` and no longer to `Throwable`;
+* `\Tools\TestSuite\TestTrait::assertException()` new performs a strict comparison and does not
+  consider parent classes (`ErrorException` != `Exception`). It correctly ignores the  deprecations
+  in determining the exception;
 * improved the `array_clean()` global function.
 
 ### 1.6.3

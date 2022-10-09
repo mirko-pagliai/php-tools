@@ -26,6 +26,9 @@ use ErrorException;
 use Exception;
 use GdImage;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Error\Deprecated;
+use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\ExpectationFailedException;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
@@ -110,11 +113,25 @@ class TestTraitTest extends TestCase
             throw new Exception('right exception message');
         }, Exception::class, 'right exception message');
 
-        //It correctly ignores the deprecations
+        //It correctly ignores deprecations
         $this->assertException(function () {
             deprecationWarning('This is a deprecation!');
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
+
+        //Can't asserts deprecations
+        try {
+            $this->assertException(function () {
+                deprecationWarning('This is a deprecation');
+            }, Deprecated::class);
+        } catch (Notice $e) {
+            $this->assertStringStartsWith('You cannot use `Tools\TestSuite\TestTrait::assertException()` for deprecations', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
 
         //No exception throw
         try {
@@ -123,7 +140,21 @@ class TestTraitTest extends TestCase
             $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
         } finally {
             if (!isset($e)) {
-                self::fail('No exception throw');
+                self::fail();
+            }
+            unset($e);
+        }
+
+        //The comparison is strict, it does not consider parent classes (`ErrorException` != `Exception`)
+        try {
+            $this->assertException(function () {
+                throw new ErrorException();
+            });
+        } catch (AssertionFailedError $e) {
+            $this->assertStringStartsWith('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
             }
             unset($e);
         }
@@ -135,10 +166,10 @@ class TestTraitTest extends TestCase
                     throw new Exception();
                 }, $class);
             } catch (AssertionFailedError $e) {
-                $this->assertStringStartsWith('Class `' . $class . '` does not exist or is not an exception', $e->getMessage());
+                $this->assertStringStartsWith('Class `' . $class . '` is not a throwable or does not exist', $e->getMessage());
             } finally {
                 if (!isset($e)) {
-                    self::fail('No exception throw');
+                    self::fail();
                 }
                 unset($e);
             }
@@ -153,7 +184,7 @@ class TestTraitTest extends TestCase
             $this->assertStringStartsWith('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
         } finally {
             if (!isset($e)) {
-                self::fail('No exception throw');
+                self::fail();
             }
             unset($e);
         }
@@ -167,7 +198,7 @@ class TestTraitTest extends TestCase
             $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
         } finally {
             if (!isset($e)) {
-                self::fail('No exception throw');
+                self::fail();
             }
             unset($e);
         }
@@ -181,7 +212,7 @@ class TestTraitTest extends TestCase
             $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
         } finally {
             if (!isset($e)) {
-                self::fail('No exception throw');
+                self::fail();
             }
             unset($e);
         }
@@ -238,7 +269,7 @@ class TestTraitTest extends TestCase
             [null],
             [''],
         ] as $array) {
-            $this->assertException(fn() => $this->assertIsArrayNotEmpty($array), AssertionFailedError::class);
+            $this->assertException(fn() => $this->assertIsArrayNotEmpty($array), ExpectationFailedException::class);
         }
     }
 
@@ -267,7 +298,7 @@ class TestTraitTest extends TestCase
         $this->assertObjectPropertiesEqual(['first', 'second'], $object);
         $this->assertObjectPropertiesEqual(['second', 'first'], $object);
 
-        $this->expectException(AssertionFailedError::class);
+        $this->expectException(ExpectationFailedException::class);
         $this->assertObjectPropertiesEqual(['first'], $object);
     }
 
