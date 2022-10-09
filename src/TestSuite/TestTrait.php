@@ -118,6 +118,9 @@ trait TestTrait
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
+        if ($expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
+            trigger_error('You cannot use `' . __METHOD__ . '()` for deprecations');
+        }
 
         try {
             call_user_func($function);

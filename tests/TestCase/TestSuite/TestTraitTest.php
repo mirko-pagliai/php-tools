@@ -26,6 +26,8 @@ use ErrorException;
 use Exception;
 use GdImage;
 use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\Error\Deprecated;
+use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\ExpectationFailedException;
 use stdClass;
 use Tools\Filesystem;
@@ -116,6 +118,20 @@ class TestTraitTest extends TestCase
             deprecationWarning('This is a deprecation!');
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
+
+        //Can't asserts deprecations
+        try {
+            $this->assertException(function () {
+                deprecationWarning('This is a deprecation');
+            }, Deprecated::class);
+        } catch (Notice $e) {
+            $this->assertStringStartsWith('You cannot use `Tools\TestSuite\TestTrait::assertException()` for deprecations', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
 
         //No exception throw
         try {
