@@ -119,8 +119,7 @@ class Exceptionist
      * @template Keys of array-key|array-key[]
      * @param Keys $key Key to check or an array of keys
      * @param array $array An array with keys to check
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return Keys
      * @throws \Tools\Exception\KeyNotExistsException|\Exception
@@ -138,8 +137,7 @@ class Exceptionist
      * Checks whether a file or directory exists
      * @template ExistingFilename as string
      * @param ExistingFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ExistingFilename
      * @throws \Tools\Exception\FileNotExistsException|\Exception
@@ -156,8 +154,7 @@ class Exceptionist
      * @template Needle
      * @param Needle $needle The searched value
      * @param array $haystack The array
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return Needle
      * @throws \Tools\Exception\NotInArrayException|\Exception
@@ -175,8 +172,7 @@ class Exceptionist
      * Checks whether a value is `false`
      * @template FalseValue
      * @param FalseValue $value The value you want to check
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return FalseValue
      * @throws \Exception
@@ -211,8 +207,7 @@ class Exceptionist
      * Checks whether a file or directory exists and is readable
      * @template ReadableFilename as string
      * @param ReadableFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ReadableFilename
      * @throws \Tools\Exception\FileNotExistsException
@@ -231,8 +226,7 @@ class Exceptionist
      * Checks whether a file or directory exists and is writable
      * @template WritableFilename as string
      * @param WritableFilename $filename Path to the file or directory
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return WritableFilename
      * @throws \Tools\Exception\FileNotExistsException
@@ -253,8 +247,7 @@ class Exceptionist
      * @template RelativeObject as object
      * @param class-string<RelativeObject>|RelativeObject $object An object instance or a class name
      * @param ExistingMethod $methodName The method name
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return array{class-string<RelativeObject>, ExistingMethod} Array with class name and method name
      * @throws \Tools\Exception\MethodNotExistsException|\Exception
@@ -276,8 +269,7 @@ class Exceptionist
      * @template ExistingProperty of string|string[]
      * @param object $object The class name or an object of the class to test for
      * @param ExistingProperty $property Name of the property or an array of names
-     * @param string|null $message The failure message that will be appended to
-     *  the generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param E|class-string<E> $exception The exception class you want to set
      * @return ExistingProperty
      * @throws \Tools\Exception\PropertyNotExistsException|\Exception
@@ -296,8 +288,7 @@ class Exceptionist
      * Checks whether a value is `true`
      * @template TrueValue
      * @param TrueValue $value The value you want to check
-     * @param string|null $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @param \Exception|class-string<\Exception> $exception The exception class you want to set
      * @return TrueValue
      * @throws \Exception
