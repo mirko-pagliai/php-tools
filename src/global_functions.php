@@ -51,7 +51,7 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return array<class-string>
      * @since 1.0.1
-     * @throws \ErrorException|\Throwable
+     * @throws \Throwable
      */
     function get_child_methods(string $class): array
     {

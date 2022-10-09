@@ -317,7 +317,7 @@ class Exceptionist
             $message = 'The value is not equal to `true`';
             if ($value === false) {
                 $message = '`false` is not equal to `true`';
-            } elseif (is_null($value)) {
+            } /** @noinspection PhpConditionAlreadyCheckedInspection */ elseif (is_null($value)) {
                 $message = '`null` is not equal to `true`';
             } elseif (is_array($value)) {
                 $message = 'An empty array is not equal to `true`';

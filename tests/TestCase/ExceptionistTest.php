@@ -41,6 +41,7 @@ class ExceptionistTest extends TestCase
      * Test to verify that the exceptions thrown by the `Exceptionist` report
      *  the correct file and line
      * @test
+     * @noinspection PhpConditionAlreadyCheckedInspection
      */
     public function testLineAndFile(): void
     {
