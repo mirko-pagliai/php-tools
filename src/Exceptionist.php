@@ -57,7 +57,7 @@ class Exceptionist
      * @param string $message The message for the exception
      * @param class-string<PassedException> $exception The exception
      * @return PassedException
-     * @todo add `@since` tag
+     * @since 1.7.0
      */
     private static function buildException(string $message, string $exception): ErrorException
     {
