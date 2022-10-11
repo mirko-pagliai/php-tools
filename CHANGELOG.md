@@ -1,6 +1,8 @@
 # 1.x branch
 ## 1.6 branch
 ### 1.6.5
+* `isReadable()` and `isWritable()` method provided by `Exceptionist` no longer even call the
+  `fileExists()` method;
 * added `\Tools\TestSuite\TestTrait::assertDeprecated()` method;
 * improved `\Tools\TestSuite\TestTrait::assertException()`.
 
