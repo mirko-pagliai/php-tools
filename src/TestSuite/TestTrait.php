@@ -109,7 +109,7 @@ trait TestTrait
      * @param callable $function A callable you want to test and that should throw a `Deprecated` exception
      * @param string $expectedMessage The expected message
      * @return void
-     * @since 1.6.4
+     * @since 1.6.5
      */
     protected static function assertDeprecated(callable $function, string $expectedMessage = ''): void
     {
