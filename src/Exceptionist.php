@@ -231,7 +231,6 @@ class Exceptionist
         if (func_num_args() > 2) {
             deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
         }
-        self::fileExists($filename, $message, $exception);
         self::isTrue(is_readable($filename), $message ?: sprintf('File or directory `%s` is not readable', Filesystem::instance()->rtr($filename)), $exception);
 
         return $filename;
@@ -253,7 +252,6 @@ class Exceptionist
         if (func_num_args() > 2) {
             deprecationWarning('The `$exception` parameter is deprecated and will be removed in a later release');
         }
-        self::fileExists($filename, $message, $exception);
         self::isTrue(is_writable($filename), $message ?: sprintf('File or directory `%s` is not writable', Filesystem::instance()->rtr($filename)), $exception);
 
         return $filename;

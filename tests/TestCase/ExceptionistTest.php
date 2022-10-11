@@ -39,34 +39,11 @@ use Tools\TestSuite\TestCase;
 class ExceptionistTest extends TestCase
 {
     /**
-     * @var int
-     */
-    protected static int $initialErrorReporting;
-
-    /**
-     * This method is called before the first test of this test class is run.
-     */
-    public static function setUpBeforeClass(): void
-    {
-        self::$initialErrorReporting = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-    }
-
-    /**
-     * This method is called after the last test of this test class is run.
-     */
-    public static function tearDownAfterClass(): void
-    {
-        error_reporting(self::$initialErrorReporting);
-    }
-
-    /**
      * Test to check that using an already instantiated exception is deprecated
      * @test
      */
     public function testInstantiatedExceptionIsDeprecated(): void
     {
-        error_reporting(self::$initialErrorReporting);
-
         try {
             Exceptionist::isTrue(false, '', new ErrorException());
         } catch (Deprecated $e) {
@@ -76,8 +53,6 @@ class ExceptionistTest extends TestCase
                 $this->fail();
             }
         }
-
-        error_reporting(E_ALL & ~E_USER_DEPRECATED);
     }
 
     /**
@@ -86,8 +61,6 @@ class ExceptionistTest extends TestCase
      */
     public function testExceptionParameterIsDeprecated(): void
     {
-        error_reporting(self::$initialErrorReporting);
-
         foreach ([
             fn() => Exceptionist::arrayKeyExists(1, ['a', 'b'], '', KeyNotExistsException::class),
             fn() => Exceptionist::fileExists(TMP, '', FileNotExistsException::class),
@@ -109,8 +82,6 @@ class ExceptionistTest extends TestCase
                 unset($e);
             }
         }
-
-        error_reporting(E_ALL & ~E_USER_DEPRECATED);
     }
 
     /**
@@ -302,7 +273,7 @@ class ExceptionistTest extends TestCase
         $this->assertSame($file, Exceptionist::isReadable($file));
 
         $this->expectException(NotReadableException::class);
-        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not readable');
         Exceptionist::isReadable(TMP . 'noExisting');
     }
 
@@ -316,7 +287,7 @@ class ExceptionistTest extends TestCase
         $this->assertSame($file, Exceptionist::isWritable($file));
 
         $this->expectException(NotWritableException::class);
-        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` does not exist');
+        $this->expectExceptionMessage('File or directory `' . TMP . 'noExisting` is not writable');
         Exceptionist::isWritable(TMP . 'noExisting');
     }
 
@@ -372,9 +343,8 @@ class ExceptionistTest extends TestCase
         $this->assertTrue(Exceptionist::isTrue(true));
         $this->assertSame('string', Exceptionist::isTrue('string'));
 
-        $this->expectException(ErrorException::class);
-        $this->expectExceptionMessage('`false` is not equal to `true`');
-        Exceptionist::isTrue(false);
+        $this->assertException(fn() => Exceptionist::isTrue(false), ErrorException::class, '`false` is not equal to `true`');
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', Exception::class), Exception::class);
     }
 
     /**
@@ -408,13 +378,24 @@ class ExceptionistTest extends TestCase
     }
 
     /**
-     * Test for `isTrue()` method, with an invalid exception class
+     * Test for `isTrue()` method, with a bad exception object
      * @uses \Tools\Exceptionist::isTrue()
      * @test
      */
-    public function testIsTrueFailureWithInvalidExceptionClass(): void
+    public function testIsTrueFailureWithBadExceptionObject(): void
     {
-        /** @phpstan-ignore-next-line */
-        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Exception` or a class string');
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
+        try {
+            Exceptionist::isTrue(false, '', new stdClass());
+        } catch (Notice $e) {
+            $this->assertSame('`$exception` parameter must be an instance of `Exception` or a class string', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+        }
+
+        error_reporting($current);
     }
 }
