@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.6 branch
+### 1.6.5
+* added `\Tools\TestSuite\TestTrait::assertDeprecated()` method;
+* improved `\Tools\TestSuite\TestTrait::assertException()`.
+
 ### 1.6.4
 * `object_map()` global function and `\Tools\Exceptionist::methodExists()` method throw the new 
   `\Tools\Exception\MethodNotExistsException`;

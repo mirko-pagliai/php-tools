@@ -100,6 +100,55 @@ class TestTraitTest extends TestCase
     }
 
     /**
+     * Tests for `assertDeprecated()` method
+     * @return void
+     * @uses \Tools\TestSuite\TestTrait::assertDeprecated()
+     */
+    public function testAssertDeprecated(): void
+    {
+        $this->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'));
+        $this->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'), 'This is a deprecation!');
+
+        //Different exception throw
+        try {
+            $this->assertDeprecated(function () {
+                throw new BadMethodCallException();
+            });
+        } catch (AssertionFailedError $e) {
+            $this->assertSame('Expected exception `' . Deprecated::class . '`, unexpected type `' . BadMethodCallException::class . '`', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
+
+        //No exception throw
+        try {
+            $this->assertDeprecated('time');
+        } catch (AssertionFailedError $e) {
+            $this->assertSame('Expected exception `' . Deprecated::class . '`, but no exception throw', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
+
+        //Wrong exception message
+        try {
+            $this->assertDeprecated(fn() => deprecationWarning('Wrong'), 'Right');
+        } catch (AssertionFailedError $e) {
+            $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
+    }
+
+    /**
      * Tests for `assertException()` method
      * @uses \Tools\TestSuite\TestTrait::assertException()
      * @test
@@ -119,13 +168,13 @@ class TestTraitTest extends TestCase
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
 
-        //Can't asserts deprecations
+        //Can't assert deprecations
         try {
             $this->assertException(function () {
                 deprecationWarning('This is a deprecation');
             }, Deprecated::class);
         } catch (Notice $e) {
-            $this->assertStringStartsWith('You cannot use `Tools\TestSuite\TestTrait::assertException()` for deprecations', $e->getMessage());
+            $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();
@@ -137,7 +186,7 @@ class TestTraitTest extends TestCase
         try {
             $this->assertException('time');
         } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `Exception`, but no exception throw', $e->getMessage());
+            $this->assertSame('Expected exception `Exception`, but no exception throw', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();
@@ -151,7 +200,7 @@ class TestTraitTest extends TestCase
                 throw new ErrorException();
             });
         } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
+            $this->assertSame('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();
@@ -166,7 +215,7 @@ class TestTraitTest extends TestCase
                     throw new Exception();
                 }, $class);
             } catch (AssertionFailedError $e) {
-                $this->assertStringStartsWith('Class `' . $class . '` is not a throwable or does not exist', $e->getMessage());
+                $this->assertSame('Class `' . $class . '` is not a throwable or does not exist', $e->getMessage());
             } finally {
                 if (!isset($e)) {
                     self::fail();
@@ -181,7 +230,7 @@ class TestTraitTest extends TestCase
                 throw new Exception();
             }, BadMethodCallException::class);
         } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
+            $this->assertSame('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();

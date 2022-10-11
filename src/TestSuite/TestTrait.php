@@ -105,9 +105,32 @@ trait TestTrait
     }
 
     /**
+     * Asserts that a callable throws a `Deprecated`
+     * @param callable $function A callable you want to test and that should throw a `Deprecated` exception
+     * @param string $expectedMessage The expected message
+     * @return void
+     * @since 1.6.4
+     */
+    protected static function assertDeprecated(callable $function, string $expectedMessage = ''): void
+    {
+        try {
+            call_user_func($function);
+        } catch (Deprecated $e) {
+            if ($expectedMessage) {
+                parent::assertStringStartsWith($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
+            }
+        } catch (Exception $e) {
+            self::fail(sprintf('Expected exception `%s`, unexpected type `%s`', Deprecated::class, get_class($e)));
+        }
+
+        if (!isset($e)) {
+            self::fail('Expected exception `' . Deprecated::class . '`, but no exception throw');
+        }
+    }
+
+    /**
      * Asserts that a callable throws an exception
-     * @param callable $function A callable you want to test and that should
-     *  raise the expected exception
+     * @param callable $function A callable you want to test and that should raise the expected exception
      * @param string $expectedException Expected exception
      * @param string $expectedMessage The expected message
      * @return void
@@ -119,7 +142,8 @@ trait TestTrait
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
         if ($expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
-            trigger_error('You cannot use `' . __METHOD__ . '()` for deprecations');
+            [, $method] = explode('::', __METHOD__);
+            trigger_error('You cannot use `' . $method . '()` for deprecations, use instead `assertDeprecated()`');
         }
 
         try {
@@ -127,10 +151,14 @@ trait TestTrait
         } catch (Deprecated $e) {
             //Do nothing
         } catch (Exception $e) {
-            parent::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
+            if ($expectedException !== get_class($e)) {
+                 self::fail('Expected exception `' . $expectedException . '`, unexpected type `' . get_class($e) . '`');
+            }
 
             if ($expectedMessage) {
-                parent::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
+                if (!$e->getMessage()) {
+                    self::fail('Expected message exception `' . $expectedMessage . '`, but no message for the exception');
+                }
                 parent::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
             }
         }
@@ -279,7 +307,7 @@ trait TestTrait
     public function skipIf(bool $shouldSkip, string $message = ''): bool
     {
         if ($shouldSkip) {
-            $this->markTestSkipped($message);
+            self::markTestSkipped($message);
         }
 
         return $shouldSkip;
