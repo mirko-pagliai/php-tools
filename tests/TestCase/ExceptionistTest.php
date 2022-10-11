@@ -19,6 +19,7 @@ use App\ExampleClass;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Deprecated;
+use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
@@ -342,9 +343,8 @@ class ExceptionistTest extends TestCase
         $this->assertTrue(Exceptionist::isTrue(true));
         $this->assertSame('string', Exceptionist::isTrue('string'));
 
-        $this->expectException(ErrorException::class);
-        $this->expectExceptionMessage('`false` is not equal to `true`');
-        Exceptionist::isTrue(false);
+        $this->assertException(fn() => Exceptionist::isTrue(false), ErrorException::class, '`false` is not equal to `true`');
+        $this->assertException(fn() => Exceptionist::isTrue(false, '', Exception::class), Exception::class);
     }
 
     /**
@@ -375,5 +375,27 @@ class ExceptionistTest extends TestCase
         $message = 'it\'s not `true`';
         $this->assertException(fn() => Exceptionist::isTrue(false, $message), ErrorException::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
+    }
+
+    /**
+     * Test for `isTrue()` method, with a bad exception object
+     * @uses \Tools\Exceptionist::isTrue()
+     * @test
+     */
+    public function testIsTrueFailureWithBadExceptionObject(): void
+    {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+
+        try {
+            Exceptionist::isTrue(false, '', new stdClass());
+        } catch (Notice $e) {
+            $this->assertSame('`$exception` parameter must be an instance of `Exception` or a class string', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+        }
+
+        error_reporting($current);
     }
 }
