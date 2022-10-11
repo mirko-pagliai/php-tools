@@ -115,12 +115,11 @@ trait TestTrait
     {
         try {
             call_user_func($function);
-        } catch (Deprecated $e) {
+        } catch (Throwable $e) {
+            self::assertInstanceOf(Deprecated::class, $e, sprintf('Expected exception `%s`, unexpected type `%s`', Deprecated::class, get_class($e)));
             if ($expectedMessage) {
-                parent::assertStringStartsWith($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
+                self::assertStringStartsWith($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
             }
-        } catch (Exception $e) {
-            self::fail(sprintf('Expected exception `%s`, unexpected type `%s`', Deprecated::class, get_class($e)));
         }
 
         if (!isset($e)) {
@@ -150,16 +149,12 @@ trait TestTrait
             call_user_func($function);
         } catch (Deprecated $e) {
             //Do nothing
-        } catch (Exception $e) {
-            if ($expectedException !== get_class($e)) {
-                 self::fail('Expected exception `' . $expectedException . '`, unexpected type `' . get_class($e) . '`');
-            }
+        } catch (Throwable $e) {
+            self::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
 
             if ($expectedMessage) {
-                if (!$e->getMessage()) {
-                    self::fail('Expected message exception `' . $expectedMessage . '`, but no message for the exception');
-                }
-                parent::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
+                self::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
+                self::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
             }
         }
 

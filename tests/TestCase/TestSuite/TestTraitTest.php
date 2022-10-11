@@ -115,7 +115,7 @@ class TestTraitTest extends TestCase
                 throw new BadMethodCallException();
             });
         } catch (AssertionFailedError $e) {
-            $this->assertSame('Expected exception `' . Deprecated::class . '`, unexpected type `' . BadMethodCallException::class . '`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `' . BadMethodCallException::class . '`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();
@@ -200,7 +200,7 @@ class TestTraitTest extends TestCase
                 throw new ErrorException();
             });
         } catch (AssertionFailedError $e) {
-            $this->assertSame('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();
@@ -230,7 +230,7 @@ class TestTraitTest extends TestCase
                 throw new Exception();
             }, BadMethodCallException::class);
         } catch (AssertionFailedError $e) {
-            $this->assertSame('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
+            $this->assertStringStartsWith('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();

@@ -19,7 +19,6 @@ use App\ExampleClass;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
@@ -376,16 +375,5 @@ class ExceptionistTest extends TestCase
         $message = 'it\'s not `true`';
         $this->assertException(fn() => Exceptionist::isTrue(false, $message), ErrorException::class, $message);
         $this->assertException(fn() => Exceptionist::isTrue(false, '', new ErrorException($message)), ErrorException::class, $message);
-    }
-
-    /**
-     * Test for `isTrue()` method, with an invalid exception class
-     * @uses \Tools\Exceptionist::isTrue()
-     * @test
-     */
-    public function testIsTrueFailureWithInvalidExceptionClass(): void
-    {
-        /** @phpstan-ignore-next-line */
-        $this->assertException(fn() => Exceptionist::isTrue(false, '', new stdClass()), Notice::class, '`$exception` parameter must be an instance of `Exception` or a class string');
     }
 }
