@@ -16,26 +16,11 @@ declare(strict_types=1);
 
 namespace Tools\Exception;
 
-use Exception;
-use Tools\InvalidValueException;
+use ErrorException;
 
 /**
  * "Not positive value" exception.
  */
-class NotPositiveException extends InvalidValueException
+class NotPositiveException extends ErrorException
 {
-    /**
-     * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The exception code
-     * @param int $severity The severity level of the exception
-     * @param string $filename The filename where the exception is thrown
-     * @param int $lineno The line number where the exception is thrown
-     * @param \Exception|null $previous The previous exception used for the exception chaining
-     * @param mixed $value The value that thrown the exception
-     */
-    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, $value = null)
-    {
-        parent::__construct($message ?: (is_stringable($value) ? 'Value `' . (is_array($value) ? array_to_string($value) : $value) . '` is not a positive' : 'Value is not a positive'), $code, $severity, $filename, $lineno, $previous, $value);
-    }
 }

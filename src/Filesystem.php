@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace Tools;
 
 use InvalidArgumentException;
-use RuntimeException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -91,12 +90,12 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
-     * @throws \RuntimeException|\Throwable
+     * @throws \ErrorException
      */
     public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
-        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file', RuntimeException::class);
+        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file');
 
         return $this->createFile($filename, $data);
     }
@@ -184,7 +183,7 @@ class Filesystem extends BaseFilesystem
      * The root path must be set with the `ROOT` environment variable (using the
      *  `putenv()` function) or the `ROOT` constant.
      * @return string
-     * @throws \Throwable
+     * @throws \ErrorException
      */
     public function getRoot(): string
     {
@@ -251,25 +250,6 @@ class Filesystem extends BaseFilesystem
 
             return false;
         }
-    }
-
-    /**
-     * Tells whether a directory and its subdirectories are writable.
-     *
-     * It can also check that all the files are writable.
-     * @param string $dirname Path to the directory
-     * @param bool $checkOnlyDir If `true`, also checks for all files
-     * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return bool
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
-     * @deprecated Use instead `isWritableRecursive()`
-     * @noinspection SpellCheckingInspection
-     */
-    public function isWritableResursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
-    {
-        deprecationWarning('Deprecated. Use instead `isWritableRecursive()`');
-
-        return $this->isWritableRecursive($dirname, $checkOnlyDir, $ignoreErrors);
     }
 
     /**
@@ -341,7 +321,7 @@ class Filesystem extends BaseFilesystem
      * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \Throwable
+     * @throws \ErrorException
      */
     public function rtr(string $path): string
     {
