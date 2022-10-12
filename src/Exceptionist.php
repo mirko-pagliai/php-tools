@@ -96,10 +96,11 @@ class Exceptionist
      * ```
      * Exceptionist::isDir('/my/dir/path', 'This is not a directory', \RuntimeException::class);
      * ```
-     * @template RealArguments of mixed
+     * @template RealArguments
      * @param string $name Method name
      * @param array{0: RealArguments, 1?: string, 2?: class-string<\ErrorException>} $arguments Method arguments
      * @return RealArguments
+     * @throws \ErrorException
      */
     public static function __callStatic(string $name, array $arguments)
     {
@@ -128,12 +129,13 @@ class Exceptionist
             trigger_error('Error calling `' . $phpName . '()`: ' . $e->getMessage());
         }
 
-        //Now calls `isFalse()` or `isTrue()` method and performs the check, with that result and returns arguments
-        if (!$message) {
-            $message = sprintf('`%s::%s()` returned `false`', __CLASS__, $name);
+        $message = $message ?: sprintf('`%s::%s()` returned `false`', __CLASS__, $name);
+        $result ??= false;
+        if ($negative) {
+            self::isFalse($result, $message, $exception);
+        } else {
+            self::isTrue($result, $message, $exception);
         }
-        $callback = [__CLASS__, $negative ? 'isFalse' : 'isTrue'];
-        forward_static_call($callback, $result ?? false, $message, $exception);
 
         return $arguments;
     }
@@ -226,13 +228,12 @@ class Exceptionist
 
     /**
      * Checks whether a value is `false`
-     * @template FalseException of \ErrorException
-     * @template FalseValue of mixed
+     * @template FalseValue
      * @param FalseValue $value The value you want to check
      * @param string $message The failure message that will be appended to the generated message
-     * @param class-string<FalseException> $exception The exception class you want to set
+     * @param class-string<\ErrorException> $exception The exception class you want to set
      * @return FalseValue
-     * @throws FalseException
+     * @throws \ErrorException
      * @since 1.5.10
      */
     public static function isFalse($value, string $message = '', string $exception = ErrorException::class)
@@ -263,13 +264,12 @@ class Exceptionist
 
     /**
      * Checks whether a value is `true`
-     * @template TrueException of \ErrorException
      * @template TrueValue
      * @param TrueValue $value The value you want to check
      * @param string $message The failure message that will be appended to the generated message
-     * @param class-string<TrueException> $exception The exception class you want to set
+     * @param class-string<\ErrorException> $exception The exception class you want to set
      * @return TrueValue
-     * @throws TrueException
+     * @throws ErrorException
      * @noinspection PhpConditionAlreadyCheckedInspection
      */
     public static function isTrue($value, string $message = '', string $exception = ErrorException::class)
