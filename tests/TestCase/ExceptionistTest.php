@@ -20,6 +20,7 @@ use App\ExampleClass;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\Error\Warning;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
@@ -101,7 +102,7 @@ class ExceptionistTest extends TestCase
     {
         try {
             Exceptionist::arrayCombine('a');
-        } catch (Notice $e) {
+        } catch (Notice | Warning $e) {
             $this->assertStringStartsWith('Error calling `array_combine()`: array_combine() expects exactly 2', $e->getMessage());
         } finally {
             if (!isset($e)) {
