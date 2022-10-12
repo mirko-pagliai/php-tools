@@ -96,15 +96,18 @@ class ExceptionistTest extends TestCase
      * Test for `__callStatic()` magic method, with an error from the PHP function
      * @uses \Tools\Exceptionist::__callStatic()
      * @test
-     * @noinspection PhpUndefinedMethodInspection
      */
     public function testCallStaticMagicMethodWithErrorFromFunction(): void
     {
-        $this->assertException(fn() => Exceptionist::arrayCombine('a'), Notice::class, 'Error calling `array_combine()`: array_combine() expects exactly 2 arguments, 1 given');
-
-        $this->expectNotice();
-        $this->expectNoticeMessageMatches('#^Error calling `array_combine\(\)`\:#');
-        Exceptionist::arrayCombine('a');
+        try {
+            Exceptionist::arrayCombine('a');
+        } catch (Notice $e) {
+            $this->assertStringStartsWith('Error calling `array_combine()`: array_combine() expects exactly 2', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                $this->fail();
+            }
+        }
     }
 
     /**

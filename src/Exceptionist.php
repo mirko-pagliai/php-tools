@@ -17,6 +17,7 @@ namespace Tools;
 
 use ArgumentCountError;
 use ErrorException;
+use PHPUnit\Framework\Error\Warning;
 use ReflectionException;
 use ReflectionFunction;
 use Tools\Exception\FileNotExistsException;
@@ -125,7 +126,7 @@ class Exceptionist
             $rFunction = new ReflectionFunction($phpName);
             /** @var callable $phpName */
             $result = call_user_func_array($phpName, $rFunction->getNumberOfParameters() > 1 && is_array($arguments) ? $arguments : [$arguments]);
-        } catch (ArgumentCountError | ReflectionException | TypeError $e) {
+        } catch (ArgumentCountError | ReflectionException | TypeError | Warning $e) {
             trigger_error('Error calling `' . $phpName . '()`: ' . $e->getMessage());
         }
 
