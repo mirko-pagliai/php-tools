@@ -228,7 +228,6 @@ class ExceptionistTest extends TestCase
      * Test for `isTrue()` method, with check on file and line
      * @uses \Tools\Exceptionist::isTrue()
      * @test
-     * @todo add test with another method
      * @noinspection PhpRedundantCatchClauseInspection
      */
     public function testIsTrueFileAndLine(): void
