@@ -21,12 +21,13 @@ use ReflectionProperty;
 
 /**
  * A `Reflection` trait.
+ * @template ReflectedObject as object
  */
 trait ReflectionTrait
 {
     /**
      * Internal method to get the `ReflectionMethod` instance
-     * @param object $object Instantiated object that we will run method on
+     * @param ReflectedObject $object Instantiated object that we will run method on
      * @param string $name Method name
      * @return \ReflectionMethod
      * @throws \ReflectionException
@@ -41,7 +42,7 @@ trait ReflectionTrait
 
     /**
      * Internal method to get the `ReflectionProperty` instance
-     * @param object $object Instantiated object that has the property
+     * @param ReflectedObject $object Instantiated object that has the property
      * @param string $name Property name
      * @return \ReflectionProperty
      * @throws \ReflectionException
@@ -58,11 +59,10 @@ trait ReflectionTrait
      * Gets all properties as array with property names as keys.
      *
      * If the object is a mock, it removes the properties added by PHPUnit.
-     * @param string|object $object Instantiated object from which to get
-     *  properties or class name
-     * @param int $filter The optional filter, for filtering desired property
-     *  types. It's configured using `ReflectionProperty` constants, and
-     *  default is public, protected and private properties
+     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object from which to get properties or
+     *  its class name
+     * @param int $filter The optional filter, for filtering desired property types. It's configured using
+     *  ReflectionProperty` constants, and default is public, protected and private properties
      * @return array<string, string> Property names as keys and property values as values
      * @throws \Throwable
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
@@ -74,9 +74,7 @@ trait ReflectionTrait
         $properties = (new ReflectionClass($object))->getProperties($filter);
 
         //Removes properties added by PHPUnit, if the object is a mock
-        $properties = array_filter($properties, function ($property) {
-            return !str_starts_with($property->getName(), '__phpunit');
-        });
+        $properties = array_filter($properties, fn(ReflectionProperty $property): bool => !str_starts_with($property->getName(), '__phpunit'));
 
         $values = array_map(function (ReflectionProperty $property) use ($object) {
             $property->setAccessible(true);
@@ -89,8 +87,7 @@ trait ReflectionTrait
 
     /**
      * Gets a property value
-     * @param string|object $object Instantiated object that has the property
-     *  or class name
+     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object that has the property or class name
      * @param string $name Property name
      * @return mixed Property value
      * @throws \ReflectionException
@@ -104,8 +101,8 @@ trait ReflectionTrait
 
     /**
      * Invokes a method
-     * @param string|object $object Instantiated object that we will run method
-     *  on or class name
+     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object that we will run method on or
+     *  its class name
      * @param string $methodName Method name
      * @param array $parameters Array of parameters to pass into method
      * @return mixed Method return
@@ -120,7 +117,7 @@ trait ReflectionTrait
 
     /**
      * Sets a property value
-     * @param object $object Instantiated object that has the property
+     * @param ReflectedObject $object Instantiated object that has the property
      * @param string $name Property name
      * @param mixed $value Value you want to set
      * @return mixed Old property value
