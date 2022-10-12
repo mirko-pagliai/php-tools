@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection, PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**

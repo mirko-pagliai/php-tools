@@ -269,7 +269,7 @@ class Exceptionist
      * @param string $message The failure message that will be appended to the generated message
      * @param class-string<\ErrorException> $exception The exception class you want to set
      * @return TrueValue
-     * @throws ErrorException
+     * @throws \ErrorException
      * @noinspection PhpConditionAlreadyCheckedInspection
      */
     public static function isTrue($value, string $message = '', string $exception = ErrorException::class)

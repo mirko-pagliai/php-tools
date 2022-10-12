@@ -22,16 +22,20 @@ use Exception;
  */
 class ExampleChildClass extends ExampleClass
 {
-    public function throwMethod()
+    /**
+     * @return void
+     * @throws \Exception
+     */
+    public function throwMethod(): void
     {
         throw new Exception('Exception message...');
     }
 
-    public function childMethod()
+    public function childMethod(): void
     {
     }
 
-    public function anotherChildMethod()
+    public function anotherChildMethod(): void
     {
     }
 }

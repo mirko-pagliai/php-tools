@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection, HttpUrlsUsage */
 declare(strict_types=1);
 
 /**
@@ -290,14 +291,12 @@ class FilesystemTest extends TestCase
 
     /**
      * Test for `normalizePath()` method
+     * @uses \Tools\Filesystem::normalizePath()
      * @test
      */
     public function testNormalizePath(): void
     {
-        foreach ([
-            'path/to/normalize',
-            'path\\to\\normalize',
-        ] as $path) {
+        foreach (['path/to/normalize', 'path\\to\\normalize',] as $path) {
             $this->assertSame('path' . DS . 'to' . DS . 'normalize', Filesystem::instance()->normalizePath($path));
         }
     }
@@ -332,7 +331,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `unlinkResursive()` method
+     * Test for `unlinkRecursive()` method
+     * @uses \Tools\Filesystem::unlinkRecursive()
      * @test
      */
     public function testUnlinkRecursive(): void

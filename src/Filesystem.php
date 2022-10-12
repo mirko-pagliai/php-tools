@@ -90,6 +90,7 @@ class Filesystem extends BaseFilesystem
      *  be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
+     * @throws \ErrorException
      */
     public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
@@ -182,6 +183,7 @@ class Filesystem extends BaseFilesystem
      * The root path must be set with the `ROOT` environment variable (using the
      *  `putenv()` function) or the `ROOT` constant.
      * @return string
+     * @throws \ErrorException
      */
     public function getRoot(): string
     {
@@ -319,6 +321,7 @@ class Filesystem extends BaseFilesystem
      * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
+     * @throws \ErrorException
      */
     public function rtr(string $path): string
     {

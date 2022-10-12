@@ -157,6 +157,7 @@ abstract class Entity implements ArrayAccess
      *  list of properties with their respective values
      * @param EntityPropertyValue $value The value to set to the property
      * @return $this
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function set($property, $value = null)
     {
