@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpMissingFieldTypeInspection, PhpUnusedPrivateFieldInspection */
 declare(strict_types=1);
 
 /**
@@ -20,34 +20,51 @@ namespace App;
  */
 class ExampleClass
 {
-    private $privateProperty = 'this is a private property';
+    private string $privateProperty = 'this is a private property';
 
     protected $firstProperty;
 
-    protected $secondProperty = 'a protected property';
+    protected ?string $secondProperty = 'a protected property';
 
-    public $publicProperty = 'this is public';
+    public string $publicProperty = 'this is public';
 
-    public static $staticProperty = 'a static property';
+    public static string $staticProperty = 'a static property';
 
+    /**
+     * @param mixed $var
+     * @return mixed
+     */
     protected function protectedMethod($var = null)
     {
         return $var ?: 'a protected method';
     }
 
-    public function setProperty($propertyName, $propertyValue)
+    /**
+     * @param string $propertyName
+     * @param mixed $propertyValue
+     * @return mixed
+     */
+    public function setProperty(string $propertyName, $propertyValue)
     {
         $this->$propertyName = $propertyValue;
 
         return $propertyValue;
     }
 
-    public function __get($name)
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name)
     {
         return $this->$name;
     }
 
-    public function has($property): bool
+    /**
+     * @param string $property
+     * @return bool
+     */
+    public function has(string $property): bool
     {
         return property_exists($this, $property);
     }

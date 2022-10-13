@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -13,7 +14,7 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-namespace Tools\Test;
+namespace Tools\Test\TestSuite;
 
 use App\ExampleClass;
 use ReflectionProperty;

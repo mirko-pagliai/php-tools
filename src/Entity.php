@@ -22,18 +22,21 @@ use ArrayAccess;
  * An Entity class.
  *
  * It exposes the methods for retrieving and storing properties associated.
+ * @template EntityPropertyName as string
+ * @template EntityPropertyValue as mixed
+ * @template EntityProperties as array<EntityPropertyName, EntityPropertyValue>
  */
 abstract class Entity implements ArrayAccess
 {
     /**
      * Properties
-     * @var array
+     * @var EntityProperties
      */
     protected array $properties;
 
     /**
      * Initializes the internal properties
-     * @param array $properties Properties to set
+     * @param EntityProperties $properties Properties to set
      */
     public function __construct(array $properties = [])
     {
@@ -41,8 +44,7 @@ abstract class Entity implements ArrayAccess
     }
 
     /**
-     * Called by `var_dump()` when dumping the object to get the properties that
-     *  should be shown
+     * Called by `var_dump()` when dumping the object to get the properties that should be shown
      * @return array
      */
     public function __debugInfo(): array
@@ -52,8 +54,8 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Magic method for reading data from inaccessible properties
-     * @param string $property Property name
-     * @return mixed Property value
+     * @param EntityPropertyName $property Property name
+     * @return EntityPropertyValue
      */
     public function __get(string $property)
     {
@@ -63,9 +65,9 @@ abstract class Entity implements ArrayAccess
     /**
      * Checks if a property exists.
      *
-     * This method also returns `true` for properties with empty, `false` or
-     *  `null` value. Instead, use `hasValue()` to check the value as well.
-     * @param string $property Property name
+     * This method also returns `true` for properties with empty, `false` or `null` value. Instead, use `hasValue()` to
+     *  check the value as well.
+     * @param EntityPropertyName $property Property name
      * @return bool
      */
     public function has(string $property): bool
@@ -75,7 +77,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Checks if a property exists and has a value
-     * @param string $property Property name
+     * @param EntityPropertyName $property Property name
      * @return bool
      * @since 1.5.8
      */
@@ -86,7 +88,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Magic method for reading data from inaccessible properties
-     * @param string $property Property name
+     * @param EntityPropertyName $property Property name
      * @param mixed $default Default value if the property does not exist
      * @return mixed Property value
      */
@@ -97,7 +99,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Checks if a property does not exist or is empty
-     * @param string $property Property name
+     * @param EntityPropertyName $property Property name
      * @return bool
      * @since 1.5.8
      */
@@ -108,7 +110,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Implements `isset($entity);`
-     * @param mixed $offset The offset to check
+     * @param EntityPropertyName $offset The offset to check
      * @return bool
      */
     public function offsetExists($offset): bool
@@ -118,7 +120,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Implements `$entity[$offset];`
-     * @param mixed $offset The offset to get
+     * @param EntityPropertyName $offset The offset to get
      * @return mixed
      */
     public function offsetGet($offset)
@@ -128,8 +130,8 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Implements `$entity[$offset] = $value;`
-     * @param mixed $offset The offset to set
-     * @param mixed $value The value to set.
+     * @param EntityPropertyName $offset The offset to set
+     * @param EntityPropertyValue $value The value to set.
      * @return void
      */
     public function offsetSet($offset, $value): void
@@ -139,7 +141,7 @@ abstract class Entity implements ArrayAccess
 
     /**
      * Implements `unset($result[$offset]);`
-     * @param mixed $offset The offset to remove
+     * @param EntityPropertyName $offset The offset to remove
      * @return void
      */
     public function offsetUnset($offset): void
@@ -148,11 +150,14 @@ abstract class Entity implements ArrayAccess
     }
 
     /**
-     * Sets a single property inside this entity
-     * @param string|array $property The name of property to set or a list of
-     *  properties with their respective values
-     * @param mixed $value The value to set to the property
+     * Sets a property inside this entity.
+     *
+     * You can also pass an array as first argument containing names and values of multiple properties.
+     * @param EntityPropertyName|array<EntityPropertyName, EntityPropertyValue> $property The name of property to set or a
+     *  list of properties with their respective values
+     * @param EntityPropertyValue $value The value to set to the property
      * @return $this
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function set($property, $value = null)
     {

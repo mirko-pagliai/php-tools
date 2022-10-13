@@ -40,6 +40,7 @@ trait EventDispatcherTrait
      * Sets a new `EventDispatcher`
      * @param \Tools\Event\EventDispatcher $eventDispatcher Event dispatcher
      * @return $this
+     * @noinspection PhpMissingReturnTypeInspection
      */
     public function setEventDispatcher(EventDispatcher $eventDispatcher)
     {

@@ -1,4 +1,5 @@
 <?php
+/** @noinspection PhpUnhandledExceptionInspection, HttpUrlsUsage */
 declare(strict_types=1);
 
 /**
@@ -258,22 +259,6 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `isWritableResursive()`
-     * @uses \Tools\Filesystem::isWritableResursive()
-     * @test
-     */
-    public function testIsWritableResursive(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(Filesystem::instance()->isWritableResursive(TMP));
-        error_reporting($current);
-
-        $this->expectDeprecation();
-        $this->expectDeprecationMessage('Deprecated. Use instead `isWritableRecursive()`');
-        Filesystem::instance()->isWritableResursive(TMP);
-    }
-
-    /**
      * Test for `makePathAbsolute()` method
      * @test
      */
@@ -306,14 +291,12 @@ class FilesystemTest extends TestCase
 
     /**
      * Test for `normalizePath()` method
+     * @uses \Tools\Filesystem::normalizePath()
      * @test
      */
     public function testNormalizePath(): void
     {
-        foreach ([
-            'path/to/normalize',
-            'path\\to\\normalize',
-        ] as $path) {
+        foreach (['path/to/normalize', 'path\\to\\normalize',] as $path) {
             $this->assertSame('path' . DS . 'to' . DS . 'normalize', Filesystem::instance()->normalizePath($path));
         }
     }
@@ -348,7 +331,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `unlinkResursive()` method
+     * Test for `unlinkRecursive()` method
+     * @uses \Tools\Filesystem::unlinkRecursive()
      * @test
      */
     public function testUnlinkRecursive(): void

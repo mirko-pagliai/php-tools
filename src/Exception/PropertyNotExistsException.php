@@ -17,42 +17,10 @@ declare(strict_types=1);
 namespace Tools\Exception;
 
 use ErrorException;
-use Exception;
 
 /**
  * "Property does not exist" exception.
  */
 class PropertyNotExistsException extends ErrorException
 {
-    /**
-     * Property name
-     * @var string|null
-     */
-    protected ?string $property;
-
-    /**
-     * Constructor
-     * @param string $message The string of the error message
-     * @param int $code The exception code
-     * @param int $severity The severity level of the exception
-     * @param string $filename The filename where the exception is thrown
-     * @param int $lineno The line number where the exception is thrown
-     * @param \Exception|null $previous The previous exception used for the exception chaining
-     * @param string|null $property Name of the property that do not exist
-     */
-    public function __construct(string $message = '', int $code = 0, int $severity = E_ERROR, string $filename = '__FILE__', int $lineno = __LINE__, ?Exception $previous = null, ?string $property = null)
-    {
-        parent::__construct($message ?: ($property ? sprintf('Property `%s` does not exist', $property) : 'Property does not exist'), $code, $severity, $filename, $lineno, $previous);
-        $this->property = $property;
-    }
-
-    /**
-     * Gets the name of the property that do not exist
-     * @return string|null
-     * @since 1.2.11
-     */
-    public function getPropertyName(): ?string
-    {
-        return $this->property;
-    }
 }

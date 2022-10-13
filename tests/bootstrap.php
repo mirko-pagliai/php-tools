@@ -13,15 +13,15 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-require_once 'vendor/autoload.php';
-
-use Tools\Filesystem;
-
 if (!defined('DS')) {
     define('DS', DIRECTORY_SEPARATOR);
 }
 define('ROOT', dirname(__DIR__) . DS);
 define('TMP', sys_get_temp_dir() . DS . 'php-tools' . DS);
+
+require_once ROOT . 'vendor' . DS . 'autoload.php';
+
+use Tools\Filesystem;
 
 if (!file_exists(TMP)) {
     mkdir(TMP, 0777, true);
@@ -30,8 +30,9 @@ if (!file_exists(TMP)) {
 if (!function_exists('createSomeFiles')) {
     /**
      * Function to create some files for tests
-     * @param array<string> $files Files
-     * @return array<string>
+     * @template CreatedFiles as string[]
+     * @param CreatedFiles $files Files
+     * @return CreatedFiles
      */
     function createSomeFiles(array $files = []): array
     {

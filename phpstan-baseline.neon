@@ -6,7 +6,7 @@ parameters:
 			path: src/global_functions.php
 
 		-
-			message: "#^Parameter \\#3 \\$exception of static method Tools\\\\Exceptionist\\<Exception\\>\\:\\:isTrue\\(\\) expects class\\-string\\<Exception\\>\\|Exception, stdClass given\\.$#"
+			message: "#^Parameter \\#3 \\$exception of static method Tools\\\\Exceptionist\\:\\:isTrue\\(\\) expects class\\-string\\<ErrorException\\>, string given\\.$#"
 			count: 1
 			path: tests/TestCase/ExceptionistTest.php
 
