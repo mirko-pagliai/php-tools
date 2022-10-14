@@ -107,7 +107,8 @@ class Filesystem extends BaseFilesystem
      *  names to exclude or boolean true to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return array<array<string>> Array of nested directories and files in each directory
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Tools\Exception\MethodNotExistsException
      */
     public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
@@ -224,7 +225,8 @@ class Filesystem extends BaseFilesystem
      * @param bool $checkOnlyDir If `true`, also checks for all files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
-     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException|\Throwable
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Tools\Exception\MethodNotExistsException
      */
     public function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
@@ -349,7 +351,7 @@ class Filesystem extends BaseFilesystem
      * @return bool
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Throwable
+     * @throws \Tools\Exception\MethodNotExistsException
      * @see \Tools\Filesystem::rmdirRecursive()
      */
     public function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool

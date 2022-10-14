@@ -52,6 +52,7 @@ if (!function_exists('get_child_methods')) {
      * @return array<class-string>
      * @since 1.0.1
      * @throws \ErrorException
+     * @todo create a `Exceptionist::classExists()` method
      */
     function get_child_methods(string $class): array
     {
