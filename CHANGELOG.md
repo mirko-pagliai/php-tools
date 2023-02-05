@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.1
+* re-added pguardiario/phpuri as library file.
+
 ### 1.7.0
 * `\Tools\Exceptionist` has been completely rewritten and made more functional, simpler and better
   documented. We tried to keep compatibility with the old class as much as possible;

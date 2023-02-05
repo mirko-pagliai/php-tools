@@ -18,6 +18,7 @@
         <whitelist>
             <directory suffix=".php">./src/</directory>
             <exclude>
+                <file>./lib/phpuri.php</file>
                 <file>./src/debug_functions.php</file>
             </exclude>
         </whitelist>
