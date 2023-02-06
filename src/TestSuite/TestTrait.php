@@ -79,7 +79,9 @@ trait TestTrait
             $function = 'is_' . strtolower(substr($name, 8));
             if (is_callable($function)) {
                 $var = array_shift($arguments);
-                call_user_func_array([__CLASS__, 'assertTrue'], [$function($var), ...$arguments]);
+                /** @var callable $callable */
+                $callable = [__CLASS__, 'assertTrue'];
+                call_user_func_array($callable, [$function($var), ...$arguments]);
 
                 return;
             }

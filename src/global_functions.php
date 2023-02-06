@@ -46,13 +46,11 @@ if (!function_exists('array_to_string')) {
 
 if (!function_exists('get_child_methods')) {
     /**
-     * Gets the class methods' names, but unlike the `get_class_methods()`
-     *  function, this function excludes the methods of the parent class
+     * Gets the class methods' names. Unlike `get_class_methods()`, this function excludes the methods of the parent class
      * @param class-string $class Class name
-     * @return array<class-string>
+     * @return string[]
      * @since 1.0.1
      * @throws \ErrorException
-     * @todo create a `Exceptionist::classExists()` method
      */
     function get_child_methods(string $class): array
     {
