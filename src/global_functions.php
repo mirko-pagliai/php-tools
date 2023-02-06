@@ -46,12 +46,11 @@ if (!function_exists('array_to_string')) {
 
 if (!function_exists('get_child_methods')) {
     /**
-     * Gets the class methods' names, but unlike the `get_class_methods()`
-     *  function, this function excludes the methods of the parent class
+     * Gets the class methods' names. Unlike `get_class_methods()`, this function excludes the methods of the parent class
      * @param class-string $class Class name
-     * @return array<class-string>
+     * @return string[]
      * @since 1.0.1
-     * @throws \Throwable
+     * @throws \ErrorException
      */
     function get_child_methods(string $class): array
     {
@@ -149,16 +148,12 @@ if (!function_exists('objects_map')) {
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the
      *  called method applied to each object
-     * @throws \Tools\Exception\MethodNotExistsException|\Throwable
+     * @throws \Tools\Exception\MethodNotExistsException
      * @since 1.1.11
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
-        return array_map(function (object $object) use ($method, $args) {
-            Exceptionist::methodExists($object, $method);
-
-            return call_user_func_array([$object, $method], $args);
-        }, $objects);
+        return array_map(fn (object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
     }
 }
 
@@ -199,7 +194,7 @@ if (!function_exists('which')) {
      * Finds the executable of a command, like `which` on Unix systems
      * @param string $command Command
      * @return string
-     * @throws \Throwable
+     * @throws \ErrorException
      */
     function which(string $command): string
     {

@@ -64,9 +64,10 @@ trait ReflectionTrait
      * @param int $filter The optional filter, for filtering desired property types. It's configured using
      *  ReflectionProperty` constants, and default is public, protected and private properties
      * @return array<string, string> Property names as keys and property values as values
-     * @throws \Throwable
-     * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
+     * @throws \ReflectionException
+     * @throws \Tools\Exception\MethodNotExistsException
      * @since 1.1.4
+     * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      */
     protected function getProperties($object, int $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE): array
     {

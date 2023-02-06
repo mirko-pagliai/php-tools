@@ -32,7 +32,9 @@ abstract class TestCase extends PHPUnitTestCase
      *
      * It empties the temporary file directory.
      * @return void
-     * @throws \Throwable
+     * @throws \Symfony\Component\Filesystem\Exception\IOException
+     * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
+     * @throws \Tools\Exception\MethodNotExistsException
      */
     protected function tearDown(): void
     {

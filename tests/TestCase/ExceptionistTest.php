@@ -97,6 +97,7 @@ class ExceptionistTest extends TestCase
      * Test for `__callStatic()` magic method, with an error from the PHP function
      * @uses \Tools\Exceptionist::__callStatic()
      * @test
+     * @noinspection PhpUndefinedMethodInspection
      */
     public function testCallStaticMagicMethodWithErrorFromFunction(): void
     {

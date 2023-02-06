@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnitAssertTrueWithIncompatibleTypeArgumentInspection */
 /** @noinspection PhpUnitAssertCanBeReplacedWithFailInspection */
 declare(strict_types=1);
 
@@ -20,8 +19,7 @@ namespace App;
 use Tools\TestSuite\TestCase;
 
 /**
- * @noinspection PhpUnitAssertCanBeReplacedWithFailInspection
- * @noinspection PhpUnitAssertTrueWithIncompatibleTypeArgumentInspection
+ * AssertionFailedTestCase class
  */
 class AssertionFailedTestCase extends TestCase
 {
