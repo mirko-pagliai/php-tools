@@ -5,16 +5,16 @@
       <code>$event</code>
     </MoreSpecificImplementedParamType>
   </file>
-  <file src="src/Exceptionist.php">
-    <UndefinedDocblockClass occurrences="2">
-      <code>FalseException</code>
-      <code>TrueException</code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="src/TestSuite/TestTrait.php">
     <DuplicateArrayKey occurrences="1">
       <code>$arguments</code>
     </DuplicateArrayKey>
+    <InternalClass occurrences="1">
+      <code>new PHPUnitException(sprintf('The `%s()` method is not callable. Is this trait used by a class that extends `%s`?', 'getMockForAbstractClass', PHPUnitTestCase::class))</code>
+    </InternalClass>
+    <InternalMethod occurrences="1">
+      <code>new PHPUnitException(sprintf('The `%s()` method is not callable. Is this trait used by a class that extends `%s`?', 'getMockForAbstractClass', PHPUnitTestCase::class))</code>
+    </InternalMethod>
   </file>
   <file src="src/global_functions.php">
     <UndefinedFunction occurrences="1">
