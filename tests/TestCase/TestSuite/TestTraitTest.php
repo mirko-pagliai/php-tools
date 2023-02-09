@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Test\TestSuite;
 
+use App\AbstractExampleClass;
 use App\AnotherExampleChildClass;
 use App\AssertionFailedTestCase;
 use App\ExampleChildClass;
@@ -30,9 +31,11 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\Exception as PHPUnitException;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * TestTraitTest class
@@ -40,8 +43,9 @@ use Tools\TestSuite\TestCase;
 class TestTraitTest extends TestCase
 {
     /**
-     * Test for `__call()` and `__callStatic()` magic methods
      * @test
+     * @uses \Tools\TestSuite\TestTrait::__call()
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
      */
     public function testMagicCallAndCallStatic(): void
     {
@@ -80,8 +84,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertArrayKeysEqual()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertArrayKeysEqual()
      */
     public function testAssertArrayKeysEqual(): void
     {
@@ -101,8 +105,7 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertDeprecated()` method
-     * @return void
+     * @test
      * @uses \Tools\TestSuite\TestTrait::assertDeprecated()
      */
     public function testAssertDeprecated(): void
@@ -150,9 +153,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertException()` method
-     * @uses \Tools\TestSuite\TestTrait::assertException()
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertException()
      */
     public function testAssertException(): void
     {
@@ -269,8 +271,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `assertFileExtension()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertFileExtension()
      */
     public function testAssertFileExtension(): void
     {
@@ -280,8 +282,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `assertFileMime()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertFileMime()
      */
     public function testAssertFileMime(): void
     {
@@ -291,8 +293,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `assertImageSize()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertImageSize()
      */
     public function testAssertImageSize(): void
     {
@@ -305,8 +307,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertIsArrayNotEmpty()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsArray()
      */
     public function testAssertIsArrayNotEmpty(): void
     {
@@ -324,8 +326,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertIsMock()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsMock()
      */
     public function testAssertIsMock(): void
     {
@@ -337,8 +339,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertObjectPropertiesEqual()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertObjectPropertiesEqual()
      */
     public function testAssertObjectPropertiesEqual(): void
     {
@@ -353,8 +355,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `assertSameMethods()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertSameMethods()
      */
     public function testAssertSameMethods(): void
     {
@@ -372,8 +374,8 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `expectAssertionFailed()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::expectAssertionFailed()
      */
     public function testExpectAssertionFailed(): void
     {
@@ -397,8 +399,29 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `skipIf()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::createPartialMockForAbstractClass()
+     */
+    public function testCreatePartialMockForAbstractClass(): void
+    {
+        $TestCase = new class extends TestCase {
+            use TestTrait;
+        };
+        $result = $TestCase->createPartialMockForAbstractClass(AbstractExampleClass::class);
+        $this->assertIsMock($result);
+        $this->assertInstanceOf(AbstractExampleClass::class, $result);
+
+        $this->expectException(PHPUnitException::class);
+        $this->expectExceptionMessage('The `getMockForAbstractClass()` method is not callable. Is this trait used by a class that extends `PHPUnit\Framework\TestCase`?');
+        $BadClass = new class {
+            use TestTrait;
+        };
+        $BadClass->createPartialMockForAbstractClass(AbstractExampleClass::class);
+    }
+
+    /**
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::skipIf()
      */
     public function testSkipIf(): void
     {
