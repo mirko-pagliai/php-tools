@@ -82,8 +82,8 @@ class TestTraitTest extends TestCase
             'assertIsString' => 'string',
             'assertIsUrl' => 'http://localhost',
         ] as $assertMethod => $value) {
-            call_user_func([$this->TestCase, $assertMethod], $value);
-            forward_static_call([$this->TestCase, $assertMethod], $value);
+            $this->TestCase->$assertMethod($value);
+            TestCase::$assertMethod($value);
         }
 
         //Missing argument
