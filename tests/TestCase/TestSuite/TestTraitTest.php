@@ -315,7 +315,7 @@ class TestTraitTest extends TestCase
     public function testAssertImageSize(): void
     {
         $resource = imagecreatetruecolor(120, 20);
-        if (!$resource instanceof GdImage) {
+        if (!$resource instanceof GdImage && !is_resource($resource)) {
             $this->fail('Unable to create a valid resource image');
         }
         imagejpeg($resource, TMP . 'pic.jpg');
