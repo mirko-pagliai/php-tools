@@ -21,8 +21,8 @@ use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Exception as PHPUnitException;
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Throwable;
 use Tools\Filesystem;
 
