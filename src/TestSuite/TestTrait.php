@@ -277,8 +277,8 @@ trait TestTrait
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
-        if (!method_exists($this, 'getMockForAbstractClass')) {
-            throw new PHPUnitException(sprintf('The `%s()` method is not callable. Is this trait used by a class that extends `%s`?', 'getMockForAbstractClass', PHPUnitTestCase::class));
+        if (!$this instanceof PHPUnitTestCase) {
+            throw new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
         }
 
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);

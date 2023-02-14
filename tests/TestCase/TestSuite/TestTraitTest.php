@@ -32,6 +32,7 @@ use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
@@ -423,7 +424,7 @@ class TestTraitTest extends TestCase
         $this->assertInstanceOf(AbstractExampleClass::class, $result);
 
         $this->expectException(PHPUnitException::class);
-        $this->expectExceptionMessage('The `getMockForAbstractClass()` method is not callable. Is this trait used by a class that extends `PHPUnit\Framework\TestCase`?');
+        $this->expectExceptionMessage('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
         $BadClass = new class {
             use TestTrait;
         };
