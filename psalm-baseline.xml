@@ -10,10 +10,10 @@
       <code>$arguments</code>
     </DuplicateArrayKey>
     <InternalClass occurrences="1">
-      <code>new PHPUnitException(sprintf('The `%s()` method is not callable. Is this trait used by a class that extends `%s`?', 'getMockForAbstractClass', PHPUnitTestCase::class))</code>
+      <code>new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?')</code>
     </InternalClass>
     <InternalMethod occurrences="1">
-      <code>new PHPUnitException(sprintf('The `%s()` method is not callable. Is this trait used by a class that extends `%s`?', 'getMockForAbstractClass', PHPUnitTestCase::class))</code>
+      <code>new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?')</code>
     </InternalMethod>
   </file>
   <file src="src/global_functions.php">
