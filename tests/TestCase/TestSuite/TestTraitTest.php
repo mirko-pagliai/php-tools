@@ -55,9 +55,7 @@ class TestTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = new class extends TestCase {
-            use TestTrait;
-        };
+        $this->TestCase = $this->getMockForAbstractClass(TestCase::class);
     }
 
     /**
@@ -90,12 +88,12 @@ class TestTraitTest extends TestCase
         $this->assertException(
             [$this->TestCase, 'assertIsJson'],
             BadMethodCallException::class,
-            'Method ' . get_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed'
+            'Method ' . get_parent_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed'
         );
 
         //Calling a no existing method or a no existing `assertIs*()` method
         foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
-            $this->assertException(fn() => $this->TestCase->$method('string'), BadMethodCallException::class, 'Method ' . get_class($this->TestCase) . '::' . $method . '() does not exist');
+            $this->assertException(fn() => $this->TestCase->$method('string'), BadMethodCallException::class, 'Method ' . get_parent_class($this->TestCase) . '::' . $method . '() does not exist');
         }
     }
 
@@ -324,7 +322,7 @@ class TestTraitTest extends TestCase
 
     /**
      * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsArray()
+     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
      */
     public function testAssertIsArrayNotEmpty(): void
     {
