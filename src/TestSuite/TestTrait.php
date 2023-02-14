@@ -20,7 +20,9 @@ use BadMethodCallException;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
+use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Throwable;
 use Tools\Filesystem;
 
@@ -45,11 +47,10 @@ trait TestTrait
     /**
      * Magic `__call()` method.
      *
-     * Provides some "assertIs" methods (eg, `assertIsString()`).
+     * Provides some `assertIs*()` methods (eg, `assertIsString()`).
      * @param string $name Name of the method
      * @param array $arguments Arguments
      * @return void
-     * @see __callStatic()
      * @since 1.1.12
      */
     public function __call(string $name, array $arguments): void
@@ -60,7 +61,7 @@ trait TestTrait
     /**
      * Magic `__callStatic()` method.
      *
-     * Provides some "assertIs" methods (eg, `assertIsString()`).
+     * Provides some `assertIs*()` methods (eg, `assertIsString()`).
      * @param string $name Name of the method
      * @param array $arguments Arguments
      * @return void
@@ -92,13 +93,12 @@ trait TestTrait
 
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
-     * @param array<int, string|int> $expectedKeys Expected keys
+     * @param array-key[] $expectedKeys Expected keys
      * @param array $array Array to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected static function assertArrayKeysEqual(array $expectedKeys, array $array, string $message = ''): void
+    public static function assertArrayKeysEqual(array $expectedKeys, array $array, string $message = ''): void
     {
         $keys = array_keys($array);
         sort($keys);
@@ -113,7 +113,7 @@ trait TestTrait
      * @return void
      * @since 1.6.5
      */
-    protected static function assertDeprecated(callable $function, string $expectedMessage = ''): void
+    public static function assertDeprecated(callable $function, string $expectedMessage = ''): void
     {
         try {
             call_user_func($function);
@@ -137,7 +137,7 @@ trait TestTrait
      * @return void
      * @since 1.1.7
      */
-    protected static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
+    public static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
     {
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
@@ -168,20 +168,16 @@ trait TestTrait
     /**
      * Asserts that a filename has the `$expectedExtension`.
      *
-     * If `$expectedExtension` is an array, asserts that the filename has at
-     *  least one of those values.
+     * If `$expectedExtension` is an array, asserts that the filename has at least one of those values.
      *
      * It is not necessary it actually exists.
-     * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected
-     *  extension is `jpg`).
-     * @param string|array<string> $expectedExtension Expected extension or an
-     *  array of extensions
+     * The assertion is case-insensitive (eg, for `PIC.JPG`, the expected extension is `jpg`).
+     * @param string|string[] $expectedExtension Expected extension or an array of extensions
      * @param string $filename Filename
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
+    public static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
     {
         self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
@@ -189,16 +185,13 @@ trait TestTrait
     /**
      * Asserts that a filename have a MIME content type.
      *
-     * If `$expectedMime` is an array, asserts that the filename has at
-     *  least one of those values.
-     * @param string|array<string> $expectedMime MIME content type or an array
-     *  of types
+     * If `$expectedMime` is an array, asserts that the filename has at least one of those values.
+     * @param string|string[] $expectedMime MIME content type or an array of types
      * @param string $filename Filename
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected static function assertFileMime($expectedMime, string $filename, string $message = ''): void
+    public static function assertFileMime($expectedMime, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
@@ -209,11 +202,10 @@ trait TestTrait
      * @param int $expectedWidth Expected image width
      * @param int $expectedHeight Expected mage height
      * @param string $filename Path to the tested file
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
+    public static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         [$actualWidth, $actualHeight] = getimagesize($filename) ?: [];
@@ -224,53 +216,48 @@ trait TestTrait
     /**
      * Asserts that `$var` is an array and is not empty
      * @param mixed $var Variable to check
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.0.6
      */
-    protected static function assertIsArrayNotEmpty($var, string $message = ''): void
+    public static function assertIsArrayNotEmpty($var, string $message = ''): void
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
     }
 
     /**
-     * Asserts that an object is a mock (instance of `MockObject`)
+     * Asserts that an object is an instance of `MockObject`
      * @param object $object Object
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.5.2
      */
-    protected static function assertIsMock(object $object, string $message = ''): void
+    public static function assertIsMock(object $object, string $message = ''): void
     {
         self::assertInstanceOf(MockObject::class, $object, $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock');
     }
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param array<string> $expectedProperties Expected properties or an array
-     *  of properties
-     * @param object|array $object Object you want to check or an array of objects
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string[] $expectedProperties Expected properties
+     * @param object|object[] $object Object you want to check or an array of objects
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected function assertObjectPropertiesEqual(array $expectedProperties, $object, string $message = ''): void
+    public function assertObjectPropertiesEqual(array $expectedProperties, $object, string $message = ''): void
     {
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
     /**
-     * Asserts that `$firstClass` and `$secondClass` have the same methods
+     * Asserts that `$firstClass` and `$secondClass` classes have the same methods
      * @param class-string|object $firstClass First class as string or object
      * @param class-string|object $secondClass Second class as string or object
-     * @param string $message The failure message that will be appended to the
-     *  generated message
+     * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    protected static function assertSameMethods($firstClass, $secondClass, string $message = ''): void
+    public static function assertSameMethods($firstClass, $secondClass, string $message = ''): void
     {
         [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
@@ -279,10 +266,28 @@ trait TestTrait
     }
 
     /**
-     * Expects the next assertion to fail. Optionally it can verify that the
-     *  exception message is also the same.
+     * Returns a partial mock object for the specified abstract class.
      *
-     * Convenient wrapper for `expectException()` and `expectExceptionMessage()`
+     * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
+     * @param class-string $originalClassName Abstract class you want to mock
+     * @param string[] $mockedMethods Methods you want to mock
+     * @param array $arguments Constructor arguments
+     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @since 1.7.1
+     */
+    public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
+    {
+        if (!$this instanceof PHPUnitTestCase) {
+            throw new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
+        }
+
+        return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);
+    }
+
+    /**
+     * Expects the next assertion to fail. Optionally it can verify that the exception message is also the same.
+     *
+     * Convenient wrapper for `expectException()` and `expectExceptionMessage()`.
      * @param string $withMessage Optional expected message to check
      * @return void
      * @since 1.5.2

@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.2
+* added `TestTrait::createPartialMockForAbstractClass()` method;
+* all methods of the `TestTrait` are now public. This has allowed for improved testing.
+
 ### 1.7.1
 * re-added pguardiario/phpuri as library file.
 

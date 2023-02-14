@@ -1,5 +1,5 @@
 <?php
-/** @noinspection PhpElementIsNotAvailableInCurrentPhpVersionInspection, PhpUnhandledExceptionInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools\Test\TestSuite;
 
+use App\AbstractExampleClass;
 use App\AnotherExampleChildClass;
 use App\AssertionFailedTestCase;
 use App\ExampleChildClass;
@@ -29,10 +30,13 @@ use GdImage;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * TestTraitTest class
@@ -40,17 +44,32 @@ use Tools\TestSuite\TestCase;
 class TestTraitTest extends TestCase
 {
     /**
-     * Test for `__call()` and `__callStatic()` magic methods
+     * @var \Tools\TestSuite\TestCase
+     */
+    protected TestCase $TestCase;
+
+    /**
+     * This method is called before each test
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->TestCase = $this->getMockForAbstractClass(TestCase::class);
+    }
+
+    /**
      * @test
+     * @uses \Tools\TestSuite\TestTrait::__call()
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
      */
     public function testMagicCallAndCallStatic(): void
     {
-        $function = fn() => '';
-        //Methods that use the `assertInternalType()` method
         foreach ([
             'assertIsArray' => ['array'],
             'assertIsBool' => true,
-            'assertIsCallable' => $function,
+            'assertIsCallable' => fn() => '',
             'assertIsFloat' => 1.1,
             'assertIsHtml' => '<b>html</b>',
             'assertIsInt' => 1,
@@ -62,57 +81,56 @@ class TestTraitTest extends TestCase
             'assertIsString' => 'string',
             'assertIsUrl' => 'http://localhost',
         ] as $assertMethod => $value) {
-            $this->{$assertMethod}($value);
-            self::{$assertMethod}($value);
+            $this->TestCase->$assertMethod($value);
+            TestCase::$assertMethod($value);
         }
 
         //Missing argument
         $this->assertException(
-            [$this, 'assertIsJson'],
+            [$this->TestCase, 'assertIsJson'],
             BadMethodCallException::class,
-            'Method ' . get_parent_class($this) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed'
+            'Method ' . get_parent_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed'
         );
 
-        //Calling a no existing method or a no existing "assertIs" method
+        //Calling a no existing method or a no existing `assertIs*()` method
         foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
-            $this->assertException(fn() => $this->$method('string'), BadMethodCallException::class, 'Method ' . get_parent_class($this) . '::' . $method . '() does not exist');
+            $this->assertException(fn() => $this->TestCase->$method('string'), BadMethodCallException::class, 'Method ' . get_parent_class($this->TestCase) . '::' . $method . '() does not exist');
         }
     }
 
     /**
-     * Tests for `assertArrayKeysEqual()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertArrayKeysEqual()
      */
     public function testAssertArrayKeysEqual(): void
     {
-        $this->assertArrayKeysEqual([], []);
+        $this->TestCase->assertArrayKeysEqual([], []);
 
         foreach ([
             ['key1' => 'value1', 'key2' => 'value2'],
             ['key2' => 'value2', 'key1' => 'value1'],
         ] as $array) {
-            $this->assertArrayKeysEqual(['key1', 'key2'], $array);
+            $this->TestCase->assertArrayKeysEqual(['key1', 'key2'], $array);
         }
 
-        $this->assertArrayKeysEqual([0, 1, 2], ['first', 'second', 'third']);
+        $this->TestCase->assertArrayKeysEqual([0, 1, 2], ['first', 'second', 'third']);
 
         $this->expectException(AssertionFailedError::class);
-        $this->assertArrayKeysEqual(['key2'], $array);
+        $this->TestCase->assertArrayKeysEqual(['key2'], $array);
     }
 
     /**
-     * Tests for `assertDeprecated()` method
-     * @return void
+     * @test
      * @uses \Tools\TestSuite\TestTrait::assertDeprecated()
      */
     public function testAssertDeprecated(): void
     {
-        $this->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'));
-        $this->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'), 'This is a deprecation!');
+        $this->TestCase->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'));
+        $this->TestCase->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'), 'This is a deprecation!');
 
         //Different exception throw
         try {
-            $this->assertDeprecated(function () {
+            $this->TestCase->assertDeprecated(function () {
                 throw new BadMethodCallException();
             });
         } catch (AssertionFailedError $e) {
@@ -126,7 +144,7 @@ class TestTraitTest extends TestCase
 
         //No exception throw
         try {
-            $this->assertDeprecated('time');
+            $this->TestCase->assertDeprecated('time');
         } catch (AssertionFailedError $e) {
             $this->assertSame('Expected exception `' . Deprecated::class . '`, but no exception throw', $e->getMessage());
         } finally {
@@ -138,7 +156,7 @@ class TestTraitTest extends TestCase
 
         //Wrong exception message
         try {
-            $this->assertDeprecated(fn() => deprecationWarning('Wrong'), 'Right');
+            $this->TestCase->assertDeprecated(fn() => deprecationWarning('Wrong'), 'Right');
         } catch (AssertionFailedError $e) {
             $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong', $e->getMessage());
         } finally {
@@ -150,28 +168,27 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Tests for `assertException()` method
-     * @uses \Tools\TestSuite\TestTrait::assertException()
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertException()
      */
     public function testAssertException(): void
     {
-        $this->assertException(function () {
+        $this->TestCase->assertException(function () {
             throw new Exception();
         });
-        $this->assertException(function () {
+        $this->TestCase->assertException(function () {
             throw new Exception('right exception message');
         }, Exception::class, 'right exception message');
 
         //It correctly ignores deprecations
-        $this->assertException(function () {
+        $this->TestCase->assertException(function () {
             deprecationWarning('This is a deprecation!');
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
 
         //Can't assert deprecations
         try {
-            $this->assertException(function () {
+            $this->TestCase->assertException(function () {
                 deprecationWarning('This is a deprecation');
             }, Deprecated::class);
         } catch (Notice $e) {
@@ -185,7 +202,7 @@ class TestTraitTest extends TestCase
 
         //No exception throw
         try {
-            $this->assertException('time');
+            $this->TestCase->assertException('time');
         } catch (AssertionFailedError $e) {
             $this->assertSame('Expected exception `Exception`, but no exception throw', $e->getMessage());
         } finally {
@@ -197,7 +214,7 @@ class TestTraitTest extends TestCase
 
         //The comparison is strict, it does not consider parent classes (`ErrorException` != `Exception`)
         try {
-            $this->assertException(function () {
+            $this->TestCase->assertException(function () {
                 throw new ErrorException();
             });
         } catch (AssertionFailedError $e) {
@@ -212,7 +229,7 @@ class TestTraitTest extends TestCase
         //No existing exception or invalid exception class
         foreach (['noExistingException', stdClass::class] as $class) {
             try {
-                $this->assertException(function () {
+                $this->TestCase->assertException(function () {
                     throw new Exception();
                 }, $class);
             } catch (AssertionFailedError $e) {
@@ -227,7 +244,7 @@ class TestTraitTest extends TestCase
 
         //Unexpected exception type
         try {
-            $this->assertException(function () {
+            $this->TestCase->assertException(function () {
                 throw new Exception();
             }, BadMethodCallException::class);
         } catch (AssertionFailedError $e) {
@@ -241,7 +258,7 @@ class TestTraitTest extends TestCase
 
         //Wrong exception message
         try {
-            $this->assertException(function () {
+            $this->TestCase->assertException(function () {
                 throw new Exception('Wrong');
             }, Exception::class, 'Right');
         } catch (AssertionFailedError $e) {
@@ -255,7 +272,7 @@ class TestTraitTest extends TestCase
 
         //Expected exception message, but no message
         try {
-            $this->assertException(function () {
+            $this->TestCase->assertException(function () {
                 throw new Exception();
             }, Exception::class, 'Right');
         } catch (AssertionFailedError $e) {
@@ -269,30 +286,30 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `assertFileExtension()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertFileExtension()
      */
     public function testAssertFileExtension(): void
     {
-        $this->assertFileExtension('jpg', 'file.jpg');
-        $this->assertFileExtension('jpeg', 'FILE.JPEG');
-        $this->assertFileExtension(['jpg', 'jpeg'], 'file.jpg');
+        $this->TestCase->assertFileExtension('jpg', 'file.jpg');
+        $this->TestCase->assertFileExtension('jpeg', 'FILE.JPEG');
+        $this->TestCase->assertFileExtension(['jpg', 'jpeg'], 'file.jpg');
     }
 
     /**
-     * Test for `assertFileMime()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertFileMime()
      */
     public function testAssertFileMime(): void
     {
         $file = Filesystem::instance()->createTmpFile('string');
-        $this->assertFileMime('text/plain', $file);
-        $this->assertFileMime(['text/plain', 'inode/x-empty'], $file);
+        $this->TestCase->assertFileMime('text/plain', $file);
+        $this->TestCase->assertFileMime(['text/plain', 'inode/x-empty'], $file);
     }
 
     /**
-     * Test for `assertImageSize()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertImageSize()
      */
     public function testAssertImageSize(): void
     {
@@ -301,16 +318,16 @@ class TestTraitTest extends TestCase
             $this->fail('Unable to create a valid resource image');
         }
         imagejpeg($resource, TMP . 'pic.jpg');
-        $this->assertImageSize(120, 20, TMP . 'pic.jpg');
+        $this->TestCase->assertImageSize(120, 20, TMP . 'pic.jpg');
     }
 
     /**
-     * Tests for `assertIsArrayNotEmpty()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
      */
     public function testAssertIsArrayNotEmpty(): void
     {
-        $this->assertIsArrayNotEmpty(['value']);
+        $this->TestCase->assertIsArrayNotEmpty(['value']);
 
         foreach ([
             [],
@@ -319,61 +336,61 @@ class TestTraitTest extends TestCase
             [null],
             [''],
         ] as $array) {
-            $this->assertException(fn() => $this->assertIsArrayNotEmpty($array), ExpectationFailedException::class);
+            $this->assertException(fn() => $this->TestCase->assertIsArrayNotEmpty($array), ExpectationFailedException::class);
         }
     }
 
     /**
-     * Tests for `assertIsMock()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsMock()
      */
     public function testAssertIsMock(): void
     {
-        $mock = $this->getMockBuilder(stdClass::class)->getMock();
-        $this->assertIsMock($mock);
+        $MockObject = $this->getMockBuilder(stdClass::class)->getMock();
+        $this->TestCase->assertIsMock($MockObject);
 
         $this->expectAssertionFailed('Failed asserting that a `stdClass` object is a mock');
-        $this->assertIsMock(new stdClass());
+        $this->TestCase->assertIsMock(new stdClass());
     }
 
     /**
-     * Tests for `assertObjectPropertiesEqual()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertObjectPropertiesEqual()
      */
     public function testAssertObjectPropertiesEqual(): void
     {
         $object = new stdClass();
         $object->first = 'first value';
         $object->second = 'second value';
-        $this->assertObjectPropertiesEqual(['first', 'second'], $object);
-        $this->assertObjectPropertiesEqual(['second', 'first'], $object);
+        $this->TestCase->assertObjectPropertiesEqual(['first', 'second'], $object);
+        $this->TestCase->assertObjectPropertiesEqual(['second', 'first'], $object);
 
         $this->expectException(ExpectationFailedException::class);
-        $this->assertObjectPropertiesEqual(['first'], $object);
+        $this->TestCase->assertObjectPropertiesEqual(['first'], $object);
     }
 
     /**
-     * Test for `assertSameMethods()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::assertSameMethods()
      */
     public function testAssertSameMethods(): void
     {
         $exampleClass = new ExampleClass();
-        $this->assertSameMethods($exampleClass, ExampleClass::class);
-        $this->assertSameMethods($exampleClass, get_class($exampleClass));
+        $this->TestCase->assertSameMethods($exampleClass, ExampleClass::class);
+        $this->TestCase->assertSameMethods($exampleClass, get_class($exampleClass));
 
         $copyExampleClass = &$exampleClass;
-        $this->assertSameMethods($exampleClass, $copyExampleClass);
+        $this->TestCase->assertSameMethods($exampleClass, $copyExampleClass);
 
-        $this->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
+        $this->TestCase->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
 
         $this->expectException(AssertionFailedError::class);
-        $this->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
+        $this->TestCase->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
     }
 
     /**
-     * Test for `expectAssertionFailed()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::expectAssertionFailed()
      */
     public function testExpectAssertionFailed(): void
     {
@@ -397,8 +414,26 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * Test for `skipIf()` method
      * @test
+     * @uses \Tools\TestSuite\TestTrait::createPartialMockForAbstractClass()
+     */
+    public function testCreatePartialMockForAbstractClass(): void
+    {
+        $result = $this->TestCase->createPartialMockForAbstractClass(AbstractExampleClass::class);
+        $this->assertIsMock($result);
+        $this->assertInstanceOf(AbstractExampleClass::class, $result);
+
+        $this->expectException(PHPUnitException::class);
+        $this->expectExceptionMessage('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
+        $BadClass = new class {
+            use TestTrait;
+        };
+        $BadClass->createPartialMockForAbstractClass(AbstractExampleClass::class);
+    }
+
+    /**
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::skipIf()
      */
     public function testSkipIf(): void
     {
