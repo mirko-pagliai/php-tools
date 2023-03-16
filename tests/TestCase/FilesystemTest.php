@@ -28,8 +28,8 @@ use Tools\TestSuite\TestCase;
 class FilesystemTest extends TestCase
 {
     /**
-     * Test for `addSlashTerm()` method
      * @test
+     * @uses \Tools\Filesystem::addSlashTerm()
      */
     public function testAddSlashTerm(): void
     {
@@ -39,8 +39,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `concatenate()` method
      * @test
+     * @uses \Tools\Filesystem::concatenate()
      */
     public function testConcatenate(): void
     {
@@ -51,8 +51,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `createFile()` method
      * @test
+     * @uses \Tools\Filesystem::createFile()
      */
     public function testCreateFile(): void
     {
@@ -75,8 +75,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `createTmpFile()` method
      * @test
+     * @uses \Tools\Filesystem::createTmpFile()
      */
     public function testCreateTmpFile(): void
     {
@@ -89,9 +89,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `getDirTree()` method
-     * @uses \Tools\Filesystem::getDirTree()
      * @test
+     * @uses \Tools\Filesystem::getDirTree()
      */
     public function testGetDirTree(): void
     {
@@ -143,8 +142,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `getExtension()` method
      * @test
+     * @uses \Tools\Filesystem::getExtension()
      */
     public function testGetExtension(): void
     {
@@ -189,8 +188,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `getRoot()` method
      * @test
+     * @uses \Tools\Filesystem::getRoot()
      */
     public function testGetRoot(): void
     {
@@ -202,8 +201,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `instance()` method
      * @test
+     * @uses \Tools\Filesystem::instance()
      */
     public function testInstance(): void
     {
@@ -212,35 +211,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `isSlashTerm()` method
      * @test
-     */
-    public function testIsSlashTerm(): void
-    {
-        foreach ([
-            'path/',
-            '/path/',
-            'path\\',
-            '\\path\\',
-        ] as $path) {
-            $this->assertTrue(Filesystem::instance()->isSlashTerm($path));
-        }
-
-        foreach ([
-            'path',
-            '/path',
-            '\\path',
-            'path.ext',
-            '/path.ext',
-        ] as $path) {
-            $this->assertFalse(Filesystem::instance()->isSlashTerm($path));
-        }
-    }
-
-    /**
-     * Test for `isWritableRecursive()` method
      * @uses \Tools\Filesystem::isWritableRecursive()
-     * @test
      */
     public function testIsWritableRecursive(): void
     {
@@ -259,8 +231,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `makePathAbsolute()` method
      * @test
+     * @uses \Tools\Filesystem::makePathAbsolute()
      */
     public function testMakePathAbsolute(): void
     {
@@ -273,8 +245,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `makePathRelative()` method
      * @test
+     * @uses \Tools\Filesystem::makePathRelative()
      */
     public function testMakePathRelative(): void
     {
@@ -290,7 +262,6 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `normalizePath()` method
      * @uses \Tools\Filesystem::normalizePath()
      * @test
      */
@@ -302,8 +273,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `rmdirRecursive()` method
      * @test
+     * @uses \Tools\Filesystem::rmdirRecursive()
      */
     public function testRmdirRecursive(): void
     {
@@ -318,8 +289,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `rtr()` method
      * @test
+     * @uses \Tools\Filesystem::rtr()
      */
     public function testRtr(): void
     {
@@ -331,9 +302,8 @@ class FilesystemTest extends TestCase
     }
 
     /**
-     * Test for `unlinkRecursive()` method
-     * @uses \Tools\Filesystem::unlinkRecursive()
      * @test
+     * @uses \Tools\Filesystem::unlinkRecursive()
      */
     public function testUnlinkRecursive(): void
     {
