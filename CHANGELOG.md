@@ -1,10 +1,8 @@
 # 1.x branch
 ## 1.7 branch
-### 1.7.4
-* fixed a bug for `Exceptionist::isInstanceOf()`: this method now accepts instantiated objects or class name as string
-    as its first argument.
-
 ### 1.7.3
+* fixed a bug for `Exceptionist::isInstanceOf()`: this method now accepts instantiated objects or class name as string
+    as its first argument;
 * removed `Filesystem::isSlashTerm()` method. Use directly `addSlashTerm()` or `concatenate()` methods.
 
 ### 1.7.2
