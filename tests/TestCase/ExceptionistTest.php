@@ -178,14 +178,14 @@ class ExceptionistTest extends TestCase
     }
 
     /**
-     * Test for `isInstanceOf()` method
-     * @uses \Tools\Exceptionist::isInstanceOf()
      * @test
+     * @uses \Tools\Exceptionist::isInstanceOf()
      */
     public function testIsInstanceOf(): void
     {
         $instance = new stdClass();
         $this->assertSame($instance, Exceptionist::isInstanceOf($instance, stdClass::class));
+        $this->assertSame(get_class($instance), Exceptionist::isInstanceOf(get_class($instance), stdClass::class));
 
         $this->assertException(fn() => Exceptionist::isInstanceOf($instance, ExampleClass::class), ObjectWrongInstanceException::class, 'Object `stdClass` is not an instance of `App\ExampleClass`');
     }

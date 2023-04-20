@@ -34,7 +34,9 @@ class Filesystem extends BaseFilesystem
      */
     public function addSlashTerm(string $path): string
     {
-        return $this->isSlashTerm($path) ? $path : $path . DS;
+        $isSlashTerm = in_array($path[strlen($path) - 1], ['/', '\\']);
+
+        return $path . ($isSlashTerm ? '' : DS);
     }
 
     /**
