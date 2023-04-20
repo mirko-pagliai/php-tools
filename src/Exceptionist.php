@@ -209,21 +209,21 @@ class Exceptionist
     /**
      * Checks whether an object is an instance of `$class`
      * @template InstancedObject as object
-     * @param InstancedObject $object The object you want to check
+     * @param InstancedObject|class-string<InstancedObject> $objectOrClass The object you want to check
      * @param class-string $class The class that the object should be an instance of
      * @param string $message The failure message that will be appended to the generated message
-     * @return InstancedObject
+     * @return InstancedObject|class-string<InstancedObject>
      * @throws \Tools\Exception\ObjectWrongInstanceException
      * @since 1.4.7
      */
-    public static function isInstanceOf(object $object, string $class, string $message = ''): object
+    public static function isInstanceOf($objectOrClass, string $class, string $message = '')
     {
-        if ($object instanceof $class) {
-            return $object;
+        if (is_a($objectOrClass, $class, true)) {
+            return $objectOrClass;
         }
 
         /** @var \Tools\Exception\ObjectWrongInstanceException $e */
-        $e = self::buildException($message ?: 'Object `' . get_class($object) . '` is not an instance of `' . $class . '`', ObjectWrongInstanceException::class);
+        $e = self::buildException($message ?: 'Object `' . (is_string($objectOrClass) ? $objectOrClass : get_class($objectOrClass)) . '` is not an instance of `' . $class . '`', ObjectWrongInstanceException::class);
         throw $e;
     }
 
