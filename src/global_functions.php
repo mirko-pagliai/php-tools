@@ -153,7 +153,7 @@ if (!function_exists('objects_map')) {
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
-        return array_map(fn (object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
+        return array_map(fn(object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
     }
 }
 
