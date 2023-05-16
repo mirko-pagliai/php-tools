@@ -32,7 +32,7 @@ class Filesystem extends BaseFilesystem
      * @param string $path Path
      * @return string Path with the slash term
      */
-    public function addSlashTerm(string $path): string
+    public static function addSlashTerm(string $path): string
     {
         $isSlashTerm = in_array($path[strlen($path) - 1], ['/', '\\']);
 
@@ -57,8 +57,7 @@ class Filesystem extends BaseFilesystem
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
-     * @param mixed $data The data to write. Can be either a string, an array or
-     *  a stream resource
+     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return string
@@ -83,13 +82,10 @@ class Filesystem extends BaseFilesystem
     /**
      * Creates a temporary file. Alias for `tempnam()` and `file_put_contents()`.
      *
-     * You can pass a directory where to create the file. If `null`, the file
-     *  will be created in `TMP`, if the constant is defined, otherwise in the
-     *  temporary directory of the system.
-     * @param mixed $data The data to write. Can be either a string, an array or
-     *  a stream resource
-     * @param string|null $dir The directory where the temporary filename will
-     *  be created
+     * You can pass a directory where to create the file. If `null`, the file will be created in `TMP`, if the constant
+     * is defined, otherwise in the temporary directory of the system.
+     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
+     * @param string|null $dir The directory where the temporary filename will be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
      * @throws \ErrorException
@@ -105,10 +101,9 @@ class Filesystem extends BaseFilesystem
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param string|array|bool $exceptions Either an array of filename or folder
-     *  names to exclude or boolean true to not grab dot files/folders
+     * @param string|string[]|bool $exceptions Either an array files/folders to exclude or `true` to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array<array<string>> Array of nested directories and files in each directory
+     * @return array<string[]> Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      * @throws \Tools\Exception\MethodNotExistsException
      */
@@ -152,16 +147,14 @@ class Filesystem extends BaseFilesystem
     /**
      * Gets the extension from a filename.
      *
-     * Unlike other functions, this removes query string and fragments (if the
-     *  filename is an url) and knows how to recognize extensions made up of
-     *  several parts (eg, `sql.gz`).
+     * Unlike other functions, this removes query string and fragments (if the filename is an url) and knows how to
+     * recognize extensions made up of several parts (eg, `sql.gz`).
      * @param string $filename Filename
      * @return string|null
      */
-    public function getExtension(string $filename): ?string
+    public static function getExtension(string $filename): ?string
     {
-        //Gets the basename and, if the filename is an url, removes query string
-        //  and fragments (#)
+        //Gets the basename and, if the filename is an url, removes query string and fragments (#)
         $filename = parse_url(basename($filename), PHP_URL_PATH);
         if (!$filename) {
             return null;
@@ -173,8 +166,7 @@ class Filesystem extends BaseFilesystem
             $filename = substr($filename, $pos + 1);
         }
 
-        //Finds the occurrence of the first point. The offset is 1 to
-        //  preserve the hidden files
+        //Finds the occurrence of the first point. The offset is 1 to preserve the hidden files
         $pos = strpos($filename, '.', 1);
 
         return $pos === false ? null : strtolower(substr($filename, $pos + 1));
@@ -183,12 +175,11 @@ class Filesystem extends BaseFilesystem
     /**
      * Gets the root path.
      *
-     * The root path must be set with the `ROOT` environment variable (using the
-     *  `putenv()` function) or the `ROOT` constant.
+     * The root path must be set with the `ROOT` environment variable (using `putenv()`) or the `ROOT` constant.
      * @return string
      * @throws \ErrorException
      */
-    public function getRoot(): string
+    public static function getRoot(): string
     {
         $root = getenv('ROOT');
         if (!$root) {
@@ -207,16 +198,6 @@ class Filesystem extends BaseFilesystem
     public static function instance(): Filesystem
     {
         return new Filesystem();
-    }
-
-    /**
-     * Checks if a path ends in a slash (i.e. is slash-terminated)
-     * @param string $path Path
-     * @return bool
-     */
-    public function isSlashTerm(string $path): bool
-    {
-        return in_array($path[strlen($path) - 1], ['/', '\\']);
     }
 
     /**
@@ -294,18 +275,16 @@ class Filesystem extends BaseFilesystem
      * @return string Normalized path
      * @since 1.4.5
      */
-    public function normalizePath(string $path): string
+    public static function normalizePath(string $path): string
     {
         return str_replace(['/', '\\'], DS, $path);
     }
 
     /**
-     * Removes the directory itself and all its contents, including
-     *  subdirectories and files.
+     * Removes the directory itself and all its contents, including subdirectories and files.
      *
-     * To remove only files contained in a directory and its subdirectories,
-     *  leaving the directories unaltered, use the `unlinkRecursive()`
-     *  method instead.
+     * To remove only files contained in a directory and its subdirectories, leaving the directories unaltered, use the
+     * `unlinkRecursive()` method instead.
      * @param string $dirname Path to the directory
      * @return bool
      * @see \Tools\Filesystem::unlinkRecursive()
@@ -340,15 +319,12 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Recursively removes all the files contained in a directory and within its
-     *  subdirectories. This function only removes the files, leaving the
-     *  directories unaltered.
+     * Recursively removes all the files contained in a directory and within its subdirectories. This function only
+     * removes the files, leaving the directories unaltered.
      *
-     * To remove the directory itself and all its contents, use the
-     *  `rmdirRecursive()` method instead.
+     * To remove the directory itself and all its contents, use the rmdirRecursive()` method instead.
      * @param string $dirname The directory path
-     * @param array<string>|bool|string $exceptions Either an array of files to
-     *  exclude or boolean true to not grab dot files
+     * @param string|string[]|bool $exceptions Either an array of files to exclude or `true` to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Filesystem\Exception\IOException

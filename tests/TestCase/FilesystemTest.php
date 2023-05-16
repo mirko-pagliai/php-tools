@@ -35,6 +35,7 @@ class FilesystemTest extends TestCase
     {
         $expected = DS . 'tmp' . DS;
         $this->assertSame($expected, Filesystem::instance()->addSlashTerm(DS . 'tmp'));
+        $this->assertSame($expected, Filesystem::addSlashTerm(DS . 'tmp'));
         $this->assertSame($expected, Filesystem::instance()->addSlashTerm($expected));
     }
 
@@ -148,6 +149,7 @@ class FilesystemTest extends TestCase
     public function testGetExtension(): void
     {
         $this->assertNull(Filesystem::instance()->getExtension(''));
+        $this->assertSame('sql', Filesystem::getExtension('backup.sql'));
 
         foreach ([
             'backup.sql' => 'sql',
@@ -198,6 +200,7 @@ class FilesystemTest extends TestCase
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
         $this->assertSame(rtrim(ROOT, DS), Filesystem::instance()->getRoot());
+        $this->assertSame(rtrim(ROOT, DS), Filesystem::getRoot());
     }
 
     /**
@@ -269,6 +272,7 @@ class FilesystemTest extends TestCase
     {
         foreach (['path/to/normalize', 'path\\to\\normalize',] as $path) {
             $this->assertSame('path' . DS . 'to' . DS . 'normalize', Filesystem::instance()->normalizePath($path));
+            $this->assertSame('path' . DS . 'to' . DS . 'normalize', Filesystem::normalizePath($path));
         }
     }
 
