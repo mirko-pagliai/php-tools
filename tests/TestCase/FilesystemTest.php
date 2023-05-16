@@ -49,6 +49,7 @@ class FilesystemTest extends TestCase
         $this->assertSame('dir' . DS . 'sub-dir', Filesystem::instance()->concatenate('dir', 'sub-dir'));
         $this->assertSame('dir' . DS . 'sub-dir', Filesystem::instance()->concatenate('dir' . DS, 'sub-dir'));
         $this->assertSame('dir' . DS . 'sub-dir' . DS . 'sub-sub-dir', Filesystem::instance()->concatenate('dir', 'sub-dir', 'sub-sub-dir'));
+        $this->assertSame('dir' . DS . 'sub-dir' . DS . 'sub-sub-dir', Filesystem::concatenate('dir', 'sub-dir', 'sub-sub-dir'));
     }
 
     /**
@@ -59,6 +60,8 @@ class FilesystemTest extends TestCase
     {
         $filename = TMP . 'dirToBeCreated' . DS . 'exampleFile';
         $this->assertSame($filename, Filesystem::instance()->createFile($filename));
+        $this->assertStringEqualsFile($filename, '');
+        $this->assertSame($filename, Filesystem::createFile($filename));
         $this->assertStringEqualsFile($filename, '');
 
         unlink($filename);
@@ -87,6 +90,9 @@ class FilesystemTest extends TestCase
             $this->assertMatchesRegularExpression($pattern, $filename);
             $this->assertStringEqualsFile($filename, $string);
         }
+
+        $filename = Filesystem::createTmpFile();
+        $this->assertFileExists($filename);
     }
 
     /**
@@ -105,8 +111,9 @@ class FilesystemTest extends TestCase
         ];
         $expectedFiles = createSomeFiles();
 
-        $this->assertEquals([$expectedDirs, $expectedFiles], Filesystem::instance()->getDirTree(TMP . 'exampleDir'));
         $this->assertEquals([$expectedDirs, $expectedFiles], Filesystem::instance()->getDirTree(TMP . 'exampleDir' . DS));
+        $this->assertEquals([$expectedDirs, $expectedFiles], Filesystem::instance()->getDirTree(TMP . 'exampleDir'));
+        $this->assertEquals([$expectedDirs, $expectedFiles], Filesystem::getDirTree(TMP . 'exampleDir'));
 
         //Excludes some files
         foreach ([
@@ -220,6 +227,7 @@ class FilesystemTest extends TestCase
     public function testIsWritableRecursive(): void
     {
         $this->assertTrue(Filesystem::instance()->isWritableRecursive(TMP));
+        $this->assertTrue(Filesystem::isWritableRecursive(TMP));
 
         if (!IS_WIN) {
             $this->assertFalse(Filesystem::instance()->isWritableRecursive(DS . 'bin'));
@@ -239,8 +247,9 @@ class FilesystemTest extends TestCase
      */
     public function testMakePathAbsolute(): void
     {
-        $this->assertSame(TMP . 'dir', Filesystem::instance()->makePathAbsolute(TMP . 'dir', TMP));
         $this->assertSame(TMP . 'dir', Filesystem::instance()->makePathAbsolute('dir', TMP));
+        $this->assertSame(TMP . 'dir', Filesystem::instance()->makePathAbsolute(TMP . 'dir', TMP));
+        $this->assertSame(TMP . 'dir', Filesystem::makePathAbsolute(TMP . 'dir', TMP));
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The start path `relativePath` is not absolute');
@@ -286,6 +295,10 @@ class FilesystemTest extends TestCase
         $this->assertTrue(Filesystem::instance()->rmdirRecursive(TMP . 'exampleDir'));
         $this->assertDirectoryDoesNotExist(TMP . 'exampleDir');
 
+        createSomeFiles();
+        $this->assertTrue(Filesystem::rmdirRecursive(TMP . 'exampleDir'));
+        $this->assertDirectoryDoesNotExist(TMP . 'exampleDir');
+
         //Does not delete a file
         $filename = Filesystem::instance()->createTmpFile();
         $this->assertFalse(Filesystem::instance()->rmdirRecursive($filename));
@@ -299,6 +312,7 @@ class FilesystemTest extends TestCase
     public function testRtr(): void
     {
         $this->assertSame('my' . DS . 'folder', Filesystem::instance()->rtr(ROOT . 'my' . DS . 'folder'));
+        $this->assertSame('my' . DS . 'folder', Filesystem::rtr(ROOT . 'my' . DS . 'folder'));
 
         //Resets the ROOT value, removing the final slash
         putenv('ROOT=' . rtrim(ROOT, DS));
@@ -322,6 +336,10 @@ class FilesystemTest extends TestCase
         }
 
         $this->assertTrue(Filesystem::instance()->unlinkRecursive(TMP . 'exampleDir'));
+        array_map([$this, 'assertFileDoesNotExist'], $files);
+        $this->assertDirectoryExists(TMP . 'exampleDir');
+
+        $this->assertTrue(Filesystem::unlinkRecursive(TMP . 'exampleDir'));
         array_map([$this, 'assertFileDoesNotExist'], $files);
         $this->assertDirectoryExists(TMP . 'exampleDir');
 

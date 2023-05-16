@@ -45,11 +45,14 @@ class Filesystem extends BaseFilesystem
      * @return string The path concatenated
      * @since 1.4.5
      */
-    public function concatenate(string ...$paths): string
+    public static function concatenate(string ...$paths): string
     {
         $end = array_pop($paths);
 
-        return implode('', array_map([$this, 'addSlashTerm'], $paths)) . $end;
+        /** @var callable $addSlashTerm */
+        $addSlashTerm = ['self', 'addSlashTerm'];
+
+        return implode('', array_map($addSlashTerm, $paths)) . $end;
     }
 
     /**
@@ -63,11 +66,11 @@ class Filesystem extends BaseFilesystem
      * @return string
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
+    public static function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
     {
         try {
-            $this->mkdir(dirname($filename), $dirMode);
-            $this->dumpFile($filename, $data);
+            self::instance()->mkdir(dirname($filename), $dirMode);
+            self::instance()->dumpFile($filename, $data);
 
             return $filename;
         } catch (IOException $e) {
@@ -90,12 +93,12 @@ class Filesystem extends BaseFilesystem
      * @return string Path of temporary filename
      * @throws \ErrorException
      */
-    public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
+    public static function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         Exceptionist::isTrue($filename, 'It is not possible to create a temporary file');
 
-        return $this->createFile($filename, $data);
+        return self::createFile($filename, $data);
     }
 
     /**
@@ -107,7 +110,7 @@ class Filesystem extends BaseFilesystem
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      * @throws \Tools\Exception\MethodNotExistsException
      */
-    public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
+    public static function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
         $path = $path === DS ? DS : rtrim($path, DS);
         $finder = new Finder();
@@ -211,10 +214,10 @@ class Filesystem extends BaseFilesystem
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      * @throws \Tools\Exception\MethodNotExistsException
      */
-    public function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
+    public static function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
         try {
-            [$directories, $files] = $this->getDirTree($dirname);
+            [$directories, $files] = self::getDirTree($dirname);
             $items = $checkOnlyDir ? $directories : array_merge($directories, $files);
 
             if (!in_array($dirname, $items)) {
@@ -245,16 +248,16 @@ class Filesystem extends BaseFilesystem
      * @since 1.4.5
      * @throws \InvalidArgumentException
      */
-    public function makePathAbsolute(string $endPath, string $startPath): string
+    public static function makePathAbsolute(string $endPath, string $startPath): string
     {
-        if (!$this->isAbsolutePath($startPath)) {
-            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
+        if (!self::instance()->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException('The start path `' . $startPath . '` is not absolute');
         }
-        if ($this->isAbsolutePath($endPath)) {
+        if (self::instance()->isAbsolutePath($endPath)) {
             return $endPath;
         }
 
-        return $this->concatenate($startPath, $endPath);
+        return self::concatenate($startPath, $endPath);
     }
 
     /**
@@ -290,12 +293,12 @@ class Filesystem extends BaseFilesystem
      * @see \Tools\Filesystem::unlinkRecursive()
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public function rmdirRecursive(string $dirname): bool
+    public static function rmdirRecursive(string $dirname): bool
     {
         if (!is_dir($dirname)) {
             return false;
         }
-        $this->remove($dirname);
+        self::instance()->remove($dirname);
 
         return true;
     }
@@ -306,12 +309,12 @@ class Filesystem extends BaseFilesystem
      * @return string Relative path
      * @throws \ErrorException
      */
-    public function rtr(string $path): string
+    public static function rtr(string $path): string
     {
-        if ($this->isAbsolutePath($path)) {
-            $root = $this->getRoot();
+        if (self::instance()->isAbsolutePath($path)) {
+            $root = self::getRoot();
             if (str_starts_with($path, $root)) {
-                $path = $this->normalizePath($this->makePathRelative($path, $root));
+                $path = self::normalizePath(self::instance()->makePathRelative($path, $root));
             }
         }
 
@@ -332,11 +335,11 @@ class Filesystem extends BaseFilesystem
      * @throws \Tools\Exception\MethodNotExistsException
      * @see \Tools\Filesystem::rmdirRecursive()
      */
-    public function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
+    public static function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
     {
         try {
-            [, $files] = $this->getDirTree($dirname, $exceptions);
-            $this->remove($files);
+            [, $files] = self::getDirTree($dirname, $exceptions);
+            self::instance()->remove($files);
 
             return true;
         } catch (IOException | DirectoryNotFoundException $e) {
