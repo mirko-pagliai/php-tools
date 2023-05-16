@@ -119,8 +119,7 @@ if (!function_exists('is_stringable')) {
     /**
      * Checks is a value can be converted to string.
      *
-     * Arrays that can be converted to strings with `array_to_string ()` are
-     *  stringable.
+     * Arrays that can be converted to strings with `array_to_string ()` are stringable.
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
@@ -142,17 +141,18 @@ if (!function_exists('is_stringable')) {
 if (!function_exists('objects_map')) {
     /**
      * Executes an object method for all objects of the given arrays
-     * @param array<object> $objects An array of objects. Each object must have
-     *  the method to be called
+     * @param array<object> $objects An array of objects. Each object must have the method to be called
      * @param string $method The method to be called for each object
      * @param array $args Optional arguments for the method to be called
-     * @return array Returns an array containing all the returned values of the
-     *  called method applied to each object
+     * @return array Returns an array containing all the returned values of the called method applied to each object
      * @throws \Tools\Exception\MethodNotExistsException
+     * @deprecated 1.7.4 deprecated, it will be removed in a later release
      * @since 1.1.11
      */
     function objects_map(array $objects, string $method, array $args = []): array
     {
+        deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
+
         return array_map(fn(object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
     }
 }

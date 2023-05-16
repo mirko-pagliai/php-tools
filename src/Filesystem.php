@@ -21,6 +21,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Provides basic utility to manipulate the file system.
@@ -106,7 +107,7 @@ class Filesystem extends BaseFilesystem
      * @param string $path The directory path to build the tree from
      * @param string|string[]|bool $exceptions Either an array files/folders to exclude or `true` to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array<string[]> Array of nested directories and files in each directory
+     * @return string[][] Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      * @throws \Tools\Exception\MethodNotExistsException
      */
@@ -123,11 +124,23 @@ class Filesystem extends BaseFilesystem
         }
 
         try {
+            /**
+             * Internal method.
+             *
+             * Takes a `Finder` instance, sorts by names and runs the `getPathname()` method on all elements, returning an array
+             * @param Finder $finder A `Finder` instance
+             * @return string[]
+             */
+            $extractPathnames = function (Finder $finder): array {
+                return array_values(array_map(fn(SplFileInfo $file): string => $file->getPathname(), iterator_to_array($finder->sortByName())));
+            };
+
             $finder->directories()->ignoreUnreadableDirs()->in($path);
             if ($exceptions) {
                 $finder->exclude($exceptions);
             }
-            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
+
+            $dirs = $extractPathnames($finder);
             array_unshift($dirs, rtrim($path, DS));
 
             $finder->files()->in($path);
@@ -135,9 +148,8 @@ class Filesystem extends BaseFilesystem
                 $exceptions = array_map(fn($exception): string => preg_quote($exception, '/'), $exceptions);
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
             }
-            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
-            return [$dirs, $files];
+            return [$dirs, $extractPathnames($finder)];
         } catch (DirectoryNotFoundException $e) {
             if (!$ignoreErrors) {
                 throw $e;
