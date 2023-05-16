@@ -89,8 +89,13 @@ class GlobalFunctionsTest extends TestCase
      */
     public function testIsJson(): void
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
         $this->assertFalse(is_json('this is a no json string'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
     }
 
     /**

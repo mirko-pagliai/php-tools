@@ -94,12 +94,13 @@ if (!function_exists('is_json')) {
      * Checks if a string is JSON
      * @param string $string String
      * @return bool
+     * @deprecated 1.7.4 Use instead `json_validate()`
      */
     function is_json(string $string): bool
     {
-        json_decode($string);
+        deprecationWarning('Deprecated. Use instead `json_validate()`');
 
-        return json_last_error() === JSON_ERROR_NONE;
+        return json_validate($string);
     }
 }
 

@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.4
+* `is_json()` global function is now deprecated. Use instead `json_validate()`.
+
 ### 1.7.3
 * fixed a bug for `Exceptionist::isInstanceOf()`: this method now accepts instantiated objects or class name as string
     as its first argument;
