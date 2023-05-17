@@ -21,6 +21,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 /**
  * Provides basic utility to manipulate the file system.
@@ -28,11 +29,16 @@ use Symfony\Component\Finder\Finder;
 class Filesystem extends BaseFilesystem
 {
     /**
+     * @var \Tools\Filesystem
+     */
+    protected static Filesystem $_instance;
+
+    /**
      * Adds the slash term to a path, if it doesn't have one
      * @param string $path Path
      * @return string Path with the slash term
      */
-    public function addSlashTerm(string $path): string
+    public static function addSlashTerm(string $path): string
     {
         $isSlashTerm = in_array($path[strlen($path) - 1], ['/', '\\']);
 
@@ -45,11 +51,14 @@ class Filesystem extends BaseFilesystem
      * @return string The path concatenated
      * @since 1.4.5
      */
-    public function concatenate(string ...$paths): string
+    public static function concatenate(string ...$paths): string
     {
         $end = array_pop($paths);
 
-        return implode('', array_map([$this, 'addSlashTerm'], $paths)) . $end;
+        /** @var callable $addSlashTerm */
+        $addSlashTerm = ['self', 'addSlashTerm'];
+
+        return implode('', array_map($addSlashTerm, $paths)) . $end;
     }
 
     /**
@@ -57,18 +66,17 @@ class Filesystem extends BaseFilesystem
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
-     * @param mixed $data The data to write. Can be either a string, an array or
-     *  a stream resource
+     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return string
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
+    public static function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
     {
         try {
-            $this->mkdir(dirname($filename), $dirMode);
-            $this->dumpFile($filename, $data);
+            self::instance()->mkdir(dirname($filename), $dirMode);
+            self::instance()->dumpFile($filename, $data);
 
             return $filename;
         } catch (IOException $e) {
@@ -83,36 +91,31 @@ class Filesystem extends BaseFilesystem
     /**
      * Creates a temporary file. Alias for `tempnam()` and `file_put_contents()`.
      *
-     * You can pass a directory where to create the file. If `null`, the file
-     *  will be created in `TMP`, if the constant is defined, otherwise in the
-     *  temporary directory of the system.
-     * @param mixed $data The data to write. Can be either a string, an array or
-     *  a stream resource
-     * @param string|null $dir The directory where the temporary filename will
-     *  be created
+     * You can pass a directory where to create the file. If `null`, the file will be created in `TMP`, if the constant
+     * is defined, otherwise in the temporary directory of the system.
+     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
+     * @param string|null $dir The directory where the temporary filename will be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
      * @throws \ErrorException
      */
-    public function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
+    public static function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         Exceptionist::isTrue($filename, 'It is not possible to create a temporary file');
 
-        return $this->createFile($filename, $data);
+        return self::createFile($filename, $data);
     }
 
     /**
      * Returns an array of nested directories and files in each directory
      * @param string $path The directory path to build the tree from
-     * @param string|array|bool $exceptions Either an array of filename or folder
-     *  names to exclude or boolean true to not grab dot files/folders
+     * @param string|string[]|bool $exceptions Either an array files/folders to exclude or `true` to not grab dot files/folders
      * @param bool $ignoreErrors With `true`, errors will be ignored
-     * @return array<array<string>> Array of nested directories and files in each directory
+     * @return string[][] Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      */
-    public function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
+    public static function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
         $path = $path === DS ? DS : rtrim($path, DS);
         $finder = new Finder();
@@ -125,11 +128,23 @@ class Filesystem extends BaseFilesystem
         }
 
         try {
+            /**
+             * Internal method.
+             *
+             * Takes a `Finder` instance, sorts by names and runs the `getPathname()` method on all elements, returning an array
+             * @param \Symfony\Component\Finder\Finder $finder A `Finder` instance
+             * @return string[]
+             */
+            $extractPathnames = function (Finder $finder): array {
+                return array_values(array_map(fn(SplFileInfo $file): string => $file->getPathname(), iterator_to_array($finder->sortByName())));
+            };
+
             $finder->directories()->ignoreUnreadableDirs()->in($path);
             if ($exceptions) {
                 $finder->exclude($exceptions);
             }
-            $dirs = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
+
+            $dirs = $extractPathnames($finder);
             array_unshift($dirs, rtrim($path, DS));
 
             $finder->files()->in($path);
@@ -137,9 +152,8 @@ class Filesystem extends BaseFilesystem
                 $exceptions = array_map(fn($exception): string => preg_quote($exception, '/'), $exceptions);
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
             }
-            $files = objects_map(array_values(iterator_to_array($finder->sortByName())), 'getPathname');
 
-            return [$dirs, $files];
+            return [$dirs, $extractPathnames($finder)];
         } catch (DirectoryNotFoundException $e) {
             if (!$ignoreErrors) {
                 throw $e;
@@ -152,16 +166,14 @@ class Filesystem extends BaseFilesystem
     /**
      * Gets the extension from a filename.
      *
-     * Unlike other functions, this removes query string and fragments (if the
-     *  filename is an url) and knows how to recognize extensions made up of
-     *  several parts (eg, `sql.gz`).
+     * Unlike other functions, this removes query string and fragments (if the filename is an url) and knows how to
+     * recognize extensions made up of several parts (eg, `sql.gz`).
      * @param string $filename Filename
      * @return string|null
      */
-    public function getExtension(string $filename): ?string
+    public static function getExtension(string $filename): ?string
     {
-        //Gets the basename and, if the filename is an url, removes query string
-        //  and fragments (#)
+        //Gets the basename and, if the filename is an url, removes query string and fragments (#)
         $filename = parse_url(basename($filename), PHP_URL_PATH);
         if (!$filename) {
             return null;
@@ -173,8 +185,7 @@ class Filesystem extends BaseFilesystem
             $filename = substr($filename, $pos + 1);
         }
 
-        //Finds the occurrence of the first point. The offset is 1 to
-        //  preserve the hidden files
+        //Finds the occurrence of the first point. The offset is 1 to preserve the hidden files
         $pos = strpos($filename, '.', 1);
 
         return $pos === false ? null : strtolower(substr($filename, $pos + 1));
@@ -183,12 +194,11 @@ class Filesystem extends BaseFilesystem
     /**
      * Gets the root path.
      *
-     * The root path must be set with the `ROOT` environment variable (using the
-     *  `putenv()` function) or the `ROOT` constant.
+     * The root path must be set with the `ROOT` environment variable (using `putenv()`) or the `ROOT` constant.
      * @return string
      * @throws \ErrorException
      */
-    public function getRoot(): string
+    public static function getRoot(): string
     {
         $root = getenv('ROOT');
         if (!$root) {
@@ -200,23 +210,13 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Returns a new `Filesystem` instance
+     * Returns the `Filesystem` instance
      * @return self
      * @since 1.4.7
      */
     public static function instance(): Filesystem
     {
-        return new Filesystem();
-    }
-
-    /**
-     * Checks if a path ends in a slash (i.e. is slash-terminated)
-     * @param string $path Path
-     * @return bool
-     */
-    public function isSlashTerm(string $path): bool
-    {
-        return in_array($path[strlen($path) - 1], ['/', '\\']);
+        return self::$_instance ??= new Filesystem();
     }
 
     /**
@@ -228,12 +228,11 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      */
-    public function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
+    public static function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
         try {
-            [$directories, $files] = $this->getDirTree($dirname);
+            [$directories, $files] = self::getDirTree($dirname);
             $items = $checkOnlyDir ? $directories : array_merge($directories, $files);
 
             if (!in_array($dirname, $items)) {
@@ -264,16 +263,13 @@ class Filesystem extends BaseFilesystem
      * @since 1.4.5
      * @throws \InvalidArgumentException
      */
-    public function makePathAbsolute(string $endPath, string $startPath): string
+    public static function makePathAbsolute(string $endPath, string $startPath): string
     {
-        if (!$this->isAbsolutePath($startPath)) {
-            throw new InvalidArgumentException(sprintf('The start path `%s` is not absolute', $startPath));
-        }
-        if ($this->isAbsolutePath($endPath)) {
-            return $endPath;
+        if (!self::instance()->isAbsolutePath($startPath)) {
+            throw new InvalidArgumentException('The start path `' . $startPath . '` is not absolute');
         }
 
-        return $this->concatenate($startPath, $endPath);
+        return self::instance()->isAbsolutePath($endPath) ? $endPath : self::concatenate($startPath, $endPath);
     }
 
     /**
@@ -294,29 +290,27 @@ class Filesystem extends BaseFilesystem
      * @return string Normalized path
      * @since 1.4.5
      */
-    public function normalizePath(string $path): string
+    public static function normalizePath(string $path): string
     {
         return str_replace(['/', '\\'], DS, $path);
     }
 
     /**
-     * Removes the directory itself and all its contents, including
-     *  subdirectories and files.
+     * Removes the directory itself and all its contents, including subdirectories and files.
      *
-     * To remove only files contained in a directory and its subdirectories,
-     *  leaving the directories unaltered, use the `unlinkRecursive()`
-     *  method instead.
+     * To remove only files contained in a directory and its subdirectories, leaving the directories unaltered, use the
+     * `unlinkRecursive()` method instead.
      * @param string $dirname Path to the directory
      * @return bool
      * @see \Tools\Filesystem::unlinkRecursive()
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public function rmdirRecursive(string $dirname): bool
+    public static function rmdirRecursive(string $dirname): bool
     {
         if (!is_dir($dirname)) {
             return false;
         }
-        $this->remove($dirname);
+        self::instance()->remove($dirname);
 
         return true;
     }
@@ -327,40 +321,33 @@ class Filesystem extends BaseFilesystem
      * @return string Relative path
      * @throws \ErrorException
      */
-    public function rtr(string $path): string
+    public static function rtr(string $path): string
     {
-        if ($this->isAbsolutePath($path)) {
-            $root = $this->getRoot();
-            if (str_starts_with($path, $root)) {
-                $path = $this->normalizePath($this->makePathRelative($path, $root));
-            }
+        if (self::instance()->isAbsolutePath($path) && str_starts_with($path, self::getRoot())) {
+            $path = self::normalizePath(self::instance()->makePathRelative($path, self::getRoot()));
         }
 
         return rtrim($path, DS);
     }
 
     /**
-     * Recursively removes all the files contained in a directory and within its
-     *  subdirectories. This function only removes the files, leaving the
-     *  directories unaltered.
+     * Recursively removes all the files contained in a directory and within its subdirectories. This function only
+     * removes the files, leaving the directories unaltered.
      *
-     * To remove the directory itself and all its contents, use the
-     *  `rmdirRecursive()` method instead.
+     * To remove the directory itself and all its contents, use the rmdirRecursive()` method instead.
      * @param string $dirname The directory path
-     * @param array<string>|bool|string $exceptions Either an array of files to
-     *  exclude or boolean true to not grab dot files
+     * @param string|string[]|bool $exceptions Either an array of files to exclude or `true` to not grab dot files
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      * @see \Tools\Filesystem::rmdirRecursive()
      */
-    public function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
+    public static function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
     {
         try {
-            [, $files] = $this->getDirTree($dirname, $exceptions);
-            $this->remove($files);
+            [, $files] = self::getDirTree($dirname, $exceptions);
+            self::instance()->remove($files);
 
             return true;
         } catch (IOException | DirectoryNotFoundException $e) {

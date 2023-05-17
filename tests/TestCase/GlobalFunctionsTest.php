@@ -30,8 +30,8 @@ use Tools\TestSuite\TestCase;
 class GlobalFunctionsTest extends TestCase
 {
     /**
-     * Test for `array_to_string()` global function
      * @test
+     * @uses array_to_string()
      */
     public function testArrayToString(): void
     {
@@ -47,8 +47,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `get_child_methods()` global function
      * @test
+     * @uses get_child_methods()
      */
     public function testGetChildMethods(): void
     {
@@ -63,8 +63,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `get_class_short_name()` global function
      * @test
+     * @uses get_class_short_name()
      */
     public function testGetClassShortName(): void
     {
@@ -74,8 +74,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_html()` global function
      * @test
+     * @uses is_html()
      */
     public function testIsHtml(): void
     {
@@ -84,18 +84,23 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_json()` global function
      * @test
+     * @uses is_json()
      */
     public function testIsJson(): void
     {
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
         $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
         $this->assertFalse(is_json('this is a no json string'));
+        error_reporting($current);
+
+        $this->expectDeprecation();
+        is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
     }
 
     /**
-     * Test for `is_positive()` global function
      * @test
+     * @uses is_positive()
      */
     public function testIsPositive(): void
     {
@@ -108,8 +113,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `slug()` global function
      * @test
+     * @uses slug()
      * @noinspection SpellCheckingInspection
      */
     public function testSlug(): void
@@ -128,8 +133,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_stringable()` global function
      * @test
+     * @uses is_stringable()
      */
     public function testIsStringable(): void
     {
@@ -149,12 +154,17 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `objects_map()` global function
      * @test
+     * @uses objects_map()
      */
     public function testObjectsMap(): void
     {
         $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
+
+        $this->expectDeprecation();
+        objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
+
+        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
 
         $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
         $this->assertEquals(['a new value', 'a new value'], $result);
@@ -167,11 +177,22 @@ class GlobalFunctionsTest extends TestCase
         $this->expectException(MethodNotExistsException::class);
         $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` does not exist');
         objects_map([new ExampleClass()], 'noExistingMethod');
+
+        error_reporting($current);
     }
 
     /**
-     * Test for `uncamelcase()` global function
      * @test
+     * @uses rtr()
+     */
+    public function testRtr(): void
+    {
+        $this->assertSame('my' . DS . 'folder', rtr(ROOT . 'my' . DS . 'folder'));
+    }
+
+    /**
+     * @test
+     * @uses uncamelcase()
      */
     public function testUncamelcase(): void
     {
@@ -181,8 +202,8 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `which()` global function
      * @test
+     * @uses which()
      */
     public function testWhich(): void
     {

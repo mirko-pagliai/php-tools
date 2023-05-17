@@ -1,5 +1,11 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.4
+* all methods provided by the `Filesystem` class (except for `makePathRelative()`) can now be called statically;
+* added `rtr()` global function, a fast and convenient alias for `Filesystem::rtr()`;
+* `objects_map()` global function is now deprecated and will be removed in a later release;
+* `is_json()` global function is now deprecated. Use instead `json_validate()`.
+
 ### 1.7.3
 * fixed a bug for `Exceptionist::isInstanceOf()`: this method now accepts instantiated objects or class name as string
     as its first argument;
