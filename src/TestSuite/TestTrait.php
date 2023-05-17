@@ -76,8 +76,14 @@ trait TestTrait
                 throw new BadMethodCallException(sprintf('Method %s::%s() expects at least 1 argument, maximum 2, %d passed', __CLASS__, $name, $count));
             }
 
-            /** @var callable $function */
-            $function = 'is_' . strtolower(substr($name, 8));
+            switch ($name) {
+                case 'assertIsJson':
+                    $function = 'json_validate';
+                    break;
+                default:
+                    $function = 'is_' . strtolower(substr($name, 8));
+            }
+
             if (is_callable($function)) {
                 $var = array_shift($arguments);
                 /** @var callable $callable */
