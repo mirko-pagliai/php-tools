@@ -16,6 +16,7 @@ declare(strict_types=1);
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Exceptionist;
+use Tools\Filesystem;
 use function Symfony\Component\String\u;
 
 if (!defined('IS_WIN')) {
@@ -154,6 +155,21 @@ if (!function_exists('objects_map')) {
         deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
 
         return array_map(fn(object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
+    }
+}
+
+if (!function_exists('rtr')) {
+    /**
+     * Fast and convenient alias for `Filesystem::rtr()`
+     * @param string $path Absolute path
+     * @return string Relative path
+     * @throws \ErrorException
+     * @see \Tools\Filesystem::rtr()
+     * @since 1.7.4
+     */
+    function rtr(string $path): string
+    {
+        return Filesystem::rtr($path);
     }
 }
 

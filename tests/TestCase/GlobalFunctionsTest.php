@@ -178,6 +178,15 @@ class GlobalFunctionsTest extends TestCase
 
     /**
      * @test
+     * @uses rtr()
+     */
+    public function testRtr(): void
+    {
+        $this->assertSame('my' . DS . 'folder', rtr(ROOT . 'my' . DS . 'folder'));
+    }
+
+    /**
+     * @test
      * @uses uncamelcase()
      */
     public function testUncamelcase(): void
