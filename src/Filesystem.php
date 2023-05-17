@@ -29,6 +29,11 @@ use Symfony\Component\Finder\SplFileInfo;
 class Filesystem extends BaseFilesystem
 {
     /**
+     * @var \Tools\Filesystem
+     */
+    protected static Filesystem $_instance;
+
+    /**
      * Adds the slash term to a path, if it doesn't have one
      * @param string $path Path
      * @return string Path with the slash term
@@ -128,7 +133,7 @@ class Filesystem extends BaseFilesystem
              * Internal method.
              *
              * Takes a `Finder` instance, sorts by names and runs the `getPathname()` method on all elements, returning an array
-             * @param Finder $finder A `Finder` instance
+             * @param \Symfony\Component\Finder\Finder $finder A `Finder` instance
              * @return string[]
              */
             $extractPathnames = function (Finder $finder): array {
@@ -206,13 +211,13 @@ class Filesystem extends BaseFilesystem
     }
 
     /**
-     * Returns a new `Filesystem` instance
+     * Returns the `Filesystem` instance
      * @return self
      * @since 1.4.7
      */
     public static function instance(): Filesystem
     {
-        return new Filesystem();
+        return self::$_instance ??= new Filesystem();
     }
 
     /**
@@ -323,11 +328,8 @@ class Filesystem extends BaseFilesystem
      */
     public static function rtr(string $path): string
     {
-        if (self::instance()->isAbsolutePath($path)) {
-            $root = self::getRoot();
-            if (str_starts_with($path, $root)) {
-                $path = self::normalizePath(self::instance()->makePathRelative($path, $root));
-            }
+        if (self::instance()->isAbsolutePath($path) && str_starts_with($path, self::getRoot())) {
+            $path = self::normalizePath(self::instance()->makePathRelative($path, self::getRoot()));
         }
 
         return rtrim($path, DS);
