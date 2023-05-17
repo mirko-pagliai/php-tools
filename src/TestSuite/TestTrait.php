@@ -81,6 +81,7 @@ trait TestTrait
                     $function = 'json_validate';
                     break;
                 default:
+                    /** @var callable $function */
                     $function = 'is_' . strtolower(substr($name, 8));
             }
 

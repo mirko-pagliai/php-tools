@@ -5,6 +5,12 @@
       <code>$event</code>
     </MoreSpecificImplementedParamType>
   </file>
+  <file src="src/Filesystem.php">
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>new Filesystem()</code>
+      <code>self::$_instance</code>
+    </RedundantPropertyInitializationCheck>
+  </file>
   <file src="src/TestSuite/TestTrait.php">
     <DuplicateArrayKey occurrences="1">
       <code>$arguments</code>
