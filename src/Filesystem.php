@@ -114,7 +114,6 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return string[][] Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      */
     public static function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
     {
@@ -229,7 +228,6 @@ class Filesystem extends BaseFilesystem
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return bool
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      */
     public static function isWritableRecursive(string $dirname, bool $checkOnlyDir = true, bool $ignoreErrors = false): bool
     {
@@ -270,11 +268,8 @@ class Filesystem extends BaseFilesystem
         if (!self::instance()->isAbsolutePath($startPath)) {
             throw new InvalidArgumentException('The start path `' . $startPath . '` is not absolute');
         }
-        if (self::instance()->isAbsolutePath($endPath)) {
-            return $endPath;
-        }
 
-        return self::concatenate($startPath, $endPath);
+        return self::instance()->isAbsolutePath($endPath) ? $endPath : self::concatenate($startPath, $endPath);
     }
 
     /**
@@ -346,7 +341,6 @@ class Filesystem extends BaseFilesystem
      * @return bool
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      * @see \Tools\Filesystem::rmdirRecursive()
      */
     public static function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
