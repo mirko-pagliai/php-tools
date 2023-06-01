@@ -212,9 +212,13 @@ if (!function_exists('which')) {
      * @param string $command Command
      * @return string
      * @throws \ErrorException
+     * @deprecated 1.7.5 Use instead `Symfony\Component\Process\ExecutableFinder::find()` method
+     * @codeCoverageIgnore
      */
     function which(string $command): string
     {
+        deprecationWarning('Deprecated. Use instead `' . ExecutableFinder::class . '::find()` method');
+
         return Exceptionist::isTrue((new ExecutableFinder())->find($command) ?: '', 'Unable to find the executable for the `' . $command . '` command');
     }
 }
