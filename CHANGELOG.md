@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.5
+* `which()` global function is now deprecated. Use instead `Symfony\Component\Process\ExecutableFinder::find()` method.
+
 ### 1.7.4
 * all methods provided by the `Filesystem` class (except for `makePathRelative()`) can now be called statically;
 * added `rtr()` global function, a fast and convenient alias for `Filesystem::rtr()`;
