@@ -123,6 +123,7 @@ abstract class Entity implements ArrayAccess
      * @param EntityPropertyName $offset The offset to get
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->properties[$offset];

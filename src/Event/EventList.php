@@ -66,6 +66,7 @@ class EventList implements ArrayAccess
      * @param mixed $offset The offset to retrieve
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->offsetExists($offset) ? $this->_events[$offset] : null;
