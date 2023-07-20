@@ -31,8 +31,7 @@ class EventTest extends TestCase
     protected Event $Event;
 
     /**
-     * Called before every test method
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
@@ -42,8 +41,8 @@ class EventTest extends TestCase
     }
 
     /**
-     * Test for `getName()` method
      * @test
+     * @uses \Tools\Event\Event::getName()
      */
     public function testGetName(): void
     {
@@ -51,8 +50,8 @@ class EventTest extends TestCase
     }
 
     /**
-     * Test for `getArg()` method
      * @test
+     * @uses \Tools\Event\Event::getArg()
      */
     public function testGetArg(): void
     {
@@ -65,15 +64,14 @@ class EventTest extends TestCase
     }
 
     /**
-     * Test for `getArgs()` method
      * @test
+     * @uses \Tools\Event\Event::getArgs()
      */
     public function testGetArgs(): void
     {
         $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
-        //With `ArrayAccess` as event argument
-        $Mock = $this->getMockForAbstractClass(Entity::class);
+        $Mock = $this->createStub(\stdClass::class);
         $Event = new Event('myEvent', $Mock);
         $this->assertIsArray($Event->getArgs());
         $this->assertNotEmpty($Event->getArgs());

@@ -22,6 +22,7 @@ use ArrayAccess;
  * An Entity class.
  *
  * It exposes the methods for retrieving and storing properties associated.
+ * @deprecated 1.7.5 The `Entity` class is deprecated and will be removed in a later release
  * @template EntityPropertyName as string
  * @template EntityPropertyValue as mixed
  * @template EntityProperties as array<EntityPropertyName, EntityPropertyValue>
@@ -40,6 +41,8 @@ abstract class Entity implements ArrayAccess
      */
     public function __construct(array $properties = [])
     {
+        deprecationWarning('The `Entity` class is deprecated and will be removed in a later release');
+
         $this->properties = $properties;
     }
 
