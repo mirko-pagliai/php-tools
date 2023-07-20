@@ -50,6 +50,9 @@ class FilesystemTest extends TestCase
         $this->assertSame('dir' . DS . 'sub-dir', Filesystem::instance()->concatenate('dir' . DS, 'sub-dir'));
         $this->assertSame('dir' . DS . 'sub-dir' . DS . 'sub-sub-dir', Filesystem::instance()->concatenate('dir', 'sub-dir', 'sub-sub-dir'));
         $this->assertSame('dir' . DS . 'sub-dir' . DS . 'sub-sub-dir', Filesystem::concatenate('dir', 'sub-dir', 'sub-sub-dir'));
+
+        //As static
+        $this->assertSame('dir' . DS . 'sub-dir', (Filesystem::concatenate('dir', 'sub-dir')));
     }
 
     /**

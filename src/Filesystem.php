@@ -56,7 +56,7 @@ class Filesystem extends BaseFilesystem
         $end = array_pop($paths);
 
         /** @var callable $addSlashTerm */
-        $addSlashTerm = ['self', 'addSlashTerm'];
+        $addSlashTerm = [self::class, 'addSlashTerm'];
 
         return implode('', array_map($addSlashTerm, $paths)) . $end;
     }

@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.7 branch
 ### 1.7.5
-* `which()` global function is now deprecated. Use instead `Symfony\Component\Process\ExecutableFinder::find()` method.
+* `which()` global function is now deprecated. Use instead `Symfony\Component\Process\ExecutableFinder::find()` method;
+* fixed `notice: Use of "self" in callables is deprecated` for `Filesystem` class.
 
 ### 1.7.4
 * all methods provided by the `Filesystem` class (except for `makePathRelative()`) can now be called statically;
