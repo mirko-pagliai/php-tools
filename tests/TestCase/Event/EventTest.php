@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace Tools\Test\Event;
 
-use Tools\Entity;
 use Tools\Event\Event;
 use Tools\Exception\KeyNotExistsException;
 use Tools\TestSuite\TestCase;

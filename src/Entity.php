@@ -128,7 +128,6 @@ abstract class Entity implements ArrayAccess
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
-
     {
         return $this->properties[$offset];
     }
