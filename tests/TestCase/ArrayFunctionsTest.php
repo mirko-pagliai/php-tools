@@ -23,9 +23,8 @@ use Tools\TestSuite\TestCase;
 class ArrayFunctionsTest extends TestCase
 {
     /**
-     * Test for `array_clean()` global function
-     * @uses \array_clean()
      * @test
+     * @uses \array_clean()
      */
     public function testArrayClean(): void
     {
@@ -48,8 +47,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_has_only_numeric_keys()` global function
      * @test
+     * @uses \array_has_only_numeric_keys()
      */
     public function testArrayHasOnlyNumericKeys(): void
     {
@@ -60,8 +59,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_unique_recursive()` global function
      * @test
+     * @uses \array_unique_recursive()
      */
     public function testArrayUniqueRecursive(): void
     {
@@ -75,8 +74,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_value_first()` global function
      * @test
+     * @uses \array_value_first()
      */
     public function testArrayValueFirst(): void
     {
@@ -87,8 +86,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_value_first_recursive()` global function
      * @test
+     * @uses \array_value_first_recursive()
      */
     public function testArrayValueFirstRecursive(): void
     {
@@ -104,8 +103,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_value_last()` global function
      * @test
+     * @uses \array_value_last()
      */
     public function testArrayValueLast(): void
     {
@@ -116,8 +115,8 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `array_value_last_recursive()` global function
      * @test
+     * @uses \array_value_last_recursive()
      */
     public function testArrayValueLastRecursive(): void
     {
@@ -130,5 +129,24 @@ class ArrayFunctionsTest extends TestCase
         ] as $array) {
             $this->assertEquals('fourth', array_value_last_recursive($array));
         }
+    }
+
+    /**
+     * @test
+     * @uses \is_array_key_last()
+     */
+    public function testIsArrayKeyLast(): void
+    {
+        $array = ['first', 'second', 'third'];
+        $this->assertFalse(is_array_key_last(0, $array));
+        $this->assertFalse(is_array_key_last(1, $array));
+        $this->assertTrue(is_array_key_last(2, $array));
+        $this->assertFalse(is_array_key_last(3, $array));
+
+        $array = ['a' => 'first', 'b' => 'second', 'c' => 'third'];
+        $this->assertFalse(is_array_key_last('a', $array));
+        $this->assertFalse(is_array_key_last('b', $array));
+        $this->assertTrue(is_array_key_last('c', $array));
+        $this->assertFalse(is_array_key_last('d', $array));
     }
 }

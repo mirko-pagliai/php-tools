@@ -25,9 +25,34 @@ use Tools\TestSuite\TestCase;
 class EntityTest extends TestCase
 {
     /**
+     * @var int
+     */
+    protected static int $currentErrorLevel;
+
+    /**
      * @var \Tools\Entity
      */
-    protected $Entity;
+    protected Entity $Entity;
+
+    /**
+     * @inheritDoc
+     */
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::$currentErrorLevel = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        error_reporting(self::$currentErrorLevel);
+    }
 
     /**
      * Called before every test method
