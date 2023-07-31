@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.7 branch
 ### 1.7.5
+* added `is_array_key_last()` global function;
 * The `Entity` class is deprecated and will be removed in a later release;
 * `which()` global function is now deprecated. Use instead `Symfony\Component\Process\ExecutableFinder::find()` method;
 * fixed `notice: Use of "self" in callables is deprecated` for `Filesystem` class.

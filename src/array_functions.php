@@ -131,3 +131,17 @@ if (!function_exists('array_value_last_recursive')) {
         return is_array($value) ? array_value_last_recursive($value) : $value;
     }
 }
+
+if (!function_exists('is_array_key_last')) {
+    /**
+     * Returns `true` if `$key` is the last key of the array, otherwise return `false`
+     * @param int|string $key Key you want to check
+     * @param array $array Array
+     * @return bool
+     * @since 1.7.5
+     */
+    function is_array_key_last($key, array $array): bool
+    {
+        return $key === array_key_last($array);
+    }
+}
