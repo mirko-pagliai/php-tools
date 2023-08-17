@@ -132,7 +132,6 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
-
 if (!function_exists('is_array_key_last')) {
     /**
      * Returns `true` if `$key` is the first key of the array
