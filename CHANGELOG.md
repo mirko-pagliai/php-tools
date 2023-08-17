@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.7 branch
+### 1.7.6
+* added `is_array_key_first()` global function.
+
 ### 1.7.5
 * added `is_array_key_last()` global function;
 * The `Entity` class is deprecated and will be removed in a later release;
