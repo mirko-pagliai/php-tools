@@ -132,9 +132,24 @@ if (!function_exists('array_value_last_recursive')) {
     }
 }
 
+
 if (!function_exists('is_array_key_last')) {
     /**
-     * Returns `true` if `$key` is the last key of the array, otherwise return `false`
+     * Returns `true` if `$key` is the first key of the array
+     * @param int|string $key Key you want to check
+     * @param array $array Array
+     * @return bool
+     * @since 1.7.6
+     */
+    function is_array_key_first($key, array $array): bool
+    {
+        return $key === array_key_first($array);
+    }
+}
+
+if (!function_exists('is_array_key_last')) {
+    /**
+     * Returns `true` if `$key` is the last key of the array
      * @param int|string $key Key you want to check
      * @param array $array Array
      * @return bool
