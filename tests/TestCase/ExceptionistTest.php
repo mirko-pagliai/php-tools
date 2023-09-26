@@ -20,7 +20,6 @@ use App\ExampleClass;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
-use PHPUnit\Framework\Error\Warning;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
@@ -88,8 +87,7 @@ class ExceptionistTest extends TestCase
      */
     public function testCallStaticMagicMethodWithNoExistingFunction(): void
     {
-        $this->expectNotice();
-        $this->expectNoticeMessage('Error calling `is_invalid_method()`: Function is_invalid_method() does not exist');
+        $this->expectExceptionMessage('Error calling `is_invalid_method()`: Function is_invalid_method() does not exist');
         Exceptionist::isInvalidMethod(1);
     }
 
@@ -103,7 +101,7 @@ class ExceptionistTest extends TestCase
     {
         try {
             Exceptionist::arrayCombine('a');
-        } catch (Notice | Warning $e) {
+        } catch (Exception $e) {
             $this->assertStringStartsWith('Error calling `array_combine()`: array_combine() expects exactly 2', $e->getMessage());
         } finally {
             if (!isset($e)) {

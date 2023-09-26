@@ -16,11 +16,12 @@ declare(strict_types=1);
 
 namespace Tools\TestSuite;
 
+use Closure;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\Filesystem;
 
 /**
- * TestCase class.
+ * TestCase class
  */
 abstract class TestCase extends PHPUnitTestCase
 {
@@ -34,7 +35,6 @@ abstract class TestCase extends PHPUnitTestCase
      * @return void
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
-     * @throws \Tools\Exception\MethodNotExistsException
      */
     protected function tearDown(): void
     {
@@ -43,5 +43,35 @@ abstract class TestCase extends PHPUnitTestCase
         if (rtrim(TMP, DS) !== rtrim(sys_get_temp_dir(), DS)) {
             Filesystem::instance()->unlinkRecursive(TMP);
         }
+    }
+
+    /**
+     * Helper method for check deprecation methods
+     * @param \Closure $callable callable function that will receive asserts
+     * @return void
+     * @since 1.8.0
+     * @codeCoverageIgnore
+     */
+    public function deprecated(Closure $callable): void
+    {
+        $previousHandler = set_error_handler(
+            function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
+                if ($code == E_USER_DEPRECATED) {
+                    $deprecation = true;
+
+                    return true;
+                }
+                if ($previousHandler) {
+                    return $previousHandler($code, $message, $file, $line, $context);
+                }
+
+                return false;
+            }
+        );
+        try {
+            $callable();
+        } finally {
+        }
+        $this->assertTrue($deprecation, 'Should have at least one deprecation warning');
     }
 }

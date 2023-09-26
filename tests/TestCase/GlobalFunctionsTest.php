@@ -94,8 +94,9 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(is_json('this is a no json string'));
         error_reporting($current);
 
-        $this->expectDeprecation();
-        is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
+        $this->deprecated(function () {
+            is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
+        });
     }
 
     /**
@@ -161,8 +162,9 @@ class GlobalFunctionsTest extends TestCase
     {
         $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
 
-        $this->expectDeprecation();
-        objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
+        $this->deprecated(function () use ($arrayOfObjects) {
+            objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
+        });
 
         $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
 

@@ -1,4 +1,11 @@
 # 1.x branch
+## 1.8 branch
+### 1.8.0
+* `Exceptionist::__callStatic()` method throw a `BadMethodCallException` exception on errors;
+* added `TestCase::deprecated()` method, a helper method for check deprecation methods;
+* `TestTrait::assertDeprecated()` method was removed, not deeming it useful to deprecate a method that dealt with deprecations;
+* some small changes to prepare for PHPUnit 10.
+
 ## 1.7 branch
 ### 1.7.6
 * added `is_array_key_first()` global function.

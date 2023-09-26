@@ -49,14 +49,14 @@ class TestTraitTest extends TestCase
     protected TestCase $TestCase;
 
     /**
-     * This method is called before each test
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->TestCase = $this->getMockForAbstractClass(TestCase::class);
+        $this->TestCase = new class ('test') extends TestCase {
+        };
     }
 
     /**
@@ -121,54 +121,6 @@ class TestTraitTest extends TestCase
 
     /**
      * @test
-     * @uses \Tools\TestSuite\TestTrait::assertDeprecated()
-     */
-    public function testAssertDeprecated(): void
-    {
-        $this->TestCase->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'));
-        $this->TestCase->assertDeprecated(fn() => deprecationWarning('This is a deprecation!'), 'This is a deprecation!');
-
-        //Different exception throw
-        try {
-            $this->TestCase->assertDeprecated(function () {
-                throw new BadMethodCallException();
-            });
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `' . Deprecated::class . '`, unexpected type `' . BadMethodCallException::class . '`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //No exception throw
-        try {
-            $this->TestCase->assertDeprecated('time');
-        } catch (AssertionFailedError $e) {
-            $this->assertSame('Expected exception `' . Deprecated::class . '`, but no exception throw', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //Wrong exception message
-        try {
-            $this->TestCase->assertDeprecated(fn() => deprecationWarning('Wrong'), 'Right');
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-    }
-
-    /**
-     * @test
      * @uses \Tools\TestSuite\TestTrait::assertException()
      */
     public function testAssertException(): void
@@ -185,20 +137,6 @@ class TestTraitTest extends TestCase
             deprecationWarning('This is a deprecation!');
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
-
-        //Can't assert deprecations
-        try {
-            $this->TestCase->assertException(function () {
-                deprecationWarning('This is a deprecation');
-            }, Deprecated::class);
-        } catch (Notice $e) {
-            $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
 
         //No exception throw
         try {
@@ -277,6 +215,30 @@ class TestTraitTest extends TestCase
             }, Exception::class, 'Right');
         } catch (AssertionFailedError $e) {
             $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
+        } finally {
+            if (!isset($e)) {
+                self::fail();
+            }
+            unset($e);
+        }
+    }
+
+    /**
+     * Test for `assertException` with a deprecation (it can't assert deprecations)
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::assertException()
+     */
+    public function testAssertExceptionWithDeprecation(): void
+    {
+        $this->skipIf(!class_exists(Deprecated::class));
+
+        //Can't assert deprecations
+        try {
+            $this->TestCase->assertException(function () {
+                deprecationWarning('This is a deprecation');
+            }, Deprecated::class);
+        } catch (Notice $e) {
+            $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
         } finally {
             if (!isset($e)) {
                 self::fail();

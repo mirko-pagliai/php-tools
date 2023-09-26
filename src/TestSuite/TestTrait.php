@@ -114,29 +114,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a callable throws a `Deprecated`
-     * @param callable $function A callable you want to test and that should throw a `Deprecated` exception
-     * @param string $expectedMessage The expected message
-     * @return void
-     * @since 1.6.5
-     */
-    public static function assertDeprecated(callable $function, string $expectedMessage = ''): void
-    {
-        try {
-            call_user_func($function);
-        } catch (Throwable $e) {
-            self::assertInstanceOf(Deprecated::class, $e, sprintf('Expected exception `%s`, unexpected type `%s`', Deprecated::class, get_class($e)));
-            if ($expectedMessage) {
-                self::assertStringStartsWith($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
-            }
-        }
-
-        if (!isset($e)) {
-            self::fail('Expected exception `' . Deprecated::class . '`, but no exception throw');
-        }
-    }
-
-    /**
      * Asserts that a callable throws an exception
      * @param callable $function A callable you want to test and that should raise the expected exception
      * @param string $expectedException Expected exception
@@ -149,7 +126,7 @@ trait TestTrait
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
-        if ($expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
+        if (class_exists(Deprecated::class) && $expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
             [, $method] = explode('::', __METHOD__);
             trigger_error('You cannot use `' . $method . '()` for deprecations, use instead `assertDeprecated()`');
         }
