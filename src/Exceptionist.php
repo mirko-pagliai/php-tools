@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use ArgumentCountError;
+use BadMethodCallException;
 use ErrorException;
 use PHPUnit\Framework\Error\Warning;
 use ReflectionException;
@@ -101,6 +102,7 @@ class Exceptionist
      * @param string $name Method name
      * @param array{0: RealArguments, 1?: string, 2?: class-string<\ErrorException>} $arguments Method arguments
      * @return RealArguments
+     * @throws \BadMethodCallException
      * @throws \ErrorException
      */
     public static function __callStatic(string $name, array $arguments)
@@ -127,7 +129,7 @@ class Exceptionist
             /** @var callable $phpName */
             $result = call_user_func_array($phpName, $rFunction->getNumberOfParameters() > 1 && is_array($arguments) ? $arguments : [$arguments]);
         } catch (ArgumentCountError | ReflectionException | TypeError | Warning $e) {
-            trigger_error('Error calling `' . $phpName . '()`: ' . $e->getMessage());
+            throw new BadMethodCallException('Error calling `' . $phpName . '()`: ' . $e->getMessage());
         }
 
         $message = $message ?: sprintf('`%s::%s()` returned `false`', __CLASS__, $name);
