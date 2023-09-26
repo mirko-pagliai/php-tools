@@ -34,6 +34,6 @@ class DeprecationFunctionsTest extends TestCase
 
         $this->deprecated(function () {
             deprecationWarning('This method is deprecated');
-        }, 'This method is deprecated');
+        });
     }
 }
