@@ -50,6 +50,7 @@ abstract class TestCase extends PHPUnitTestCase
      * @param \Closure $callable callable function that will receive asserts
      * @return void
      * @since 1.8.0
+     * @codeCoverageIgnore
      */
     public function deprecated(Closure $callable): void
     {
