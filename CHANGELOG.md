@@ -1,4 +1,8 @@
 # 1.x branch
+## 1.8 branch
+### 1.8.0
+* added `TestCase::deprecated()` method, an helper method for check deprecation methods.
+
 ## 1.7 branch
 ### 1.7.6
 * added `is_array_key_first()` global function.
