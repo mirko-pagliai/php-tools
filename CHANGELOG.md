@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.8 branch
 ### 1.8.0
-* added `TestCase::deprecated()` method, an helper method for check deprecation methods.
+* added `TestCase::deprecated()` method, a helper method for check deprecation methods;
+* `TestTrait::assertDeprecated()` method was removed, not deeming it useful to deprecate a method that dealt with deprecations.
 
 ## 1.7 branch
 ### 1.7.6

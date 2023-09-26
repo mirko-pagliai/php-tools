@@ -114,29 +114,6 @@ trait TestTrait
     }
 
     /**
-     * Asserts that a callable throws a `Deprecated`
-     * @param callable $function A callable you want to test and that should throw a `Deprecated` exception
-     * @param string $expectedMessage The expected message
-     * @return void
-     * @since 1.6.5
-     */
-    public static function assertDeprecated(callable $function, string $expectedMessage = ''): void
-    {
-        try {
-            call_user_func($function);
-        } catch (Throwable $e) {
-            self::assertInstanceOf(Deprecated::class, $e, sprintf('Expected exception `%s`, unexpected type `%s`', Deprecated::class, get_class($e)));
-            if ($expectedMessage) {
-                self::assertStringStartsWith($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
-            }
-        }
-
-        if (!isset($e)) {
-            self::fail('Expected exception `' . Deprecated::class . '`, but no exception throw');
-        }
-    }
-
-    /**
      * Asserts that a callable throws an exception
      * @param callable $function A callable you want to test and that should raise the expected exception
      * @param string $expectedException Expected exception
