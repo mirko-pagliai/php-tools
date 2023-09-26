@@ -49,14 +49,13 @@ class TestTraitTest extends TestCase
     protected TestCase $TestCase;
 
     /**
-     * This method is called before each test
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->TestCase = new class('test') extends TestCase {
+        $this->TestCase = new class ('test') extends TestCase {
         };
     }
 
