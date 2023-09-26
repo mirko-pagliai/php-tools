@@ -56,7 +56,8 @@ class TestTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = $this->getMockForAbstractClass(TestCase::class);
+        $this->TestCase = new class('test') extends TestCase {
+        };
     }
 
     /**

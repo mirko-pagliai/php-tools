@@ -126,7 +126,7 @@ trait TestTrait
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
-        if ($expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
+        if (class_exists(Deprecated::class) && $expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
             [, $method] = explode('::', __METHOD__);
             trigger_error('You cannot use `' . $method . '()` for deprecations, use instead `assertDeprecated()`');
         }
