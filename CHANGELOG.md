@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.9 branch
+### 1.9.0
+* requires at least PHP 8.1. Updated `cakephp-codesniffer`, `phpstan` and `psalm` packages;
+* added tests for PHP 8.2 and 8.3.
+
 ## 1.8 branch
 ### 1.8.0
 * `Exceptionist::__callStatic()` method throw a `BadMethodCallException` exception on errors;
