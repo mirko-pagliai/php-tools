@@ -27,7 +27,7 @@ class EventList implements ArrayAccess
 {
     /**
      * Events list
-     * @var \Tools\Event\Event[]
+     * @var object[]
      */
     protected array $_events = [];
 
@@ -42,10 +42,10 @@ class EventList implements ArrayAccess
 
     /**
      * Adds an event to the list when event listing is enabled
-     * @param \Tools\Event\Event $event An event to the list of dispatched events.
+     * @param object $event An event to the list of dispatched events.
      * @return void
      */
-    public function add(Event $event): void
+    public function add(object $event): void
     {
         $this->_events[] = $event;
     }
@@ -65,9 +65,9 @@ class EventList implements ArrayAccess
      * Offset to retrieve
      * @link https://secure.php.net/manual/en/arrayaccess.offsetget.php
      * @param mixed $offset The offset to retrieve
-     * @return \Tools\Event\Event|null
+     * @return object|null
      */
-    public function offsetGet(mixed $offset): ?Event
+    public function offsetGet(mixed $offset): ?object
     {
         return $this->offsetExists($offset) ? $this->_events[$offset] : null;
     }
@@ -107,12 +107,15 @@ class EventList implements ArrayAccess
     /**
      * Extracts events by name
      * @param string $name Event name
-     * @return \Tools\Event\Event[]
+     * @return object[]
      * @since 1.5.12
      */
     public function extract(string $name): array
     {
-        return array_values(array_filter($this->_events, fn($event) => $event->getName() === $name));
+        return array_values(array_filter($this->_events, function (object $event) use ($name): bool {
+            /** @var \Tools\Event\Event $event */
+            return $event->getName() === $name;
+        }));
     }
 
     /**
@@ -127,7 +130,7 @@ class EventList implements ArrayAccess
 
     /**
      * Returns the `EventList` as array
-     * @return \Tools\Event\Event[]
+     * @return object[]
      * @since 1.4.1
      */
     public function toArray(): array

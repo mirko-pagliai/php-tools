@@ -42,10 +42,9 @@ class EventDispatcher extends BaseEventDispatcher
 
     /**
      * Dispatches an event
-     * @param \Tools\Event\Event $event An `Event` instance
+     * @param object $event An `Event` instance
      * @param string|null $eventName Name of the event
      * @return object The `Event` that was dispatched
-     * @noinspection PhpDocSignatureInspection
      */
     public function dispatch(object $event, ?string $eventName = null): object
     {
