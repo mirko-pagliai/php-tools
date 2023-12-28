@@ -27,21 +27,22 @@ class EventDispatcherTraitTest extends TestCase
     use EventDispatcherTrait;
 
     /**
-     * Test for `getEventDispatcher()` and `setEventDispatcher()` methods
      * @test
+     * @uses \Tools\Event\EventDispatcherTrait::getEventDispatcher()
+     * @uses \Tools\Event\EventDispatcherTrait::setEventDispatcher()
      */
     public function testGetAndSetEventDispatcher(): void
     {
         $this->assertInstanceOf(EventDispatcher::class, $this->getEventDispatcher());
         $newDispatcher = new EventDispatcher();
         $result = $this->setEventDispatcher($newDispatcher);
-        $this->assertInstanceOf(__CLASS__, $result);
+        $this->assertInstanceOf(EventDispatcherTraitTest::class, $result);
         $this->assertSame($newDispatcher, $this->getEventDispatcher());
     }
 
     /**
-     * Test for `dispatchEvent()` method
      * @test
+     * @uses \Tools\Event\EventDispatcherTrait::dispatchEvent()
      */
     public function testDispatchEvent(): void
     {
