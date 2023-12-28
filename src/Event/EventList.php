@@ -21,6 +21,7 @@ use ArrayAccess;
  * EventList.
  *
  * It allows you to manage the events already dispatched.
+ * @template-implements \ArrayAccess<int, mixed>
  */
 class EventList implements ArrayAccess
 {

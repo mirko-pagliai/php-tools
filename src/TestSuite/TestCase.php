@@ -54,6 +54,7 @@ abstract class TestCase extends PHPUnitTestCase
      */
     public function deprecated(Closure $callable): void
     {
+        $deprecation = false;
         $previousHandler = set_error_handler(
             function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
                 if ($code == E_USER_DEPRECATED) {

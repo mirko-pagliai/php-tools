@@ -21,13 +21,12 @@ use ReflectionProperty;
 
 /**
  * A `Reflection` trait.
- * @template ReflectedObject as object
  */
 trait ReflectionTrait
 {
     /**
      * Internal method to get the `ReflectionMethod` instance
-     * @param ReflectedObject $object Instantiated object that we will run method on
+     * @param object $object Instantiated object that we will run method on
      * @param string $name Method name
      * @return \ReflectionMethod
      * @throws \ReflectionException
@@ -42,7 +41,7 @@ trait ReflectionTrait
 
     /**
      * Internal method to get the `ReflectionProperty` instance
-     * @param ReflectedObject $object Instantiated object that has the property
+     * @param object $object Instantiated object that has the property
      * @param string $name Property name
      * @return \ReflectionProperty
      * @throws \ReflectionException
@@ -59,13 +58,11 @@ trait ReflectionTrait
      * Gets all properties as array with property names as keys.
      *
      * If the object is a mock, it removes the properties added by PHPUnit.
-     * @param ReflectedObject|class-string<ReflectedObject> $object Instantiated object from which to get properties or
-     *  its class name
+     * @param object|string $object Instantiated object from which to get properties or its class name
      * @param int $filter The optional filter, for filtering desired property types. It's configured using
-     *  ReflectionProperty` constants, and default is public, protected and private properties
+     *  `ReflectionProperty` constants, and default is public, protected and private properties
      * @return array<string, string> Property names as keys and property values as values
      * @throws \ReflectionException
-     * @throws \Tools\Exception\MethodNotExistsException
      * @since 1.1.4
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      */
@@ -86,7 +83,7 @@ trait ReflectionTrait
 
     /**
      * Gets a property value
-     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object that has the property or class name
+     * @param object|string $object Instantiated object that has the property or class name
      * @param string $name Property name
      * @return mixed Property value
      * @throws \ReflectionException
@@ -100,8 +97,7 @@ trait ReflectionTrait
 
     /**
      * Invokes a method
-     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object that we will run method on or
-     *  its class name
+     * @param object|string $object Instantiated object that we will run method on or its class name
      * @param string $methodName Method name
      * @param array $parameters Array of parameters to pass into method
      * @return mixed Method return
@@ -116,7 +112,7 @@ trait ReflectionTrait
 
     /**
      * Sets a property value
-     * @param ReflectedObject $object Instantiated object that has the property
+     * @param object $object Instantiated object that has the property
      * @param string $name Property name
      * @param mixed $value Value you want to set
      * @return mixed Old property value
