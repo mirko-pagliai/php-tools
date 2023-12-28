@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Tools\Event;
 
 use ArrayAccess;
-use Tools\Event\Event;
 
 /**
  * EventList.

@@ -43,7 +43,6 @@ class Event extends BaseEvent
      */
     public function __construct(string $name, mixed $args = null)
     {
-
         $this->name = $name;
 
         $this->args = (array)$args;
