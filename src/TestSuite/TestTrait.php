@@ -253,7 +253,7 @@ trait TestTrait
      * Returns a partial mock object for the specified abstract class.
      *
      * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
-     * @param string $originalClassName Abstract class you want to mock
+     * @param class-string $originalClassName Abstract class you want to mock
      * @param string[] $mockedMethods Methods you want to mock
      * @param array $arguments Constructor arguments
      * @return \PHPUnit\Framework\MockObject\MockObject

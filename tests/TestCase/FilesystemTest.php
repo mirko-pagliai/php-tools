@@ -74,7 +74,7 @@ class FilesystemTest extends TestCase
         $this->skipIf(IS_WIN);
 
         //Using a no existing directory, but ignoring errors
-        $this->assertEmpty(Filesystem::instance()->createFile(DS . 'noExistingDir' . DS . 'file', null, 0777, true));
+        $this->assertEmpty(Filesystem::instance()->createFile(DS . 'noExistingDir' . DS . 'file', '', 0777, true));
 
         //Using a no existing directory
         $this->expectException(IOException::class);

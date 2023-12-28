@@ -67,13 +67,13 @@ class Filesystem extends BaseFilesystem
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
-     * @param string|string[]|resource|resource[]|null $data The data to write. Can be either a string, a resource or an array
+     * @param string|resource $data The data to write. Can be either a string or a resource
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return string
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public static function createFile(string $filename, mixed $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
+    public static function createFile(mixed $filename, mixed $data = '', int $dirMode = 0777, bool $ignoreErrors = false): string
     {
         try {
             self::instance()->mkdir(dirname($filename), $dirMode);
@@ -94,13 +94,13 @@ class Filesystem extends BaseFilesystem
      *
      * You can pass a directory where to create the file. If `null`, the file will be created in `TMP`, if the constant
      * is defined, otherwise in the temporary directory of the system.
-     * @param string|string[]|resource|resource[]|null $data The data to write. Can be either a string, a resource or an array
+     * @param string|resource $data The data to write. Can be either a string or a resource
      * @param string|null $dir The directory where the temporary filename will be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
      * @throws \LogicException
      */
-    public static function createTmpFile(mixed $data = null, ?string $dir = null, string $prefix = 'tmp'): string
+    public static function createTmpFile(mixed $data = '', ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         if (!$filename) {
