@@ -27,7 +27,7 @@ class ObjectWrongInstanceException extends ErrorException
     /**
      * @inheritDoc
      */
-    public function __construct($message = "", $code = 0, $severity = 1, $filename = null, $line = null, Throwable $previous = null)
+    public function __construct($message = '', $code = 0, $severity = 1, $filename = null, $line = null, ?Throwable $previous = null)
     {
         deprecationWarning('`' . __CLASS__ . '` is deprecated and will be removed in a later release');
 
