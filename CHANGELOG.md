@@ -12,6 +12,7 @@
 ## 1.8 branch
 ### 1.8.1
 * the `Exceptionist` class is deprecated and will be removed in a later release;
+* all exception classes provided by this package are deprecated and will be removed in a later release;
 * fixed configuration of phpcs.
 
 ### 1.8.0
