@@ -65,7 +65,6 @@ trait ReflectionTrait
      *  ReflectionProperty` constants, and default is public, protected and private properties
      * @return array<string, string> Property names as keys and property values as values
      * @throws \ReflectionException
-     * @throws \Tools\Exception\MethodNotExistsException
      * @since 1.1.4
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      */
