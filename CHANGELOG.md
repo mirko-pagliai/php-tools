@@ -1,12 +1,13 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.0
-* requires at least PHP 8.1. Updated `cakephp-codesniffer`, `phpstan` and `psalm` packages;
+* requires at least PHP 8.1;
 * `Entity` and `Exceptionist` classes had been deprecated and were removed;
 * `is_json()`, `objects_map()` and `which()` global functions had been deprecated and were removed;
 * updated `Event` and `EventList` classes;
 * several (error suppression) rules have been removed from the `sniffer-ruleset.xml` file;
-* added tests for PHP 8.2 and 8.3.
+* added tests for PHP 8.2 and 8.3;
+* updated `cakephp-codesniffer`, `phpstan` and `psalm` packages;
 
 ## 1.8 branch
 ### 1.8.1
