@@ -6,6 +6,9 @@
 * added tests for PHP 8.2 and 8.3.
 
 ## 1.8 branch
+### 1.8.1
+* fixed configuration of phpcs.
+
 ### 1.8.0
 * `Exceptionist::__callStatic()` method throw a `BadMethodCallException` exception on errors;
 * added `TestCase::deprecated()` method, a helper method for check deprecation methods;
