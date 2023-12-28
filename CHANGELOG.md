@@ -4,7 +4,7 @@
 * requires at least PHP 8.1;
 * `Entity` and `Exceptionist` classes had been deprecated and were removed;
 * `is_json()`, `objects_map()` and `which()` global functions had been deprecated and were removed;
-* updated `Event` and `EventList` classes;
+* all exception classes provided by this package had been deprecated and were removed;
 * several (error suppression) rules have been removed from the `sniffer-ruleset.xml` file;
 * added tests for PHP 8.2 and 8.3;
 * updated `cakephp-codesniffer`, `phpstan` and `psalm` packages. Updated symfony's components.
