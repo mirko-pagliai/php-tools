@@ -6,9 +6,89 @@ parameters:
 			path: src/global_functions.php
 
 		-
+			message: "#^Access to an undefined property Tools\\\\Entity\\:\\:\\$code\\.$#"
+			count: 1
+			path: tests/TestCase/EntityTest.php
+
+		-
+			message: "#^Access to an undefined property Tools\\\\Entity\\:\\:\\$noExisting\\.$#"
+			count: 1
+			path: tests/TestCase/EntityTest.php
+
+		-
+			message: "#^Call to an undefined static method Tools\\\\Exceptionist\\:\\:arrayCombine\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/ExceptionistTest.php
+
+		-
+			message: "#^Call to an undefined static method Tools\\\\Exceptionist\\:\\:isInvalidMethod\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/ExceptionistTest.php
+
+		-
 			message: "#^Parameter \\#3 \\$exception of static method Tools\\\\Exceptionist\\:\\:isTrue\\(\\) expects class\\-string\\<ErrorException\\>, string given\\.$#"
 			count: 1
 			path: tests/TestCase/ExceptionistTest.php
+
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$firstProperty\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/ReflectionTraitTest.php
+
+		-
+			message: "#^Access to protected property App\\\\ExampleClass\\:\\:\\$secondProperty\\.$#"
+			count: 2
+			path: tests/TestCase/TestSuite/ReflectionTraitTest.php
+
+		-
+			message: "#^Call to an undefined method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:expectException\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:expectExceptionMessage\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertContains\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertEquals\\(\\)\\.$#"
+			count: 5
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertFileExists\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertInstanceOf\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertNotEmpty\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:assertTrue\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:fail\\(\\)\\.$#"
+			count: 2
+			path: tests/TestCase/TestSuite/TestTraitTest.php
+
+		-
+			message: "#^Call to an undefined static method class@anonymous/tests/TestCase/TestSuite/TestTraitTest\\.php\\:390\\:\\:markTestSkipped\\(\\)\\.$#"
+			count: 1
+			path: tests/TestCase/TestSuite/TestTraitTest.php
 
 		-
 			message: "#^Call to function is_resource\\(\\) with false will always evaluate to false\\.$#"
