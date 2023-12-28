@@ -59,7 +59,7 @@ trait ReflectionTrait
      * Gets all properties as array with property names as keys.
      *
      * If the object is a mock, it removes the properties added by PHPUnit.
-     * @param class-string<ReflectedObject>|ReflectedObject $object Instantiated object from which to get properties or
+     * @param ReflectedObject|class-string<ReflectedObject> $object Instantiated object from which to get properties or
      *  its class name
      * @param int $filter The optional filter, for filtering desired property types. It's configured using
      *  ReflectionProperty` constants, and default is public, protected and private properties
@@ -69,7 +69,7 @@ trait ReflectionTrait
      * @since 1.1.4
      * @link http://php.net/manual/en/class.reflectionproperty.php#reflectionproperty.constants.modifiers
      */
-    protected function getProperties($object, int $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE): array
+    protected function getProperties(object|string $object, int $filter = ReflectionProperty::IS_PUBLIC | ReflectionProperty::IS_PROTECTED | ReflectionProperty::IS_PRIVATE): array
     {
         $object = is_object($object) ? $object : new $object();
         $properties = (new ReflectionClass($object))->getProperties($filter);
@@ -91,7 +91,7 @@ trait ReflectionTrait
      * @return mixed Property value
      * @throws \ReflectionException
      */
-    protected function getProperty($object, string $name)
+    protected function getProperty(object|string $object, string $name): mixed
     {
         $object = is_object($object) ? $object : new $object();
 
@@ -107,7 +107,7 @@ trait ReflectionTrait
      * @return mixed Method return
      * @throws \ReflectionException
      */
-    protected function invokeMethod($object, string $methodName, array $parameters = [])
+    protected function invokeMethod(object|string $object, string $methodName, array $parameters = []): mixed
     {
         $object = is_object($object) ? $object : new $object();
 
@@ -122,7 +122,7 @@ trait ReflectionTrait
      * @return mixed Old property value
      * @throws \ReflectionException
      */
-    protected function setProperty(object $object, string $name, $value)
+    protected function setProperty(object $object, string $name, mixed $value): mixed
     {
         $property = $this->_getPropertyInstance($object, $name);
         $oldValue = $property->getValue($object);

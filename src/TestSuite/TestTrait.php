@@ -28,19 +28,19 @@ use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
- * @method static void assertIsArray($var, ?string $message = '') Asserts that `$var` is an array
- * @method static void assertIsBool($var, ?string $message = '') Asserts that `$var` is a boolean
- * @method static void assertIsCallable($var, ?string $message = '') Asserts that `$var` is a callable
- * @method static void assertIsFloat($var, ?string $message = '') Asserts that `$var` is a float
- * @method static void assertIsHtml($var, ?string $message = '') Asserts that `$var` is a html string
- * @method static void assertIsInt($var, ?string $message = '') Asserts that `$var` is an int
- * @method static void assertIsIterable($var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
- * @method static void assertIsJson($var, ?string $message = '') Asserts that `$var` is a json string
- * @method static void assertIsObject($var, ?string $message = '') Asserts that `$var` is an object
- * @method static void assertIsPositive($var, ?string $message = '') Asserts that `$var` is a positive number
- * @method static void assertIsResource($var, ?string $message = '') Asserts that `$var` is a resource
- * @method static void assertIsString($var, ?string $message = '') Asserts that `$var` is a string
- * @method static void assertIsUrl($var, ?string $message = '') Asserts that `$var` is an url
+ * @method static void assertIsArray(mixed $var, ?string $message = '') Asserts that `$var` is an array
+ * @method static void assertIsBool(mixed $var, ?string $message = '') Asserts that `$var` is a boolean
+ * @method static void assertIsCallable(mixed $var, ?string $message = '') Asserts that `$var` is a callable
+ * @method static void assertIsFloat(mixed $var, ?string $message = '') Asserts that `$var` is a float
+ * @method static void assertIsHtml(mixed $var, ?string $message = '') Asserts that `$var` is a html string
+ * @method static void assertIsInt(mixed $var, ?string $message = '') Asserts that `$var` is an int
+ * @method static void assertIsIterable(mixed $var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
+ * @method static void assertIsJson(mixed $var, ?string $message = '') Asserts that `$var` is a json string
+ * @method static void assertIsObject(mixed $var, ?string $message = '') Asserts that `$var` is an object
+ * @method static void assertIsPositive(mixed $var, ?string $message = '') Asserts that `$var` is a positive number
+ * @method static void assertIsResource(mixed $var, ?string $message = '') Asserts that `$var` is a resource
+ * @method static void assertIsString(mixed $var, ?string $message = '') Asserts that `$var` is a string
+ * @method static void assertIsUrl(mixed $var, ?string $message = '') Asserts that `$var` is an url
  */
 trait TestTrait
 {
@@ -161,7 +161,7 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
+    public static function assertFileExtension(string|array $expectedExtension, string $filename, string $message = ''): void
     {
         self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
@@ -175,7 +175,7 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertFileMime($expectedMime, string $filename, string $message = ''): void
+    public static function assertFileMime(string|array $expectedMime, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
@@ -204,7 +204,7 @@ trait TestTrait
      * @return void
      * @since 1.0.6
      */
-    public static function assertIsArrayNotEmpty($var, string $message = ''): void
+    public static function assertIsArrayNotEmpty(mixed $var, string $message = ''): void
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
@@ -229,19 +229,19 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertObjectPropertiesEqual(array $expectedProperties, $object, string $message = ''): void
+    public function assertObjectPropertiesEqual(array $expectedProperties, object|array $object, string $message = ''): void
     {
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
     /**
      * Asserts that `$firstClass` and `$secondClass` classes have the same methods
-     * @param class-string|object $firstClass First class as string or object
-     * @param class-string|object $secondClass Second class as string or object
+     * @param string|object $firstClass First class as string or object
+     * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertSameMethods($firstClass, $secondClass, string $message = ''): void
+    public static function assertSameMethods(string|object $firstClass, string|object $secondClass, string $message = ''): void
     {
         [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
@@ -253,7 +253,7 @@ trait TestTrait
      * Returns a partial mock object for the specified abstract class.
      *
      * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
-     * @param class-string $originalClassName Abstract class you want to mock
+     * @param string $originalClassName Abstract class you want to mock
      * @param string[] $mockedMethods Methods you want to mock
      * @param array $arguments Constructor arguments
      * @return \PHPUnit\Framework\MockObject\MockObject

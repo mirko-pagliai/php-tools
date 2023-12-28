@@ -14,12 +14,13 @@ declare(strict_types=1);
  * @phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
  */
 
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
-VarDumper::setHandler(function ($var) {
+VarDumper::setHandler(function ($var): void {
     $template = '
 %s
 ########## DEBUG ##########
@@ -44,27 +45,29 @@ if (!function_exists('debug') && function_exists('dump')) {
      * Prints out debug information about given variable.
      *
      * Alias for the `dump()` global function provided by `VarDumper` component.
-     * @param mixed $var Variable you want to debug
-     * @return void
+     * @param mixed ...$vars Variables you want to debug
+     * @return mixed
      * @link https://symfony.com/doc/current/components/var_dumper.html#the-dump-function
+     * @see \dump()
      * @since 1.2.11
      */
-    function debug($var): void
+    function debug(mixed ...$vars): mixed
     {
-        call_user_func('dump', $var);
+        return call_user_func('dump', $vars);
     }
 }
 
 if (!function_exists('dd') && function_exists('dump')) {
     /**
      * Prints out debug information about given variable and dies
-     * @param mixed $var Variable you want to debug
+     * @param mixed ...$vars Variables you want to debug
      * @return void
      * @since 1.2.11
      */
-    function dd($var): void
+    #[NoReturn]
+    function dd(mixed ...$vars): void
     {
-        call_user_func('dump', $var);
+        call_user_func('dump', $vars);
         die(1);
     }
 }

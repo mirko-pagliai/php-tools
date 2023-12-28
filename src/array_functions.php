@@ -15,18 +15,15 @@ declare(strict_types=1);
 
 if (!function_exists('array_clean')) {
     /**
-     * Cleans an array, filtering elements, removing duplicate values and
-     *  reordering the keys.
+     * Cleans an array, filtering elements, removing duplicate values and reordering the keys.
      *
-     * Elements will be filtered with the `array_filter()` function. If `$callback`
-     *  is `null`, all entries of array equal to `false` will be removed.
+     * Elements will be filtered with the `array_filter()` function. If `$callback` is `null`, all entries of array
+     *  equal to `false` will be removed.
      *
-     * The keys will be re-ordered with the `array_values()` function only if all
-     *  the keys in the original array are numeric.
+     * The keys will be re-ordered with `array_values()` only if all the keys in the original array are numeric.
      * @param array $array Array you want to clean
-     * @param callable|null $callback The callback function to filter. If no
-     *  callback is supplied, all entries of array equal to `false` will be
-     *  removed
+     * @param callable|null $callback The callback function to filter. If no callback is supplied, all entries of array
+     *  equal to `false` will be removed
      * @param int $flag Flag determining what arguments are sent to callback
      * @return array
      * @link http://php.net/manual/en/function.array-filter.php
@@ -79,7 +76,7 @@ if (!function_exists('array_value_first')) {
      * @return mixed
      * @since 1.1.12
      */
-    function array_value_first(array $array)
+    function array_value_first(array $array): mixed
     {
         return $array ? array_values($array)[0] : null;
     }
@@ -94,7 +91,7 @@ if (!function_exists('array_value_first_recursive')) {
      * @return mixed
      * @since 1.1.12
      */
-    function array_value_first_recursive(array $array)
+    function array_value_first_recursive(array $array): mixed
     {
         $value = array_value_first($array);
 
@@ -109,7 +106,7 @@ if (!function_exists('array_value_last')) {
      * @return mixed
      * @since 1.1.12
      */
-    function array_value_last(array $array)
+    function array_value_last(array $array): mixed
     {
         return $array ? array_values(array_slice($array, -1))[0] : null;
     }
@@ -124,7 +121,7 @@ if (!function_exists('array_value_last_recursive')) {
      * @return mixed
      * @since 1.1.12
      */
-    function array_value_last_recursive(array $array)
+    function array_value_last_recursive(array $array): mixed
     {
         $value = array_value_last($array);
 
@@ -140,7 +137,7 @@ if (!function_exists('is_array_key_last')) {
      * @return bool
      * @since 1.7.6
      */
-    function is_array_key_first($key, array $array): bool
+    function is_array_key_first(int|string $key, array $array): bool
     {
         return $key === array_key_first($array);
     }
@@ -154,7 +151,7 @@ if (!function_exists('is_array_key_last')) {
      * @return bool
      * @since 1.7.5
      */
-    function is_array_key_last($key, array $array): bool
+    function is_array_key_last(int|string $key, array $array): bool
     {
         return $key === array_key_last($array);
     }

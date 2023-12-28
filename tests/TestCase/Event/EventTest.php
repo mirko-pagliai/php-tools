@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace Tools\Test\Event;
 
+use stdClass;
 use Tools\Event\Event;
 use Tools\TestSuite\TestCase;
 
@@ -68,7 +69,7 @@ class EventTest extends TestCase
     {
         $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
-        $Mock = $this->createStub(\stdClass::class);
+        $Mock = $this->createStub(stdClass::class);
         $Event = new Event('myEvent', $Mock);
         $this->assertIsArray($Event->getArgs());
         $this->assertNotEmpty($Event->getArgs());

@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Tools;
 
+use Psr\Http\Message\StreamInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
 /**
@@ -66,10 +67,10 @@ class BodyParser
 
     /**
      * Constructor
-     * @param string|\Psr\Http\Message\StreamInterface $body Body
+     * @param \Psr\Http\Message\StreamInterface|string $body Body
      * @param string $url Reference url. Used to determine the relative links
      */
-    public function __construct($body, string $url)
+    public function __construct(StreamInterface|string $body, string $url)
     {
         $this->body = (string)$body;
         $this->url = $url;
