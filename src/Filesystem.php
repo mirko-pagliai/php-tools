@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use InvalidArgumentException;
+use LogicException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -66,13 +67,13 @@ class Filesystem extends BaseFilesystem
      *
      * It also recursively creates the directory where the file will be created.
      * @param string $filename Path to the file where to write the data
-     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
+     * @param string|string[]|resource|resource[]|null $data The data to write. Can be either a string, a resource or an array
      * @param int $dirMode Mode for the directory, if it does not exist
      * @param bool $ignoreErrors With `true`, errors will be ignored
      * @return string
      * @throws \Symfony\Component\Filesystem\Exception\IOException
      */
-    public static function createFile(string $filename, $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
+    public static function createFile(string $filename, mixed $data = null, int $dirMode = 0777, bool $ignoreErrors = false): string
     {
         try {
             self::instance()->mkdir(dirname($filename), $dirMode);
@@ -93,16 +94,18 @@ class Filesystem extends BaseFilesystem
      *
      * You can pass a directory where to create the file. If `null`, the file will be created in `TMP`, if the constant
      * is defined, otherwise in the temporary directory of the system.
-     * @param mixed $data The data to write. Can be either a string, an array or a stream resource
+     * @param string|string[]|resource|resource[]|null $data The data to write. Can be either a string, a resource or an array
      * @param string|null $dir The directory where the temporary filename will be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
-     * @throws \ErrorException
+     * @throws \LogicException
      */
-    public static function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
+    public static function createTmpFile(mixed $data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
-        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file');
+        if (!$filename) {
+            throw new LogicException('It is not possible to create a temporary file');
+        }
 
         return self::createFile($filename, $data);
     }
@@ -115,7 +118,7 @@ class Filesystem extends BaseFilesystem
      * @return string[][] Array of nested directories and files in each directory
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      */
-    public static function getDirTree(string $path, $exceptions = false, bool $ignoreErrors = false): array
+    public static function getDirTree(string $path, string|bool|array $exceptions = false, bool $ignoreErrors = false): array
     {
         $path = $path === DS ? DS : rtrim($path, DS);
         $finder = new Finder();
@@ -135,7 +138,7 @@ class Filesystem extends BaseFilesystem
              * @param \Symfony\Component\Finder\Finder $finder A `Finder` instance
              * @return string[]
              */
-            $extractPathnames = function (Finder $finder): array {
+            $extractPaths = function (Finder $finder): array {
                 return array_values(array_map(fn(SplFileInfo $file): string => $file->getPathname(), iterator_to_array($finder->sortByName())));
             };
 
@@ -144,7 +147,7 @@ class Filesystem extends BaseFilesystem
                 $finder->exclude($exceptions);
             }
 
-            $dirs = $extractPathnames($finder);
+            $dirs = $extractPaths($finder);
             array_unshift($dirs, rtrim($path, DS));
 
             $finder->files()->in($path);
@@ -153,7 +156,7 @@ class Filesystem extends BaseFilesystem
                 $finder->notName('/(' . implode('|', $exceptions) . ')/');
             }
 
-            return [$dirs, $extractPathnames($finder)];
+            return [$dirs, $extractPaths($finder)];
         } catch (DirectoryNotFoundException $e) {
             if (!$ignoreErrors) {
                 throw $e;
@@ -196,17 +199,16 @@ class Filesystem extends BaseFilesystem
      *
      * The root path must be set with the `ROOT` environment variable (using `putenv()`) or the `ROOT` constant.
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
      */
     public static function getRoot(): string
     {
         $root = getenv('ROOT');
-        if (!$root) {
-            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            $root = ROOT;
+        if (!$root && !defined('ROOT')) {
+            throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
         }
 
-        return $root;
+        return $root ?: ROOT;
     }
 
     /**
@@ -343,7 +345,7 @@ class Filesystem extends BaseFilesystem
      * @throws \Symfony\Component\Finder\Exception\DirectoryNotFoundException
      * @see \Tools\Filesystem::rmdirRecursive()
      */
-    public static function unlinkRecursive(string $dirname, $exceptions = false, bool $ignoreErrors = false): bool
+    public static function unlinkRecursive(string $dirname, string|array|bool $exceptions = false, bool $ignoreErrors = false): bool
     {
         try {
             [, $files] = self::getDirTree($dirname, $exceptions);

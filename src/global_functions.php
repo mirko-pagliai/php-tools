@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use Tools\Exceptionist;
 use Tools\Filesystem;
 use function Symfony\Component\String\u;
 
@@ -51,11 +50,13 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return string[]
      * @since 1.0.1
-     * @throws \ErrorException
+     * @throws \LogicException
      */
     function get_child_methods(string $class): array
     {
-        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist');
+        if (!class_exists($class)) {
+            throw new LogicException('Class `' . $class . '` does not exist');
+        }
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
 
@@ -66,12 +67,12 @@ if (!function_exists('get_child_methods')) {
 if (!function_exists('get_class_short_name')) {
     /**
      * Gets class short name (the part without the namespace)
-     * @param mixed $class Classname or object
+     * @param class-string|object $class Classname or object
      * @return string
      * @throws \ReflectionException
      * @since 1.0.2
      */
-    function get_class_short_name($class): string
+    function get_class_short_name(string|object $class): string
     {
         return (new ReflectionClass($class))->getShortName();
     }
@@ -111,7 +112,7 @@ if (!function_exists('is_positive')) {
      * @param float|string|int $string String
      * @return bool
      */
-    function is_positive($string): bool
+    function is_positive(float|string|int $string): bool
     {
         return is_numeric($string) && $string > 0 && $string == round((float)$string);
     }
@@ -126,7 +127,7 @@ if (!function_exists('is_stringable')) {
      * @return bool
      * @since 1.2.5
      */
-    function is_stringable($var): bool
+    function is_stringable(mixed $var): bool
     {
         if (is_array($var)) {
             try {
@@ -143,11 +144,11 @@ if (!function_exists('is_stringable')) {
 if (!function_exists('objects_map')) {
     /**
      * Executes an object method for all objects of the given arrays
-     * @param array<object> $objects An array of objects. Each object must have the method to be called
+     * @param object[]|string[] $objects An array of objects. Each object must have the method to be called
      * @param string $method The method to be called for each object
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the called method applied to each object
-     * @throws \Tools\Exception\MethodNotExistsException
+     * @throws \LogicException
      * @deprecated 1.7.4 deprecated, it will be removed in a later release
      * @since 1.1.11
      */
@@ -155,7 +156,15 @@ if (!function_exists('objects_map')) {
     {
         deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
 
-        return array_map(fn(object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
+        return array_map(function ($object) use ($method, $args) {
+            /** @var callable $callable */
+            $callable = [$object, $method];
+            if (!is_callable($callable)) {
+                throw new BadMethodCallException(sprintf('Method `%s::%s()` is not callable', is_string($object) ? $object : get_class($object), $method));
+            }
+
+            return call_user_func_array($callable, $args);
+        }, $objects);
     }
 }
 
@@ -211,7 +220,7 @@ if (!function_exists('which')) {
      * Finds the executable of a command, like `which` on Unix systems
      * @param string $command Command
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
      * @deprecated 1.7.5 Use instead `Symfony\Component\Process\ExecutableFinder::find()` method
      * @codeCoverageIgnore
      */
@@ -219,6 +228,11 @@ if (!function_exists('which')) {
     {
         deprecationWarning('Deprecated. Use instead `' . ExecutableFinder::class . '::find()` method');
 
-        return Exceptionist::isTrue((new ExecutableFinder())->find($command) ?: '', 'Unable to find the executable for the `' . $command . '` command');
+        $executableFinder = (new ExecutableFinder())->find($command);
+        if (!$executableFinder) {
+            throw new LogicException('Unable to find the executable for the `' . $command . '` command');
+        }
+
+        return $executableFinder;
     }
 }

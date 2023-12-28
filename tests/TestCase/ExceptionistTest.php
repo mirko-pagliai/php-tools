@@ -37,6 +37,31 @@ use Tools\TestSuite\TestCase;
 class ExceptionistTest extends TestCase
 {
     /**
+     * @var int
+     */
+    protected static int $currentErrorLevel;
+
+    /**
+     * @inheritDoc
+     */
+    public static function setUpBeforeClass(): void
+    {
+        parent::setUpBeforeClass();
+
+        self::$currentErrorLevel = error_reporting(E_ALL & ~E_USER_DEPRECATED);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function tearDownAfterClass(): void
+    {
+        parent::tearDownAfterClass();
+
+        error_reporting(self::$currentErrorLevel);
+    }
+
+    /**
      * Test for `__callStatic()` magic method
      * @uses \Tools\Exceptionist::__callStatic()
      * @test

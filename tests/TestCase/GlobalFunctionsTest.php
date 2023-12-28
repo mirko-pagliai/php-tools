@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -21,7 +20,6 @@ use App\ExampleClass;
 use App\ExampleOfStringable;
 use LogicException;
 use stdClass;
-use Tools\Exception\MethodNotExistsException;
 use Tools\TestSuite\TestCase;
 
 /**
@@ -176,8 +174,7 @@ class GlobalFunctionsTest extends TestCase
         }
 
         //With a no existing method
-        $this->expectException(MethodNotExistsException::class);
-        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` does not exist');
+        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` is not callable');
         objects_map([new ExampleClass()], 'noExistingMethod');
 
         error_reporting($current);

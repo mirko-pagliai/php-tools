@@ -15,8 +15,8 @@ declare(strict_types=1);
  */
 namespace Tools\Event;
 
+use LogicException;
 use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
-use Tools\Exceptionist;
 
 /**
  * Event instance.
@@ -52,11 +52,13 @@ class Event extends BaseEvent
      * Gets the argument with the specified index of this event
      * @param int $index Index
      * @return mixed
-     * @throws \Tools\Exception\KeyNotExistsException
+     * @throws \LogicException
      */
-    public function getArg(int $index)
+    public function getArg(int $index): mixed
     {
-        Exceptionist::arrayKeyExists($index, $this->args, sprintf('Argument with index `%s` does not exist', $index));
+        if (!array_key_exists($index, $this->args)) {
+            throw new LogicException(sprintf('Argument with index `%s` does not exist', $index));
+        }
 
         return $this->args[$index];
     }

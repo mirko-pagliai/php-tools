@@ -33,6 +33,7 @@ use TypeError;
 
 /**
  * The `Exceptionist`.
+ * @deprecated 1.8.1 The `Exceptionist` class is deprecated and will be removed in a later release
  * @method static string classExists(string $className, string $message = '', string $exception = \ErrorException::class)
  * @method static string fileNotExists(string $filename, string $message = '', string $exception = \ErrorException::class)
  * @method static array isArray($value, string $message = '', string $exception = \ErrorException::class)
@@ -277,6 +278,8 @@ class Exceptionist
      */
     public static function isTrue($value, string $message = '', string $exception = ErrorException::class)
     {
+        deprecationWarning('The `Exceptionist` class is deprecated and will be removed in a later release');
+
         if ($value) {
             return $value;
         }
