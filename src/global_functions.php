@@ -144,7 +144,7 @@ if (!function_exists('is_stringable')) {
 if (!function_exists('objects_map')) {
     /**
      * Executes an object method for all objects of the given arrays
-     * @param array<object> $objects An array of objects. Each object must have the method to be called
+     * @param object[]|string[] $objects An array of objects. Each object must have the method to be called
      * @param string $method The method to be called for each object
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the called method applied to each object
@@ -156,12 +156,14 @@ if (!function_exists('objects_map')) {
     {
         deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
 
-        return array_map(function (object $object) use ($method, $args) {
-            if (!is_callable([$object, $method])) {
+        return array_map(function ($object) use ($method, $args) {
+            /** @var callable $callable */
+            $callable = [$object, $method];
+            if (!is_callable($callable)) {
                 throw new BadMethodCallException(sprintf('Method `%s::%s()` is not callable', is_string($object) ? $object : get_class($object), $method));
             }
 
-            return call_user_func_array([$object, $method], $args);
+            return call_user_func_array($callable, $args);
         }, $objects);
     }
 }

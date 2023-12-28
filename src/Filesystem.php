@@ -205,7 +205,7 @@ class Filesystem extends BaseFilesystem
     {
         $root = getenv('ROOT');
         if (!$root && !defined('ROOT')) {
-            throw new LogicExceptions('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
+            throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
         }
 
         return $root ?: ROOT;

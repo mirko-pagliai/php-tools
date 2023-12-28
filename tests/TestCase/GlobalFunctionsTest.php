@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -21,7 +20,6 @@ use App\ExampleClass;
 use App\ExampleOfStringable;
 use LogicException;
 use stdClass;
-use Tools\Exception\MethodNotExistsException;
 use Tools\TestSuite\TestCase;
 
 /**
