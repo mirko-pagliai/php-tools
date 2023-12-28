@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Tools;
 
 use InvalidArgumentException;
+use LogicException;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
@@ -97,12 +98,14 @@ class Filesystem extends BaseFilesystem
      * @param string|null $dir The directory where the temporary filename will be created
      * @param string $prefix The prefix of the generated temporary filename
      * @return string Path of temporary filename
-     * @throws \ErrorException
+     * @throws \LogicException
      */
     public static function createTmpFile($data = null, ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
-        Exceptionist::isTrue($filename, 'It is not possible to create a temporary file');
+        if (!$filename) {
+            throw new LogicException('It is not possible to create a temporary file');
+        }
 
         return self::createFile($filename, $data);
     }
@@ -196,17 +199,16 @@ class Filesystem extends BaseFilesystem
      *
      * The root path must be set with the `ROOT` environment variable (using `putenv()`) or the `ROOT` constant.
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
      */
     public static function getRoot(): string
     {
         $root = getenv('ROOT');
-        if (!$root) {
-            Exceptionist::isTrue(defined('ROOT'), 'No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            $root = ROOT;
+        if (!$root && !defined('ROOT')) {
+            throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
         }
 
-        return $root;
+        return $root ?: ROOT;
     }
 
     /**

@@ -22,4 +22,5 @@ parameters:
 
 
     excludePaths:
-        -  tests/test_app/
+        - src/Exception
+        - tests/test_app/

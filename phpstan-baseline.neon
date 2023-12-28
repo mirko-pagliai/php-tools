@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$callback of function call_user_func_array expects callable\\(\\)\\: mixed, array\\{class\\-string\\<object\\>\\|object, string\\} given\\.$#"
-			count: 1
-			path: src/global_functions.php
-
-		-
 			message: "#^Parameter \\#3 \\$exception of static method Tools\\\\Exceptionist\\:\\:isTrue\\(\\) expects class\\-string\\<ErrorException\\>, string given\\.$#"
 			count: 1
 			path: tests/TestCase/ExceptionistTest.php

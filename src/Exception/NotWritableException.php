@@ -20,7 +20,17 @@ use ErrorException;
 
 /**
  * "File or directory is not writable" exception.
+ * @deprecated 1.8.1 This exception class is deprecated and will be removed in a later release
  */
 class NotWritableException extends ErrorException
 {
+    /**
+     * @inheritDoc
+     */
+    public function __construct($message = '', $code = 0, $severity = 1, $filename = null, $line = null, ?Throwable $previous = null)
+    {
+        deprecationWarning('`' . __CLASS__ . '` is deprecated and will be removed in a later release');
+
+        parent::__construct($message, $code, $severity, $filename, $line, $previous);
+    }
 }

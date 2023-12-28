@@ -1,5 +1,10 @@
 # 1.x branch
 ## 1.8 branch
+### 1.8.1
+* the `Exceptionist` class is deprecated and will be removed in a later release;
+* all exception classes provided by this package are deprecated and will be removed in a later release;
+* fixed configuration of phpcs.
+
 ### 1.8.0
 * `Exceptionist::__callStatic()` method throw a `BadMethodCallException` exception on errors;
 * added `TestCase::deprecated()` method, a helper method for check deprecation methods;
