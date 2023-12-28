@@ -91,21 +91,6 @@ if (!function_exists('is_html')) {
     }
 }
 
-if (!function_exists('is_json')) {
-    /**
-     * Checks if a string is JSON
-     * @param string $string String
-     * @return bool
-     * @deprecated 1.7.4 Use instead `json_validate()`
-     */
-    function is_json(string $string): bool
-    {
-        deprecationWarning('Deprecated. Use instead `json_validate()`');
-
-        return json_validate($string);
-    }
-}
-
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
@@ -138,33 +123,6 @@ if (!function_exists('is_stringable')) {
         }
 
         return !is_null($var) && (is_scalar($var) || method_exists($var, '__toString'));
-    }
-}
-
-if (!function_exists('objects_map')) {
-    /**
-     * Executes an object method for all objects of the given arrays
-     * @param object[]|string[] $objects An array of objects. Each object must have the method to be called
-     * @param string $method The method to be called for each object
-     * @param array $args Optional arguments for the method to be called
-     * @return array Returns an array containing all the returned values of the called method applied to each object
-     * @throws \LogicException
-     * @deprecated 1.7.4 deprecated, it will be removed in a later release
-     * @since 1.1.11
-     */
-    function objects_map(array $objects, string $method, array $args = []): array
-    {
-        deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
-
-        return array_map(function ($object) use ($method, $args) {
-            /** @var callable $callable */
-            $callable = [$object, $method];
-            if (!is_callable($callable)) {
-                throw new BadMethodCallException(sprintf('Method `%s::%s()` is not callable', is_string($object) ? $object : get_class($object), $method));
-            }
-
-            return call_user_func_array($callable, $args);
-        }, $objects);
     }
 }
 
@@ -212,27 +170,5 @@ if (!function_exists('uncamelcase')) {
     function uncamelcase(string $string): string
     {
         return (string)u($string)->snake();
-    }
-}
-
-if (!function_exists('which')) {
-    /**
-     * Finds the executable of a command, like `which` on Unix systems
-     * @param string $command Command
-     * @return string
-     * @throws \LogicException
-     * @deprecated 1.7.5 Use instead `Symfony\Component\Process\ExecutableFinder::find()` method
-     * @codeCoverageIgnore
-     */
-    function which(string $command): string
-    {
-        deprecationWarning('Deprecated. Use instead `' . ExecutableFinder::class . '::find()` method');
-
-        $executableFinder = (new ExecutableFinder())->find($command);
-        if (!$executableFinder) {
-            throw new LogicException('Unable to find the executable for the `' . $command . '` command');
-        }
-
-        return $executableFinder;
     }
 }

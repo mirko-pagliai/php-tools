@@ -83,22 +83,6 @@ class GlobalFunctionsTest extends TestCase
 
     /**
      * @test
-     * @uses is_json()
-     */
-    public function testIsJson(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
-        $this->assertFalse(is_json('this is a no json string'));
-        error_reporting($current);
-
-        $this->deprecated(function () {
-            is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
-        });
-    }
-
-    /**
-     * @test
      * @uses is_positive()
      */
     public function testIsPositive(): void
@@ -150,34 +134,6 @@ class GlobalFunctionsTest extends TestCase
         $this->assertFalse(is_stringable(['a', true]));
         $this->assertFalse(is_stringable(['a', ['b', ['c']]]));
         $this->assertTrue(is_stringable(new ExampleOfStringable()));
-    }
-
-    /**
-     * @test
-     * @uses objects_map()
-     */
-    public function testObjectsMap(): void
-    {
-        $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
-
-        $this->deprecated(function () use ($arrayOfObjects) {
-            objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
-        });
-
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-
-        $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
-        $this->assertEquals(['a new value', 'a new value'], $result);
-
-        foreach ($arrayOfObjects as $object) {
-            $this->assertEquals('a new value', $object->publicProperty);
-        }
-
-        //With a no existing method
-        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` is not callable');
-        objects_map([new ExampleClass()], 'noExistingMethod');
-
-        error_reporting($current);
     }
 
     /**
