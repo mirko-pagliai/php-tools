@@ -15,7 +15,6 @@ declare(strict_types=1);
 
 use Symfony\Component\Process\ExecutableFinder;
 use Symfony\Component\String\Slugger\AsciiSlugger;
-use Tools\Exceptionist;
 use Tools\Filesystem;
 use function Symfony\Component\String\u;
 
@@ -51,11 +50,13 @@ if (!function_exists('get_child_methods')) {
      * @param class-string $class Class name
      * @return string[]
      * @since 1.0.1
-     * @throws \ErrorException
+     * @throws \LogicException
      */
     function get_child_methods(string $class): array
     {
-        Exceptionist::classExists($class, 'Class `' . $class . '` does not exist');
+        if (!class_exists($class)) {
+            throw new LogicException('Class `' . $class . '` does not exist');
+        }
         $methods = get_class_methods($class);
         $parentClass = get_parent_class($class);
 
@@ -147,7 +148,7 @@ if (!function_exists('objects_map')) {
      * @param string $method The method to be called for each object
      * @param array $args Optional arguments for the method to be called
      * @return array Returns an array containing all the returned values of the called method applied to each object
-     * @throws \Tools\Exception\MethodNotExistsException
+     * @throws \LogicException
      * @deprecated 1.7.4 deprecated, it will be removed in a later release
      * @since 1.1.11
      */
@@ -155,7 +156,13 @@ if (!function_exists('objects_map')) {
     {
         deprecationWarning('`objects_map()` is deprecated and will be removed in a later release');
 
-        return array_map(fn(object $object) => call_user_func_array(Exceptionist::methodExists($object, $method), $args), $objects);
+        return array_map(function (object $object) use ($method, $args) {
+            if (!is_callable([$object, $method])) {
+                throw new BadMethodCallException(sprintf('Method `%s::%s()` is not callable', is_string($object) ? $object : get_class($object), $method));
+            }
+
+            return call_user_func_array([$object, $method], $args);
+        }, $objects);
     }
 }
 
@@ -211,7 +218,7 @@ if (!function_exists('which')) {
      * Finds the executable of a command, like `which` on Unix systems
      * @param string $command Command
      * @return string
-     * @throws \ErrorException
+     * @throws \LogicException
      * @deprecated 1.7.5 Use instead `Symfony\Component\Process\ExecutableFinder::find()` method
      * @codeCoverageIgnore
      */
@@ -219,6 +226,11 @@ if (!function_exists('which')) {
     {
         deprecationWarning('Deprecated. Use instead `' . ExecutableFinder::class . '::find()` method');
 
-        return Exceptionist::isTrue((new ExecutableFinder())->find($command) ?: '', 'Unable to find the executable for the `' . $command . '` command');
+        $executableFinder = (new ExecutableFinder())->find($command);
+        if (!$executableFinder) {
+            throw new LogicException('Unable to find the executable for the `' . $command . '` command');
+        }
+
+        return $executableFinder;
     }
 }

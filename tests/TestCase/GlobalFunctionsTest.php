@@ -176,8 +176,7 @@ class GlobalFunctionsTest extends TestCase
         }
 
         //With a no existing method
-        $this->expectException(MethodNotExistsException::class);
-        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` does not exist');
+        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` is not callable');
         objects_map([new ExampleClass()], 'noExistingMethod');
 
         error_reporting($current);
