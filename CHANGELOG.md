@@ -3,7 +3,8 @@
 ### 1.9.0
 * requires at least PHP 8.1;
 * the `deprecationWarning()` function has been replaced by the ominimum provided by the `cakephp/core` package. Be
-  careful, because the signature is different now;
+  careful, because the signature is different now. The `TestCase::deprecated()` method has been removed and is not in
+  use for now;
 * `Entity` and `Exceptionist` classes had been deprecated and were removed;
 * `is_json()`, `objects_map()` and `which()` global functions had been deprecated and were removed;
 * all exception classes provided by this package had been deprecated and were removed;
