@@ -7,7 +7,7 @@
 * updated `Event` and `EventList` classes;
 * several (error suppression) rules have been removed from the `sniffer-ruleset.xml` file;
 * added tests for PHP 8.2 and 8.3;
-* updated `cakephp-codesniffer`, `phpstan` and `psalm` packages;
+* updated `cakephp-codesniffer`, `phpstan` and `psalm` packages. Updated symfony's components.
 
 ## 1.8 branch
 ### 1.8.1

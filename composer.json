@@ -14,13 +14,13 @@
         "php": ">=8.1",
         "ext-fileinfo": "*",
         "ext-json": "*",
-        "symfony/dom-crawler": "^5.1.4|^6.0",
-        "symfony/event-dispatcher": "^5.0|^6.0",
-        "symfony/filesystem": "^5.0|^6.0",
-        "symfony/finder": "^5.0|^6.0",
+        "symfony/dom-crawler": "^5.1.4|^6.0|^7.0",
+        "symfony/event-dispatcher": "^5.0|^6.0|^7.0",
+        "symfony/filesystem": "^5.0|^6.0|^7.0",
+        "symfony/finder": "^5.0|^6.0|^7.0",
         "symfony/polyfill-php83": "^1.27",
-        "symfony/string": "^5.0|^6.0",
-        "symfony/var-dumper": "^5.0|^6.0",
+        "symfony/string": "^5.0|^6.0|^7.0",
+        "symfony/var-dumper": "^5.0|^6.0|^7.0",
         "symfony/translation-contracts": "^2.1"
     },
     "require-dev": {
@@ -28,7 +28,6 @@
         "cakephp/cakephp-codesniffer": "^5.0",
         "phpunit/phpunit": "^9.1|^9.5",
         "psr/http-message": "^1.0",
-        "symfony/console": "^5.1|^6.0",
         "phpstan/phpstan": "^1.10.38",
         "vimeo/psalm": "^5.15.0"
     },
