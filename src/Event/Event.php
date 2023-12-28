@@ -41,9 +41,11 @@ class Event extends BaseEvent
      * @param mixed $args Any event argument you wish to be transported with
      *  this event to it can be read by listeners
      */
-    public function __construct(string $name, $args = null)
+    public function __construct(string $name, mixed $args = null)
     {
+
         $this->name = $name;
+
         $this->args = (array)$args;
     }
 
