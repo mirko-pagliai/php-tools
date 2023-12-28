@@ -134,7 +134,7 @@ class TestTraitTest extends TestCase
 
         //It correctly ignores deprecations
         $this->TestCase->assertException(function () {
-            deprecationWarning('This is a deprecation!');
+            deprecationWarning('1.0', 'This is a deprecation!');
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
 

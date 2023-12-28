@@ -55,5 +55,3 @@ if (!function_exists('createSomeFiles')) {
         return array_map([Filesystem::instance(), 'createFile'], $files);
     }
 }
-
-require_once ROOT . 'src' . DS . 'deprecation_functions.php';
