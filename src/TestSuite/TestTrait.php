@@ -22,7 +22,7 @@ use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use PHPUnit\Framework\TestCase;
 use Throwable;
 use Tools\Filesystem;
 
@@ -250,7 +250,7 @@ trait TestTrait
      * Returns a partial mock object for the specified abstract class.
      *
      * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
-     * @param class-string $originalClassName Abstract class you want to mock
+     * @param string $originalClassName Abstract class you want to mock
      * @param string[] $mockedMethods Methods you want to mock
      * @param array $arguments Constructor arguments
      * @return \PHPUnit\Framework\MockObject\MockObject
@@ -258,8 +258,8 @@ trait TestTrait
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
-        if (!$this instanceof PHPUnitTestCase) {
-            throw new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
+        if (!$this instanceof TestCase) {
+            throw new PHPUnitException('Is this trait used by a class that extends `' . TestCase::class . '`?');
         }
 
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);
