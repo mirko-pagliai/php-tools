@@ -1,7 +1,7 @@
 # 1.x branch
 ## 1.8 branch
 ### 1.8.1
-* tests for the `ReflectionTrait` have largely improved;
+* tests for `ReflectionTrait` and `TestTrait` have largely improved;
 * the `Exceptionist` class is deprecated and will be removed in a later release;
 * all exception classes provided by this package are deprecated and will be removed in a later release;
 * fixed configuration of phpcs.
