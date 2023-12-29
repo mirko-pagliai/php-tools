@@ -7,4 +7,5 @@
     <rule ref="./sniffer-ruleset.xml"/>
 
     <exclude-pattern>libs/phpuri\.php</exclude-pattern>
+    <exclude-pattern>src/TestSuite/TestCase\.php</exclude-pattern>
 </ruleset>
