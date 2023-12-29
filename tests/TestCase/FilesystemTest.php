@@ -17,16 +17,19 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use InvalidArgumentException;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Tools\Filesystem;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * FilesystemTest class
  */
 class FilesystemTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @test
      * @uses \Tools\Filesystem::addSlashTerm()

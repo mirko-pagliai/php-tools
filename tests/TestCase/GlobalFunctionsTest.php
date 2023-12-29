@@ -19,14 +19,17 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
 use LogicException;
+use PHPUnit\Framework\TestCase;
 use stdClass;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * GlobalFunctionsTest class
  */
 class GlobalFunctionsTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @test
      * @uses array_to_string()

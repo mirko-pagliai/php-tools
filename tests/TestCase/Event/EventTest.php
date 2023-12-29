@@ -16,8 +16,8 @@ declare(strict_types=1);
 namespace Tools\Test\Event;
 
 use stdClass;
+use PHPUnit\Framework\TestCase;
 use Tools\Event\Event;
-use Tools\TestSuite\TestCase;
 
 /**
  * EventTest class

@@ -15,10 +15,13 @@ declare(strict_types=1);
 
 namespace App;
 
-use Tools\TestSuite\TestCase;
+use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestTrait;
 
 class SkipTestCase extends TestCase
 {
+    use TestTrait;
+
     /**
      * test that a test is marked as skipped using skipIf and its first parameter evaluates to true
      *

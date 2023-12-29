@@ -16,14 +16,17 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
+use PHPUnit\Framework\TestCase;
 use Tools\BodyParser;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\ReflectionTrait;
 
 /**
  * BodyParserTest class
  */
 class BodyParserTest extends TestCase
 {
+    use ReflectionTrait;
+
     /**
      * Test for `extractLinks()` method
      * @test
