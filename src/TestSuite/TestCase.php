@@ -16,17 +16,28 @@ declare(strict_types=1);
 
 namespace Tools\TestSuite;
 
-use Closure;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Tools\Filesystem;
 
 /**
  * TestCase class
+ * @deprecated 1.8.1 The `TestCase` class has been deprecated and will be removed in a later release. Use instead the
+ *  `PHPUnit\Framework\TestCase` class (and possibly `ReflectionTrait` and `TestTrait`)
  */
 abstract class TestCase extends PHPUnitTestCase
 {
     use ReflectionTrait;
     use TestTrait;
+
+    /**
+     * @psalm-suppress InternalMethod
+     */
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        deprecationWarning('The `TestCase` class has been deprecated and will be removed in a later release. Use instead the `PHPUnit\Framework\TestCase` class (and possibly `ReflectionTrait` and `TestTrait`)');
+
+        parent::__construct($name, $data, $dataName);
+    }
 
     /**
      * Teardown any static object changes and restore them.
@@ -43,35 +54,5 @@ abstract class TestCase extends PHPUnitTestCase
         if (rtrim(TMP, DS) !== rtrim(sys_get_temp_dir(), DS)) {
             Filesystem::instance()->unlinkRecursive(TMP);
         }
-    }
-
-    /**
-     * Helper method for check deprecation methods
-     * @param \Closure $callable callable function that will receive asserts
-     * @return void
-     * @since 1.8.0
-     * @codeCoverageIgnore
-     */
-    public function deprecated(Closure $callable): void
-    {
-        $previousHandler = set_error_handler(
-            function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
-                if ($code == E_USER_DEPRECATED) {
-                    $deprecation = true;
-
-                    return true;
-                }
-                if ($previousHandler) {
-                    return $previousHandler($code, $message, $file, $line, $context);
-                }
-
-                return false;
-            }
-        );
-        try {
-            $callable();
-        } finally {
-        }
-        $this->assertTrue($deprecation, 'Should have at least one deprecation warning');
     }
 }

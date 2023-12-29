@@ -20,6 +20,7 @@ use App\ExampleClass;
 use ErrorException;
 use Exception;
 use PHPUnit\Framework\Error\Notice;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\Exception\FileNotExistsException;
 use Tools\Exception\KeyNotExistsException;
@@ -32,10 +33,12 @@ use Tools\Exception\ObjectWrongInstanceException;
 use Tools\Exception\PropertyNotExistsException;
 use Tools\Exceptionist;
 use Tools\Filesystem;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 class ExceptionistTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @var int
      */

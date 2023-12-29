@@ -16,14 +16,17 @@ declare(strict_types=1);
 namespace Tools\Test;
 
 use App\EntityExample;
+use PHPUnit\Framework\TestCase;
 use Tools\Entity;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * EntityTest class
  */
 class EntityTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @var int
      */

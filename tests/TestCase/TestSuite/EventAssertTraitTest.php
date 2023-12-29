@@ -15,10 +15,10 @@ declare(strict_types=1);
 namespace Tools\Test\TestSuite;
 
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase;
 use Tools\Event\Event;
 use Tools\Event\EventDispatcher;
 use Tools\TestSuite\EventAssertTrait;
-use Tools\TestSuite\TestCase;
 
 /**
  * TestTraitTest class

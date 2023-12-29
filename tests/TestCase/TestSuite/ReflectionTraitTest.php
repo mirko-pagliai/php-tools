@@ -16,97 +16,51 @@ declare(strict_types=1);
 
 namespace Tools\Test\TestSuite;
 
-use App\ExampleClass;
-use ReflectionProperty;
-use Tools\TestSuite\TestCase;
+use App\ReflectionTraitTestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Reflection\ReflectionTrait Test Case
+ * ReflectionTraitTest class
  */
 class ReflectionTraitTest extends TestCase
 {
     /**
-     * @var \App\ExampleClass
-     */
-    protected ExampleClass $example;
-
-    /**
-     * Called before every test method
-     * @return void
-     */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->example = new ExampleClass();
-    }
-
-    /**
-     * Tests for `getProperties()` method
      * @test
+     * @uses \Tools\TestSuite\ReflectionTrait::getProperties()
      */
     public function testGetProperties(): void
     {
-        $expected = [
-            'privateProperty' => 'this is a private property',
-            'firstProperty' => null,
-            'secondProperty' => 'a protected property',
-            'publicProperty' => 'this is public',
-            'staticProperty' => 'a static property',
-        ];
-
-        $this->assertEquals($expected, $this->getProperties($this->example));
-        $this->assertEquals($expected, $this->getProperties(ExampleClass::class));
-        $this->assertEquals($expected, $this->getProperties(new ExampleClass()));
-
-        $this->assertArrayKeysEqual(['publicProperty', 'staticProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PUBLIC));
-        $this->assertArrayKeysEqual(['firstProperty', 'secondProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PROTECTED));
-        $this->assertArrayKeysEqual(['privateProperty'], $this->getProperties($this->example, ReflectionProperty::IS_PRIVATE));
-        $this->assertArrayKeysEqual(['staticProperty'], $this->getProperties($this->example, ReflectionProperty::IS_STATIC));
-
-        unset($expected['privateProperty']);
-        $example = $this->getMockBuilder(ExampleClass::class)->getMock();
-        $this->assertEquals($expected, $this->getProperties($example));
+        $result = (new ReflectionTraitTestCase('testGetProperties'))->run();
+        $this->assertTrue($result->wasSuccessful());
     }
 
     /**
-     * Tests for `getProperty()` method
      * @test
+     * @uses \Tools\TestSuite\ReflectionTrait::getProperty()
      */
     public function testGetProperty(): void
     {
-        $this->assertNull($this->getProperty($this->example, 'firstProperty'));
-        $this->assertEquals('a protected property', $this->getProperty($this->example, 'secondProperty'));
-        $this->assertEquals('a protected property', $this->getProperty(ExampleClass::class, 'secondProperty'));
-        $this->assertEquals('a protected property', $this->getProperty(new ExampleClass(), 'secondProperty'));
+        $result = (new ReflectionTraitTestCase('testGetProperty'))->run();
+        $this->assertTrue($result->wasSuccessful());
     }
 
     /**
-     * Tests for `invokeMethod()` method
      * @test
+     * @uses \Tools\TestSuite\ReflectionTrait::invokeMethod()
      */
     public function testInvokeMethod(): void
     {
-        $this->assertEquals('a protected method', $this->invokeMethod($this->example, 'protectedMethod'));
-        $this->assertEquals('example string', $this->invokeMethod($this->example, 'protectedMethod', ['example string']));
-        $this->assertEquals('a protected method', $this->invokeMethod(ExampleClass::class, 'protectedMethod'));
-        $this->assertEquals('a protected method', $this->invokeMethod(new ExampleClass(), 'protectedMethod'));
+        $result = (new ReflectionTraitTestCase('testInvokeMethod'))->run();
+        $this->assertTrue($result->wasSuccessful());
     }
 
     /**
-     * Tests for `setProperty()` method
      * @test
-     * @noinspection Annotator
+     * @uses \Tools\TestSuite\ReflectionTrait::setProperty()
      */
     public function testSetProperty(): void
     {
-        $result = $this->setProperty($this->example, 'firstProperty', 'example string');
-        $this->assertNull($result);
-        $this->assertEquals('example string', $this->example->firstProperty);
-
-        $expectedResult = $this->example->secondProperty;
-        $result = $this->setProperty($this->example, 'secondProperty', null);
-        $this->assertEquals($expectedResult, $result);
-        $this->assertNull($this->example->secondProperty);
+        $result = (new ReflectionTraitTestCase('testSetProperty'))->run();
+        $this->assertTrue($result->wasSuccessful());
     }
 }

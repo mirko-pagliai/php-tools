@@ -15,14 +15,17 @@ declare(strict_types=1);
 namespace Tools\Test\TestSuite\Console;
 
 use App\Command\ExampleCommand;
+use PHPUnit\Framework\TestCase;
 use Tools\TestSuite\Console\CommandTester;
-use Tools\TestSuite\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * CommandTesterTest
  */
 class CommandTesterTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * Tests for `assertOutputContains()` method
      * @test

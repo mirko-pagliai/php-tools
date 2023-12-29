@@ -17,12 +17,13 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use BadMethodCallException;
+use Closure;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use PHPUnit\Framework\TestCase;
 use Throwable;
 use Tools\Filesystem;
 
@@ -258,14 +259,45 @@ trait TestTrait
      * @param array $arguments Constructor arguments
      * @return \PHPUnit\Framework\MockObject\MockObject
      * @since 1.7.1
+     * @psalm-suppress InternalClass, InternalMethod
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
-        if (!$this instanceof PHPUnitTestCase) {
-            throw new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
+        if (!$this instanceof TestCase) {
+            throw new PHPUnitException('Is this trait used by a class that extends `' . TestCase::class . '`?');
         }
 
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);
+    }
+
+    /**
+     * Helper method for check deprecation methods
+     * @param \Closure $callable callable function that will receive asserts
+     * @return void
+     * @since 1.8.0
+     * @codeCoverageIgnore
+     */
+    public function deprecated(Closure $callable): void
+    {
+        $previousHandler = set_error_handler(
+            function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
+                if ($code == E_USER_DEPRECATED) {
+                    $deprecation = true;
+
+                    return true;
+                }
+                if ($previousHandler) {
+                    return $previousHandler($code, $message, $file, $line, $context);
+                }
+
+                return false;
+            }
+        );
+        try {
+            $callable();
+        } finally {
+        }
+        $this->assertTrue($deprecation, 'Should have at least one deprecation warning');
     }
 
     /**

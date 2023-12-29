@@ -16,13 +16,16 @@ declare(strict_types=1);
 
 namespace App;
 
-use Tools\TestSuite\TestCase;
+use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * AssertionFailedTestCase class
  */
 class AssertionFailedTestCase extends TestCase
 {
+    use TestTrait;
+
     /**
      * test that a test expects that an assertion failed
      * @return void

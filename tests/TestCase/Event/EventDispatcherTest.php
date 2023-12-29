@@ -14,10 +14,10 @@ declare(strict_types=1);
  */
 namespace Tools\Test\Event;
 
+use PHPUnit\Framework\TestCase;
 use Tools\Event\Event;
 use Tools\Event\EventDispatcher;
 use Tools\Event\EventList;
-use Tools\TestSuite\TestCase;
 
 /**
  * EventDispatcherTest class

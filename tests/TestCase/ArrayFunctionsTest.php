@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
-use Tools\TestSuite\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ArrayFunctionsTest class

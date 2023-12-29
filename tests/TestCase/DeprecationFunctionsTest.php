@@ -15,13 +15,16 @@ declare(strict_types=1);
 
 namespace Tools\Test;
 
-use Tools\TestSuite\TestCase;
+use PHPUnit\Framework\TestCase;
+use Tools\TestSuite\TestTrait;
 
 /**
  * DeprecationFunctionsTest class
  */
 class DeprecationFunctionsTest extends TestCase
 {
+    use TestTrait;
+
     /**
      * @test
      * @uses \deprecationWarning()

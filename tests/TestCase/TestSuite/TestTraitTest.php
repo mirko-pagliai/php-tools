@@ -32,10 +32,9 @@ use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\ExpectationFailedException;
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\Filesystem;
-use Tools\TestSuite\TestCase;
 use Tools\TestSuite\TestTrait;
 
 /**
@@ -43,8 +42,10 @@ use Tools\TestSuite\TestTrait;
  */
 class TestTraitTest extends TestCase
 {
+    use TestTrait;
+
     /**
-     * @var \Tools\TestSuite\TestCase
+     * @var \PHPUnit\Framework\TestCase
      */
     protected TestCase $TestCase;
 
@@ -55,7 +56,8 @@ class TestTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = new class ('test') extends TestCase {
+        $this->TestCase = new class extends TestCase {
+            use TestTrait;
         };
     }
 
@@ -67,35 +69,58 @@ class TestTraitTest extends TestCase
     public function testMagicCallAndCallStatic(): void
     {
         foreach ([
-            'assertIsArray' => ['array'],
-            'assertIsBool' => true,
-            'assertIsCallable' => fn() => '',
-            'assertIsFloat' => 1.1,
-            'assertIsHtml' => '<b>html</b>',
-            'assertIsInt' => 1,
-            'assertIsIterable' => new ExampleOfTraversable(),
-            'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
-            'assertIsObject' => new stdClass(),
-            'assertIsPositive' => '1',
-            'assertIsResource' => tmpfile(),
-            'assertIsString' => 'string',
-            'assertIsUrl' => 'http://localhost',
-        ] as $assertMethod => $value) {
+             'assertIsArray' => ['array'],
+             'assertIsBool' => true,
+             'assertIsCallable' => fn() => '',
+             'assertIsFloat' => 1.1,
+             'assertIsHtml' => '<b>html</b>',
+             'assertIsInt' => 1,
+             'assertIsIterable' => new ExampleOfTraversable(),
+             'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
+             'assertIsObject' => new stdClass(),
+             'assertIsPositive' => '1',
+             'assertIsResource' => tmpfile(),
+             'assertIsString' => 'string',
+             'assertIsUrl' => 'http://localhost',
+         ] as $assertMethod => $value) {
             $this->TestCase->$assertMethod($value);
-            TestCase::$assertMethod($value);
+            /** @var callable $staticCallable */
+            $staticCallable = [$this->TestCase, $assertMethod];
+            forward_static_call($staticCallable, $value);
         }
+    }
 
-        //Missing argument
-        $this->assertException(
-            [$this->TestCase, 'assertIsJson'],
-            BadMethodCallException::class,
-            'Method ' . get_parent_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed'
-        );
+    /**
+     * Test for `__callStatic()` method with a no existing method
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
+     */
+    public function testMagicCallWithNoExistingMethod(): void
+    {
+        $this->expectExceptionMessage('Method ' . get_class($this->TestCase) . '::noExistingMethod() does not exist');
+        $this->TestCase->noExistingMethod('string');
+    }
 
-        //Calling a no existing method or a no existing `assertIs*()` method
-        foreach (['assertIsNoExistingType', 'noExistingMethod'] as $method) {
-            $this->assertException(fn() => $this->TestCase->$method('string'), BadMethodCallException::class, 'Method ' . get_parent_class($this->TestCase) . '::' . $method . '() does not exist');
-        }
+    /**
+     * Test for `__callStatic()` method with a no existing "assertIs" method
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
+     */
+    public function testMagicCallWithNoExistingAssertIsMethod(): void
+    {
+        $this->expectExceptionMessage('Method ' . get_class($this->TestCase) . '::assertIsNoExistingType() does not exist');
+        $this->TestCase->assertIsNoExistingType('string');
+    }
+
+    /**
+     * Test for `__callStatic()` method missing arguments
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
+     */
+    public function testMagicCallMissingArgs(): void
+    {
+        $this->expectExceptionMessage('Method ' . get_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed');
+        $this->TestCase->assertIsJson();
     }
 
     /**
@@ -386,7 +411,7 @@ class TestTraitTest extends TestCase
         $this->assertInstanceOf(AbstractExampleClass::class, $result);
 
         $this->expectException(PHPUnitException::class);
-        $this->expectExceptionMessage('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?');
+        $this->expectExceptionMessage('Is this trait used by a class that extends `' . TestCase::class . '`?');
         $BadClass = new class {
             use TestTrait;
         };
