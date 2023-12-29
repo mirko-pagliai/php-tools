@@ -84,7 +84,9 @@ class TestTraitTest extends TestCase
              'assertIsUrl' => 'http://localhost',
          ] as $assertMethod => $value) {
             $this->TestCase->$assertMethod($value);
-            forward_static_call([$this->TestCase, $assertMethod], $value);
+            /** @var callable $staticCallable */
+            $staticCallable = [$this->TestCase, $assertMethod];
+            forward_static_call($staticCallable, $value);
         }
     }
 
