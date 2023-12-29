@@ -31,6 +31,7 @@ abstract class TestCase extends PHPUnitTestCase
 
     /**
      * @inheritDoc
+     * @psalm-suppress InternalMethod
      */
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
