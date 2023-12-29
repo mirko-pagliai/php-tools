@@ -21,11 +21,23 @@ use Tools\Filesystem;
 
 /**
  * TestCase class
+ * @deprecated 1.8.1 The `TestCase` class has been deprecated and will be removed in a later release. Use instead the
+ *  `PHPUnit\Framework\TestCase` class (and possibly `ReflectionTrait` and `TestTrait`)
  */
 abstract class TestCase extends PHPUnitTestCase
 {
     use ReflectionTrait;
     use TestTrait;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        deprecationWarning('The `TestCase` class has been deprecated and will be removed in a later release. Use instead the `PHPUnit\Framework\TestCase` class (and possibly `ReflectionTrait` and `TestTrait`)');
+
+        parent::__construct($name, $data, $dataName);
+    }
 
     /**
      * Teardown any static object changes and restore them.
