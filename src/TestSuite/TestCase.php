@@ -30,7 +30,9 @@ abstract class TestCase extends PHPUnitTestCase
     use TestTrait;
 
     /**
-     * @inheritDoc
+     * @param string|null $name Test name
+     * @param array $data Data
+     * @param $dataName Data name
      * @psalm-suppress InternalMethod
      */
     public function __construct(?string $name = null, array $data = [], $dataName = '')
