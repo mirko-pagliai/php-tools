@@ -17,7 +17,6 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use BadMethodCallException;
-use Closure;
 use Exception;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
@@ -272,12 +271,12 @@ trait TestTrait
 
     /**
      * Helper method for check deprecation methods
-     * @param \Closure $callable callable function that will receive asserts
+     * @param callable $callable callable function that will receive asserts
      * @return void
      * @since 1.8.0
      * @codeCoverageIgnore
      */
-    public function deprecated(Closure $callable): void
+    public function deprecated(callable $callable): void
     {
         $previousHandler = set_error_handler(
             function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
