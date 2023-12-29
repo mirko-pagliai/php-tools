@@ -256,6 +256,7 @@ trait TestTrait
      * @param array $arguments Constructor arguments
      * @return \PHPUnit\Framework\MockObject\MockObject
      * @since 1.7.1
+     * @psalm-suppress InternalClass, InternalMethod
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
