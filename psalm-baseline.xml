@@ -11,17 +11,4 @@
       <code>self::$_instance</code>
     </RedundantPropertyInitializationCheck>
   </file>
-  <file src="src/TestSuite/TestCase.php">
-    <UndefinedVariable>
-      <code>$previousHandler</code>
-    </UndefinedVariable>
-  </file>
-  <file src="src/TestSuite/TestTrait.php">
-    <InternalClass>
-      <code><![CDATA[new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?')]]></code>
-    </InternalClass>
-    <InternalMethod>
-      <code><![CDATA[new PHPUnitException('Is this trait used by a class that extends `' . PHPUnitTestCase::class . '`?')]]></code>
-    </InternalMethod>
-  </file>
 </files>
