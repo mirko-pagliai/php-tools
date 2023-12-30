@@ -1,6 +1,6 @@
 # 1.x branch
 ## 1.9 branch
-### 1.9.0
+### 1.9.0-RC1
 * requires at least PHP 8.1;
 * the `deprecationWarning()` function has been replaced by the ominimum provided by the `cakephp/core` package.
   (`\Cake\Core\deprecationWarning`). Be careful, because the signature is different now. The `TestCase::deprecated()`
