@@ -270,7 +270,7 @@ class TestTraitTest extends TestCase
         //Can't assert deprecations
         try {
             $this->TestCase->assertException(function () {
-                deprecationWarning('This is a deprecation');
+                deprecationWarning('1.0', 'This is a deprecation');
             }, Deprecated::class);
         } catch (Notice $e) {
             $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
