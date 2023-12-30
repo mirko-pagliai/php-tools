@@ -10,6 +10,7 @@
 * `Entity` and `Exceptionist` classes had been deprecated and were removed;
 * `is_json()`, `objects_map()` and `which()` global functions had been deprecated and were removed;
 * all exception classes provided by this package had been deprecated and were removed;
+* the (old) `CommandTester` class has been removed;
 * several (error suppression) rules have been removed from the `sniffer-ruleset.xml` file;
 * added tests for PHP 8.2 and 8.3;
 * updated `cakephp-codesniffer`, `phpstan` and `psalm` packages. Updated symfony's components.
