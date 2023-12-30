@@ -21,7 +21,6 @@ use App\AnotherExampleChildClass;
 use App\AssertionFailedTestCase;
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfTraversable;
 use App\SkipTestCase;
 use ArrayIterator;
 use BadMethodCallException;
