@@ -20,6 +20,7 @@
         "symfony/filesystem": "^5.0|^6.0|^7.0",
         "symfony/finder": "^5.0|^6.0|^7.0",
         "symfony/polyfill-php83": "^1.27",
+        "symfony/process": "^5.0|^6.0|^7.0",
         "symfony/string": "^5.0|^6.0|^7.0",
         "symfony/var-dumper": "^5.0|^6.0|^7.0",
         "symfony/translation-contracts": "^2.1"
