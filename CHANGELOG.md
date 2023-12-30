@@ -2,9 +2,9 @@
 ## 1.9 branch
 ### 1.9.0
 * requires at least PHP 8.1;
-* the `deprecationWarning()` function has been replaced by the ominimum provided by the `cakephp/core` package. Be
-  careful, because the signature is different now. The `TestCase::deprecated()` method has been removed and is not in
-  use for now;
+* the `deprecationWarning()` function has been replaced by the ominimum provided by the `cakephp/core` package.
+  (`\Cake\Core\deprecationWarning`). Be careful, because the signature is different now. The `TestCase::deprecated()`
+  method has been removed and is not in use for now;
 * the `TestCase` class had been deprecated and were removed. Use instead the `PHPUnit\Framework\TestCase` class (and
   possibly `ReflectionTrait` and `TestTrait`). The `deprecated()` method has been moved to `TestTrait`;
 * `Entity` and `Exceptionist` classes had been deprecated and were removed;

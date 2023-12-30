@@ -36,6 +36,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
+use function Cake\Core\deprecationWarning;
 
 /**
  * TestTraitTest class

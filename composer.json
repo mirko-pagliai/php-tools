@@ -41,10 +41,8 @@
             "libs/phpuri.php",
             "src/array_functions.php",
             "src/debug_functions.php",
-            "src/deprecation_functions.php",
             "src/global_functions.php",
-            "src/network_functions.php",
-            "vendor/cakephp/core/functions_global.php"
+            "src/network_functions.php"
         ]
     },
     "autoload-dev": {
