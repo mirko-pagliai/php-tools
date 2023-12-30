@@ -23,10 +23,12 @@ use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfTraversable;
 use App\SkipTestCase;
+use ArrayIterator;
 use BadMethodCallException;
 use ErrorException;
 use Exception;
 use GdImage;
+use IteratorAggregate;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Error\Deprecated;
 use PHPUnit\Framework\Error\Notice;
@@ -36,6 +38,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
+use Traversable;
 use function Cake\Core\deprecationWarning;
 
 /**
@@ -69,6 +72,13 @@ class TestTraitTest extends TestCase
      */
     public function testMagicCallAndCallStatic(): void
     {
+        $Traversable = new class implements IteratorAggregate {
+            public function getIterator(): Traversable
+            {
+                return new ArrayIterator([]);
+            }
+        };
+
         foreach ([
              'assertIsArray' => ['array'],
              'assertIsBool' => true,
@@ -76,7 +86,7 @@ class TestTraitTest extends TestCase
              'assertIsFloat' => 1.1,
              'assertIsHtml' => '<b>html</b>',
              'assertIsInt' => 1,
-             'assertIsIterable' => new ExampleOfTraversable(),
+             'assertIsIterable' => $Traversable,
              'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
              'assertIsObject' => new stdClass(),
              'assertIsPositive' => '1',

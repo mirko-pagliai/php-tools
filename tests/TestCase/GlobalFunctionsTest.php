@@ -17,7 +17,6 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfStringable;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -39,8 +38,14 @@ class GlobalFunctionsTest extends TestCase
         $this->assertSame('[\'a\', \'1\', \'0.5\', \'c\']', array_to_string(['a', 1, 0.5, 'c']));
         $this->assertSame('[]', array_to_string([]));
 
+        $ToStringClass = new class {
+            public function __toString()
+            {
+                return __CLASS__;
+            }
+        };
         //This class implements the `__toString()` method
-        $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
+        $this->assertSame('[\'a\', \''. (string)$ToStringClass . '\']', array_to_string(['a', $ToStringClass]));
 
         foreach ([['a', true], ['a', ['b', 'c']]] as $array) {
             $this->assertException(fn() => array_to_string($array), LogicException::class, 'Cannot convert array to string, some values are not stringable');
@@ -132,11 +137,17 @@ class GlobalFunctionsTest extends TestCase
             $this->assertFalse(is_stringable($value));
         }
 
+        $ToStringClass = new class {
+            public function __toString()
+            {
+                return __CLASS__;
+            }
+        };
         $this->assertTrue(is_stringable([]));
         $this->assertTrue(is_stringable(['a', 1, 0.5, 'c']));
         $this->assertFalse(is_stringable(['a', true]));
         $this->assertFalse(is_stringable(['a', ['b', ['c']]]));
-        $this->assertTrue(is_stringable(new ExampleOfStringable()));
+        $this->assertTrue(is_stringable($ToStringClass));
     }
 
     /**
