@@ -19,7 +19,7 @@
 * tests for `ReflectionTrait` and `TestTrait` have largely improved;
 * the `TestCase` class has been deprecated and will be removed in a later release. Use instead the
   `PHPUnit\Framework\TestCase` class (and possibly `ReflectionTrait` and `TestTrait`). The `deprecated()` method has
-  been moved to `TestTrait`;
+  been moved to `TestTrait` (and the signature was updated);
 * the `Exceptionist` class is deprecated and will be removed in a later release;
 * all exception classes provided by this package are deprecated and will be removed in a later release;
 * fixed configuration of phpcs.
