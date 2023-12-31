@@ -1,8 +1,7 @@
 .directory
 .idea
-.phpunit.result.cache
+.phpunit.*cache
 *_old
 *.old.*
 composer.lock
-coverage/
 vendor/
