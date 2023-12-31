@@ -352,7 +352,8 @@ class TestTraitTest extends TestCase
         $MockObject = $this->getMockBuilder(stdClass::class)->getMock();
         $this->TestCase->assertIsMock($MockObject);
 
-        $this->expectAssertionFailed('Failed asserting that a `stdClass` object is a mock');
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('Failed asserting that a `stdClass` object is a mock');
         $this->TestCase->assertIsMock(new stdClass());
     }
 
