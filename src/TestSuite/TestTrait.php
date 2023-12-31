@@ -297,24 +297,6 @@ trait TestTrait
     }
 
     /**
-     * Expects the next assertion to fail. Optionally it can verify that the exception message is also the same.
-     *
-     * Convenient wrapper for `expectException()` and `expectExceptionMessage()`.
-     * @param string $withMessage Optional expected message to check
-     * @return void
-     * @deprecated 1.8.2 `TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release
-     * @since 1.5.2
-     */
-    public function expectAssertionFailed(string $withMessage = ''): void
-    {
-        deprecationWarning('`TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release');
-        $this->expectException(AssertionFailedError::class);
-        if ($withMessage) {
-            $this->expectExceptionMessage($withMessage);
-        }
-    }
-
-    /**
      * Skips the test if the condition is `true`
      * @param bool $shouldSkip Whether the test should be skipped
      * @param string $message The message to display

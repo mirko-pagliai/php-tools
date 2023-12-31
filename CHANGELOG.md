@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.1-RC2
-* can use `cakephp/core` `4.0` or `5.0`.
+* can use `cakephp/core` `4.0` or `5.0`;
+* `TestTrait::expectAssertionFailed()` had been deprecated and has been removed.
 
 ### 1.9.0-RC1
 * requires at least PHP 8.1;
