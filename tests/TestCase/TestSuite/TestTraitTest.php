@@ -38,7 +38,6 @@ use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
 use Traversable;
-use function Cake\Core\deprecationWarning;
 
 /**
  * TestTraitTest class
@@ -169,7 +168,11 @@ class TestTraitTest extends TestCase
 
         //It correctly ignores deprecations
         $this->TestCase->assertException(function () {
-            deprecationWarning('1.0', 'This is a deprecation!');
+            if (function_exists('Cake\Core\deprecationWarning')) {
+                \Cake\Core\deprecationWarning('1.0', 'This is a deprecation!');
+            } else {
+                \deprecationWarning('This is a deprecation');
+            }
             throw new ErrorException('This is an error exception');
         }, ErrorException::class, 'This is an error exception');
 
@@ -270,7 +273,11 @@ class TestTraitTest extends TestCase
         //Can't assert deprecations
         try {
             $this->TestCase->assertException(function () {
-                deprecationWarning('1.0', 'This is a deprecation');
+                if (function_exists('Cake\Core\deprecationWarning')) {
+                    \Cake\Core\deprecationWarning('1.0', 'This is a deprecation!');
+                } else {
+                    \deprecationWarning('This is a deprecation');
+                }
             }, Deprecated::class);
         } catch (Notice $e) {
             $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
