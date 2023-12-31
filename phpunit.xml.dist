@@ -9,10 +9,6 @@
   xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
   <coverage>
-    <include>
-      <directory suffix=".php">./src/</directory>
-    </include>
-
     <exclude>
       <file>./libs/phpuri.php</file>
       <file>./src/debug_functions.php</file>
