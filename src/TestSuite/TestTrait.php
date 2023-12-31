@@ -305,10 +305,12 @@ trait TestTrait
      * Convenient wrapper for `expectException()` and `expectExceptionMessage()`.
      * @param string $withMessage Optional expected message to check
      * @return void
+     * @deprecated 1.8.2 `TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release
      * @since 1.5.2
      */
     public function expectAssertionFailed(string $withMessage = ''): void
     {
+        deprecationWarning('`TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release');
         $this->expectException(AssertionFailedError::class);
         if ($withMessage) {
             $this->expectExceptionMessage($withMessage);

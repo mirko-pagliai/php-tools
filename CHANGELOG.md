@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.8 branch
+### 1.8.2
+* `TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release.
+
 ### 1.8.1
 * tests for `ReflectionTrait` and `TestTrait` have largely improved;
 * the `TestCase` class has been deprecated and will be removed in a later release. Use instead the
