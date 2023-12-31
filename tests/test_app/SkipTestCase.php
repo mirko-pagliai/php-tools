@@ -40,5 +40,6 @@ class SkipTestCase extends TestCase
     public function testSkipIfFalse(): void
     {
         $this->skipIf(false);
+        $this->assertTrue(true, 'Avoid phpunit warnings');
     }
 }

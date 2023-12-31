@@ -27,7 +27,7 @@
     "require-dev": {
         "ext-gd": "*",
         "cakephp/cakephp-codesniffer": "^5.0",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^9.5 || ^10.1.0 <=10.5.3",
         "psr/http-message": "^1.0",
         "phpstan/phpstan": "^1.10.38",
         "vimeo/psalm": "^5.15.0"

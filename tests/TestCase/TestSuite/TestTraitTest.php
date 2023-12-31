@@ -33,6 +33,8 @@ use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestStatus\Skipped;
+use PHPUnit\Framework\TestStatus\Success;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
@@ -57,7 +59,7 @@ class TestTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = new class extends TestCase {
+        $this->TestCase = new class ('myTest') extends TestCase {
             use TestTrait;
         };
     }
@@ -416,10 +418,12 @@ class TestTraitTest extends TestCase
      */
     public function testSkipIf(): void
     {
-        $result = (new SkipTestCase('testSkipIfTrue'))->run();
-        $this->assertSame(1, $result->skippedCount());
+        $Test = (new SkipTestCase('testSkipIfTrue'));
+        $Test->run();
+        $this->assertInstanceOf(Skipped::class, $Test->status());
 
-        $result = (new SkipTestCase('testSkipIfFalse'))->run();
-        $this->assertSame(0, $result->skippedCount());
+        $Test = (new SkipTestCase('testSkipIfFalse'));
+        $Test->run();
+        $this->assertInstanceOf(Success::class, $Test->status());
     }
 }

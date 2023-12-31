@@ -30,8 +30,9 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperties(): void
     {
-        $result = (new ReflectionTraitTestCase('testGetProperties'))->run();
-        $this->assertTrue($result->wasSuccessful());
+        $Test = (new ReflectionTraitTestCase('testGetProperties'));
+        $Test->run();
+        $this->assertTrue($Test->status()->isSuccess());
     }
 
     /**
@@ -40,8 +41,9 @@ class ReflectionTraitTest extends TestCase
      */
     public function testGetProperty(): void
     {
-        $result = (new ReflectionTraitTestCase('testGetProperty'))->run();
-        $this->assertTrue($result->wasSuccessful());
+        $Test = (new ReflectionTraitTestCase('testGetProperty'));
+        $Test->run();
+        $this->assertTrue($Test->status()->isSuccess());
     }
 
     /**
@@ -50,8 +52,9 @@ class ReflectionTraitTest extends TestCase
      */
     public function testInvokeMethod(): void
     {
-        $result = (new ReflectionTraitTestCase('testInvokeMethod'))->run();
-        $this->assertTrue($result->wasSuccessful());
+        $Test = (new ReflectionTraitTestCase('testInvokeMethod'));
+        $Test->run();
+        $this->assertTrue($Test->status()->isSuccess());
     }
 
     /**
@@ -60,7 +63,8 @@ class ReflectionTraitTest extends TestCase
      */
     public function testSetProperty(): void
     {
-        $result = (new ReflectionTraitTestCase('testSetProperty'))->run();
-        $this->assertTrue($result->wasSuccessful());
+        $Test = (new ReflectionTraitTestCase('testSetProperty'));
+        $Test->run();
+        $this->assertTrue($Test->status()->isSuccess());
     }
 }
