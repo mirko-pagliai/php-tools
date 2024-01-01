@@ -17,13 +17,9 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use BadMethodCallException;
-use Exception;
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Exception as PHPUnitException;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 use Tools\Filesystem;
 
 /**
@@ -108,45 +104,6 @@ trait TestTrait
         sort($keys);
         sort($expectedKeys);
         self::assertEquals($expectedKeys, $keys, $message);
-    }
-
-    /**
-     * Asserts that a callable throws an exception
-     * @param callable $function A callable you want to test and that should raise the expected exception
-     * @param string $expectedException Expected exception
-     * @param string $expectedMessage The expected message
-     * @return void
-     * @deprecated 1.8.2 `assertException()` is deprecated and will be removed in a later release'
-     * @since 1.1.7
-     */
-    public static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
-    {
-        deprecationWarning('`assertException()` is deprecated and will be removed in a later release');
-
-        if (!is_subclass_of($expectedException, Throwable::class)) {
-            self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
-        }
-        if (class_exists(Deprecated::class) && $expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
-            [, $method] = explode('::', __METHOD__);
-            trigger_error('You cannot use `' . $method . '()` for deprecations, use instead `assertDeprecated()`');
-        }
-
-        try {
-            call_user_func($function);
-        } catch (Deprecated $e) {
-            //Do nothing
-        } catch (Throwable $e) {
-            self::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
-
-            if ($expectedMessage) {
-                self::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
-                self::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
-            }
-        }
-
-        if (!isset($e)) {
-            self::fail('Expected exception `' . $expectedException . '`, but no exception throw');
-        }
     }
 
     /**
@@ -263,7 +220,7 @@ trait TestTrait
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
         if (!$this instanceof TestCase) {
-            throw new PHPUnitException('Is this trait used by a class that extends `' . TestCase::class . '`?');
+            throw new Exception('Is this trait used by a class that extends `' . TestCase::class . '`?');
         }
 
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);

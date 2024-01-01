@@ -3,6 +3,7 @@
 ### 1.9.1-RC2
 * ready for PHPUnit 10;
 * can use `cakephp/core` `4.0` or `5.0`;
+* `TestTrait::assertException()` had been deprecated and has been removed;
 * `TestTrait::expectAssertionFailed()` had been deprecated and has been removed.
 
 ### 1.9.0-RC1
