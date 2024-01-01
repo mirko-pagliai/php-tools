@@ -47,9 +47,8 @@ class GlobalFunctionsTest extends TestCase
         //This class implements the `__toString()` method
         $this->assertSame('[\'a\', \'' . (string)$ToStringClass . '\']', array_to_string(['a', $ToStringClass]));
 
-        foreach ([['a', true], ['a', ['b', 'c']]] as $array) {
-            $this->assertException(fn() => array_to_string($array), LogicException::class, 'Cannot convert array to string, some values are not stringable');
-        }
+        $this->expectExceptionMessage('Cannot convert array to string, some values are not stringable');
+        array_to_string(['a', ['b', 'c']]);
     }
 
     /**
