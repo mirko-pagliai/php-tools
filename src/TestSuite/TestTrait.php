@@ -119,10 +119,13 @@ trait TestTrait
      * @param string $expectedException Expected exception
      * @param string $expectedMessage The expected message
      * @return void
+     * @deprecated 1.8.2 `assertException()` is deprecated and will be removed in a later release'
      * @since 1.1.7
      */
     public static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
     {
+        deprecationWarning('`assertException()` is deprecated and will be removed in a later release');
+
         if (!is_subclass_of($expectedException, Throwable::class)) {
             self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
         }
