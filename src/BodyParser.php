@@ -69,9 +69,12 @@ class BodyParser
      * Constructor
      * @param \Psr\Http\Message\StreamInterface|string $body Body
      * @param string $url Reference url. Used to determine the relative links
+     * @deprecated 1.8.2 `BodyParser` is deprecated and will be removed in a later release
      */
     public function __construct(StreamInterface|string $body, string $url)
     {
+        deprecationWarning('`BodyParser` class is deprecated and will be removed in a later release');
+
         $this->body = (string)$body;
         $this->url = $url;
     }

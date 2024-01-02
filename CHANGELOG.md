@@ -23,6 +23,7 @@
 
 ## 1.8 branch
 ### 1.8.2
+* `BodyParser` is deprecated and will be removed in a later release;
 * `TestTrait::assertException()` is deprecated and will be removed in a later release;
 * `TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release.
 
