@@ -22,8 +22,8 @@
         "symfony/polyfill-php83": "^1.27",
         "symfony/process": "^5.0|^6.0",
         "symfony/string": "^5.0|^6.0",
-        "symfony/var-dumper": "^5.0|^6.0",
-        "symfony/translation-contracts": "^2.1"
+        "symfony/translation-contracts": "^2.1",
+        "symfony/var-dumper": "^5.0|^6.0"
     },
     "require-dev": {
         "ext-gd": "*",
