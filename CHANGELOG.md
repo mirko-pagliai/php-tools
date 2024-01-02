@@ -1,7 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.1-RC2
-* ready for PHPUnit 10;
+* requires at least PHPUnit 10;
 * can use `cakephp/core` `4.0` or `5.0`;
 * `BodyParser` had been deprecated and has been removed;
 * `TestTrait::assertException()` had been deprecated and has been removed;
