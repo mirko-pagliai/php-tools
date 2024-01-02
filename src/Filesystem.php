@@ -138,9 +138,8 @@ class Filesystem extends BaseFilesystem
              * @param \Symfony\Component\Finder\Finder $finder A `Finder` instance
              * @return string[]
              */
-            $extractPathnames = function (Finder $finder): array {
-                return array_values(array_map(fn(SplFileInfo $file): string => $file->getPathname(), iterator_to_array($finder->sortByName())));
-            };
+            $extractPathnames = fn(Finder $finder): array =>
+                 array_values(array_map(fn(SplFileInfo $file): string => $file->getPathname(), iterator_to_array($finder->sortByName())));
 
             $finder->directories()->ignoreUnreadableDirs()->in($path);
             if ($exceptions) {
@@ -321,7 +320,6 @@ class Filesystem extends BaseFilesystem
      * Returns a path relative to the root path
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \ErrorException
      */
     public static function rtr(string $path): string
     {
