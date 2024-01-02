@@ -18,7 +18,6 @@ namespace Tools\Test;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfStringable;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\TestSuite\TestTrait;
