@@ -18,7 +18,6 @@ namespace Tools\Test\TestSuite;
 
 use App\AbstractExampleClass;
 use App\AnotherExampleChildClass;
-use App\AssertionFailedTestCase;
 use App\ExampleChildClass;
 use App\ExampleClass;
 use App\ExampleOfTraversable;
@@ -336,7 +335,8 @@ class TestTraitTest extends TestCase
         $MockObject = $this->getMockBuilder(stdClass::class)->getMock();
         $this->TestCase->assertIsMock($MockObject);
 
-        $this->expectAssertionFailed('Failed asserting that a `stdClass` object is a mock');
+        $this->expectException(AssertionFailedError::class);
+        $this->expectExceptionMessage('Failed asserting that a `stdClass` object is a mock');
         $this->TestCase->assertIsMock(new stdClass());
     }
 
@@ -373,31 +373,6 @@ class TestTraitTest extends TestCase
 
         $this->expectException(AssertionFailedError::class);
         $this->TestCase->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
-    }
-
-    /**
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::expectAssertionFailed()
-     */
-    public function testExpectAssertionFailed(): void
-    {
-        $result = (new AssertionFailedTestCase('testAssertionFailed'))->run();
-        $this->assertSame(0, $result->failureCount());
-
-        $result = (new AssertionFailedTestCase('testAssertionFailedWithMessage'))->run();
-        $this->assertSame(0, $result->failureCount());
-
-        $result = (new AssertionFailedTestCase('testAssertionFailedMissingFailure'))->run();
-        $this->assertSame(1, $result->failureCount());
-        $this->assertSame('Failed asserting that exception of type "PHPUnit\Framework\AssertionFailedError" is thrown.', $result->failures()[0]->exceptionMessage());
-
-        $result = (new AssertionFailedTestCase('testAssertionFailedMissingAssertion'))->run();
-        $this->assertSame(1, $result->failureCount());
-        $this->assertSame('Failed asserting that exception of type "PHPUnit\Framework\AssertionFailedError" is thrown.', $result->failures()[0]->exceptionMessage());
-
-        $result = (new AssertionFailedTestCase('testAssertionFailedWithBadMessage'))->run();
-        $this->assertSame(1, $result->failureCount());
-        $this->assertSame('Failed asserting that exception message \'Failed asserting that false is true.\' contains \'this is no true\'.', $result->failures()[0]->exceptionMessage());
     }
 
     /**
