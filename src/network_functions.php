@@ -15,8 +15,7 @@ declare(strict_types=1);
 
 if (!function_exists('clean_url')) {
     /**
-     * Cleans an url. It removes all unnecessary parts, as fragment (#),
-     *  trailing slash and `www` prefix
+     * Cleans an url. It removes all unnecessary parts, as fragment (#), trailing slash and `www` prefix
      * @param string $url Url
      * @param bool $removeWWW Removes the www prefix
      * @param bool $removeTrailingSlash Removes the trailing slash
@@ -26,7 +25,6 @@ if (!function_exists('clean_url')) {
     function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
         $url = preg_replace('/(#.*)$/', '', $url) ?: '';
-
         if ($removeWWW) {
             $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url) ?: '';
         }
@@ -99,10 +97,13 @@ if (!function_exists('url_to_absolute')) {
      * @param string $path Basic path, on which to construct the absolute url
      * @param string $relative Relative url to join
      * @return string
+     * @deprecated 1.8.3 `url_to_absolute()` is deprecated and will be removed in a later release
      * @since 1.1.16
      */
     function url_to_absolute(string $path, string $relative): string
     {
+        deprecationWarning('`url_to_absolute()` is deprecated and will be removed in a later release');
+
         $path = clean_url($path, false, true);
         $path = preg_match('/^(\w+:\/\/.+)\/[^.\/]+\.[^.\/]+$/', $path, $matches) ? $matches[1] : $path;
 
