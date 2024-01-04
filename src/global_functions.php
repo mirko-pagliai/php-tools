@@ -189,11 +189,14 @@ if (!function_exists('slug')) {
      * @param string $string The string you want to generate the slug from
      * @param bool $lowerCase With `true` the string will be lowercase
      * @return string
+     * @deprecated 1.8.3 `slug()` is deprecated and will be removed in a later release'
      * @see https://symfony.com/doc/current/components/string.html#slugger
      * @since 1.4.1
      */
     function slug(string $string, bool $lowerCase = true): string
     {
+        deprecationWarning('`slug()` is deprecated and will be removed in a later release');
+
         $slug = (string)(new AsciiSlugger())->slug($string);
 
         return $lowerCase ? strtolower($slug) : $slug;

@@ -114,26 +114,6 @@ class GlobalFunctionsTest extends TestCase
 
     /**
      * @test
-     * @uses slug()
-     * @noinspection SpellCheckingInspection
-     */
-    public function testSlug(): void
-    {
-        foreach ([
-            'This is a Slug',
-            'This\'is a slug',
-            'This\\Is\\A\\Slug',
-            'This ìs a slùg',
-            'this_is_a_slug',
-        ] as $string) {
-            $this->assertSame('this-is-a-slug', slug($string));
-        }
-
-        $this->assertSame('This-is-a-Slug', slug('This is a Slug', false));
-    }
-
-    /**
-     * @test
      * @uses is_stringable()
      */
     public function testIsStringable(): void

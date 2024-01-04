@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.8 branch
+### 1.8.3
+* '`slug()` is deprecated and will be removed in a later release'.
+
 ### 1.8.2
 * added tests for PHP 8.2;
 * `BodyParser` is deprecated and will be removed in a later release;
