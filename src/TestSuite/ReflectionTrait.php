@@ -33,10 +33,7 @@ trait ReflectionTrait
      */
     protected function _getMethodInstance(object $object, string $name): ReflectionMethod
     {
-        $method = new ReflectionMethod(get_class($object), $name);
-        $method->setAccessible(true);
-
-        return $method;
+        return new ReflectionMethod(get_class($object), $name);
     }
 
     /**
@@ -48,10 +45,7 @@ trait ReflectionTrait
      */
     protected function _getPropertyInstance(object $object, string $name): ReflectionProperty
     {
-        $property = new ReflectionProperty(get_class($object), $name);
-        $property->setAccessible(true);
-
-        return $property;
+        return new ReflectionProperty(get_class($object), $name);
     }
 
     /**

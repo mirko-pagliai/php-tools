@@ -216,13 +216,17 @@ trait TestTrait
      * @throws \PHPUnit\Framework\MockObject\Exception
      * @since 1.7.1
      * @psalm-suppress InternalClass, InternalMethod
+     * @noinspection PhpDocSignatureInspection
+     * @noinspection PhpUndefinedClassInspection
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
+        /** @noinspection PhpInstanceofIsAlwaysTrueInspection */
         if (!$this instanceof TestCase) {
             throw new Exception('Is this trait used by a class that extends `' . TestCase::class . '`?');
         }
 
+        /** @noinspection PhpDeprecationInspection */
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);
     }
 
@@ -232,6 +236,7 @@ trait TestTrait
      * @return void
      * @since 1.8.0
      * @codeCoverageIgnore
+     * @noinspection PhpStatementHasEmptyBodyInspection
      */
     public function deprecated(callable $callable): void
     {
@@ -252,7 +257,6 @@ trait TestTrait
         try {
             $callable();
         } finally {
-            //Do nothing
         }
         $this->assertTrue($deprecation, 'Should have at least one deprecation warning');
     }

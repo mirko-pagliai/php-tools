@@ -69,6 +69,8 @@ if (!function_exists('get_class_short_name')) {
      * @return string
      * @throws \ReflectionException
      * @since 1.0.2
+     * @noinspection PhpDocSignatureInspection
+     * @noinspection PhpUndefinedClassInspection
      */
     function get_class_short_name(string|object $class): string
     {
