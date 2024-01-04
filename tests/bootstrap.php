@@ -30,9 +30,8 @@ if (!file_exists(TMP)) {
 if (!function_exists('createSomeFiles')) {
     /**
      * Function to create some files for tests
-     * @template CreatedFiles as string[]
-     * @param CreatedFiles $files Files
-     * @return CreatedFiles
+     * @param string[] $files Files
+     * @return string[]
      */
     function createSomeFiles(array $files = []): array
     {

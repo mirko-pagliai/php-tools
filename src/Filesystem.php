@@ -104,9 +104,7 @@ class Filesystem extends BaseFilesystem
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         if (!$filename) {
-            /** @codingStandardsIgnoreStart */
-            throw new LogicException('It is not possible to create a temporary file');
-            /** @codingStandardsIgnoreEnd */
+            throw new LogicException('It is not possible to create a temporary file'); // @codeCoverageIgnore
         }
 
         return self::createFile($filename, $data);
@@ -206,9 +204,7 @@ class Filesystem extends BaseFilesystem
     {
         $root = getenv('ROOT');
         if (!$root && !defined('ROOT')) {
-            /** @codingStandardsIgnoreStart */
-            throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
-            /** @codingStandardsIgnoreEnd */
+            throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant'); // @codeCoverageIgnore
         }
 
         return $root ?: ROOT;
