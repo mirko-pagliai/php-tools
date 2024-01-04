@@ -140,23 +140,6 @@ if (!function_exists('rtr')) {
     }
 }
 
-if (!function_exists('slug')) {
-    /**
-     * Gets a slug from a string
-     * @param string $string The string you want to generate the slug from
-     * @param bool $lowerCase With `true` the string will be lowercase
-     * @return string
-     * @see https://symfony.com/doc/current/components/string.html#slugger
-     * @since 1.4.1
-     */
-    function slug(string $string, bool $lowerCase = true): string
-    {
-        $slug = (string)(new AsciiSlugger())->slug($string);
-
-        return $lowerCase ? strtolower($slug) : $slug;
-    }
-}
-
 if (!function_exists('uncamelcase')) {
     /**
      * Gets an "uncamelcase" string.

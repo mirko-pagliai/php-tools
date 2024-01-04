@@ -1,8 +1,12 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.2
+* `slug()` global function had been deprecated and has been removed.
+
 ### 1.9.1-RC2
 * requires at least PHPUnit 10;
 * can use `cakephp/core` `4.0` or `5.0`;
+* `TestTrait::assertException()` had been deprecated and has been removed;
 * `BodyParser` had been deprecated and has been removed;
 * `TestTrait::assertException()` had been deprecated and has been removed;
 * `TestTrait::expectAssertionFailed()` had been deprecated and has been removed.
