@@ -103,10 +103,11 @@ class Filesystem extends BaseFilesystem
     public static function createTmpFile(mixed $data = '', ?string $dir = null, string $prefix = 'tmp'): string
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
+        /** @codingStandardsIgnoreStart */
         if (!$filename) {
-            /** @codeCoverageIgnore  */
             throw new LogicException('It is not possible to create a temporary file');
         }
+        /** @codingStandardsIgnoreEnd */
 
         return self::createFile($filename, $data);
     }
@@ -204,10 +205,11 @@ class Filesystem extends BaseFilesystem
     public static function getRoot(): string
     {
         $root = getenv('ROOT');
+        /** @codingStandardsIgnoreStart */
         if (!$root && !defined('ROOT')) {
-            // @codeCoverageIgnore
             throw new LogicException('No root path has been set. The root path must be set with the `ROOT` environment variable (using the `putenv()` function) or the `ROOT` constant');
         }
+        /** @codingStandardsIgnoreEnd */
 
         return $root ?: ROOT;
     }

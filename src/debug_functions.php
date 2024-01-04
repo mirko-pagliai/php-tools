@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
  */
 
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
@@ -63,7 +64,7 @@ if (!function_exists('dd') && function_exists('dump')) {
      * @return void
      * @since 1.2.11
      */
-    function dd(mixed $var): void
+    #[NoReturn] function dd(mixed $var): void
     {
         call_user_func('dump', $var);
         die(1);
