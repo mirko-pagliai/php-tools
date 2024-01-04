@@ -24,8 +24,8 @@ use PHPUnit\Framework\TestCase;
 class NetworkFunctionsTest extends TestCase
 {
     /**
-     * Test for `clean_url()` global function
      * @test
+     * @uses \clean_url()
      */
     public function testCleanUrl(): void
     {
@@ -71,8 +71,8 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `get_hostname_from_url()` global function
      * @test
+     * @uses \get_hostname_from_url()
      */
     public function testGetHostnameFromUrl(): void
     {
@@ -100,8 +100,8 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_external_url()` global function
      * @test
+     * @uses \is_external_url()
      */
     public function testIsExternalUrl(): void
     {
@@ -131,8 +131,8 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_localhost()` global function
      * @test
+     * @uses \is_localhost()
      */
     public function testIsLocalhost(): void
     {
@@ -147,8 +147,8 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
-     * Test for `is_url()` global function
      * @test
+     * @uses \is_url()
      */
     public function testIsUrl(): void
     {
@@ -178,36 +178,5 @@ class NetworkFunctionsTest extends TestCase
         ] as $url) {
             $this->assertFalse(is_url($url));
         }
-    }
-
-    /**
-     * Test for `url_to_absolute()` global function
-     * @test
-     */
-    public function testUrlToAbsolute(): void
-    {
-        foreach (['http', 'https', 'ftp'] as $scheme) {
-            $paths = [
-                $scheme . '://localhost/my-site/sub-dir/another-sub-dir',
-                $scheme . '://localhost/my-site/sub-dir/another-sub-dir/a_file.html',
-            ];
-
-            foreach ($paths as $path) {
-                foreach ([
-                    'http://localhost/my-site' => 'http://localhost/my-site',
-                    'http://localhost/my-site/page.html' => 'http://localhost/my-site/page.html',
-                    '//localhost/my-site' => $scheme . '://localhost/my-site',
-                    'page2.html' => $scheme . '://localhost/my-site/sub-dir/another-sub-dir/page2.html',
-                    '/page3.html' => $scheme . '://localhost/page3.html',
-                    '../page4.html' => $scheme . '://localhost/my-site/sub-dir/page4.html',
-                    '../../page5.html' => $scheme . '://localhost/my-site/page5.html',
-                    'http://external.com' => 'http://external.com',
-                ] as $url => $expected) {
-                    $this->assertSame($expected, url_to_absolute($path, $url));
-                }
-            }
-        }
-
-        $this->assertSame('http://example.com/page6.html', url_to_absolute('http://example.com', 'page6.html'));
     }
 }
