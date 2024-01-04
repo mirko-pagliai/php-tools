@@ -93,7 +93,7 @@ trait TestTrait
 
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
-     * @param array-key[] $expectedKeys Expected keys
+     * @param array $expectedKeys Expected keys
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the generated message
      * @return void
@@ -181,7 +181,7 @@ trait TestTrait
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param string[] $expectedProperties Expected properties
+     * @param array $expectedProperties Expected properties
      * @param object|object[] $object Object you want to check or an array of objects
      * @param string $message The failure message that will be appended to the generated message
      * @return void
@@ -210,10 +210,10 @@ trait TestTrait
      * Returns a partial mock object for the specified abstract class.
      *
      * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
-     * @param class-string $originalClassName Abstract class you want to mock
+     * @param class-string<object> $originalClassName Abstract class you want to mock
      * @param string[] $mockedMethods Methods you want to mock
      * @param array $arguments Constructor arguments
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws \PHPUnit\Framework\MockObject\Exception
      * @since 1.7.1
      * @psalm-suppress InternalClass, InternalMethod
      */
@@ -252,6 +252,7 @@ trait TestTrait
         try {
             $callable();
         } finally {
+            //Do nothing
         }
         $this->assertTrue($deprecation, 'Should have at least one deprecation warning');
     }

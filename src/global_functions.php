@@ -45,7 +45,7 @@ if (!function_exists('array_to_string')) {
 if (!function_exists('get_child_methods')) {
     /**
      * Gets the class methods' names. Unlike `get_class_methods()`, this function excludes the methods of the parent class
-     * @param class-string $class Class name
+     * @param string $class Class name
      * @return string[]
      * @since 1.0.1
      * @throws \LogicException
@@ -129,7 +129,6 @@ if (!function_exists('rtr')) {
      * Fast and convenient alias for `Filesystem::rtr()`
      * @param string $path Absolute path
      * @return string Relative path
-     * @throws \ErrorException
      * @see \Tools\Filesystem::rtr()
      * @since 1.7.4
      */

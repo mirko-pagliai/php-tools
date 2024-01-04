@@ -64,7 +64,8 @@ if (!function_exists('dd') && function_exists('dump')) {
      * @return void
      * @since 1.2.11
      */
-    #[NoReturn] function dd(mixed $var): void
+    #[NoReturn]
+    function dd(mixed $var): void
     {
         call_user_func('dump', $var);
         die(1);
