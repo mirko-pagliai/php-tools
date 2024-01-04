@@ -265,6 +265,7 @@ trait TestTrait
     public function skipIf(bool $shouldSkip, string $message = ''): bool
     {
         if ($shouldSkip) {
+            /** @codeCoverageIgnore  */
             self::markTestSkipped($message);
         }
 

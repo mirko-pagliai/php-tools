@@ -104,6 +104,7 @@ class Filesystem extends BaseFilesystem
     {
         $filename = tempnam($dir ?: (defined('TMP') ? TMP : sys_get_temp_dir()), $prefix) ?: '';
         if (!$filename) {
+            /** @codeCoverageIgnore  */
             throw new LogicException('It is not possible to create a temporary file');
         }
 
