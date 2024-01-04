@@ -13,7 +13,6 @@ declare(strict_types=1);
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
 
-use Symfony\Component\String\Slugger\AsciiSlugger;
 use Tools\Filesystem;
 use function Symfony\Component\String\u;
 
