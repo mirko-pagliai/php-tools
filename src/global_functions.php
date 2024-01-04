@@ -117,7 +117,7 @@ if (!function_exists('is_stringable')) {
         if (is_array($var)) {
             try {
                 return (bool)array_to_string($var);
-            } catch (LogicException $e) {
+            } catch (LogicException) {
                 return false;
             }
         }
