@@ -29,8 +29,7 @@ class EventListTest extends TestCase
     protected EventList $EventList;
 
     /**
-     * Called before every test method
-     * @return void
+     * @inheritDoc
      */
     public function setUp(): void
     {
@@ -40,23 +39,27 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for all offset methods
      * @test
+     * @uses \Tools\Event\EventList::offsetExists()
+     * @uses \Tools\Event\EventList::offsetGet()
+     * @uses \Tools\Event\EventList::offsetSet()
+     * @uses \Tools\Event\EventList::offsetUnset()
      */
     public function testOffsetMethods(): void
     {
+        $Event = new Event('myEvent');
         $this->assertFalse($this->EventList->offsetExists(1));
         $this->assertNull($this->EventList->offsetGet(1));
-        $this->EventList->offsetSet(1, 'string');
+        $this->EventList->offsetSet(1, $Event);
         $this->assertTrue($this->EventList->offsetExists(1));
-        $this->assertSame('string', $this->EventList->offsetGet(1));
+        $this->assertSame($Event, $this->EventList->offsetGet(1));
         $this->EventList->offsetUnset(1);
         $this->assertFalse($this->EventList->offsetExists(1));
     }
 
     /**
-     * Test for `add()` method
      * @test
+     * @uses \Tools\Event\EventList::add()
      */
     public function testAdd(): void
     {
@@ -66,8 +69,8 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for `count()` method
      * @test
+     * @uses \Tools\Event\EventList::count()
      */
     public function testCount(): void
     {
@@ -79,8 +82,8 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for `flush()` method
      * @test
+     * @uses \Tools\Event\EventList::flush()
      */
     public function testFlush(): void
     {
@@ -90,8 +93,8 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for `hasEvent()` method
      * @test
+     * @uses \Tools\Event\EventList::hasEvent()
      */
     public function testHasEvent(): void
     {
@@ -101,8 +104,8 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for `extract()` method
      * @test
+     * @uses \Tools\Event\EventList::extract()
      */
     public function testExtract(): void
     {
@@ -120,8 +123,8 @@ class EventListTest extends TestCase
     }
 
     /**
-     * Test for `toArray()` method
      * @test
+     * @uses \Tools\Event\EventList::toArray()
      */
     public function testToArray(): void
     {

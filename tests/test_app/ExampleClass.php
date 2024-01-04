@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpMissingFieldTypeInspection, PhpUnusedPrivateFieldInspection */
+<?php
 declare(strict_types=1);
 
 /**
@@ -12,7 +12,6 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 namespace App;
 
 /**

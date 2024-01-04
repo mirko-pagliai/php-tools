@@ -1,4 +1,32 @@
 # 1.x branch
+## 1.9 branch
+### 1.9.2
+* `url_to_absolute()` had been deprecated and has been removed;
+* `slug()` global function had been deprecated and has been removed.
+
+### 1.9.1-RC2
+* requires at least PHPUnit 10;
+* can use `cakephp/core` `4.0` or `5.0`;
+* `TestTrait::assertException()` had been deprecated and has been removed;
+* `BodyParser` had been deprecated and has been removed;
+* `TestTrait::assertException()` had been deprecated and has been removed;
+* `TestTrait::expectAssertionFailed()` had been deprecated and has been removed.
+
+### 1.9.0-RC1
+* requires at least PHP 8.1;
+* the `deprecationWarning()` function has been replaced by the ominimum provided by the `cakephp/core` package.
+  (`\Cake\Core\deprecationWarning`). Be careful, because the signature is different now. The `TestCase::deprecated()`
+  method has been removed and is not in use for now;
+* the `TestCase` class had been deprecated and has been removed. Use instead the `PHPUnit\Framework\TestCase` class (and
+  possibly `ReflectionTrait` and `TestTrait`). The `deprecated()` method has been moved to `TestTrait`;
+* `Entity` and `Exceptionist` classes had been deprecated and have been removed;
+* `is_json()`, `objects_map()` and `which()` global functions had been deprecated and have been removed;
+* all exception classes provided by this package had been deprecated and have been removed;
+* the (old) `CommandTester` class has been removed;
+* several (error suppression) rules have been removed from the `sniffer-ruleset.xml` file;
+* added tests for PHP 8.2 and 8.3;
+* updated `cakephp-codesniffer`, `phpstan` and `psalm` packages. Updated symfony's components.
+
 ## 1.8 branch
 ### 1.8.3
 * `url_to_absolute()` is deprecated and will be removed in a later release;

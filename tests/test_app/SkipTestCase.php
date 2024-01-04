@@ -12,7 +12,6 @@ declare(strict_types=1);
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
  */
-
 namespace App;
 
 use PHPUnit\Framework\TestCase;
@@ -40,5 +39,6 @@ class SkipTestCase extends TestCase
     public function testSkipIfFalse(): void
     {
         $this->skipIf(false);
+        $this->assertTrue(true, 'Avoid phpunit warnings');
     }
 }

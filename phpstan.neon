@@ -17,10 +17,11 @@ parameters:
 
     ignoreErrors:
         -
-            message: '#^(Access|Call) to (protected|an undefined) ((static )?method|property)#'
-            path: tests/TestCase/
-
+            message: '#^Call to an undefined method PHPUnit\\Framework\\TestCase::\w+\(\)\.$#'
+            path: tests/TestCase/TestSuite/TestTraitTest.php
+        -
+            message: '#^Call to an undefined (static )?method class@anonymous\/tests\/TestCase\/TestSuite\/TestTraitTest\.php:\d+::\w+\(\)\.#'
+            path: tests/TestCase/TestSuite/TestTraitTest.php
 
     excludePaths:
-        - src/Exception
         - tests/test_app/

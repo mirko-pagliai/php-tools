@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#3 \\$exception of static method Tools\\\\Exceptionist\\:\\:isTrue\\(\\) expects class\\-string\\<ErrorException\\>, string given\\.$#"
-			count: 1
-			path: tests/TestCase/ExceptionistTest.php
-
-		-
 			message: "#^Call to function is_resource\\(\\) with false will always evaluate to false\\.$#"
 			count: 1
 			path: tests/TestCase/TestSuite/TestTraitTest.php

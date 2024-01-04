@@ -56,7 +56,7 @@ trait EventDispatcherTrait
      *  this event to it can be read by listeners
      * @return \Tools\Event\Event
      */
-    public function dispatchEvent(string $name, $args = null): Event
+    public function dispatchEvent(string $name, mixed $args = null): Event
     {
         $event = new Event($name, $args);
         $this->getEventDispatcher()->dispatch($event, $name);

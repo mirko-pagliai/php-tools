@@ -5,19 +5,23 @@
   processIsolation="false"
   stopOnFailure="false"
   bootstrap="./tests/bootstrap.php"
-  convertDeprecationsToExceptions="true"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" cacheDirectory=".phpunit.cache"
 >
-  <coverage>
-    <exclude>
-      <file>./libs/phpuri.php</file>
-      <file>./src/debug_functions.php</file>
-    </exclude>
-  </coverage>
-
+  <coverage/>
   <testsuites>
     <testsuite name="php-tools Test Cases">
       <directory>./tests/TestCase</directory>
     </testsuite>
   </testsuites>
+
+  <source>
+    <include>
+      <directory>./src</directory>
+    </include>
+
+    <exclude>
+      <file>./libs/phpuri.php</file>
+      <file>./src/debug_functions.php</file>
+    </exclude>
+  </source>
 </phpunit>

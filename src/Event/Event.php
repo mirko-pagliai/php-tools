@@ -41,9 +41,10 @@ class Event extends BaseEvent
      * @param mixed $args Any event argument you wish to be transported with
      *  this event to it can be read by listeners
      */
-    public function __construct(string $name, $args = null)
+    public function __construct(string $name, mixed $args = null)
     {
         $this->name = $name;
+
         $this->args = (array)$args;
     }
 
@@ -53,7 +54,7 @@ class Event extends BaseEvent
      * @return mixed
      * @throws \LogicException
      */
-    public function getArg(int $index)
+    public function getArg(int $index): mixed
     {
         if (!array_key_exists($index, $this->args)) {
             throw new LogicException(sprintf('Argument with index `%s` does not exist', $index));

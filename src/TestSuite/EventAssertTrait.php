@@ -49,6 +49,7 @@ trait EventAssertTrait
 
         $matching = false;
         foreach ($EventDispatcher->getEventList()->toArray() as $event) {
+            /** @var \Tools\Event\Event $event */
             if ($event->getName() === $eventName && $event->getArgs() === $eventArgs) {
                 $matching = true;
             }
