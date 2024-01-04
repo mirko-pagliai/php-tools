@@ -34,7 +34,6 @@
             "Tools\\": "src/"
         },
         "files": [
-            "libs/phpuri.php",
             "src/array_functions.php",
             "src/debug_functions.php",
             "src/global_functions.php",

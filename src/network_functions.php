@@ -90,23 +90,3 @@ if (!function_exists('is_url')) {
         return (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;()]*[-a-z0-9+&@#\/%=~_|()]$/i", $string);
     }
 }
-
-if (!function_exists('url_to_absolute')) {
-    /**
-     * Builds an absolute url
-     * @param string $path Basic path, on which to construct the absolute url
-     * @param string $relative Relative url to join
-     * @return string
-     * @deprecated 1.8.3 `url_to_absolute()` is deprecated and will be removed in a later release
-     * @since 1.1.16
-     */
-    function url_to_absolute(string $path, string $relative): string
-    {
-        deprecationWarning('`url_to_absolute()` is deprecated and will be removed in a later release');
-
-        $path = clean_url($path, false, true);
-        $path = preg_match('/^(\w+:\/\/.+)\/[^.\/]+\.[^.\/]+$/', $path, $matches) ? $matches[1] : $path;
-
-        return phpUri::parse($path . '/')->join($relative);
-    }
-}
