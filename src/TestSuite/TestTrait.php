@@ -17,30 +17,26 @@ declare(strict_types=1);
 namespace Tools\TestSuite;
 
 use BadMethodCallException;
-use Exception;
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Exception as PHPUnitException;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use Throwable;
 use Tools\Filesystem;
 
 /**
  * A trait that provides some assertion methods.
- * @method static void assertIsArray($var, ?string $message = '') Asserts that `$var` is an array
- * @method static void assertIsBool($var, ?string $message = '') Asserts that `$var` is a boolean
- * @method static void assertIsCallable($var, ?string $message = '') Asserts that `$var` is a callable
- * @method static void assertIsFloat($var, ?string $message = '') Asserts that `$var` is a float
- * @method static void assertIsHtml($var, ?string $message = '') Asserts that `$var` is a html string
- * @method static void assertIsInt($var, ?string $message = '') Asserts that `$var` is an int
- * @method static void assertIsIterable($var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
- * @method static void assertIsJson($var, ?string $message = '') Asserts that `$var` is a json string
- * @method static void assertIsObject($var, ?string $message = '') Asserts that `$var` is an object
- * @method static void assertIsPositive($var, ?string $message = '') Asserts that `$var` is a positive number
- * @method static void assertIsResource($var, ?string $message = '') Asserts that `$var` is a resource
- * @method static void assertIsString($var, ?string $message = '') Asserts that `$var` is a string
- * @method static void assertIsUrl($var, ?string $message = '') Asserts that `$var` is an url
+ * @method static void assertIsArray(mixed $var, ?string $message = '') Asserts that `$var` is an array
+ * @method static void assertIsBool(mixed $var, ?string $message = '') Asserts that `$var` is a boolean
+ * @method static void assertIsCallable(mixed $var, ?string $message = '') Asserts that `$var` is a callable
+ * @method static void assertIsFloat(mixed $var, ?string $message = '') Asserts that `$var` is a float
+ * @method static void assertIsHtml(mixed $var, ?string $message = '') Asserts that `$var` is a html string
+ * @method static void assertIsInt(mixed $var, ?string $message = '') Asserts that `$var` is an int
+ * @method static void assertIsIterable(mixed $var, ?string $message = '') Asserts that `$var` is iterable, i.e. that it is an array or an object implementing `Traversable`
+ * @method static void assertIsJson(mixed $var, ?string $message = '') Asserts that `$var` is a json string
+ * @method static void assertIsObject(mixed $var, ?string $message = '') Asserts that `$var` is an object
+ * @method static void assertIsPositive(mixed $var, ?string $message = '') Asserts that `$var` is a positive number
+ * @method static void assertIsResource(mixed $var, ?string $message = '') Asserts that `$var` is a resource
+ * @method static void assertIsString(mixed $var, ?string $message = '') Asserts that `$var` is a string
+ * @method static void assertIsUrl(mixed $var, ?string $message = '') Asserts that `$var` is an url
  */
 trait TestTrait
 {
@@ -76,20 +72,17 @@ trait TestTrait
                 throw new BadMethodCallException(sprintf('Method %s::%s() expects at least 1 argument, maximum 2, %d passed', __CLASS__, $name, $count));
             }
 
-            switch ($name) {
-                case 'assertIsJson':
-                    $function = 'json_validate';
-                    break;
-                default:
-                    /** @var callable $function */
-                    $function = 'is_' . strtolower(substr($name, 8));
-            }
+            /** @var callable $function */
+            $function = match ($name) {
+                'assertIsJson' => 'json_validate',
+                default => 'is_' . strtolower(substr($name, 8)),
+            };
 
             if (is_callable($function)) {
                 $var = array_shift($arguments);
                 /** @var callable $callable */
                 $callable = [__CLASS__, 'assertTrue'];
-                call_user_func_array($callable, [$function($var), ...$arguments]);
+                call_user_func_array($callable, [$function($var), ...array_values($arguments)]);
 
                 return;
             }
@@ -100,7 +93,7 @@ trait TestTrait
 
     /**
      * Asserts that the array keys are equal to `$expectedKeys`
-     * @param array-key[] $expectedKeys Expected keys
+     * @param array $expectedKeys Expected keys
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the generated message
      * @return void
@@ -111,45 +104,6 @@ trait TestTrait
         sort($keys);
         sort($expectedKeys);
         self::assertEquals($expectedKeys, $keys, $message);
-    }
-
-    /**
-     * Asserts that a callable throws an exception
-     * @param callable $function A callable you want to test and that should raise the expected exception
-     * @param string $expectedException Expected exception
-     * @param string $expectedMessage The expected message
-     * @return void
-     * @deprecated 1.8.2 `assertException()` is deprecated and will be removed in a later release'
-     * @since 1.1.7
-     */
-    public static function assertException(callable $function, string $expectedException = Exception::class, string $expectedMessage = ''): void
-    {
-        deprecationWarning('`assertException()` is deprecated and will be removed in a later release');
-
-        if (!is_subclass_of($expectedException, Throwable::class)) {
-            self::fail('Class `' . $expectedException . '` is not a throwable or does not exist');
-        }
-        if (class_exists(Deprecated::class) && $expectedException == Deprecated::class || is_subclass_of($expectedException, Deprecated::class)) {
-            [, $method] = explode('::', __METHOD__);
-            trigger_error('You cannot use `' . $method . '()` for deprecations, use instead `assertDeprecated()`');
-        }
-
-        try {
-            call_user_func($function);
-        } catch (Deprecated $e) {
-            //Do nothing
-        } catch (Throwable $e) {
-            self::assertTrue($expectedException === get_class($e), sprintf('Expected exception `%s`, unexpected type `%s`', $expectedException, get_class($e)));
-
-            if ($expectedMessage) {
-                self::assertNotEmpty($e->getMessage(), 'Expected message exception `' . $expectedMessage . '`, but no message for the exception');
-                self::assertEquals($expectedMessage, $e->getMessage(), sprintf('Expected message exception `%s`, unexpected message `%s`', $expectedMessage, $e->getMessage()));
-            }
-        }
-
-        if (!isset($e)) {
-            self::fail('Expected exception `' . $expectedException . '`, but no exception throw');
-        }
     }
 
     /**
@@ -164,7 +118,7 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertFileExtension($expectedExtension, string $filename, string $message = ''): void
+    public static function assertFileExtension(string|array $expectedExtension, string $filename, string $message = ''): void
     {
         self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
@@ -178,7 +132,7 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertFileMime($expectedMime, string $filename, string $message = ''): void
+    public static function assertFileMime(string|array $expectedMime, string $filename, string $message = ''): void
     {
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
@@ -207,7 +161,7 @@ trait TestTrait
      * @return void
      * @since 1.0.6
      */
-    public static function assertIsArrayNotEmpty($var, string $message = ''): void
+    public static function assertIsArrayNotEmpty(mixed $var, string $message = ''): void
     {
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
@@ -227,24 +181,24 @@ trait TestTrait
 
     /**
      * Asserts that the object properties are equal to `$expectedProperties`
-     * @param string[] $expectedProperties Expected properties
+     * @param array $expectedProperties Expected properties
      * @param object|object[] $object Object you want to check or an array of objects
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public function assertObjectPropertiesEqual(array $expectedProperties, $object, string $message = ''): void
+    public function assertObjectPropertiesEqual(array $expectedProperties, object|array $object, string $message = ''): void
     {
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
     /**
      * Asserts that `$firstClass` and `$secondClass` classes have the same methods
-     * @param class-string|object $firstClass First class as string or object
-     * @param class-string|object $secondClass Second class as string or object
+     * @param string|object $firstClass First class as string or object
+     * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      */
-    public static function assertSameMethods($firstClass, $secondClass, string $message = ''): void
+    public static function assertSameMethods(string|object $firstClass, string|object $secondClass, string $message = ''): void
     {
         [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
@@ -256,19 +210,23 @@ trait TestTrait
      * Returns a partial mock object for the specified abstract class.
      *
      * This works like the `createPartialMock()` method, but uses abstract classes and allows you to set constructor arguments
-     * @param class-string $originalClassName Abstract class you want to mock
+     * @param class-string<object> $originalClassName Abstract class you want to mock
      * @param string[] $mockedMethods Methods you want to mock
      * @param array $arguments Constructor arguments
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @throws \PHPUnit\Framework\MockObject\Exception
      * @since 1.7.1
      * @psalm-suppress InternalClass, InternalMethod
+     * @noinspection PhpDocSignatureInspection
+     * @noinspection PhpUndefinedClassInspection
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
+        /** @noinspection PhpInstanceofIsAlwaysTrueInspection */
         if (!$this instanceof TestCase) {
-            throw new PHPUnitException('Is this trait used by a class that extends `' . TestCase::class . '`?');
+            throw new Exception('Is this trait used by a class that extends `' . TestCase::class . '`?');
         }
 
+        /** @noinspection PhpDeprecationInspection */
         return $this->getMockForAbstractClass($originalClassName, $arguments, '', true, true, true, $mockedMethods);
     }
 
@@ -278,6 +236,7 @@ trait TestTrait
      * @return void
      * @since 1.8.0
      * @codeCoverageIgnore
+     * @noinspection PhpStatementHasEmptyBodyInspection
      */
     public function deprecated(callable $callable): void
     {
@@ -303,24 +262,6 @@ trait TestTrait
     }
 
     /**
-     * Expects the next assertion to fail. Optionally it can verify that the exception message is also the same.
-     *
-     * Convenient wrapper for `expectException()` and `expectExceptionMessage()`.
-     * @param string $withMessage Optional expected message to check
-     * @return void
-     * @deprecated 1.8.2 `TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release
-     * @since 1.5.2
-     */
-    public function expectAssertionFailed(string $withMessage = ''): void
-    {
-        deprecationWarning('`TestTrait::expectAssertionFailed()` is deprecated and will be removed in a later release');
-        $this->expectException(AssertionFailedError::class);
-        if ($withMessage) {
-            $this->expectExceptionMessage($withMessage);
-        }
-    }
-
-    /**
      * Skips the test if the condition is `true`
      * @param bool $shouldSkip Whether the test should be skipped
      * @param string $message The message to display
@@ -329,7 +270,7 @@ trait TestTrait
     public function skipIf(bool $shouldSkip, string $message = ''): bool
     {
         if ($shouldSkip) {
-            self::markTestSkipped($message);
+            self::markTestSkipped($message); // @codeCoverageIgnore
         }
 
         return $shouldSkip;

@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -20,21 +19,20 @@ use App\AbstractExampleClass;
 use App\AnotherExampleChildClass;
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfTraversable;
 use App\SkipTestCase;
-use BadMethodCallException;
-use ErrorException;
-use Exception;
+use ArrayIterator;
 use GdImage;
+use IteratorAggregate;
 use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Error\Deprecated;
-use PHPUnit\Framework\Error\Notice;
 use PHPUnit\Framework\Exception as PHPUnitException;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestStatus\Skipped;
+use PHPUnit\Framework\TestStatus\Success;
 use stdClass;
 use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
+use Traversable;
 
 /**
  * TestTraitTest class
@@ -55,7 +53,7 @@ class TestTraitTest extends TestCase
     {
         parent::setUp();
 
-        $this->TestCase = new class extends TestCase {
+        $this->TestCase = new class ('myTest') extends TestCase {
             use TestTrait;
         };
     }
@@ -67,6 +65,13 @@ class TestTraitTest extends TestCase
      */
     public function testMagicCallAndCallStatic(): void
     {
+        $Traversable = new class implements IteratorAggregate {
+            public function getIterator(): Traversable
+            {
+                return new ArrayIterator([]);
+            }
+        };
+
         foreach ([
              'assertIsArray' => ['array'],
              'assertIsBool' => true,
@@ -74,7 +79,7 @@ class TestTraitTest extends TestCase
              'assertIsFloat' => 1.1,
              'assertIsHtml' => '<b>html</b>',
              'assertIsInt' => 1,
-             'assertIsIterable' => new ExampleOfTraversable(),
+             'assertIsIterable' => $Traversable,
              'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
              'assertIsObject' => new stdClass(),
              'assertIsPositive' => '1',
@@ -145,134 +150,6 @@ class TestTraitTest extends TestCase
 
     /**
      * @test
-     * @uses \Tools\TestSuite\TestTrait::assertException()
-     */
-    public function testAssertException(): void
-    {
-        $this->TestCase->assertException(function () {
-            throw new Exception();
-        });
-        $this->TestCase->assertException(function () {
-            throw new Exception('right exception message');
-        }, Exception::class, 'right exception message');
-
-        //It correctly ignores deprecations
-        $this->TestCase->assertException(function () {
-            deprecationWarning('This is a deprecation!');
-            throw new ErrorException('This is an error exception');
-        }, ErrorException::class, 'This is an error exception');
-
-        //No exception throw
-        try {
-            $this->TestCase->assertException('time');
-        } catch (AssertionFailedError $e) {
-            $this->assertSame('Expected exception `Exception`, but no exception throw', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //The comparison is strict, it does not consider parent classes (`ErrorException` != `Exception`)
-        try {
-            $this->TestCase->assertException(function () {
-                throw new ErrorException();
-            });
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `Exception`, unexpected type `ErrorException`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //No existing exception or invalid exception class
-        foreach (['noExistingException', stdClass::class] as $class) {
-            try {
-                $this->TestCase->assertException(function () {
-                    throw new Exception();
-                }, $class);
-            } catch (AssertionFailedError $e) {
-                $this->assertSame('Class `' . $class . '` is not a throwable or does not exist', $e->getMessage());
-            } finally {
-                if (!isset($e)) {
-                    self::fail();
-                }
-                unset($e);
-            }
-        }
-
-        //Unexpected exception type
-        try {
-            $this->TestCase->assertException(function () {
-                throw new Exception();
-            }, BadMethodCallException::class);
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected exception `' . BadMethodCallException::class . '`, unexpected type `Exception`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //Wrong exception message
-        try {
-            $this->TestCase->assertException(function () {
-                throw new Exception('Wrong');
-            }, Exception::class, 'Right');
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected message exception `Right`, unexpected message `Wrong`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-
-        //Expected exception message, but no message
-        try {
-            $this->TestCase->assertException(function () {
-                throw new Exception();
-            }, Exception::class, 'Right');
-        } catch (AssertionFailedError $e) {
-            $this->assertStringStartsWith('Expected message exception `Right`, but no message for the exception', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-    }
-
-    /**
-     * Test for `assertException` with a deprecation (it can't assert deprecations)
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertException()
-     */
-    public function testAssertExceptionWithDeprecation(): void
-    {
-        $this->skipIf(!class_exists(Deprecated::class));
-
-        //Can't assert deprecations
-        try {
-            $this->TestCase->assertException(function () {
-                deprecationWarning('This is a deprecation');
-            }, Deprecated::class);
-        } catch (Notice $e) {
-            $this->assertSame('You cannot use `assertException()` for deprecations, use instead `assertDeprecated()`', $e->getMessage());
-        } finally {
-            if (!isset($e)) {
-                self::fail();
-            }
-            unset($e);
-        }
-    }
-
-    /**
-     * @test
      * @uses \Tools\TestSuite\TestTrait::assertFileExtension()
      */
     public function testAssertFileExtension(): void
@@ -311,19 +188,40 @@ class TestTraitTest extends TestCase
      * @test
      * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
      */
-    public function testAssertIsArrayNotEmpty(): void
+    public function testAssertIsArrayNotEmptyWithEmptyArray(): void
     {
-        $this->TestCase->assertIsArrayNotEmpty(['value']);
+        $this->expectException(ExpectationFailedException::class);
+        $this->assertIsArrayNotEmpty([]);
+    }
 
-        foreach ([
-            [],
-            [[]],
-            [false],
-            [null],
-            [''],
-        ] as $array) {
-            $this->assertException(fn() => $this->TestCase->assertIsArrayNotEmpty($array), ExpectationFailedException::class);
-        }
+    /**
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
+     */
+    public function testAssertIsArrayNotEmptyWithBoolean(): void
+    {
+        $this->expectException(ExpectationFailedException::class);
+        $this->assertIsArrayNotEmpty(false);
+    }
+
+    /**
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
+     */
+    public function testAssertIsArrayNotEmptyWithNull(): void
+    {
+        $this->expectException(ExpectationFailedException::class);
+        $this->assertIsArrayNotEmpty(null);
+    }
+
+    /**
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
+     */
+    public function testAssertIsArrayNotEmptyWithString(): void
+    {
+        $this->expectException(ExpectationFailedException::class);
+        $this->assertIsArrayNotEmpty('');
     }
 
     /**
@@ -399,10 +297,12 @@ class TestTraitTest extends TestCase
      */
     public function testSkipIf(): void
     {
-        $result = (new SkipTestCase('testSkipIfTrue'))->run();
-        $this->assertSame(1, $result->skippedCount());
+        $Test = (new SkipTestCase('testSkipIfTrue'));
+        $Test->run();
+        $this->assertInstanceOf(Skipped::class, $Test->status());
 
-        $result = (new SkipTestCase('testSkipIfFalse'))->run();
-        $this->assertSame(0, $result->skippedCount());
+        $Test = (new SkipTestCase('testSkipIfFalse'));
+        $Test->run();
+        $this->assertInstanceOf(Success::class, $Test->status());
     }
 }

@@ -1,5 +1,4 @@
 <?php
-/** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
 /**
@@ -16,6 +15,7 @@ declare(strict_types=1);
 namespace Tools\Test\Event;
 
 use PHPUnit\Framework\TestCase;
+use stdClass;
 use Tools\Event\Event;
 
 /**
@@ -68,7 +68,7 @@ class EventTest extends TestCase
     {
         $this->assertSame(['arg1', 'arg2'], $this->Event->getArgs());
 
-        $Mock = $this->createStub(\stdClass::class);
+        $Mock = $this->createStub(stdClass::class);
         $Event = new Event('myEvent', $Mock);
         $this->assertIsArray($Event->getArgs());
         $this->assertNotEmpty($Event->getArgs());

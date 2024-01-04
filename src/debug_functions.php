@@ -11,14 +11,16 @@ declare(strict_types=1);
  * @copyright   Copyright (c) Mirko Pagliai
  * @link        https://github.com/mirko-pagliai/php-tools
  * @license     https://opensource.org/licenses/mit-license.php MIT License
+ * @phpcs:disable PSR1.Files.SideEffects.FoundWithSymbols
  */
 
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\VarDumper;
 
-VarDumper::setHandler(function ($var) {
+VarDumper::setHandler(function ($var): void {
     $template = '
 %s
 ########## DEBUG ##########
@@ -28,7 +30,7 @@ VarDumper::setHandler(function ($var) {
         $backtrace = array_reverse(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
         $backtrace = array_values(array_filter($backtrace, fn($current): bool => key_exists('file', $current)));
         $key = array_search(__FILE__, array_column($backtrace, 'file'));
-        $key = $key ? (int)$key - 1 : count($backtrace) - 3;
+        $key = $key ? $key - 1 : count($backtrace) - 3;
         $lineInfo = sprintf('%s (line %s)', $backtrace[$key]['file'] ?? '', $backtrace[$key]['line'] ?? 0);
         $dumper = new CliDumper();
         printf($template, $lineInfo, $dumper->dump($cloner->cloneVar($var), true));
@@ -44,13 +46,14 @@ if (!function_exists('debug') && function_exists('dump')) {
      *
      * Alias for the `dump()` global function provided by `VarDumper` component.
      * @param mixed $var Variable you want to debug
-     * @return void
+     * @return mixed
      * @link https://symfony.com/doc/current/components/var_dumper.html#the-dump-function
+     * @see \dump()
      * @since 1.2.11
      */
-    function debug($var): void
+    function debug(mixed $var): mixed
     {
-        call_user_func('dump', $var);
+        return call_user_func('dump', $var);
     }
 }
 
@@ -61,7 +64,8 @@ if (!function_exists('dd') && function_exists('dump')) {
      * @return void
      * @since 1.2.11
      */
-    function dd($var): void
+    #[NoReturn]
+    function dd(mixed $var): void
     {
         call_user_func('dump', $var);
         die(1);

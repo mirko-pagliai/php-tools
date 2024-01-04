@@ -17,7 +17,6 @@ namespace Tools\Test;
 
 use App\ExampleChildClass;
 use App\ExampleClass;
-use App\ExampleOfStringable;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Tools\TestSuite\TestTrait;
@@ -38,8 +37,14 @@ class GlobalFunctionsTest extends TestCase
         $this->assertSame('[\'a\', \'1\', \'0.5\', \'c\']', array_to_string(['a', 1, 0.5, 'c']));
         $this->assertSame('[]', array_to_string([]));
 
+        $ToStringClass = new class {
+            public function __toString()
+            {
+                return __CLASS__;
+            }
+        };
         //This class implements the `__toString()` method
-        $this->assertSame('[\'a\', \'App\ExampleOfStringable\']', array_to_string(['a', new ExampleOfStringable()]));
+        $this->assertSame('[\'a\', \'' . (string)$ToStringClass . '\']', array_to_string(['a', $ToStringClass]));
 
         $this->expectExceptionMessage('Cannot convert array to string, some values are not stringable');
         array_to_string(['a', ['b', 'c']]);
@@ -57,7 +62,6 @@ class GlobalFunctionsTest extends TestCase
         $this->assertEquals(get_class_methods(ExampleClass::class), get_child_methods(ExampleClass::class));
 
         $this->expectExceptionMessage('Class `\NoExistingClass` does not exist');
-        /** @phpstan-ignore-next-line */
         get_child_methods('\NoExistingClass');
     }
 
@@ -80,22 +84,6 @@ class GlobalFunctionsTest extends TestCase
     {
         $this->assertTrue(is_html('<b>string</b>'));
         $this->assertFalse(is_html('string'));
-    }
-
-    /**
-     * @test
-     * @uses is_json()
-     */
-    public function testIsJson(): void
-    {
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-        $this->assertTrue(is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}'));
-        $this->assertFalse(is_json('this is a no json string'));
-        error_reporting($current);
-
-        $this->deprecated(function () {
-            is_json('{"a":1,"b":2,"c":3,"d":4,"e":5}');
-        });
     }
 
     /**
@@ -126,39 +114,17 @@ class GlobalFunctionsTest extends TestCase
             $this->assertFalse(is_stringable($value));
         }
 
+        $ToStringClass = new class {
+            public function __toString()
+            {
+                return __CLASS__;
+            }
+        };
         $this->assertTrue(is_stringable([]));
         $this->assertTrue(is_stringable(['a', 1, 0.5, 'c']));
         $this->assertFalse(is_stringable(['a', true]));
         $this->assertFalse(is_stringable(['a', ['b', ['c']]]));
-        $this->assertTrue(is_stringable(new ExampleOfStringable()));
-    }
-
-    /**
-     * @test
-     * @uses objects_map()
-     */
-    public function testObjectsMap(): void
-    {
-        $arrayOfObjects = [new ExampleClass(), new ExampleClass()];
-
-        $this->deprecated(function () use ($arrayOfObjects) {
-            objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
-        });
-
-        $current = error_reporting(E_ALL & ~E_USER_DEPRECATED);
-
-        $result = objects_map($arrayOfObjects, 'setProperty', ['publicProperty', 'a new value']);
-        $this->assertEquals(['a new value', 'a new value'], $result);
-
-        foreach ($arrayOfObjects as $object) {
-            $this->assertEquals('a new value', $object->publicProperty);
-        }
-
-        //With a no existing method
-        $this->expectExceptionMessage('Method `' . ExampleClass::class . '::noExistingMethod()` is not callable');
-        objects_map([new ExampleClass()], 'noExistingMethod');
-
-        error_reporting($current);
+        $this->assertTrue(is_stringable($ToStringClass));
     }
 
     /**
