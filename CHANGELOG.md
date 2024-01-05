@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.3
+* fixed the signature for `TestTrait::deprecated()` method.
+
 ### 1.9.2
 * `url_to_absolute()` had been deprecated and has been removed;
 * `slug()` global function had been deprecated and has been removed.
