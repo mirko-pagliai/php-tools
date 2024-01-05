@@ -1,7 +1,8 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.3
-* fixed the signature for `TestTrait::deprecated()` method.
+* fixed the signature for `TestTrait::deprecated()` method;
+* requires `cakephp/core` 5.0;
 
 ### 1.9.2
 * `url_to_absolute()` had been deprecated and has been removed;
