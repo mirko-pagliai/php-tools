@@ -25,16 +25,16 @@ Recent packages and the master branch require at least PHP 8.1 and the current
 development of the code is based on these and later versions of PHP.
 However, there are still some branches compatible with previous versions of PHP.
 
-#### For PHP 7.4 or later
-The [php7.4](https://github.com/mirko-pagliai/php-tools/tree/php7.4) branch
-requires at least PHP 7.4.
+#### For PHP 8.0 or later
+The [php8.0](https://github.com/mirko-pagliai/php-tools/tree/php8.0) branch
+requires at least PHP 8.0.
 
 In this case, you can install the package as well:
 ```bash
-$ composer require --prefer-dist mirko-pagliai/php-tools:dev-php7.4
+$ composer require --prefer-dist mirko-pagliai/php-tools:dev-php8.0
 ```
 
-Note that the `php7.4` branch will no longer be updated as of January 04, 2024,
+Note that the `php8.0` branch will no longer be updated as of January 04, 2024,
 except for security patches, and it matches the
 [1.8.3](https://github.com/mirko-pagliai/php-tools/releases/tag/1.8.3) version.
 
