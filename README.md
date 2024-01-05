@@ -15,6 +15,15 @@ even a coffee is enough! Thank you.
 
 [![Make a donation](https://www.paypalobjects.com/webstatic/mktg/logo-center/logo_paypal_carte.jpg)](https://paypal.me/mirkopagliai)
 
+***
+
+* [Installation](#installation)
+    + [Installation on older PHP versions](#installation-on-older-php-versions)
+        - [For PHP 7.4 or later](#for-php-74-or-later)
+        - [For PHP 7.2 or later](#for-php-72-or-later)
+        - [For PHP 5.6 or later](#for-php-56-or-later)
+* [Versioning](#versioning)
+
 ## Installation
 You can install the package via composer:
 
@@ -25,13 +34,13 @@ Recent packages and the master branch require at least PHP 8.1 and the current
 development of the code is based on these and later versions of PHP.
 However, there are still some branches compatible with previous versions of PHP.
 
-#### For PHP 8.0 or later
-The [php8.0](https://github.com/mirko-pagliai/php-tools/tree/php8.0) branch
-requires at least PHP 8.0.
+#### For PHP 7.4 or later
+The [php7.4](https://github.com/mirko-pagliai/php-tools/tree/php7.4) branch
+requires at least PHP 7.4.
 
 In this case, you can install the package as well:
 ```bash
-$ composer require --prefer-dist mirko-pagliai/php-tools:dev-php8.0
+$ composer require --prefer-dist mirko-pagliai/php-tools:dev-php7.4
 ```
 
 Note that the `php8.0` branch will no longer be updated as of January 04, 2024,
