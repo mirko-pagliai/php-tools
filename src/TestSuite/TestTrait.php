@@ -198,9 +198,12 @@ trait TestTrait
      * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release
      */
     public static function assertSameMethods(string|object $firstClass, string|object $secondClass, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertSameMethods()` is deprecated and will be removed in a future release');
+
         [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
         sort($secondClassMethods);
