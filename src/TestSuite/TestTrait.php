@@ -149,9 +149,12 @@ trait TestTrait
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertImageSize()` is deprecated and will be removed in a future release
      */
     public static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertImageSize()` is deprecated and will be removed in a future release');
+
         self::assertFileExists($filename);
         [$actualWidth, $actualHeight] = getimagesize($filename) ?: [0 => 0, 1 => 0];
         self::assertEquals($actualWidth, $expectedWidth, $message);
