@@ -189,9 +189,12 @@ trait TestTrait
      * @param object|object[] $object Object you want to check or an array of objects
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release
      */
     public function assertObjectPropertiesEqual(array $expectedProperties, object|array $object, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release');
+
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
