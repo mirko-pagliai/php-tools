@@ -118,9 +118,12 @@ trait TestTrait
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release
      */
     public static function assertFileExtension(string|array $expectedExtension, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertFileExtension()` is deprecated and will be removed in a future release');
+
         self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
 

@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.4
+* `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release;
 * `TestTrait::assertFileMime()` is deprecated and will be removed in a future release;
 * `TestTrait::assertImageSize()` is deprecated and will be removed in a future release;
 * `TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release;
