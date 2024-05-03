@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.4
+* `array_clean()` and `array_has_only_numeric_keys()` are deprecated and will be removed in a future release.
+
 ### 1.9.3
 * fixed the signature for `TestTrait::deprecated()` method;
 * requires `cakephp/core` 5.0;
