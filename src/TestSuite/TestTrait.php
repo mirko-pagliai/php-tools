@@ -216,12 +216,15 @@ trait TestTrait
      * @param array $arguments Constructor arguments
      * @throws \PHPUnit\Framework\MockObject\Exception
      * @since 1.7.1
+     * @deprecated `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release
      * @psalm-suppress InternalClass, InternalMethod
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpUndefinedClassInspection
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release');
+
         /** @noinspection PhpInstanceofIsAlwaysTrueInspection */
         if (!$this instanceof TestCase) {
             throw new Exception('Is this trait used by a class that extends `' . TestCase::class . '`?');
