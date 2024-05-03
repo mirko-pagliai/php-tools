@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.4
+* `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge;
 * `array_clean()` and `array_has_only_numeric_keys()` are deprecated and will be removed in a future release.
 
 ### 1.9.3

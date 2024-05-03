@@ -237,10 +237,13 @@ trait TestTrait
      * @return void
      * @since 1.8.0
      * @codeCoverageIgnore
-     * @noinspection PhpStatementHasEmptyBodyInspection
+     * @deprecated `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge
+     * @see https://symfony.com/doc/current/components/phpunit_bridge.html#disabling-the-deprecation-helper
      */
     public function deprecated(Closure $callable): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge');
+
         $previousHandler = set_error_handler(
             function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
                 if ($code == E_USER_DEPRECATED) {
