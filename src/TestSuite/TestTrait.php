@@ -161,9 +161,12 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.0.6
+     * @deprecated `TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release
      */
     public static function assertIsArrayNotEmpty(mixed $var, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release');
+
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
     }

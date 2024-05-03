@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.4
+* `TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release;
 * `TestTrait::assertIsMock()` is deprecated and will be removed in a future release;
 * `TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release;
 * `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release;
