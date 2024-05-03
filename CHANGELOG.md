@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.9 branch
 ### 1.9.4
+* `TestTrait::assertIsMock()` is deprecated and will be removed in a future release;
 * `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release;
 * `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release;
 * `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge;

@@ -174,9 +174,12 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.5.2
+     * @deprecated `TestTrait::assertIsMock()` is deprecated and will be removed in a future release
      */
     public static function assertIsMock(object $object, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertSameMethods()` is deprecated and will be removed in a future release');
+
         self::assertInstanceOf(MockObject::class, $object, $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock');
     }
 
@@ -198,7 +201,7 @@ trait TestTrait
      * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the generated message
      * @return void
-     * @deprecated `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release
+     * @deprecated `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release
      */
     public static function assertSameMethods(string|object $firstClass, string|object $secondClass, string $message = ''): void
     {
