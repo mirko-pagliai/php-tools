@@ -160,6 +160,7 @@ class TestTraitTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \Tools\TestSuite\TestTrait::assertFileMime()
      */

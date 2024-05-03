@@ -132,9 +132,12 @@ trait TestTrait
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertFileMime()` is deprecated and will be removed in a future release
      */
     public static function assertFileMime(string|array $expectedMime, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertFileMime()` is deprecated and will be removed in a future release');
+
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
     }
