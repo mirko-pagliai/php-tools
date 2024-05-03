@@ -98,9 +98,12 @@ trait TestTrait
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release
      */
     public static function assertArrayKeysEqual(array $expectedKeys, array $array, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release');
+
         $keys = array_keys($array);
         sort($keys);
         sort($expectedKeys);
