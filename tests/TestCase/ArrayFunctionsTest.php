@@ -61,6 +61,7 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \array_unique_recursive()
      */

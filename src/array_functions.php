@@ -68,9 +68,12 @@ if (!function_exists('array_unique_recursive')) {
      * @param array $array Multidimensional array
      * @return array
      * @since 1.4.3
+     * @deprecated `array_unique_recursive()` is deprecated and will be removed in a future release
      */
     function array_unique_recursive(array $array): array
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_unique_recursive()` is deprecated and will be removed in a future release');
+
         return array_values(array_map('unserialize', array_unique(array_map('serialize', $array))));
     }
 }
