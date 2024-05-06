@@ -15,22 +15,13 @@ declare(strict_types=1);
 
 namespace Tools\Test\TestSuite;
 
-use App\AbstractExampleClass;
-use App\AnotherExampleChildClass;
-use App\ExampleChildClass;
-use App\ExampleClass;
 use App\SkipTestCase;
 use ArrayIterator;
-use GdImage;
 use IteratorAggregate;
-use PHPUnit\Framework\AssertionFailedError;
-use PHPUnit\Framework\Exception as PHPUnitException;
-use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\TestStatus\Skipped;
 use PHPUnit\Framework\TestStatus\Success;
 use stdClass;
-use Tools\Filesystem;
 use Tools\TestSuite\TestTrait;
 use Traversable;
 
@@ -124,182 +115,6 @@ class TestTraitTest extends TestCase
     {
         $this->expectExceptionMessage('Method ' . get_class($this->TestCase) . '::assertIsJson() expects at least 1 argument, maximum 2, 0 passed');
         $this->TestCase->assertIsJson();
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertArrayKeysEqual()
-     */
-    public function testAssertArrayKeysEqual(): void
-    {
-        $this->TestCase->assertArrayKeysEqual([], []);
-
-        foreach ([
-            ['key1' => 'value1', 'key2' => 'value2'],
-            ['key2' => 'value2', 'key1' => 'value1'],
-        ] as $array) {
-            $this->TestCase->assertArrayKeysEqual(['key1', 'key2'], $array);
-        }
-
-        $this->TestCase->assertArrayKeysEqual([0, 1, 2], ['first', 'second', 'third']);
-
-        $this->expectException(AssertionFailedError::class);
-        $this->TestCase->assertArrayKeysEqual(['key2'], $array);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertFileExtension()
-     */
-    public function testAssertFileExtension(): void
-    {
-        $this->TestCase->assertFileExtension('jpg', 'file.jpg');
-        $this->TestCase->assertFileExtension('jpeg', 'FILE.JPEG');
-        $this->TestCase->assertFileExtension(['jpg', 'jpeg'], 'file.jpg');
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertFileMime()
-     */
-    public function testAssertFileMime(): void
-    {
-        $file = Filesystem::instance()->createTmpFile('string');
-        $this->TestCase->assertFileMime('text/plain', $file);
-        $this->TestCase->assertFileMime(['text/plain', 'inode/x-empty'], $file);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertImageSize()
-     */
-    public function testAssertImageSize(): void
-    {
-        $resource = imagecreatetruecolor(120, 20);
-        if (!$resource instanceof GdImage && !is_resource($resource)) {
-            $this->fail('Unable to create a valid resource image');
-        }
-        imagejpeg($resource, TMP . 'pic.jpg');
-        $this->TestCase->assertImageSize(120, 20, TMP . 'pic.jpg');
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
-     */
-    public function testAssertIsArrayNotEmptyWithEmptyArray(): void
-    {
-        $this->expectException(ExpectationFailedException::class);
-        $this->assertIsArrayNotEmpty([]);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
-     */
-    public function testAssertIsArrayNotEmptyWithBoolean(): void
-    {
-        $this->expectException(ExpectationFailedException::class);
-        $this->assertIsArrayNotEmpty(false);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
-     */
-    public function testAssertIsArrayNotEmptyWithNull(): void
-    {
-        $this->expectException(ExpectationFailedException::class);
-        $this->assertIsArrayNotEmpty(null);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsArrayNotEmpty()
-     */
-    public function testAssertIsArrayNotEmptyWithString(): void
-    {
-        $this->expectException(ExpectationFailedException::class);
-        $this->assertIsArrayNotEmpty('');
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertIsMock()
-     */
-    public function testAssertIsMock(): void
-    {
-        $MockObject = $this->getMockBuilder(stdClass::class)->getMock();
-        $this->TestCase->assertIsMock($MockObject);
-
-        $this->expectException(AssertionFailedError::class);
-        $this->expectExceptionMessage('Failed asserting that a `stdClass` object is a mock');
-        $this->TestCase->assertIsMock(new stdClass());
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertObjectPropertiesEqual()
-     */
-    public function testAssertObjectPropertiesEqual(): void
-    {
-        $object = new stdClass();
-        $object->first = 'first value';
-        $object->second = 'second value';
-        $this->TestCase->assertObjectPropertiesEqual(['first', 'second'], $object);
-        $this->TestCase->assertObjectPropertiesEqual(['second', 'first'], $object);
-
-        $this->expectException(ExpectationFailedException::class);
-        $this->TestCase->assertObjectPropertiesEqual(['first'], $object);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::assertSameMethods()
-     */
-    public function testAssertSameMethods(): void
-    {
-        $exampleClass = new ExampleClass();
-        $this->TestCase->assertSameMethods($exampleClass, ExampleClass::class);
-        $this->TestCase->assertSameMethods($exampleClass, get_class($exampleClass));
-
-        $copyExampleClass = &$exampleClass;
-        $this->TestCase->assertSameMethods($exampleClass, $copyExampleClass);
-
-        $this->TestCase->assertSameMethods(ExampleChildClass::class, AnotherExampleChildClass::class);
-
-        $this->expectException(AssertionFailedError::class);
-        $this->TestCase->assertSameMethods(ExampleClass::class, AnotherExampleChildClass::class);
-    }
-
-    /**
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::createPartialMockForAbstractClass()
-     */
-    public function testCreatePartialMockForAbstractClass(): void
-    {
-        $result = $this->TestCase->createPartialMockForAbstractClass(AbstractExampleClass::class);
-        $this->assertIsMock($result);
-        $this->assertInstanceOf(AbstractExampleClass::class, $result);
-
-        $this->expectException(PHPUnitException::class);
-        $this->expectExceptionMessage('Is this trait used by a class that extends `' . TestCase::class . '`?');
-        $BadClass = new class {
-            use TestTrait;
-        };
-        $BadClass->createPartialMockForAbstractClass(AbstractExampleClass::class);
     }
 
     /**
