@@ -87,9 +87,12 @@ if (!function_exists('is_html')) {
      * @param string $string String
      * @return bool
      * @since 1.1.13
+     * @deprecated `is_html()` is deprecated and will be removed in a future release
      */
     function is_html(string $string): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_html()` is deprecated and will be removed in a future release');
+
         return strcasecmp($string, strip_tags($string)) !== 0;
     }
 }

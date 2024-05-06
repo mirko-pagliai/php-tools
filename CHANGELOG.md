@@ -11,8 +11,8 @@
 * `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release;
 * `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release;
 * `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge;
-* `array_clean()`, `array_has_only_numeric_keys()`, `array_to_string()`, `array_unique_recursive()`, `is_stringable()`
-  and `uncamelcase()` global functions are deprecated and will be removed in a future release;
+* `array_clean()`, `array_has_only_numeric_keys()`, `array_to_string()`, `array_unique_recursive()`, `is_html()`,
+  `is_stringable()` and `uncamelcase()` global functions are deprecated and will be removed in a future release;
 * removed `cakephp/core` package;
 
 ### 1.9.3
