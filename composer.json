@@ -18,11 +18,9 @@
         "symfony/filesystem": "^6.0|^7.0",
         "symfony/finder": "^6.0|^7.0",
         "symfony/polyfill-php83": "^1.27",
-        "symfony/string": "^6.0|^7.0",
         "symfony/var-dumper": "^6.0|^7.0"
     },
     "require-dev": {
-        "ext-gd": "*",
         "cakephp/cakephp-codesniffer": "^5.0",
         "jetbrains/phpstorm-attributes": "^1.1",
         "phpstan/phpstan": "^1.10.38",
