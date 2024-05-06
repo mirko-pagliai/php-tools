@@ -148,9 +148,12 @@ if (!function_exists('uncamelcase')) {
      * @param string $string The string you want to uncamelcase
      * @return string
      * @since 1.4.2
+     * @deprecated `uncamelcase()` is deprecated and will be removed in a future release
      */
     function uncamelcase(string $string): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`uncamelcase()` is deprecated and will be removed in a future release');
+
         return (string)u($string)->snake();
     }
 }
