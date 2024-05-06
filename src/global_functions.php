@@ -14,35 +14,9 @@ declare(strict_types=1);
  */
 
 use Tools\Filesystem;
-use function Symfony\Component\String\u;
 
 if (!defined('IS_WIN')) {
     define('IS_WIN', DIRECTORY_SEPARATOR === '\\');
-}
-
-if (!function_exists('array_to_string')) {
-    /**
-     * Converts an array to a string.
-     *
-     * For example, from `['a', 1, 0.5, 'c']` to `['a', '1', '0.5', 'c']`.
-     * @param array $array Array you want to convert
-     * @return string
-     * @throws \LogicException In case the array contains non-stringable values
-     * @since 1.5.8
-     * @deprecated `array_to_string()` is deprecated and will be removed in a future release
-     */
-    function array_to_string(array $array): string
-    {
-        trigger_deprecation('php-tools', '1.9.4', '`array_to_string()` is deprecated and will be removed in a future release');
-
-        return '[' . implode(', ', array_map(function ($v): string {
-            if (is_array($v) || is_bool($v) || !is_stringable($v)) {
-                throw new LogicException('Cannot convert array to string, some values are not stringable');
-            }
-
-            return '\'' . $v . '\'';
-        }, $array)) . ']';
-    }
 }
 
 if (!function_exists('get_child_methods')) {
@@ -81,22 +55,6 @@ if (!function_exists('get_class_short_name')) {
     }
 }
 
-if (!function_exists('is_html')) {
-    /**
-     * Checks if a string is HTML
-     * @param string $string String
-     * @return bool
-     * @since 1.1.13
-     * @deprecated `is_html()` is deprecated and will be removed in a future release
-     */
-    function is_html(string $string): bool
-    {
-        trigger_deprecation('php-tools', '1.9.4', '`is_html()` is deprecated and will be removed in a future release');
-
-        return strcasecmp($string, strip_tags($string)) !== 0;
-    }
-}
-
 if (!function_exists('is_positive')) {
     /**
      * Checks if a string is a positive number
@@ -106,32 +64,6 @@ if (!function_exists('is_positive')) {
     function is_positive(float|string|int $string): bool
     {
         return is_numeric($string) && $string > 0 && $string == round((float)$string);
-    }
-}
-
-if (!function_exists('is_stringable')) {
-    /**
-     * Checks is a value can be converted to string.
-     *
-     * Arrays that can be converted to strings with `array_to_string ()` are stringable.
-     * @param mixed $var A var you want to check
-     * @return bool
-     * @since 1.2.5
-     * @deprecated `is_stringable()` is deprecated and will be removed in a future release
-     */
-    function is_stringable(mixed $var): bool
-    {
-        trigger_deprecation('php-tools', '1.9.4', '`is_stringable()` is deprecated and will be removed in a future release');
-
-        if (is_array($var)) {
-            try {
-                return (bool)array_to_string($var);
-            } catch (LogicException) {
-                return false;
-            }
-        }
-
-        return !is_null($var) && (is_scalar($var) || method_exists($var, '__toString'));
     }
 }
 
@@ -146,23 +78,5 @@ if (!function_exists('rtr')) {
     function rtr(string $path): string
     {
         return Filesystem::rtr($path);
-    }
-}
-
-if (!function_exists('uncamelcase')) {
-    /**
-     * Gets an "uncamelcase" string.
-     *
-     * For example, from `thisIsAString` to `this_is_a_string`.
-     * @param string $string The string you want to uncamelcase
-     * @return string
-     * @since 1.4.2
-     * @deprecated `uncamelcase()` is deprecated and will be removed in a future release
-     */
-    function uncamelcase(string $string): string
-    {
-        trigger_deprecation('php-tools', '1.9.4', '`uncamelcase()` is deprecated and will be removed in a future release');
-
-        return (string)u($string)->snake();
     }
 }

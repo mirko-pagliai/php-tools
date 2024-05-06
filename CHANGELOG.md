@@ -1,4 +1,9 @@
 # 1.x branch
+## 1.10 branch
+### 1.10.0
+* `array_clean()`, `array_to_string()`, `array_has_only_numeric_keys()`, `array_unique_recursive()`, `is_html()`,
+  `is_stringable()` and `uncamelcase()` global functions were deprecated and have been removed.
+
 ## 1.9 branch
 ### 1.9.4
 * `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release;
