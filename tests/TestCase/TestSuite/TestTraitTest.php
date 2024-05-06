@@ -77,7 +77,6 @@ class TestTraitTest extends TestCase
              'assertIsBool' => true,
              'assertIsCallable' => fn() => '',
              'assertIsFloat' => 1.1,
-             'assertIsHtml' => '<b>html</b>',
              'assertIsInt' => 1,
              'assertIsIterable' => $Traversable,
              'assertIsJson' => '{"a":1,"b":2,"c":3,"d":4,"e":5}',
@@ -92,6 +91,21 @@ class TestTraitTest extends TestCase
             $staticCallable = [$this->TestCase, $assertMethod];
             forward_static_call($staticCallable, $value);
         }
+    }
+
+    /**
+     * `assertIsHtml()` is deprecated
+     * @group legacy
+     * @test
+     * @uses \Tools\TestSuite\TestTrait::__call()
+     * @uses \Tools\TestSuite\TestTrait::__callStatic()
+     */
+    public function testMagicCallAndCallStaticForAssertIsHtml(): void
+    {
+        $this->TestCase->assertIsHtml('<b>html</b>');
+        /** @var callable $staticCallable */
+        $staticCallable = [$this->TestCase, 'assertIsHtml'];
+        forward_static_call($staticCallable, '<b>html</b>');
     }
 
     /**
