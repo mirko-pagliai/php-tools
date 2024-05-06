@@ -114,9 +114,12 @@ if (!function_exists('is_stringable')) {
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
+     * @deprecated `is_stringable()` is deprecated and will be removed in a future release
      */
     function is_stringable(mixed $var): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_stringable()` is deprecated and will be removed in a future release');
+
         if (is_array($var)) {
             try {
                 return (bool)array_to_string($var);

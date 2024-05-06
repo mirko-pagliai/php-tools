@@ -102,6 +102,7 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses is_stringable()
      */
