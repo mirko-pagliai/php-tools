@@ -94,21 +94,6 @@ class TestTraitTest extends TestCase
     }
 
     /**
-     * `assertIsHtml()` is deprecated
-     * @group legacy
-     * @test
-     * @uses \Tools\TestSuite\TestTrait::__call()
-     * @uses \Tools\TestSuite\TestTrait::__callStatic()
-     */
-    public function testMagicCallAndCallStaticForAssertIsHtml(): void
-    {
-        $this->TestCase->assertIsHtml('<b>html</b>');
-        /** @var callable $staticCallable */
-        $staticCallable = [$this->TestCase, 'assertIsHtml'];
-        forward_static_call($staticCallable, '<b>html</b>');
-    }
-
-    /**
      * Test for `__callStatic()` method with a no existing method
      * @test
      * @uses \Tools\TestSuite\TestTrait::__callStatic()

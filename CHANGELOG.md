@@ -1,6 +1,9 @@
 # 1.x branch
 ## 1.10 branch
 ### 1.10.0
+* `assertArrayKeysEqual()`, `assertFileExtension()`, `assertFileMime()`, `assertImageSize()`, `assertIsArrayNotEmpty()`,
+  `assertIsMock()`, `assertObjectPropertiesEqual()`, `assertSameMethods()`, `createPartialMockForAbstractClass()` and
+  `deprecated()` methods provided by `TestTrait` were deprecated and have been removed;
 * `array_clean()`, `array_to_string()`, `array_has_only_numeric_keys()`, `array_unique_recursive()`, `is_html()`,
   `is_stringable()` and `uncamelcase()` global functions were deprecated and have been removed.
 
