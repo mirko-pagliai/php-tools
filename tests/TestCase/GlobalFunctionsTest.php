@@ -29,6 +29,7 @@ class GlobalFunctionsTest extends TestCase
     use TestTrait;
 
     /**
+     * @group legacy
      * @test
      * @uses array_to_string()
      */

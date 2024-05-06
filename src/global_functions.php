@@ -29,9 +29,12 @@ if (!function_exists('array_to_string')) {
      * @return string
      * @throws \LogicException In case the array contains non-stringable values
      * @since 1.5.8
+     * @deprecated `array_to_string()` is deprecated and will be removed in a future release
      */
     function array_to_string(array $array): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_to_string()` is deprecated and will be removed in a future release');
+
         return '[' . implode(', ', array_map(function ($v): string {
             if (is_array($v) || is_bool($v) || !is_stringable($v)) {
                 throw new LogicException('Cannot convert array to string, some values are not stringable');
