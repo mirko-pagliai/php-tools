@@ -5,7 +5,9 @@
   `assertIsMock()`, `assertObjectPropertiesEqual()`, `assertSameMethods()`, `createPartialMockForAbstractClass()` and
   `deprecated()` methods provided by `TestTrait` were deprecated and have been removed;
 * `array_clean()`, `array_to_string()`, `array_has_only_numeric_keys()`, `array_unique_recursive()`, `is_html()`,
-  `is_stringable()` and `uncamelcase()` global functions were deprecated and have been removed.
+  `is_stringable()` and `uncamelcase()` global functions were deprecated and have been removed;
+* `clean_url()`, `get_hostname_from_url()`, `is_external_url()` and `is_localhost()` global network functions were
+  deprecated and have been removed.
 
 ## 1.9 branch
 ### 1.9.4
