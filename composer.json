@@ -36,8 +36,7 @@
         "files": [
             "src/array_functions.php",
             "src/debug_functions.php",
-            "src/global_functions.php",
-            "src/network_functions.php"
+            "src/global_functions.php"
         ]
     },
     "autoload-dev": {

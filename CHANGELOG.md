@@ -1,6 +1,7 @@
 # 1.x branch
 ## 1.10 branch
 ### 1.10.0
+* `is_url()` global network function has been moved to `global_functions.php` file. Removed `network_functions.php`;
 * `assertArrayKeysEqual()`, `assertFileExtension()`, `assertFileMime()`, `assertImageSize()`, `assertIsArrayNotEmpty()`,
   `assertIsMock()`, `assertObjectPropertiesEqual()`, `assertSameMethods()`, `createPartialMockForAbstractClass()` and
   `deprecated()` methods provided by `TestTrait` were deprecated and have been removed;

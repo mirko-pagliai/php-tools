@@ -67,6 +67,18 @@ if (!function_exists('is_positive')) {
     }
 }
 
+if (!function_exists('is_url')) {
+    /**
+     * Checks if a string is a valid url
+     * @param string $string String
+     * @return bool
+     */
+    function is_url(string $string): bool
+    {
+        return (bool)preg_match("/^\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;()]*[-a-z0-9+&@#\/%=~_|()]$/i", $string);
+    }
+}
+
 if (!function_exists('rtr')) {
     /**
      * Fast and convenient alias for `Filesystem::rtr()`
