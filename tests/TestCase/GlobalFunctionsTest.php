@@ -29,6 +29,7 @@ class GlobalFunctionsTest extends TestCase
     use TestTrait;
 
     /**
+     * @group legacy
      * @test
      * @uses array_to_string()
      */
@@ -77,6 +78,7 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses is_html()
      */
@@ -101,6 +103,7 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses is_stringable()
      */
@@ -137,6 +140,7 @@ class GlobalFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses uncamelcase()
      */

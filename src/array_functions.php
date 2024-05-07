@@ -28,9 +28,12 @@ if (!function_exists('array_clean')) {
      * @return array
      * @link http://php.net/manual/en/function.array-filter.php
      * @since 1.1.13
+     * @deprecated `array_clean()` is deprecated and will be removed in a future release
      */
     function array_clean(array $array, ?callable $callback = null, int $flag = 0): array
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_clean()` is deprecated and will be removed in a future release');
+
         $array = array_unique($callback ? array_filter($array, $callback, $flag) : array_filter($array));
         $keys = array_keys($array);
 
@@ -45,9 +48,12 @@ if (!function_exists('array_has_only_numeric_keys')) {
      * @param array $array Array
      * @return bool
      * @since 1.4.6
+     * @deprecated `array_has_only_numeric_keys()` is deprecated and will be removed in a future release
      */
     function array_has_only_numeric_keys(array $array): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_has_only_numeric_keys()` is deprecated and will be removed in a future release');
+
         $keys = array_keys($array);
 
         return $keys === array_filter($keys, 'is_numeric');
@@ -62,9 +68,12 @@ if (!function_exists('array_unique_recursive')) {
      * @param array $array Multidimensional array
      * @return array
      * @since 1.4.3
+     * @deprecated `array_unique_recursive()` is deprecated and will be removed in a future release
      */
     function array_unique_recursive(array $array): array
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_unique_recursive()` is deprecated and will be removed in a future release');
+
         return array_values(array_map('unserialize', array_unique(array_map('serialize', $array))));
     }
 }

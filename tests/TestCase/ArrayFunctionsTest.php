@@ -23,6 +23,7 @@ use PHPUnit\Framework\TestCase;
 class ArrayFunctionsTest extends TestCase
 {
     /**
+     * @group legacy
      * @test
      * @uses \array_clean()
      */
@@ -47,6 +48,7 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \array_has_only_numeric_keys()
      */
@@ -59,6 +61,7 @@ class ArrayFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \array_unique_recursive()
      */

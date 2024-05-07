@@ -23,6 +23,7 @@ use PHPUnit\Framework\TestCase;
 class NetworkFunctionsTest extends TestCase
 {
     /**
+     * @group legacy
      * @test
      * @uses \clean_url()
      */
@@ -70,6 +71,7 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \get_hostname_from_url()
      */
@@ -99,6 +101,7 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \is_external_url()
      */
@@ -130,6 +133,7 @@ class NetworkFunctionsTest extends TestCase
     }
 
     /**
+     * @group legacy
      * @test
      * @uses \is_localhost()
      */

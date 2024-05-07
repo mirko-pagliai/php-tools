@@ -127,7 +127,7 @@ class FilesystemTest extends TestCase
             ['.hiddenFile'],
             ['.hiddenFile', 'file2', 'file3'],
         ] as $exceptions) {
-            $currentExpectedFiles = array_clean($expectedFiles, fn(string $value): bool => !in_array(basename($value), $exceptions));
+            $currentExpectedFiles = array_values(array_filter($expectedFiles, fn(string $value): bool => !in_array(basename($value), $exceptions)));
             $this->assertEquals([$expectedDirs, $currentExpectedFiles], Filesystem::instance()->getDirTree(TMP . 'exampleDir', $exceptions));
         }
 

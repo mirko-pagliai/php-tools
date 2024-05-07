@@ -29,9 +29,12 @@ if (!function_exists('array_to_string')) {
      * @return string
      * @throws \LogicException In case the array contains non-stringable values
      * @since 1.5.8
+     * @deprecated `array_to_string()` is deprecated and will be removed in a future release
      */
     function array_to_string(array $array): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`array_to_string()` is deprecated and will be removed in a future release');
+
         return '[' . implode(', ', array_map(function ($v): string {
             if (is_array($v) || is_bool($v) || !is_stringable($v)) {
                 throw new LogicException('Cannot convert array to string, some values are not stringable');
@@ -84,9 +87,12 @@ if (!function_exists('is_html')) {
      * @param string $string String
      * @return bool
      * @since 1.1.13
+     * @deprecated `is_html()` is deprecated and will be removed in a future release
      */
     function is_html(string $string): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_html()` is deprecated and will be removed in a future release');
+
         return strcasecmp($string, strip_tags($string)) !== 0;
     }
 }
@@ -111,9 +117,12 @@ if (!function_exists('is_stringable')) {
      * @param mixed $var A var you want to check
      * @return bool
      * @since 1.2.5
+     * @deprecated `is_stringable()` is deprecated and will be removed in a future release
      */
     function is_stringable(mixed $var): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_stringable()` is deprecated and will be removed in a future release');
+
         if (is_array($var)) {
             try {
                 return (bool)array_to_string($var);
@@ -148,9 +157,12 @@ if (!function_exists('uncamelcase')) {
      * @param string $string The string you want to uncamelcase
      * @return string
      * @since 1.4.2
+     * @deprecated `uncamelcase()` is deprecated and will be removed in a future release
      */
     function uncamelcase(string $string): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`uncamelcase()` is deprecated and will be removed in a future release');
+
         return (string)u($string)->snake();
     }
 }

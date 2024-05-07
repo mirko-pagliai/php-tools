@@ -98,9 +98,12 @@ trait TestTrait
      * @param array $array Array to check
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release
      */
     public static function assertArrayKeysEqual(array $expectedKeys, array $array, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release');
+
         $keys = array_keys($array);
         sort($keys);
         sort($expectedKeys);
@@ -118,9 +121,12 @@ trait TestTrait
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release
      */
     public static function assertFileExtension(string|array $expectedExtension, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertFileExtension()` is deprecated and will be removed in a future release');
+
         self::assertContains(Filesystem::instance()->getExtension($filename), (array)$expectedExtension, $message);
     }
 
@@ -132,9 +138,12 @@ trait TestTrait
      * @param string $filename Filename
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertFileMime()` is deprecated and will be removed in a future release
      */
     public static function assertFileMime(string|array $expectedMime, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertFileMime()` is deprecated and will be removed in a future release');
+
         self::assertFileExists($filename);
         self::assertContains(mime_content_type($filename), (array)$expectedMime, $message);
     }
@@ -146,9 +155,12 @@ trait TestTrait
      * @param string $filename Path to the tested file
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertImageSize()` is deprecated and will be removed in a future release
      */
     public static function assertImageSize(int $expectedWidth, int $expectedHeight, string $filename, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertImageSize()` is deprecated and will be removed in a future release');
+
         self::assertFileExists($filename);
         [$actualWidth, $actualHeight] = getimagesize($filename) ?: [0 => 0, 1 => 0];
         self::assertEquals($actualWidth, $expectedWidth, $message);
@@ -161,9 +173,12 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.0.6
+     * @deprecated `TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release
      */
     public static function assertIsArrayNotEmpty(mixed $var, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release');
+
         self::assertIsArray($var, $message);
         self::assertNotEmpty(array_filter($var), $message);
     }
@@ -174,9 +189,12 @@ trait TestTrait
      * @param string $message The failure message that will be appended to the generated message
      * @return void
      * @since 1.5.2
+     * @deprecated `TestTrait::assertIsMock()` is deprecated and will be removed in a future release
      */
     public static function assertIsMock(object $object, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertSameMethods()` is deprecated and will be removed in a future release');
+
         self::assertInstanceOf(MockObject::class, $object, $message ?: 'Failed asserting that a `' . get_class($object) . '` object is a mock');
     }
 
@@ -186,9 +204,12 @@ trait TestTrait
      * @param object|object[] $object Object you want to check or an array of objects
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release
      */
     public function assertObjectPropertiesEqual(array $expectedProperties, object|array $object, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release');
+
         self::assertArrayKeysEqual($expectedProperties, (array)$object, $message);
     }
 
@@ -198,9 +219,12 @@ trait TestTrait
      * @param string|object $secondClass Second class as string or object
      * @param string $message The failure message that will be appended to the generated message
      * @return void
+     * @deprecated `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release
      */
     public static function assertSameMethods(string|object $firstClass, string|object $secondClass, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::assertSameMethods()` is deprecated and will be removed in a future release');
+
         [$firstClassMethods, $secondClassMethods] = [get_class_methods($firstClass), get_class_methods($secondClass)];
         sort($firstClassMethods);
         sort($secondClassMethods);
@@ -216,12 +240,15 @@ trait TestTrait
      * @param array $arguments Constructor arguments
      * @throws \PHPUnit\Framework\MockObject\Exception
      * @since 1.7.1
+     * @deprecated `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release
      * @psalm-suppress InternalClass, InternalMethod
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpUndefinedClassInspection
      */
     public function createPartialMockForAbstractClass(string $originalClassName, array $mockedMethods = [], array $arguments = []): MockObject
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release');
+
         /** @noinspection PhpInstanceofIsAlwaysTrueInspection */
         if (!$this instanceof TestCase) {
             throw new Exception('Is this trait used by a class that extends `' . TestCase::class . '`?');
@@ -237,10 +264,13 @@ trait TestTrait
      * @return void
      * @since 1.8.0
      * @codeCoverageIgnore
-     * @noinspection PhpStatementHasEmptyBodyInspection
+     * @deprecated `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge
+     * @see https://symfony.com/doc/current/components/phpunit_bridge.html#disabling-the-deprecation-helper
      */
     public function deprecated(Closure $callable): void
     {
+        trigger_deprecation('php-tools', '1.9.4', '`TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge');
+
         $previousHandler = set_error_handler(
             function ($code, $message, $file, $line, $context = null) use (&$previousHandler, &$deprecation): bool {
                 if ($code == E_USER_DEPRECATED) {

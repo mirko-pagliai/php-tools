@@ -1,5 +1,22 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.4
+* `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release;
+* `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release;
+* `TestTrait::assertFileMime()` is deprecated and will be removed in a future release;
+* `TestTrait::assertImageSize()` is deprecated and will be removed in a future release;
+* `TestTrait::assertIsArrayNotEmpty()` is deprecated and will be removed in a future release;
+* `TestTrait::assertIsMock()` is deprecated and will be removed in a future release;
+* `TestTrait::assertObjectPropertiesEqual()` is deprecated and will be removed in a future release;
+* `TestTrait::assertSameMethods()` is deprecated and will be removed in a future release;
+* `TestTrait::createPartialMockForAbstractClass()` is deprecated and will be removed in a future release;
+* `TestTrait::deprecated()` is deprecated and will be removed in a future release. Use instead the PHPUnit Bridge;
+* `array_clean()`, `array_has_only_numeric_keys()`, `array_to_string()`, `array_unique_recursive()`, `is_html()`,
+  `is_stringable()` and `uncamelcase()` global functions are deprecated and will be removed in a future release;
+* `clean_url()`, `get_hostname_from_url()`, `is_external_url()` and `is_localhost()` global network functions are
+  deprecated and will be removed in a future release;
+* removed `cakephp/core` package;
+
 ### 1.9.3
 * fixed the signature for `TestTrait::deprecated()` method;
 * requires `cakephp/core` 5.0;
