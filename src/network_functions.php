@@ -21,9 +21,12 @@ if (!function_exists('clean_url')) {
      * @param bool $removeTrailingSlash Removes the trailing slash
      * @return string
      * @since 1.0.3
+     * @deprecated `clean_url()` is deprecated and will be removed in a future release
      */
     function clean_url(string $url, bool $removeWWW = false, bool $removeTrailingSlash = false): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`clean_url()` is deprecated and will be removed in a future release');
+
         $url = preg_replace('/(#.*)$/', '', $url) ?: '';
         if ($removeWWW) {
             $url = preg_replace('/^((http|https|ftp):\/\/)?www\./', '$1', $url) ?: '';
@@ -41,9 +44,12 @@ if (!function_exists('get_hostname_from_url')) {
      * @param string $url Url
      * @return string
      * @since 1.0.2
+     * @deprecated `get_hostname_from_url()` is deprecated and will be removed in a future release
      */
     function get_hostname_from_url(string $url): string
     {
+        trigger_deprecation('php-tools', '1.9.4', '`get_hostname_from_url()` is deprecated and will be removed in a future release');
+
         $host = parse_url($url, PHP_URL_HOST) ?: '';
 
         return str_starts_with($host, 'www.') ? substr($host, 4) : $host;
@@ -57,9 +63,12 @@ if (!function_exists('is_external_url')) {
      * @param string $hostname Hostname for the comparison
      * @return bool
      * @since 1.0.4
+     * @deprecated `is_external_url()` is deprecated and will be removed in a future release
      */
     function is_external_url(string $url, string $hostname): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_external_url()` is deprecated and will be removed in a future release');
+
         $hostForUrl = get_hostname_from_url($url);
 
         //Url with the same host and relative url are not external
@@ -72,9 +81,12 @@ if (!function_exists('is_localhost')) {
      * Checks if it's localhost
      * @return bool
      * @since 1.3.3
+     * @deprecated `is_localhost()` is deprecated and will be removed in a future release
      */
     function is_localhost(): bool
     {
+        trigger_deprecation('php-tools', '1.9.4', '`is_localhost()` is deprecated and will be removed in a future release');
+
         return in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
     }
 }
