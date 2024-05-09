@@ -22,6 +22,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
  *
  * Listeners are registered on the manager and events are dispatched through the
  * manager.
+ * @deprecated The `EventDispatcher` class is deprecated and will be removed in a future release
  */
 class EventDispatcher extends BaseEventDispatcher
 {
@@ -35,6 +36,8 @@ class EventDispatcher extends BaseEventDispatcher
      */
     public function __construct()
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventDispatcher` class is deprecated and will be removed in a future release');
+
         parent::__construct();
 
         $this->EventList = new EventList();

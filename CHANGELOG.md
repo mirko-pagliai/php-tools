@@ -1,5 +1,9 @@
 # 1.x branch
 ## 1.9 branch
+### 1.9.5
+* the `Event`, `EventDispatcher`, `EventDispatcherTrait` and `EventList` classes are deprecated and will be removed in
+  a future release. Use instead the `symfony/event-dispatcher` component.
+
 ### 1.9.4
 * `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release;
 * `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release;

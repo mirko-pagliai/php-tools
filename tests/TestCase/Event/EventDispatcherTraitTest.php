@@ -21,6 +21,7 @@ use Tools\Event\EventDispatcherTrait;
 
 /**
  * EventDispatcherTraitTest class
+ * @group legacy
  */
 class EventDispatcherTraitTest extends TestCase
 {

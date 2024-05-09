@@ -22,6 +22,7 @@ use ArrayAccess;
  *
  * It allows you to manage the events already dispatched.
  * @template-implements \ArrayAccess<int, mixed>
+ * @deprecated The `EventList` class is deprecated and will be removed in a future release
  */
 class EventList implements ArrayAccess
 {
@@ -30,6 +31,14 @@ class EventList implements ArrayAccess
      * @var object[]
      */
     protected array $_events = [];
+
+    /**
+     * Construct
+     */
+    public function __construct()
+    {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventList` class is deprecated and will be removed in a future release');
+    }
 
     /**
      * Empties the list of dispatched events

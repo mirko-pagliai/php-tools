@@ -20,6 +20,7 @@ use Tools\Event\EventList;
 
 /**
  * EventListTest class
+ * @group legacy
  */
 class EventListTest extends TestCase
 {

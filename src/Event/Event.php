@@ -20,6 +20,7 @@ use Symfony\Contracts\EventDispatcher\Event as BaseEvent;
 
 /**
  * Event instance.
+ * @deprecated The `Event` class is deprecated and will be removed in a future release
  */
 class Event extends BaseEvent
 {
@@ -43,6 +44,8 @@ class Event extends BaseEvent
      */
     public function __construct(string $name, mixed $args = null)
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `Event` class is deprecated and will be removed in a future release');
+
         $this->name = $name;
 
         $this->args = (array)$args;
