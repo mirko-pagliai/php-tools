@@ -2,6 +2,9 @@
 ## 1.10 branch
 ### 1.10.0
 * `is_url()` global network function has been moved to `global_functions.php` file. Removed `network_functions.php`;
+* the `Event`, `EventDispatcher`, `EventDispatcherTrait` and `EventList` classes were deprecated and have been removed.
+  Use instead the `symfony/event-dispatcher` component;
+* the `EventAssertTrait` trait were deprecated and has been removed;
 * `assertArrayKeysEqual()`, `assertFileExtension()`, `assertFileMime()`, `assertImageSize()`, `assertIsArrayNotEmpty()`,
   `assertIsMock()`, `assertObjectPropertiesEqual()`, `assertSameMethods()`, `createPartialMockForAbstractClass()` and
   `deprecated()` methods provided by `TestTrait` were deprecated and have been removed;
@@ -11,6 +14,11 @@
   deprecated and have been removed.
 
 ## 1.9 branch
+### 1.9.5
+* the `Event`, `EventDispatcher`, `EventDispatcherTrait` and `EventList` classes are deprecated and will be removed in
+  a future release. Use instead the `symfony/event-dispatcher` component;
+* the `EventAssertTrait` trait is deprecated and will be removed in a future release.
+
 ### 1.9.4
 * `TestTrait::assertArrayKeysEqual()` is deprecated and will be removed in a future release;
 * `TestTrait::assertFileExtension()` is deprecated and will be removed in a future release;
