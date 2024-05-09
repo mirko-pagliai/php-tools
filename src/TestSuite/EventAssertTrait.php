@@ -19,6 +19,7 @@ use Tools\Event\EventDispatcher;
 
 /**
  * Trait to assert whether events were fired or not.
+ * @deprecated The `EventAssertTrait` class is deprecated and will be removed in a future release
  */
 trait EventAssertTrait
 {
@@ -31,6 +32,8 @@ trait EventAssertTrait
      */
     public function assertEventFired(string $eventName, EventDispatcher $EventDispatcher, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventAssertTrait` class is deprecated and will be removed in a future release');
+
         $this->assertTrue($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: 'The `' . $eventName . '` event was not fired');
     }
 
@@ -45,6 +48,8 @@ trait EventAssertTrait
      */
     public function assertEventFiredWithArgs(string $eventName, array $eventArgs, EventDispatcher $EventDispatcher, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventAssertTrait` class is deprecated and will be removed in a future release');
+
         $this->assertEventFired($eventName, $EventDispatcher, $message);
 
         $matching = false;
@@ -72,6 +77,8 @@ trait EventAssertTrait
      */
     public function assertEventNotFired(string $eventName, EventDispatcher $EventDispatcher, string $message = ''): void
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventAssertTrait` class is deprecated and will be removed in a future release');
+
         $this->assertFalse($EventDispatcher->getEventList()->hasEvent($eventName), $message ?: 'The `' . $eventName . '` event was not expected to be fired, instead it has been fired');
     }
 }

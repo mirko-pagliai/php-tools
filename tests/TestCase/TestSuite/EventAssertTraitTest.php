@@ -22,6 +22,7 @@ use Tools\TestSuite\EventAssertTrait;
 
 /**
  * TestTraitTest class
+ * @group legacy
  */
 class EventAssertTraitTest extends TestCase
 {
