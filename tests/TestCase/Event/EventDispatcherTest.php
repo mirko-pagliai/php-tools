@@ -21,6 +21,7 @@ use Tools\Event\EventList;
 
 /**
  * EventDispatcherTest class
+ * @group legacy
  */
 class EventDispatcherTest extends TestCase
 {

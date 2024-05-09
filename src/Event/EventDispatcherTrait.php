@@ -19,6 +19,7 @@ namespace Tools\Event;
  * EventDispatcherTrait.
  *
  * A trait that allows you to quickly access the dispatcher and dispatch an event.
+ * @deprecated The `EventDispatcherTrait` class is deprecated and will be removed in a future release
  */
 trait EventDispatcherTrait
 {
@@ -33,6 +34,8 @@ trait EventDispatcherTrait
      */
     public function getEventDispatcher(): EventDispatcher
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventDispatcherTrait` class is deprecated and will be removed in a future release');
+
         return $this->EventDispatcher ??= new EventDispatcher();
     }
 
@@ -44,6 +47,8 @@ trait EventDispatcherTrait
      */
     public function setEventDispatcher(EventDispatcher $eventDispatcher)
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventDispatcherTrait` class is deprecated and will be removed in a future release');
+
         $this->EventDispatcher = $eventDispatcher;
 
         return $this;
@@ -58,6 +63,8 @@ trait EventDispatcherTrait
      */
     public function dispatchEvent(string $name, mixed $args = null): Event
     {
+        trigger_deprecation('php-tools', '1.9.5', 'The `EventDispatcherTrait` class is deprecated and will be removed in a future release');
+
         $event = new Event($name, $args);
         $this->getEventDispatcher()->dispatch($event, $name);
 
