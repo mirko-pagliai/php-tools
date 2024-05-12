@@ -1,5 +1,8 @@
 # 1.x branch
 ## 1.10 branch
+### 1.10.1
+* `debug()` and `dd()`  global function are deprecated and will be removed in a future release.
+
 ### 1.10.0
 * `is_url()` global network function has been moved to `global_functions.php` file. Removed `network_functions.php`;
 * the `Event`, `EventDispatcher`, `EventDispatcherTrait` and `EventList` classes were deprecated and have been removed.
