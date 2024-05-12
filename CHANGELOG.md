@@ -1,4 +1,8 @@
 # 1.x branch
+## 1.11 branch
+### 1.11.0
+* `debug()` and `dd()`  global function were deprecated and have been removed.
+
 ## 1.10 branch
 ### 1.10.1
 * `debug()` and `dd()`  global function are deprecated and will be removed in a future release.

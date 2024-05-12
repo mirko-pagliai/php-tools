@@ -16,8 +16,7 @@
         "ext-json": "*",
         "symfony/filesystem": "^6.0|^7.0",
         "symfony/finder": "^6.0|^7.0",
-        "symfony/polyfill-php83": "^1.27",
-        "symfony/var-dumper": "^6.0|^7.0"
+        "symfony/polyfill-php83": "^1.27"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^5.0",
@@ -34,7 +33,6 @@
         },
         "files": [
             "src/array_functions.php",
-            "src/debug_functions.php",
             "src/global_functions.php"
         ]
     },
