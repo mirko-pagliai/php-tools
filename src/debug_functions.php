@@ -50,9 +50,12 @@ if (!function_exists('debug') && function_exists('dump')) {
      * @link https://symfony.com/doc/current/components/var_dumper.html#the-dump-function
      * @see \dump()
      * @since 1.2.11
+     * @deprecated `debug()` global function is deprecated and will be removed in a future release
      */
     function debug(mixed $var): mixed
     {
+        trigger_deprecation('php-tools', '1.10.1', '`debug()` global function is deprecated and will be removed in a future release');
+
         return call_user_func('dump', $var);
     }
 }
@@ -63,10 +66,13 @@ if (!function_exists('dd') && function_exists('dump')) {
      * @param mixed $var Variable you want to debug
      * @return void
      * @since 1.2.11
+     * @deprecated `dd()` global function is deprecated and will be removed in a future release
      */
     #[NoReturn]
     function dd(mixed $var): void
     {
+        trigger_deprecation('php-tools', '1.10.1', '`dd()` global function is deprecated and will be removed in a future release');
+
         call_user_func('dump', $var);
         die(1);
     }

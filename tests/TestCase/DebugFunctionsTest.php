@@ -23,7 +23,7 @@ use PHPUnit\Framework\TestCase;
 class DebugFunctionsTest extends TestCase
 {
     /**
-     * Test for `debug()` global function
+     * @group legacy
      * @requires OS Linux
      * @test
      */
